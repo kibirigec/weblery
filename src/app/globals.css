@@ -4,7 +4,7 @@
   --background: #ffffff;
   --foreground: #1a1a1a;
   --primary: #000000;
-  --secondary: #64748b;
+  --secondary: #86868b;
   --accent: #f8fafc;
   --border: #e2e8f0;
   --muted: #94a3b8;
@@ -55,27 +55,27 @@ h6 { font-size: 1.125rem; margin-bottom: 0.625rem; }
 
 /* Paragraph Text */
 p {
-  color: #1a1a1a;
+  color: #86868b;
   margin-bottom: 1rem;
   line-height: 1.7;
 }
 
 p.lead {
   font-size: 1.25rem;
-  color: #64748b;
+  color: #86868b;
   font-weight: 400;
 }
 
 p.small {
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: #86868b;
 }
 
 /* Text Colors */
 .text-black { color: #000000 !important; }
 .text-dark { color: #1a1a1a !important; }
-.text-gray { color: #64748b !important; }
-.text-light-gray { color: #94a3b8 !important; }
+.text-gray { color: #86868b !important; }
+/* .text-light-gray { color: red !important; } */
 .text-white { color: #ffffff !important; }
 
 /* Text Sizes */
@@ -107,11 +107,11 @@ a.link-dark {
 }
 
 a.link-dark:hover {
-  color: #64748b;
+  color: #86868b;
 }
 
 a.link-gray {
-  color: #64748b;
+  color: #86868b;
 }
 
 a.link-gray:hover {
@@ -210,7 +210,8 @@ input, textarea, select {
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: #000000;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  border-width: 2px;
+  /* box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); */
 }
 
 input::placeholder, textarea::placeholder {
@@ -235,7 +236,7 @@ label {
 }
 
 .card:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /*also need an #EAEAEA */
   transform: translateY(-2px);
   border-color: #000000;
 }
@@ -272,8 +273,8 @@ label {
 
 /* Background Colors */
 .bg-white { background-color: #ffffff; }
-.bg-light { background-color: #f8fafc; }
-.bg-gray { background-color: #e2e8f0; }
+.bg-light { background-color: #fafaf9; } /* comeback here, fafaf7 */
+/* .bg-gray { background-color: red; } */
 .bg-dark { background-color: #1a1a1a; }
 .bg-black { background-color: #000000; }
 
@@ -350,7 +351,7 @@ nav a:hover {
   width: 48px;
   height: 48px;
   border-radius: 0.5rem;
-  background-color: #f8fafc;
+  background-color: #fafaf9;
   transition: background-color 0.2s ease;
 }
 
