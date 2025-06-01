@@ -1,0 +1,160 @@
+import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
+import Link from 'next/link';
+
+export default function AIIntegrationPage() {
+  return (
+    <main>
+      <Navigation />
+      
+      {/* Hero Section */}
+      <section className="pt-32 pb-16 bg-light">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-lg mb-6">
+              <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6">Custom AI Integration</h1>
+            <p className="text-xl text-gray max-w-2xl mx-auto lead">
+              Intelligent automation and AI-powered features to streamline operations and enhance user engagement.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Overview Section */}
+      <section className="section">
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Transform Your Business with AI</h2>
+              <p className="text-gray mb-6">
+                Harness the power of artificial intelligence to automate processes, gain insights from data, 
+                and create intelligent user experiences. Our AI integration services help you stay ahead of the competition.
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Custom chatbots and virtual assistants</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Machine learning model development</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Natural language processing solutions</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Computer vision and image recognition</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Predictive analytics and data insights</span>
+                </li>
+              </ul>
+            </div>
+            <div className="bg-light p-8 rounded-lg">
+              <h3 className="text-2xl font-bold mb-6">AI Technologies</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-white rounded-lg">
+                  <h4 className="font-semibold">OpenAI GPT</h4>
+                  <p className="text-sm text-gray">ChatGPT, GPT-4</p>
+                </div>
+                <div className="text-center p-4 bg-white rounded-lg">
+                  <h4 className="font-semibold">Machine Learning</h4>
+                  <p className="text-sm text-gray">TensorFlow, PyTorch</p>
+                </div>
+                <div className="text-center p-4 bg-white rounded-lg">
+                  <h4 className="font-semibold">Computer Vision</h4>
+                  <p className="text-sm text-gray">OpenCV, YOLO</p>
+                </div>
+                <div className="text-center p-4 bg-white rounded-lg">
+                  <h4 className="font-semibold">NLP</h4>
+                  <p className="text-sm text-gray">BERT, spaCy</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Use Cases */}
+      <section className="section bg-light">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">AI Integration Use Cases</h2>
+            <p className="text-xl text-gray max-w-2xl mx-auto">
+              Discover how AI can transform different aspects of your business.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-lg card-hover">
+              <h3 className="text-xl font-semibold mb-3">Customer Support</h3>
+              <p className="text-gray mb-4">AI-powered chatbots that provide 24/7 customer support and resolve queries instantly.</p>
+              <ul className="text-sm text-gray space-y-2">
+                <li>• Automated ticket routing</li>
+                <li>• Intelligent responses</li>
+                <li>• Multilingual support</li>
+              </ul>
+            </div>
+            <div className="bg-white p-6 rounded-lg card-hover">
+              <h3 className="text-xl font-semibold mb-3">Data Analytics</h3>
+              <p className="text-gray mb-4">Advanced analytics to uncover insights and predict trends from your business data.</p>
+              <ul className="text-sm text-gray space-y-2">
+                <li>• Predictive modeling</li>
+                <li>• Pattern recognition</li>
+                <li>• Real-time insights</li>
+              </ul>
+            </div>
+            <div className="bg-white p-6 rounded-lg card-hover">
+              <h3 className="text-xl font-semibold mb-3">Content Generation</h3>
+              <p className="text-gray mb-4">AI-powered content creation for marketing, documentation, and personalization.</p>
+              <ul className="text-sm text-gray space-y-2">
+                <li>• Automated copywriting</li>
+                <li>• Image generation</li>
+                <li>• Content optimization</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section">
+        <div className="container">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold mb-4">Ready to Integrate AI?</h2>
+            <p className="text-xl text-gray mb-8 max-w-2xl mx-auto">
+              Let's explore how AI can revolutionize your business operations and customer experience.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/#contact" className="btn btn-primary">
+                Start Your AI Project
+              </Link>
+              <Link href="/#services" className="btn btn-secondary">
+                View All Services
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+} 

@@ -438,3 +438,66 @@ nav a:hover {
   pointer-events: none;
   cursor: not-allowed;
 }
+
+/* Service Card Hover Colors */
+.service-card-pink:hover .icon-container {
+  background-color: #fce7f3 !important;
+}
+
+.service-card-pink:hover .icon {
+  color: #ec4899 !important;
+}
+
+.service-card-blue:hover .icon-container {
+  background-color: #dbeafe !important;
+}
+
+.service-card-blue:hover .icon {
+  color: #3b82f6 !important;
+}
+
+.service-card-yellow:hover .icon-container {
+  background-color: #fef3c7 !important;
+}
+
+.service-card-yellow:hover .icon {
+  color: #f59e0b !important;
+}
+
+.service-card-green:hover .icon-container {
+  background-color: #d1fae5 !important;
+}
+
+.service-card-green:hover .icon {
+  color: #10b981 !important;
+}
+
+.service-card-orange:hover .icon-container {
+  background-color: #fed7aa !important;
+}
+
+.service-card-orange:hover .icon {
+  color: #f97316 !important;
+}
+
+.service-card-black:hover .icon-container {
+  background-color: #f3f4f6 !important;
+}
+
+.service-card-black:hover .icon {
+  color: #1f2937 !important;
+}
+
+/* Service card link styling */
+.service-card-link {
+  text-decoration: none !important;
+}
+
+.service-card-link:hover {
+  text-decoration: none !important;
+}
+
+.service-card-link h3,
+.service-card-link p {
+  text-decoration: none !important;
+}
