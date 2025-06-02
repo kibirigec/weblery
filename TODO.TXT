@@ -1,0 +1,7 @@
+services cards snap in place on mobile as if a hover
+learn more underline when card is hovered
+hero shouldnt be totally covering the view port
+website should be selling more of value rather than software
+Our services,and why you might need them
+add an all in one pricing 
+form should have a checkbox, for multiple selections

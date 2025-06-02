@@ -8,17 +8,17 @@ export default function UIUXDesignPage() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-light">
+      <section className="pt-32 pb-16 bg-gradient-to-br from-green-50 to-green-100">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-lg mb-6">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-xl mb-6 shadow-lg border border-green-200">
+              <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
               </svg>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6">UI/UX Design</h1>
-            <p className="text-xl text-gray max-w-2xl mx-auto lead">
-              Intuitive and beautiful user interfaces that provide seamless experiences across all devices.
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-gray-900">UI/UX Design</h1>
+            <p className="text-xl text-gray-700 max-w-2xl mx-auto lead">
+              User-centered design solutions that create intuitive, beautiful, and engaging digital experiences.
             </p>
           </div>
         </div>
@@ -29,62 +29,62 @@ export default function UIUXDesignPage() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Design That Converts</h2>
-              <p className="text-gray mb-6">
-                Our UI/UX design services focus on creating user-centered designs that not only look amazing 
-                but also drive user engagement and business growth through thoughtful user experience design.
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">Design That Converts</h2>
+              <p className="text-gray-600 mb-6">
+                Create exceptional user experiences that delight customers and drive business results. Our design approach 
+                combines user research, creative vision, and data-driven insights to build products people love to use.
               </p>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span>User research and persona development</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span>Wireframing and prototyping</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span>Visual design and branding</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span>Usability testing and optimization</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Responsive design for all devices</span>
+                  <span>Design system development</span>
                 </li>
               </ul>
             </div>
-            <div className="bg-light p-8 rounded-lg">
-              <h3 className="text-2xl font-bold mb-6">Design Tools</h3>
+            <div className="bg-green-50 p-8 rounded-xl border border-green-100">
+              <h3 className="text-2xl font-bold mb-6 text-gray-900">Design Tools</h3>
               <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-white rounded-lg">
-                  <h4 className="font-semibold">Design</h4>
-                  <p className="text-sm text-gray">Figma, Sketch</p>
+                <div className="text-center p-4 bg-white rounded-lg border border-green-200 hover:border-green-300 transition-colors">
+                  <h4 className="font-semibold text-gray-800">Design</h4>
+                  <p className="text-sm text-gray-600">Figma, Adobe XD</p>
                 </div>
-                <div className="text-center p-4 bg-white rounded-lg">
-                  <h4 className="font-semibold">Prototyping</h4>
-                  <p className="text-sm text-gray">InVision, Principle</p>
+                <div className="text-center p-4 bg-white rounded-lg border border-green-200 hover:border-green-300 transition-colors">
+                  <h4 className="font-semibold text-gray-800">Prototyping</h4>
+                  <p className="text-sm text-gray-600">InVision, Principle</p>
                 </div>
-                <div className="text-center p-4 bg-white rounded-lg">
-                  <h4 className="font-semibold">Testing</h4>
-                  <p className="text-sm text-gray">Hotjar, UsabilityHub</p>
+                <div className="text-center p-4 bg-white rounded-lg border border-green-200 hover:border-green-300 transition-colors">
+                  <h4 className="font-semibold text-gray-800">Research</h4>
+                  <p className="text-sm text-gray-600">Hotjar, Maze</p>
                 </div>
-                <div className="text-center p-4 bg-white rounded-lg">
-                  <h4 className="font-semibold">Collaboration</h4>
-                  <p className="text-sm text-gray">Miro, FigJam</p>
+                <div className="text-center p-4 bg-white rounded-lg border border-green-200 hover:border-green-300 transition-colors">
+                  <h4 className="font-semibold text-gray-800">Collaboration</h4>
+                  <p className="text-sm text-gray-600">Miro, FigJam</p>
                 </div>
               </div>
             </div>
@@ -92,36 +92,104 @@ export default function UIUXDesignPage() {
         </div>
       </section>
 
-      {/* Design Process */}
-      <section className="section bg-light">
+      {/* Services Grid */}
+      <section className="section bg-green-50">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Our Design Process</h2>
-            <p className="text-xl text-gray max-w-2xl mx-auto">
-              A systematic approach to creating user-centered designs that deliver results.
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">Design Services</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Comprehensive design solutions from concept to final product.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-xl border border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-lg">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">User Research</h3>
+              <p className="text-gray-600 mb-4">Understanding your users through research, interviews, and data analysis to inform design decisions.</p>
+              <ul className="text-sm text-gray-600 space-y-2">
+                <li>• User interviews & surveys</li>
+                <li>• Competitive analysis</li>
+                <li>• User journey mapping</li>
+                <li>• Persona development</li>
+              </ul>
+            </div>
+            <div className="bg-white p-6 rounded-xl border border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-lg">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h2a2 2 0 002-2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Wireframing & Prototyping</h3>
+              <p className="text-gray-600 mb-4">Creating interactive prototypes and wireframes to test concepts before development.</p>
+              <ul className="text-sm text-gray-600 space-y-2">
+                <li>• Low-fidelity wireframes</li>
+                <li>• Interactive prototypes</li>
+                <li>• User flow diagrams</li>
+                <li>• Clickable mockups</li>
+              </ul>
+            </div>
+            <div className="bg-white p-6 rounded-xl border border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-lg">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Visual Design</h3>
+              <p className="text-gray-600 mb-4">Creating beautiful, cohesive visual designs that align with your brand and enhance user experience.</p>
+              <ul className="text-sm text-gray-600 space-y-2">
+                <li>• Visual identity design</li>
+                <li>• Component libraries</li>
+                <li>• Design systems</li>
+                <li>• Brand guidelines</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Design Process */}
+      <section className="section">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">Our Design Process</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              A proven methodology that ensures great design outcomes.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
-              <h3 className="text-xl font-semibold mb-2">Research</h3>
-              <p className="text-gray">Understanding users, market, and business requirements.</p>
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-green-600">1</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Research</h3>
+              <p className="text-gray-600">Understanding users, goals, and constraints through research and analysis.</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
-              <h3 className="text-xl font-semibold mb-2">Wireframe</h3>
-              <p className="text-gray">Creating structure and layout for optimal user flow.</p>
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-green-600">2</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Ideate</h3>
+              <p className="text-gray-600">Brainstorming solutions and creating wireframes to explore concepts.</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
-              <h3 className="text-xl font-semibold mb-2">Design</h3>
-              <p className="text-gray">Visual design with focus on usability and aesthetics.</p>
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-green-600">3</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Design</h3>
+              <p className="text-gray-600">Creating high-fidelity designs and interactive prototypes.</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
-              <h3 className="text-xl font-semibold mb-2">Test</h3>
-              <p className="text-gray">User testing and iterative improvements.</p>
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-green-600">4</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Test</h3>
+              <p className="text-gray-600">Validating designs through user testing and iterative improvements.</p>
             </div>
           </div>
         </div>
@@ -131,15 +199,15 @@ export default function UIUXDesignPage() {
       <section className="section">
         <div className="container">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to Improve Your UX?</h2>
-            <p className="text-xl text-gray mb-8 max-w-2xl mx-auto">
-              Let's create a design that your users will love and that drives your business goals.
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Create Amazing Experiences?</h2>
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Let's design digital experiences that your users will love and your business will benefit from.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/#contact" className="btn btn-primary">
-                Start Your Design
+              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors duration-200 shadow-lg hover:shadow-xl">
+                Start Your Design Project
               </Link>
-              <Link href="/#services" className="btn btn-secondary">
+              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-green-600 font-semibold rounded-lg border-2 border-green-500 hover:bg-green-50 transition-colors duration-200">
                 View All Services
               </Link>
             </div>

@@ -8,17 +8,17 @@ export default function PerformanceOptimizationPage() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-light">
+      <section className="pt-32 pb-16 bg-gradient-to-br from-orange-50 to-orange-100">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-lg mb-6">
-              <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-orange-100 rounded-xl mb-6 shadow-lg border border-orange-200">
+              <svg className="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6">Performance Optimization</h1>
-            <p className="text-xl text-gray max-w-2xl mx-auto lead">
-              Speed and performance optimization to ensure your digital products load fast and run smoothly.
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-gray-900">Performance Optimization</h1>
+            <p className="text-xl text-gray-700 max-w-2xl mx-auto lead">
+              Lightning-fast websites and applications that deliver exceptional performance and user experience.
             </p>
           </div>
         </div>
@@ -29,62 +29,62 @@ export default function PerformanceOptimizationPage() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Lightning-Fast Performance</h2>
-              <p className="text-gray mb-6">
-                Slow websites lose customers. Our performance optimization services ensure your digital products 
-                load quickly, run smoothly, and provide exceptional user experiences that keep visitors engaged.
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">Speed That Converts</h2>
+              <p className="text-gray-600 mb-6">
+                Optimize your website's performance to improve user experience, search rankings, and conversion rates. 
+                Our comprehensive optimization services ensure your digital properties load fast and perform flawlessly.
               </p>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-orange-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span>Website speed optimization</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-orange-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Database query optimization</span>
+                  <span>Core Web Vitals optimization</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-orange-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Code refactoring and cleanup</span>
+                  <span>Database and server optimization</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-orange-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span>Image and asset optimization</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-orange-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>CDN setup and caching strategies</span>
+                  <span>CDN and caching strategies</span>
                 </li>
               </ul>
             </div>
-            <div className="bg-light p-8 rounded-lg">
-              <h3 className="text-2xl font-bold mb-6">Performance Metrics</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-white rounded-lg">
-                  <span className="font-semibold">Page Load Time</span>
-                  <span className="text-primary font-bold">&lt; 3 seconds</span>
+            <div className="bg-orange-50 p-8 rounded-xl border border-orange-100">
+              <h3 className="text-2xl font-bold mb-6 text-gray-900">Performance Metrics</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-white rounded-lg border border-orange-200 hover:border-orange-300 transition-colors">
+                  <h4 className="font-semibold text-gray-800">Page Speed</h4>
+                  <p className="text-sm text-gray-600">3 seconds</p>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-white rounded-lg">
-                  <span className="font-semibold">Core Web Vitals</span>
-                  <span className="text-primary font-bold">90+ Score</span>
+                <div className="text-center p-4 bg-white rounded-lg border border-orange-200 hover:border-orange-300 transition-colors">
+                  <h4 className="font-semibold text-gray-800">Core Web Vitals</h4>
+                  <p className="text-sm text-gray-600">Green scores</p>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-white rounded-lg">
-                  <span className="font-semibold">Performance Gain</span>
-                  <span className="text-primary font-bold">50-80% Faster</span>
+                <div className="text-center p-4 bg-white rounded-lg border border-orange-200 hover:border-orange-300 transition-colors">
+                  <h4 className="font-semibold text-gray-800">Lighthouse</h4>
+                  <p className="text-sm text-gray-600">90+ score</p>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-white rounded-lg">
-                  <span className="font-semibold">SEO Improvement</span>
-                  <span className="text-primary font-bold">Higher Rankings</span>
+                <div className="text-center p-4 bg-white rounded-lg border border-orange-200 hover:border-orange-300 transition-colors">
+                  <h4 className="font-semibold text-gray-800">Mobile Performance</h4>
+                  <p className="text-sm text-gray-600">Optimized</p>
                 </div>
               </div>
             </div>
@@ -93,54 +93,72 @@ export default function PerformanceOptimizationPage() {
       </section>
 
       {/* Optimization Areas */}
-      <section className="section bg-light">
+      <section className="section bg-orange-50">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">What We Optimize</h2>
-            <p className="text-xl text-gray max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">Optimization Focus Areas</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Comprehensive performance improvements across all aspects of your digital presence.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg card-hover">
-              <h3 className="text-xl font-semibold mb-3">Frontend Performance</h3>
-              <p className="text-gray mb-4">Optimize loading times, rendering, and user interactions for better UX.</p>
-              <ul className="text-sm text-gray space-y-2">
-                <li>• Code minification</li>
-                <li>• Image compression</li>
-                <li>• Lazy loading</li>
+            <div className="bg-white p-6 rounded-xl border border-orange-200 hover:border-orange-300 transition-all duration-300 hover:shadow-lg">
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Frontend Optimization</h3>
+              <p className="text-gray-600 mb-4">Optimize client-side performance with modern techniques and best practices.</p>
+              <ul className="text-sm text-gray-600 space-y-2">
+                <li>• Code splitting & lazy loading</li>
+                <li>• CSS & JavaScript minification</li>
+                <li>• Image optimization & compression</li>
+                <li>• Browser caching strategies</li>
               </ul>
             </div>
-            <div className="bg-white p-6 rounded-lg card-hover">
-              <h3 className="text-xl font-semibold mb-3">Backend Optimization</h3>
-              <p className="text-gray mb-4">Server-side improvements for faster data processing and response times.</p>
-              <ul className="text-sm text-gray space-y-2">
-                <li>• Database optimization</li>
-                <li>• API performance</li>
-                <li>• Server configuration</li>
+            <div className="bg-white p-6 rounded-xl border border-orange-200 hover:border-orange-300 transition-all duration-300 hover:shadow-lg">
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Backend Optimization</h3>
+              <p className="text-gray-600 mb-4">Improve server response times and database performance for faster loading.</p>
+              <ul className="text-sm text-gray-600 space-y-2">
+                <li>• Database query optimization</li>
+                <li>• Server-side caching</li>
+                <li>• API response optimization</li>
+                <li>• Memory usage reduction</li>
               </ul>
             </div>
-            <div className="bg-white p-6 rounded-lg card-hover">
-              <h3 className="text-xl font-semibold mb-3">Infrastructure</h3>
-              <p className="text-gray mb-4">CDN setup, caching, and hosting optimization for global performance.</p>
-              <ul className="text-sm text-gray space-y-2">
-                <li>• CDN implementation</li>
-                <li>• Caching strategies</li>
+            <div className="bg-white p-6 rounded-xl border border-orange-200 hover:border-orange-300 transition-all duration-300 hover:shadow-lg">
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Infrastructure Optimization</h3>
+              <p className="text-gray-600 mb-4">Optimize hosting, CDN, and network infrastructure for global performance.</p>
+              <ul className="text-sm text-gray-600 space-y-2">
+                <li>• CDN configuration</li>
+                <li>• Edge computing setup</li>
                 <li>• Load balancing</li>
+                <li>• Geographic distribution</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Benefits */}
+      {/* Performance Benefits */}
       <section className="section">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Performance Benefits</h2>
-            <p className="text-xl text-gray max-w-2xl mx-auto">
-              Fast websites deliver better business results and user satisfaction.
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">Benefits of Performance Optimization</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Fast websites deliver better business results across all metrics.
             </p>
           </div>
           
@@ -151,8 +169,26 @@ export default function PerformanceOptimizationPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Higher Rankings</h3>
-              <p className="text-gray">Improved SEO performance and search visibility.</p>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Higher Conversions</h3>
+              <p className="text-gray-600">Faster sites convert visitors to customers at higher rates.</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Better SEO</h3>
+              <p className="text-gray-600">Search engines favor fast-loading websites in rankings.</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-2-12a12 12 0 110 24 12 12 0 010-24z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">User Satisfaction</h3>
+              <p className="text-gray-600">Improved user experience leads to higher engagement.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -160,44 +196,26 @@ export default function PerformanceOptimizationPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">More Conversions</h3>
-              <p className="text-gray">Faster sites convert better and reduce bounce rates.</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Better UX</h3>
-              <p className="text-gray">Enhanced user satisfaction and engagement.</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Lower Costs</h3>
-              <p className="text-gray">Reduced server costs and bandwidth usage.</p>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Reduced Costs</h3>
+              <p className="text-gray-600">Optimized infrastructure reduces hosting and bandwidth costs.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="section bg-light">
+      <section className="section">
         <div className="container">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to Speed Up Your Site?</h2>
-            <p className="text-xl text-gray mb-8 max-w-2xl mx-auto">
-              Let's optimize your website for lightning-fast performance and better user experience.
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Boost Your Performance?</h2>
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Let's optimize your website for lightning-fast performance and better business results.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/#contact" className="btn btn-primary">
+              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors duration-200 shadow-lg hover:shadow-xl">
                 Start Optimization
               </Link>
-              <Link href="/#services" className="btn btn-secondary">
+              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-orange-600 font-semibold rounded-lg border-2 border-orange-500 hover:bg-orange-50 transition-colors duration-200">
                 View All Services
               </Link>
             </div>
