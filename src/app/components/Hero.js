@@ -1,3 +1,5 @@
+import ParticleNetwork from './ParticleNetwork';
+
 export default function Hero() {
   return (
     <section className="min-h-screen flex items-center pt-20 pb-16">
@@ -24,12 +26,10 @@ export default function Hero() {
             </div>
           </div>
           
-          {/* Right Column - Space for Graphic */}
+          {/* Right Column - Particle Network Animation */}
           <div className="flex items-center justify-center lg:justify-end">
-            <div className="w-full max-w-lg h-96 bg-light rounded-lg flex items-center justify-center">
-              <p className="text-gray text-center">
-                [Graphic/Image Placeholder]
-              </p>
+            <div className="w-full max-w-lg h-96 rounded-lg overflow-hidden bg-gray-50">
+              <ParticleNetwork />
             </div>
           </div>
         </div>
