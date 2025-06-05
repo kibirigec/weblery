@@ -158,10 +158,10 @@ export default function WebDevelopmentPage() {
               Let's create a powerful web presence that drives your business forward and engages your audience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 shadow-lg hover:shadow-xl">
+              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-[#344479] !text-[#dce1ff] font-semibold rounded-lg  transition-colors duration-200 shadow-lg hover:shadow-xl">
                 Start Your Web Project
               </Link>
-              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-500 font-semibold rounded-lg border-2 border-blue-500 hover:bg-blue-50 transition-colors duration-200">
+              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-500 font-semibold rounded-lg  hover:bg-blue-50 transition-colors duration-200">
                 View All Services
               </Link>
             </div>

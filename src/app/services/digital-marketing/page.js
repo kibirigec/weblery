@@ -97,7 +97,7 @@ export default function DigitalMarketingPage() {
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4 text-yellow-900">Marketing Services</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl !text-[#5d4200] max-w-2xl mx-auto">
               Comprehensive digital marketing solutions tailored to your business goals.
             </p>
           </div>
@@ -111,7 +111,7 @@ export default function DigitalMarketingPage() {
               </div>
               <h3 className="text-xl font-semibold mb-3 text-yellow-900">SEO Optimization</h3>
               <p className="text-gray-600 mb-4">Improve your search engine rankings and organic visibility with our proven SEO strategies.</p>
-              <ul className="text-sm text-gray-600 space-y-2">
+              <ul className="text-sm text-yellow-900 space-y-2">
                 <li>• Keyword research & analysis</li>
                 <li>• On-page optimization</li>
                 <li>• Technical SEO audits</li>
@@ -126,7 +126,7 @@ export default function DigitalMarketingPage() {
               </div>
               <h3 className="text-xl font-semibold mb-3 text-yellow-900">PPC Advertising</h3>
               <p className="text-gray-600 mb-4">Drive immediate traffic and conversions with targeted pay-per-click advertising campaigns.</p>
-              <ul className="text-sm text-gray-600 space-y-2">
+                <ul className="text-sm text-yellow-900 space-y-2">
                 <li>• Google Ads management</li>
                 <li>• Campaign optimization</li>
                 <li>• Landing page design</li>
@@ -141,7 +141,7 @@ export default function DigitalMarketingPage() {
               </div>
               <h3 className="text-xl font-semibold mb-3 text-yellow-900">Social Media Marketing</h3>
               <p className="text-gray-600 mb-4">Build your brand presence and engage with your audience across all major social platforms.</p>
-              <ul className="text-sm text-gray-600 space-y-2">
+              <ul className="text-sm text-yellow-900 space-y-2">
                 <li>• Content creation & scheduling</li>
                 <li>• Community management</li>
                 <li>• Social media advertising</li>
@@ -156,15 +156,15 @@ export default function DigitalMarketingPage() {
       <section className="section  bg-[#19120b]">
         <div className="container">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4 text-[#eee0d3]">Ready to Grow Your Business?</h2>
+            <h2 className="text-3xl font-bold mb-4 !text-[#d3c4b4]">Ready to Grow Your Business?</h2>
             <p className="text-xl !text-[#d7c3ae] mb-8 max-w-2xl mx-auto">
               Let's create a digital marketing strategy that drives results and accelerates your growth.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-yellow-500 text-gray-900 font-semibold rounded-lg hover:bg-yellow-600 transition-colors duration-200 shadow-lg hover:shadow-xl">
+              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-[#5d4200] !text-[#ebc06c] font-semibold rounded-lg  transition-colors duration-200 shadow-lg hover:shadow-xl">
                 Start Your Campaign
               </Link>
-              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-yellow-600 font-semibold rounded-lg border-2 border-yellow-500 hover:bg-yellow-50 transition-colors duration-200">
+              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-yellow-600 font-semibold rounded-lg  border-yellow-500 hover:bg-yellow-50 transition-colors duration-200">
                 View All Services
               </Link>
             </div>

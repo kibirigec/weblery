@@ -158,10 +158,10 @@ export default function AIIntegrationPage() {
               Let's explore how AI can revolutionize your business operations and customer experience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-900 transition-colors duration-200 shadow-lg hover:shadow-xl">
+              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-gray-800 text-white font-semibold rounded-lg  transition-colors duration-200 shadow-lg hover:shadow-xl">
                 Start Your AI Project
               </Link>
-              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-gray-800 font-semibold rounded-lg border-2 border-gray-800 hover:bg-gray-50 transition-colors duration-200">
+              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-gray-800 font-semibold rounded-lg  hover:bg-gray-50 transition-colors duration-200">
                 View All Services
               </Link>
             </div>

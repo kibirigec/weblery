@@ -310,7 +310,7 @@ nav a:hover {
 }
 
 /* ==================== HOVER EFFECTS ==================== */
-
+/* 
 .hover-lift:hover {
   transform: translateY(-2px);
   transition: transform 0.2s ease;
@@ -329,7 +329,7 @@ nav a:hover {
 .hover-opacity:hover {
   opacity: 0.8;
   transition: opacity 0.2s ease;
-}
+} */
 
 /* ==================== ICON STYLES ==================== */
 

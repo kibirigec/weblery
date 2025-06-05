@@ -248,10 +248,10 @@ export default function MobileAppDevelopmentPage() {
               Let's transform your idea into a successful mobile application that users will love.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-pink-500 text-white font-semibold rounded-lg hover:bg-pink-600 transition-colors duration-200 shadow-lg hover:shadow-xl">
+              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-[#891347] !text-[#ffb1c6] font-semibold rounded-lg  transition-colors duration-200 shadow-lg hover:shadow-xl">
                 Start Your App Project
               </Link>
-              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-pink-500 font-semibold rounded-lg border-2 border-pink-500 hover:bg-pink-50 transition-colors duration-200">
+              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-pink-500 font-semibold rounded-lg hover:bg-pink-50 transition-colors duration-200">
                 View All Services
               </Link>
             </div>

@@ -11,7 +11,7 @@ export default function UIUXDesignPage() {
       <section className="pt-32 pb-16 bg-[#f4fcef]">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-xl mb-6 shadow-lg border-2 border-green-600">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-xl mb-6 shadow-lg border-2 border-green-600 ">
               <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
               </svg>
@@ -196,18 +196,18 @@ export default function UIUXDesignPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section">
+      <section className="section bg-[#101410]">
         <div className="container">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Create Amazing Experiences?</h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-[#e0e4db]">Ready to Create Amazing Experiences?</h2>
+            <p className="text-xl !text-[#c2c9bd] mb-8 max-w-2xl mx-auto">
               Let's design digital experiences that your users will love and your business will benefit from.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors duration-200 shadow-lg hover:shadow-xl">
+              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-[#205026] !text-[#b9f0b7] font-semibold rounded-lg hover:border-[#b9f0b7] transition-colors  shadow-lg hover:shadow-xl">
                 Start Your Design Project
               </Link>
-              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-green-600 font-semibold rounded-lg border-2 border-green-500 hover:bg-green-50 transition-colors duration-200">
+              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-green-600 font-semibold rounded-lg  hover:bg-green-50 transition-colors duration-200">
                 View All Services
               </Link>
             </div>

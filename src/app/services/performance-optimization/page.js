@@ -212,10 +212,10 @@ export default function PerformanceOptimizationPage() {
               Let's optimize your website for lightning-fast performance and better business results.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors duration-200 shadow-lg hover:shadow-xl">
+              <Link href="/#contact" className="inline-flex items-center justify-center px-8 py-3 bg-[#713719] !text-[#ffb694] font-semibold rounded-lg  transition-colors duration-200 shadow-lg hover:shadow-xl">
                 Start Optimization
               </Link>
-              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-orange-600 font-semibold rounded-lg border-2 border-orange-500 hover:bg-orange-50 transition-colors duration-200">
+              <Link href="/#services" className="inline-flex items-center justify-center px-8 py-3 bg-white text-orange-600 font-semibold rounded-lg  transition-colors duration-200">
                 View All Services
               </Link>
             </div>
