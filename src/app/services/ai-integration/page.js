@@ -150,11 +150,11 @@ export default function AIIntegrationPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section">
+      <section className="section bg-[#111318]">
         <div className="container">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Integrate AI?</h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 !text-[#e1e2e9]">Ready to Integrate AI?</h2>
+            <p className="text-xl !text-[#c4c6cf] mb-8 max-w-2xl mx-auto">
               Let's explore how AI can revolutionize your business operations and customer experience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

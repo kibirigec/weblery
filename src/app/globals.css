@@ -41,7 +41,7 @@ html {
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-  color: #000000;
+  /* color: #000000; */
   font-weight: 700;
   line-height: 1.2;
 }
@@ -279,10 +279,10 @@ label {
 .bg-black { background-color: #000000; }
 
 /* Border Utilities */
-.border { border: 1px solid #e2e8f0; }
+/* .border { border: 1px solid #e2e8f0; }
 .border-dark { border: 1px solid #000000; }
 .border-top { border-top: 1px solid #e2e8f0; }
-.border-bottom { border-bottom: 1px solid #e2e8f0; }
+.border-bottom { border-bottom: 1px solid #e2e8f0; } */
 
 /* ==================== NAVIGATION STYLES ==================== */
 
