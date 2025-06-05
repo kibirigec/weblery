@@ -47,8 +47,8 @@ export default function Hero() {
                 <span>Result-Driven</span>
               </li>
             </ul>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="#contact" className="bg-black text-white px-6 py-3 rounded-full hover:-translate-y-0.5 transition-transform duration-200">
+            <div className="flex flex-col sm:flex-row gap-4 bg-red-100">
+              <Link href="#contact" className="bg-red-500 text-white px-6 py-3 rounded-full hover:-translate-y-0.5 transition-transform duration-200">
                 Start Your Project
               </Link>
               <Link href="#portfolio" className="bg-white text-black px-6 py-3 rounded-full hover:-translate-y-0.5 transition-transform duration-200">
