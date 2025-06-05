@@ -34,7 +34,7 @@ export default function Footer() {
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-2xl font-bold text-black mb-4">MoQube</h3>
+            <h3 className="text-2xl font-bold text-black mb-4">ModiQube</h3>
             <p className="text-gray">
               Transforming businesses through innovative digital solutions and cutting-edge technology.
             </p>
@@ -56,7 +56,7 @@ export default function Footer() {
         
         <div className="border-top mt-8 pt-8 text-center">
           <p className="text-gray">
-            © 2024 MoQube. All rights reserved.
+            © 2024 ModiQube. All rights reserved.
           </p>
         </div>
       </div>
