@@ -310,7 +310,7 @@ nav a:hover {
 }
 
 /* ==================== HOVER EFFECTS ==================== */
-
+/* 
 .hover-lift:hover {
   transform: translateY(-2px);
   transition: transform 0.2s ease;
@@ -329,7 +329,7 @@ nav a:hover {
 .hover-opacity:hover {
   opacity: 0.8;
   transition: opacity 0.2s ease;
-}
+} */
 
 /* ==================== ICON STYLES ==================== */
 
@@ -376,8 +376,8 @@ nav a:hover {
   h3 { font-size: 1.5rem; }
   
   .btn {
-    display: inline-block;
-    min-width: auto;
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
   
   .section {
@@ -404,64 +404,6 @@ nav a:hover {
 .slide-in {
   animation: slideIn 0.6s ease forwards;
 }
-
-/* Menu slide animations */
-@keyframes slideInDown {
-  from { 
-    transform: translateY(-20px); 
-    opacity: 0; 
-  }
-  to { 
-    transform: translateY(0); 
-    opacity: 1; 
-  }
-}
-
-@keyframes slideOutUp {
-  from { 
-    transform: translateY(0); 
-    opacity: 1; 
-  }
-  to { 
-    transform: translateY(-20px); 
-    opacity: 0; 
-  }
-}
-
-/* Menu item animations */
-.menu-open .flex-col a:nth-child(1) {
-  animation: slideInDown 0.3s ease forwards;
-  animation-delay: 0.1s;
-}
-
-.menu-open .flex-col a:nth-child(2) {
-  animation: slideInDown 0.3s ease forwards;
-  animation-delay: 0.2s;
-}
-
-.menu-open .flex-col a:nth-child(3) {
-  animation: slideInDown 0.3s ease forwards;
-  animation-delay: 0.3s;
-}
-
-.menu-open .flex-col a:nth-child(4) {
-  animation: slideInDown 0.3s ease forwards;
-  animation-delay: 0.4s;
-}
-
-/* Adjust mobile menu appearance for top-down animation */
-/* @media (max-width: 768px) {
-  .fixed.inset-0.bg-white {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  }
-  
-  .flex-col a {
-    opacity: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 15px 0;
-    font-weight: 500;
-  }
-} */
 
 /* ==================== UTILITY CLASSES ==================== */
 
@@ -559,240 +501,3 @@ nav a:hover {
 .service-card-link p {
   text-decoration: none !important;
 }
-
-/* Mobile service card snap effect */
-@media (max-width: 768px) {
-  .card.is-active {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    border-color: #000000 !important;
-    border-width: 2px;
-  }
-}
-
-/* Custom scrolling behavior for service cards on mobile */
-@media (max-width: 768px) {
-  .service-cards-container {
-    padding: 1rem 0;
-    scroll-snap-type: x mandatory;
-    scroll-padding: 1rem;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .service-card-link {
-    scroll-snap-align: center;
-  }
-}
-
-/* Service card hover effects */
-.service-card-pink:hover .bg-gray-100 {
-  background-color: #FCE7F3 !important; /* pink-100 */
-}
-
-.service-card-pink:hover .text-gray-600 {
-  color: #DB2777 !important; /* pink-600 */
-}
-
-.service-card-blue:hover .bg-gray-100 {
-  background-color: #DBEAFE !important; /* blue-100 */
-}
-
-.service-card-blue:hover .text-gray-600 {
-  color: #2563EB !important; /* blue-600 */
-}
-
-.service-card-yellow:hover .bg-gray-100 {
-  background-color: #FEF3C7 !important; /* yellow-100 */
-}
-
-.service-card-yellow:hover .text-gray-600 {
-  color: #D97706 !important; /* yellow-600 */
-}
-
-.service-card-green:hover .bg-gray-100 {
-  background-color: #D1FAE5 !important; /* green-100 */
-}
-
-.service-card-green:hover .text-gray-600 {
-  color: #059669 !important; /* green-600 */
-}
-
-.service-card-orange:hover .bg-gray-100 {
-  background-color: #FFEDD5 !important; /* orange-100 */
-}
-
-.service-card-orange:hover .text-gray-600 {
-  color: #EA580C !important; /* orange-600 */
-}
-
-.service-card-black:hover .bg-gray-100 {
-  background-color: #F3F4F6 !important; /* gray-100 */
-}
-
-.service-card-black:hover .text-gray-600 {
-  color: #4B5563 !important; /* gray-600 */
-}
-
-/* Feature tag hover effects */
-.service-card-pink:hover .bg-gray-100.text-gray-800 {
-  background-color: #FDF2F8 !important; /* pink-50 */
-  color: #9D174D !important; /* pink-800 */
-}
-
-.service-card-blue:hover .bg-gray-100.text-gray-800 {
-  background-color: #EFF6FF !important; /* blue-50 */
-  color: #1E40AF !important; /* blue-800 */
-}
-
-.service-card-yellow:hover .bg-gray-100.text-gray-800 {
-  background-color: #FFFBEB !important; /* yellow-50 */
-  color: #92400E !important; /* yellow-800 */
-}
-
-.service-card-green:hover .bg-gray-100.text-gray-800 {
-  background-color: #ECFDF5 !important; /* green-50 */
-  color: #065F46 !important; /* green-800 */
-}
-
-.service-card-orange:hover .bg-gray-100.text-gray-800 {
-  background-color: #FFF7ED !important; /* orange-50 */
-  color: #9A3412 !important; /* orange-800 */
-}
-
-.service-card-black:hover .bg-gray-100.text-gray-800 {
-  background-color: #F9FAFB !important; /* gray-50 */
-  color: #1F2937 !important; /* gray-800 */
-}
-
-/* Prevent default touch behaviors on service cards */
-.service-card-link {
-  -webkit-tap-highlight-color: transparent;
-}
-
-.service-card-link:focus {
-  outline: none;
-}
-
-.service-card-link:active {
-  outline: none;
-}
-
-.service-card-link > div:focus, 
-.service-card-link > div:active {
-  border-color: transparent !important;
-}
-
-/* Hamburger Menu Animation */
-.hamburger-menu {
-  width: 24px;
-  height: 18px;
-  position: relative;
-  transform: rotate(0deg);
-  transition: .5s ease-in-out;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.hamburger-line {
-  display: block;
-  position: absolute;
-  height: 3px;
-  width: 100%;
-  /* Background color now controlled by className in component */
-  border-radius: 3px;
-  opacity: 1;
-  left: 0;
-  transform: rotate(0deg);
-  transition: .25s ease-in-out;
-  transform-origin: center;
-}
-
-.hamburger-line:nth-child(1) {
-  top: 0px;
-}
-
-.hamburger-line:nth-child(2) {
-  top: 8px;
-  width: 100%;
-}
-
-.hamburger-line:nth-child(3) {
-  top: 16px;
-}
-
-.hamburger-menu.open .hamburger-line:nth-child(1) {
-  top: 8px;
-  transform: rotate(135deg);
-}
-
-.hamburger-menu.open .hamburger-line:nth-child(2) {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-.hamburger-menu.open .hamburger-line:nth-child(3) {
-  top: 8px;
-  transform: rotate(-135deg);
-}
-
-/* Fixed body when menu is open */
-body.menu-open {
-  overflow: hidden;
-}
-
-/* Improve touch interactions */
-
-
-/* Ensure fixed positioning works correctly on iOS */
-.menu-open {
-  overflow: hidden !important;
-  position: fixed !important;
-  width: 100% !important;
-}
-
-/* Adjust hamburger menu for better touch interaction */
-.hamburger-menu {
-  touch-action: manipulation;
-  cursor: pointer;
-  display: block;
-  position: relative;
-  width: 30px;
-  height: 22px;
-  margin: 0;
-  padding: 0;
-}
-
-.hamburger-line {
-  display: block;
-  position: absolute;
-  height: 3px;
-  width: 100%;
-  /* Background color now controlled by className in component */
-  border-radius: 3px;
-  opacity: 1;
-  left: 0;
-  transform: rotate(0deg);
-  transition: .25s ease-in-out;
-  transform-origin: center;
-}
-
-/* Make tap targets larger for mobile */
-button, 
-a {
-  touch-action: manipulation;
-}
-
-/* Increase tap target size */
-@media (max-width: 768px) {
-  .nav-brand, 
-  button,
-  a.py-2 {
-    padding: 10px;
-    margin: -10px;
-    position: relative;
-    z-index: 1;
-  }
-}
-
