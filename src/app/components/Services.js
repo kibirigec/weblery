@@ -114,8 +114,8 @@ export default function Services() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
           <div className="mb-6 md:mb-0">
             <div className="inline-flex items-center bg-black bg-opacity-5 rounded-full px-4 py-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-black mr-2"></span>
-              <span className="text-sm font-medium">Our Expertise</span>
+              {/* <span className="w-2 h-2 rounded-full bg-black "></span> */}
+              <span className="text-sm text-[#C0C0C0] font-medium">Our Expertise</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Services</h2>
             <p className="text-xl text-gray max-w-2xl lead">

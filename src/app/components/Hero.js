@@ -8,10 +8,10 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
           {/* Left Column - Text Content */}
           <div className="flex flex-col justify-center">
-            <div className="inline-flex items-center bg-black bg-opacity-5 rounded-full px-4 py-2 mb-6">
+            {/* <div className="inline-flex items-center bg-black bg-opacity-5 rounded-full px-4 py-2 mb-6">
               <span className="w-2 h-2 rounded-full bg-black mr-2"></span>
-              <span className="text-sm font-medium">Award-Winning Digital Agency</span>
-            </div>
+              <span className="text-sm text-[#C0C0C0] font-medium">Award-Winning Digital Agency</span>
+            </div> */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-dark mb-6 leading-tight">
               Transform Your Digital
               <span className="block text-black">Presence</span>
@@ -47,11 +47,11 @@ export default function Hero() {
                 <span>Result-Driven</span>
               </li>
             </ul>
-            <div className="flex flex-col sm:flex-row gap-4 bg-red-100">
-              <Link href="#contact" className="bg-red-500 text-white px-6 py-3 rounded-full hover:-translate-y-0.5 transition-transform duration-200">
+            <div className="flex flex-col sm:flex-row gap-4 ">
+              <Link href="#contact" className="bg-black text-white text-center px-8 rounded-lg py-3  hover:-translate-y-0.5 transition-transform duration-200">
                 Start Your Project
               </Link>
-              <Link href="#portfolio" className="bg-white text-black px-6 py-3 rounded-full hover:-translate-y-0.5 transition-transform duration-200">
+              <Link href="#portfolio" className="bg-white border-2 border-black text-center text-black px-8 py-3 rounded-lg hover:-translate-y-0.5 transition-transform duration-200">
                 View Our Work
               </Link>
             </div>

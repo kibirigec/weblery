@@ -450,7 +450,7 @@ nav a:hover {
 }
 
 /* Adjust mobile menu appearance for top-down animation */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .fixed.inset-0.bg-white {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   }
@@ -461,7 +461,7 @@ nav a:hover {
     padding: 15px 0;
     font-weight: 500;
   }
-}
+} */
 
 /* ==================== UTILITY CLASSES ==================== */
 
@@ -743,9 +743,7 @@ body.menu-open {
 }
 
 /* Improve touch interactions */
-.touch-manipulation {
-  touch-action: manipulation;
-}
+
 
 /* Ensure fixed positioning works correctly on iOS */
 .menu-open {
@@ -797,3 +795,4 @@ a {
     z-index: 1;
   }
 }
+
