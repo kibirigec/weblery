@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
@@ -71,25 +71,100 @@ export default function WebDevelopmentPage() {
   const overviewRef = useRef(null);
   const servicesRef = useRef(null);
   const ctaRef = useRef(null);
+  const containerRef = useRef(null);
 
   const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
   const overviewInView = useInView(overviewRef, { once: true, amount: 0.2 });
   const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
+  // Parallax scroll effects
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const heroImageY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const heroImageRotate = useTransform(scrollYProgress, [0, 1], [0, 5]);
+  const overviewImageY = useTransform(scrollYProgress, [0.2, 0.8], [50, -50]);
+  const floatingImageY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const serviceImageScale = useTransform(scrollYProgress, [0.4, 0.7], [0.8, 1.2]);
+
   return (
-    <main>
+    <main ref={containerRef}>
       <Navigation />
       
       {/* Hero Section */}
       <motion.section 
-        className="pt-32 pb-16 bg-blue-50"
+        className="pt-32 pb-16 bg-blue-50 relative overflow-hidden"
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Background Images */}
+        <motion.div 
+          className="absolute top-0 right-0 w-96 h-96 opacity-10"
+          style={{ y: heroImageY, rotate: heroImageRotate }}
+        >
+          <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 rounded-full blur-3xl"></div>
+        </motion.div>
+        
+        <motion.div 
+          className="absolute bottom-0 left-0 w-64 h-64 opacity-5"
+          style={{ y: floatingImageY }}
+        >
+          <div className="w-full h-full bg-gradient-to-tr from-blue-300 to-blue-500 rounded-full blur-2xl"></div>
+        </motion.div>
+
+        {/* Floating Code Elements */}
+        <motion.div 
+          className="absolute top-20 left-10 opacity-20"
+          animate={{ 
+            y: [0, -20, 0],
+            rotate: [0, 5, 0]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="w-32 h-20 bg-white rounded-lg shadow-lg p-3 border border-blue-200">
+            <div className="flex space-x-1 mb-2">
+              <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+              <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+            </div>
+            <div className="space-y-1">
+              <div className="w-full h-1 bg-blue-200 rounded"></div>
+              <div className="w-3/4 h-1 bg-blue-300 rounded"></div>
+              <div className="w-1/2 h-1 bg-blue-200 rounded"></div>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div 
+          className="absolute top-32 right-20 opacity-20"
+          animate={{ 
+            y: [0, 15, 0],
+            rotate: [0, -3, 0]
+          }}
+          transition={{ 
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        >
+          <div className="w-24 h-24 bg-white rounded-xl shadow-lg p-3 border border-blue-200 flex items-center justify-center">
+            <svg className="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </div>
+        </motion.div>
+        
+        <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
               className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-xl mb-6 shadow-lg border-2 border-blue-600"
@@ -135,13 +210,21 @@ export default function WebDevelopmentPage() {
 
       {/* Overview Section */}
       <motion.section 
-        className="section"
+        className="section relative overflow-hidden"
         ref={overviewRef}
         initial="hidden"
         animate={overviewInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Image Slot */}
+        <motion.div 
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 w-80 h-80 opacity-5"
+          style={{ y: overviewImageY }}
+        >
+          <div className="w-full h-full bg-gradient-to-l from-blue-100 to-transparent rounded-l-full"></div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
               <motion.h2 
@@ -200,14 +283,47 @@ export default function WebDevelopmentPage() {
               </motion.ul>
             </motion.div>
             
+            {/* Image Slot with Browser Mockup */}
             <motion.div 
-              className="bg-blue-50 p-8 rounded-xl border border-blue-100"
+              className="bg-blue-50 p-8 rounded-xl border border-blue-100 relative"
               variants={fadeInUp}
               whileHover={{
                 scale: 1.02,
                 transition: { duration: 0.3 }
               }}
             >
+              {/* Browser Window Mockup */}
+              <motion.div 
+                className="bg-white rounded-lg shadow-xl mb-6 overflow-hidden"
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="bg-gray-100 px-4 py-3 flex items-center space-x-2 border-b">
+                  <div className="flex space-x-2">
+                    <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                  </div>
+                  <div className="flex-1 bg-white rounded mx-4 px-3 py-1 text-xs text-gray-500">
+                    https://your-website.com
+                  </div>
+                </div>
+                <div className="h-40 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+                  <motion.div 
+                    className="text-center"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <div className="w-16 h-16 bg-blue-200 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                      <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
+                      </svg>
+                    </div>
+                    <div className="text-xs text-blue-600 font-medium">Modern Web Design</div>
+                  </motion.div>
+                </div>
+              </motion.div>
+
               <motion.h3 
                 className="text-2xl font-bold mb-6 text-blue-900"
                 variants={itemVariants}
@@ -251,13 +367,23 @@ export default function WebDevelopmentPage() {
 
       {/* Services Grid */}
       <motion.section 
-        className="section bg-blue-50"
+        className="section bg-blue-50 relative overflow-hidden"
         ref={servicesRef}
         initial="hidden"
         animate={servicesInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Background Pattern */}
+        <motion.div 
+          className="absolute inset-0 opacity-5"
+          style={{ scale: serviceImageScale }}
+        >
+          <div className="absolute top-10 left-10 w-32 h-32 bg-blue-300 rounded-full blur-xl"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-blue-400 rounded-full blur-lg"></div>
+          <div className="absolute bottom-20 left-1/3 w-40 h-40 bg-blue-200 rounded-full blur-2xl"></div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="text-center mb-12">
             <motion.h2 
               className="text-3xl font-bold mb-4 text-blue-900"
@@ -282,24 +408,27 @@ export default function WebDevelopmentPage() {
                 icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
                 title: "Custom Websites",
                 description: "Bespoke websites tailored to your brand and business requirements.",
-                features: ["• Responsive design", "• SEO optimization", "• Fast loading speeds"]
+                features: ["• Responsive design", "• SEO optimization", "• Fast loading speeds"],
+                imageSlot: "laptop"
               },
               {
                 icon: "M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z",
                 title: "E-commerce Solutions", 
                 description: "Powerful online stores that drive sales and enhance customer experience.",
-                features: ["• Payment integration", "• Inventory management", "• Mobile-optimized"]
+                features: ["• Payment integration", "• Inventory management", "• Mobile-optimized"],
+                imageSlot: "shopping"
               },
               {
                 icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
                 title: "Web Applications",
                 description: "Complex web apps with advanced functionality and user interactions.",
-                features: ["• Real-time features", "• User authentication", "• Data visualization"]
+                features: ["• Real-time features", "• User authentication", "• Data visualization"],
+                imageSlot: "dashboard"
               }
             ].map((service, index) => (
               <motion.div 
                 key={index}
-                className="bg-white p-6 rounded-xl border border-blue-100 hover:border-blue-200 transition-all duration-300 hover:shadow-lg"
+                className="bg-white p-6 rounded-xl border border-blue-100 hover:border-blue-200 transition-all duration-300 hover:shadow-lg relative overflow-hidden"
                 variants={itemVariants}
                 whileHover={{
                   y: -10,
@@ -307,8 +436,31 @@ export default function WebDevelopmentPage() {
                   transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
                 }}
               >
+                {/* Image Slot Background */}
                 <motion.div 
-                  className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4"
+                  className="absolute top-0 right-0 w-20 h-20 opacity-10"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                >
+                  {service.imageSlot === "laptop" && (
+                    <svg className="w-full h-full text-blue-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/>
+                    </svg>
+                  )}
+                  {service.imageSlot === "shopping" && (
+                    <svg className="w-full h-full text-blue-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                  )}
+                  {service.imageSlot === "dashboard" && (
+                    <svg className="w-full h-full text-blue-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    </svg>
+                  )}
+                </motion.div>
+
+                <motion.div 
+                  className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 relative z-10"
                   whileHover={{
                     scale: 1.1,
                     rotate: 5,
@@ -320,10 +472,10 @@ export default function WebDevelopmentPage() {
                   </svg>
                 </motion.div>
                 
-                <h3 className="text-xl font-semibold mb-3 text-blue-900">{service.title}</h3>
-                <p className="text-gray-600 mb-4">{service.description}</p>
+                <h3 className="text-xl font-semibold mb-3 text-blue-900 relative z-10">{service.title}</h3>
+                <p className="text-gray-600 mb-4 relative z-10">{service.description}</p>
                 
-                <ul className="text-sm text-blue-900 space-y-2">
+                <ul className="text-sm text-blue-900 space-y-2 relative z-10">
                   {service.features.map((feature, featureIndex) => (
                     <motion.li 
                       key={featureIndex}
@@ -346,13 +498,53 @@ export default function WebDevelopmentPage() {
 
       {/* CTA Section */}
       <motion.section 
-        className="section bg-[#11131c]"
+        className="section bg-[#11131c] relative overflow-hidden"
         ref={ctaRef}
         initial="hidden"
         animate={ctaInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Floating Elements */}
+        <motion.div 
+          className="absolute top-10 left-10 w-6 h-6 bg-blue-400 rounded-full opacity-20"
+          animate={{ 
+            y: [0, -30, 0],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{ 
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute top-20 right-20 w-4 h-4 bg-blue-300 rounded-full opacity-30"
+          animate={{ 
+            y: [0, 25, 0],
+            x: [0, 10, 0]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 left-1/4 w-8 h-8 bg-blue-500 rounded-full opacity-15"
+          animate={{ 
+            y: [0, -20, 0],
+            rotate: [0, 180, 360]
+          }}
+          transition={{ 
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+
+        <div className="container relative z-10">
           <div className="text-center">
             <motion.h2 
               className="text-3xl font-bold mb-4 !text-[#e1e1ee]"

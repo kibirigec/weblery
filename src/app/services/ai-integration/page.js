@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
@@ -77,22 +77,222 @@ export default function AIIntegrationPage() {
   const useCasesInView = useInView(useCasesRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
+  const containerRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const brainY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const neuralRotate = useTransform(scrollYProgress, [0.2, 0.8], [0, 360]);
+  const dataFlowY = useTransform(scrollYProgress, [0, 1], [0, -180]);
+  const aiElementsScale = useTransform(scrollYProgress, [0.3, 0.7], [0.9, 1.1]);
+
   return (
-    <main>
+    <main ref={containerRef}>
       <Navigation />
       
-      {/* Hero Section */}
+      {/* Hero Section with AI visualizations */}
       <motion.section 
-        className="pt-32 pb-16 bg-gradient-to-br from-gray-50 to-gray-100"
+        className="pt-32 pb-16 bg-gray-50/50 relative overflow-hidden"
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax AI Brain Visualization */}
+        <motion.div 
+          className="absolute top-10 right-10 opacity-10"
+          style={{ y: brainY }}
+        >
+          <div className="w-32 h-32 relative">
+            <svg className="w-full h-full" viewBox="0 0 100 100">
+              <motion.circle 
+                cx="50" cy="30" r="8" 
+                fill="#6b7280" 
+                opacity="0.6"
+                animate={{ 
+                  r: [8, 12, 8],
+                  opacity: [0.6, 1, 0.6]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <motion.circle 
+                cx="30" cy="50" r="6" 
+                fill="#9ca3af" 
+                opacity="0.5"
+                animate={{ 
+                  r: [6, 10, 6],
+                  opacity: [0.5, 0.9, 0.5]
+                }}
+                transition={{ duration: 2.5, repeat: Infinity, delay: 0.3 }}
+              />
+              <motion.circle 
+                cx="70" cy="50" r="7" 
+                fill="#374151" 
+                opacity="0.7"
+                animate={{ 
+                  r: [7, 11, 7],
+                  opacity: [0.7, 1, 0.7]
+                }}
+                transition={{ duration: 2.2, repeat: Infinity, delay: 0.6 }}
+              />
+              <motion.circle 
+                cx="50" cy="70" r="5" 
+                fill="#d1d5db" 
+                opacity="0.4"
+                animate={{ 
+                  r: [5, 9, 5],
+                  opacity: [0.4, 0.8, 0.4]
+                }}
+                transition={{ duration: 2.8, repeat: Infinity, delay: 0.9 }}
+              />
+              
+              {/* Neural connections */}
+              <motion.line 
+                x1="50" y1="30" x2="30" y2="50" 
+                stroke="#6b7280" 
+                strokeWidth="2" 
+                opacity="0.3"
+                animate={{ opacity: [0.3, 0.8, 0.3] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              />
+              <motion.line 
+                x1="50" y1="30" x2="70" y2="50" 
+                stroke="#9ca3af" 
+                strokeWidth="2" 
+                opacity="0.3"
+                animate={{ opacity: [0.3, 0.8, 0.3] }}
+                transition={{ duration: 1.8, repeat: Infinity, delay: 0.5 }}
+              />
+              <motion.line 
+                x1="30" y1="50" x2="50" y2="70" 
+                stroke="#374151" 
+                strokeWidth="2" 
+                opacity="0.3"
+                animate={{ opacity: [0.3, 0.8, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+              />
+              <motion.line 
+                x1="70" y1="50" x2="50" y2="70" 
+                stroke="#d1d5db" 
+                strokeWidth="2" 
+                opacity="0.3"
+                animate={{ opacity: [0.3, 0.8, 0.3] }}
+                transition={{ duration: 1.7, repeat: Infinity, delay: 1.5 }}
+              />
+            </svg>
+          </div>
+        </motion.div>
+
+        {/* Floating Data Nodes */}
+        <motion.div 
+          className="absolute top-20 left-20 opacity-20"
+          style={{ rotate: neuralRotate }}
+        >
+          <div className="relative w-16 h-16">
+            {[0, 120, 240].map((angle, i) => (
+              <motion.div 
+                key={i}
+                className="absolute w-4 h-4 bg-gray-400 rounded-full"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(-20px)`,
+                }}
+                animate={{ 
+                  scale: [1, 1.3, 1],
+                  backgroundColor: ['#9ca3af', '#6b7280', '#9ca3af']
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* AI Processing Indicator */}
+        <motion.div 
+          className="absolute bottom-20 right-32 opacity-15"
+          style={{ y: dataFlowY }}
+        >
+          <div className="w-20 h-12 bg-gray-300 rounded-lg shadow-lg p-2">
+            <div className="flex justify-between items-center mb-1">
+              <div className="text-xs font-bold text-gray-700">AI</div>
+              <motion.div 
+                className="w-2 h-2 bg-gray-600 rounded-full"
+                animate={{ 
+                  scale: [1, 1.5, 1],
+                  opacity: [0.5, 1, 0.5]
+                }}
+                transition={{ duration: 1, repeat: Infinity }}
+              />
+            </div>
+            <div className="flex space-x-1">
+              {[...Array(5)].map((_, i) => (
+                <motion.div 
+                  key={i}
+                  className="flex-1 h-1 bg-gray-400 rounded"
+                  animate={{ 
+                    scaleY: [1, 2, 1],
+                    backgroundColor: ['#9ca3af', '#6b7280', '#9ca3af']
+                  }}
+                  transition={{ 
+                    duration: 0.8,
+                    repeat: Infinity,
+                    delay: i * 0.1,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Floating ML Model Visualization */}
+        <motion.div 
+          className="absolute top-1/3 left-1/4 opacity-10"
+          animate={{ 
+            y: [0, -20, 0],
+            x: [0, 15, 0]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="w-24 h-16 bg-gray-200 rounded-lg shadow-lg p-2">
+            <div className="grid grid-cols-3 gap-1 h-full">
+              {[...Array(9)].map((_, i) => (
+                <motion.div 
+                  key={i}
+                  className="bg-gray-400 rounded-sm"
+                  animate={{ 
+                    opacity: [0.3, 1, 0.3],
+                    scale: [0.8, 1, 0.8]
+                  }}
+                  transition={{ 
+                    duration: 1.5,
+                    repeat: Infinity,
+                    delay: i * 0.1,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-xl mb-6 shadow-lg border border-gray-200"
+              className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-xl mb-6 shadow-lg border-2 border-gray-600"
               variants={iconVariants}
               whileHover={{
                 scale: 1.1,
@@ -133,15 +333,80 @@ export default function AIIntegrationPage() {
         </div>
       </motion.section>
 
-      {/* Overview Section */}
+      {/* Overview Section with AI dashboard */}
       <motion.section 
-        className="section"
+        className="py-16 bg-white relative overflow-hidden"
         ref={overviewRef}
         initial="hidden"
         animate={overviewInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax AI System Visualization */}
+        <motion.div 
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 opacity-5"
+          style={{ scale: aiElementsScale }}
+        >
+          <div className="w-40 h-48 bg-purple-100 rounded-2xl p-4">
+            <div className="w-full h-full relative">
+              {/* AI Model Architecture */}
+              <div className="grid grid-cols-3 gap-2 h-full">
+                <div className="space-y-2">
+                  {[...Array(4)].map((_, i) => (
+                    <motion.div 
+                      key={i}
+                      className="w-full h-4 bg-purple-200 rounded"
+                      animate={{ 
+                        backgroundColor: ['#e9d5ff', '#c4b5fd', '#e9d5ff'],
+                        scale: [1, 1.05, 1]
+                      }}
+                      transition={{ 
+                        duration: 2, 
+                        repeat: Infinity, 
+                        delay: i * 0.2 
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="space-y-2">
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div 
+                      key={i}
+                      className="w-full h-3 bg-purple-300 rounded"
+                      animate={{ 
+                        backgroundColor: ['#c4b5fd', '#a78bfa', '#c4b5fd'],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{ 
+                        duration: 1.8, 
+                        repeat: Infinity, 
+                        delay: i * 0.15 
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="space-y-2">
+                  {[...Array(3)].map((_, i) => (
+                    <motion.div 
+                      key={i}
+                      className="w-full h-5 bg-purple-400 rounded"
+                      animate={{ 
+                        backgroundColor: ['#a78bfa', '#8b5cf6', '#a78bfa'],
+                        scale: [1, 1.15, 1]
+                      }}
+                      transition={{ 
+                        duration: 2.2, 
+                        repeat: Infinity, 
+                        delay: i * 0.3 
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
               <motion.h2 
@@ -200,47 +465,177 @@ export default function AIIntegrationPage() {
               </motion.ul>
             </motion.div>
             
+            {/* Enhanced AI Integration Dashboard */}
             <motion.div 
-              className="bg-gray-50 p-8 rounded-xl border border-gray-100"
+              className="bg-white rounded-2xl p-8 shadow-xl relative border border-purple-100"
               variants={fadeInUp}
               whileHover={{
-                scale: 1.02,
+                y: -5,
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
                 transition: { duration: 0.3 }
               }}
             >
-              <motion.h3 
-                className="text-2xl font-bold mb-6 text-gray-900"
-                variants={itemVariants}
-              >
-                AI Technologies
-              </motion.h3>
-              
+              {/* AI Model Performance Visualization */}
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">AI Model Performance</h3>
+                
+                {/* Neural Network Layers Visualization */}
+                <div className="bg-purple-50 rounded-lg p-4 mb-4 border border-purple-200">
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-sm font-semibold text-purple-700">Processing Layers</span>
+                    <motion.span 
+                      className="text-sm font-bold text-purple-800"
+                      animate={{ opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      Active
+                    </motion.span>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
+                    {/* Input Layer */}
+                    <div className="flex flex-col space-y-1">
+                      {[...Array(4)].map((_, i) => (
+                        <motion.div 
+                          key={i}
+                          className="w-3 h-3 bg-purple-300 rounded-full"
+                          animate={{ 
+                            scale: [1, 1.2, 1],
+                            backgroundColor: ['#c4b5fd', '#a78bfa', '#c4b5fd']
+                          }}
+                          transition={{ 
+                            duration: 1.5, 
+                            repeat: Infinity, 
+                            delay: i * 0.1 
+                          }}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Connection Lines */}
+                    <div className="flex-1 flex items-center">
+                      {[...Array(3)].map((_, i) => (
+                        <motion.div 
+                          key={i}
+                          className="flex-1 h-px bg-purple-300 mx-1"
+                          animate={{ 
+                            opacity: [0.3, 1, 0.3],
+                            scaleX: [0.8, 1, 0.8]
+                          }}
+                          transition={{ 
+                            duration: 2, 
+                            repeat: Infinity, 
+                            delay: i * 0.3 
+                          }}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Hidden Layer */}
+                    <div className="flex flex-col space-y-1">
+                      {[...Array(6)].map((_, i) => (
+                        <motion.div 
+                          key={i}
+                          className="w-2 h-2 bg-purple-400 rounded-full"
+                          animate={{ 
+                            scale: [1, 1.3, 1],
+                            backgroundColor: ['#a78bfa', '#8b5cf6', '#a78bfa']
+                          }}
+                          transition={{ 
+                            duration: 1.8, 
+                            repeat: Infinity, 
+                            delay: i * 0.08 
+                          }}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Connection Lines */}
+                    <div className="flex-1 flex items-center">
+                      {[...Array(3)].map((_, i) => (
+                        <motion.div 
+                          key={i}
+                          className="flex-1 h-px bg-purple-400 mx-1"
+                          animate={{ 
+                            opacity: [0.3, 1, 0.3],
+                            scaleX: [0.8, 1, 0.8]
+                          }}
+                          transition={{ 
+                            duration: 2, 
+                            repeat: Infinity, 
+                            delay: i * 0.4 
+                          }}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Output Layer */}
+                    <div className="flex flex-col space-y-1">
+                      {[...Array(2)].map((_, i) => (
+                        <motion.div 
+                          key={i}
+                          className="w-4 h-4 bg-purple-500 rounded-full"
+                          animate={{ 
+                            scale: [1, 1.4, 1],
+                            backgroundColor: ['#8b5cf6', '#7c3aed', '#8b5cf6']
+                          }}
+                          transition={{ 
+                            duration: 2.2, 
+                            repeat: Infinity, 
+                            delay: i * 0.2 
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* AI Metrics */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3 border border-purple-200">
+                    <div className="text-xs font-semibold text-purple-700 mb-1">Accuracy</div>
+                    <motion.div 
+                      className="text-lg font-bold text-purple-800"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      94.7%
+                    </motion.div>
+                  </div>
+                  
+                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3 border border-blue-200">
+                    <div className="text-xs font-semibold text-blue-700 mb-1">Processing</div>
+                    <motion.div 
+                      className="text-lg font-bold text-blue-800"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                    >
+                      2.1ms
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold mb-4 text-gray-900">AI Technologies</h3>
               <motion.div 
-                className="grid grid-cols-2 gap-4"
+                className="grid grid-cols-2 gap-3"
                 variants={containerVariants}
               >
                 {[
-                  { title: "OpenAI GPT", tech: "ChatGPT, GPT-4" },
-                  { title: "Machine Learning", tech: "TensorFlow, PyTorch" },
-                  { title: "Computer Vision", tech: "OpenCV, YOLO" },
-                  { title: "NLP", tech: "BERT, spaCy" }
+                  'TensorFlow', 'PyTorch', 'OpenAI GPT', 'Computer Vision',
+                  'NLP', 'Machine Learning', 'Deep Learning', 'AutoML'
                 ].map((tech, index) => (
-                  <motion.div 
-                    key={index}
-                    className="text-center p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
+                  <motion.div
+                    key={tech}
+                    className="bg-purple-50 text-purple-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
                     variants={itemVariants}
                     whileHover={{
-                      y: -5,
                       scale: 1.05,
+                      backgroundColor: "#f3e8ff",
                       transition: { duration: 0.2 }
                     }}
-                    whileTap={{
-                      scale: 0.95,
-                      transition: { duration: 0.1 }
-                    }}
                   >
-                    <h4 className="font-semibold text-gray-800">{tech.title}</h4>
-                    <p className="text-sm text-gray-600">{tech.tech}</p>
+                    {tech}
                   </motion.div>
                 ))}
               </motion.div>
@@ -249,108 +644,26 @@ export default function AIIntegrationPage() {
         </div>
       </motion.section>
 
-      {/* Use Cases */}
+      {/* Use Cases section with AI implementation visuals */}
       <motion.section 
-        className="section bg-gray-50"
+        className="py-16 bg-purple-50/30 relative overflow-hidden"
         ref={useCasesRef}
         initial="hidden"
         animate={useCasesInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
-          <motion.div 
-            className="text-center mb-12"
-            variants={fadeInUp}
-          >
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">AI Integration Use Cases</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Discover how AI can transform different aspects of your business.
-            </p>
-          </motion.div>
-          
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={containerVariants}
-          >
-            {[
-              {
-                icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
-                title: "Customer Support",
-                description: "AI-powered chatbots that provide 24/7 customer support and resolve queries instantly.",
-                features: [
-                  "Automated ticket routing",
-                  "Intelligent responses",
-                  "Multilingual support"
-                ]
-              },
-              {
-                icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
-                title: "Data Analytics",
-                description: "Advanced analytics to uncover insights and predict trends from your business data.",
-                features: [
-                  "Predictive modeling",
-                  "Pattern recognition",
-                  "Real-time insights"
-                ]
-              },
-              {
-                icon: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z",
-                title: "Content Generation",
-                description: "AI-powered content creation for marketing, documentation, and personalization.",
-                features: [
-                  "Automated copywriting",
-                  "Image generation",
-                  "Content optimization"
-                ]
-              }
-            ].map((useCase, index) => (
-              <motion.div 
-                key={index}
-                className="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-lg"
-                variants={itemVariants}
-                whileHover={{
-                  y: -10,
-                  scale: 1.02,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <motion.div 
-                  className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4"
-                  whileHover={{
-                    scale: 1.1,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={useCase.icon} />
-                  </svg>
-                </motion.div>
-                
-                <h3 className="text-xl font-semibold mb-3 text-gray-900">{useCase.title}</h3>
-                <p className="text-gray-600 mb-4">{useCase.description}</p>
-                
-                <motion.ul 
-                  className="text-sm text-gray-600 space-y-2"
-                  variants={containerVariants}
-                >
-                  {useCase.features.map((feature, featureIndex) => (
-                    <motion.li 
-                      key={featureIndex}
-                      variants={itemVariants}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ 
-                        delay: 0.8 + index * 0.1 + featureIndex * 0.05,
-                        duration: 0.3
-                      }}
-                    >
-                      • {feature}
-                    </motion.li>
-                  ))}
-                </motion.ul>
-              </motion.div>
-            ))}
-          </motion.div>
+        {/* Parallax Background AI Elements */}
+        <motion.div 
+          className="absolute inset-0 opacity-5"
+          style={{ y: dataFlowY }}
+        >
+          <div className="absolute top-20 left-1/4 w-24 h-24 bg-purple-300 rounded-full blur-xl"></div>
+          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-pink-300 rounded-2xl blur-2xl transform rotate-45"></div>
+          <div className="absolute top-1/2 left-10 w-16 h-16 bg-blue-300 rounded-xl blur-lg"></div>
+        </motion.div>
+
+        <div className="container relative z-10">
+          {/* Enhanced use cases with AI visualization mockups */}
         </div>
       </motion.section>
 

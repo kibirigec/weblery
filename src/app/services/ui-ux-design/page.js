@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
@@ -79,19 +79,110 @@ export default function UIUXDesignPage() {
   const processInView = useInView(processRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
+  const containerRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const designY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const paletteRotate = useTransform(scrollYProgress, [0.2, 0.8], [0, 360]);
+  const mockupScale = useTransform(scrollYProgress, [0.3, 0.7], [0.9, 1.1]);
+  const colorFloatY = useTransform(scrollYProgress, [0, 1], [0, -180]);
+
   return (
-    <main>
+    <main ref={containerRef}>
       <Navigation />
       
       {/* Hero Section */}
       <motion.section 
-        className="pt-32 pb-16 bg-[#f4fcef]"
+        className="pt-32 pb-16 bg-green-50/50 relative overflow-hidden"
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Design Elements */}
+        <motion.div 
+          className="absolute top-10 right-10 opacity-10"
+          style={{ y: designY }}
+        >
+          <div className="w-28 h-36 bg-green-200 rounded-2xl shadow-xl p-3">
+            <div className="w-full h-6 bg-green-300 rounded-lg mb-2"></div>
+            <div className="space-y-2">
+              <div className="w-full h-3 bg-green-300/70 rounded"></div>
+              <div className="w-3/4 h-3 bg-green-300/70 rounded"></div>
+              <div className="w-1/2 h-3 bg-green-300/70 rounded"></div>
+            </div>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <div className="h-8 bg-green-400 rounded"></div>
+              <div className="h-8 bg-green-300 rounded"></div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Floating Color Palette */}
+        <motion.div 
+          className="absolute top-20 left-20 opacity-20"
+          style={{ rotate: paletteRotate }}
+        >
+          <div className="flex space-x-1">
+            {['bg-green-400', 'bg-green-500', 'bg-green-600', 'bg-emerald-400'].map((color, i) => (
+              <motion.div 
+                key={i}
+                className={`w-4 h-4 ${color} rounded-full shadow-lg`}
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  y: [0, -5, 0]
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.2,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Design Tools */}
+        <motion.div 
+          className="absolute bottom-20 right-32 opacity-15"
+          style={{ y: colorFloatY }}
+        >
+          <div className="w-16 h-16 bg-green-300 rounded-2xl shadow-lg flex items-center justify-center">
+            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+            </svg>
+          </div>
+        </motion.div>
+
+        {/* Floating UI Elements */}
+        <motion.div 
+          className="absolute top-1/3 left-1/4 opacity-10"
+          animate={{ 
+            y: [0, -20, 0],
+            rotate: [0, 5, 0]
+          }}
+          transition={{ 
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="w-20 h-12 bg-green-200 rounded-lg shadow-lg p-2">
+            <div className="w-full h-2 bg-green-400 rounded mb-1"></div>
+            <div className="grid grid-cols-3 gap-1">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-2 bg-green-300 rounded"></div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
               className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-xl mb-6 shadow-lg border-2 border-green-600"
@@ -137,13 +228,40 @@ export default function UIUXDesignPage() {
 
       {/* Overview Section */}
       <motion.section 
-        className="py-16 bg-white"
+        className="py-16 bg-white relative overflow-hidden"
         ref={overviewRef}
         initial="hidden"
         animate={overviewInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Design Mockups */}
+        <motion.div 
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 opacity-5"
+          style={{ scale: mockupScale }}
+        >
+          <div className="w-32 h-48 bg-green-100 rounded-2xl shadow-2xl p-3">
+            <div className="w-full h-full bg-gradient-to-b from-white to-green-50 rounded-xl p-2">
+              <div className="w-full h-4 bg-green-200 rounded-full mb-2"></div>
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                {[...Array(4)].map((_, i) => (
+                  <motion.div 
+                    key={i} 
+                    className="h-6 bg-green-200 rounded"
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                  />
+                ))}
+              </div>
+              <div className="w-full h-16 bg-gradient-to-r from-green-200 to-emerald-200 rounded mb-2"></div>
+              <div className="space-y-1">
+                <div className="w-full h-1 bg-green-200 rounded"></div>
+                <div className="w-3/4 h-1 bg-green-200 rounded"></div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
               <motion.h2 
@@ -202,47 +320,102 @@ export default function UIUXDesignPage() {
               </motion.ul>
             </motion.div>
             
+            {/* Enhanced Design Showcase */}
             <motion.div 
-              className="bg-[#f4fbf6] p-8 rounded-xl border border-[#8dceaa]"
+              className="bg-white rounded-2xl p-8 shadow-xl relative border border-green-100"
               variants={fadeInUp}
               whileHover={{
-                scale: 1.02,
+                y: -5,
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
                 transition: { duration: 0.3 }
               }}
             >
-              <motion.h3 
-                className="text-2xl font-bold mb-6 text-green-900"
-                variants={itemVariants}
-              >
-                Design Tools
-              </motion.h3>
-              
+              {/* Multiple Device Mockup */}
+              <div className="flex justify-center space-x-4 mb-6">
+                <motion.div 
+                  className="w-16 h-24 bg-gray-900 rounded-xl p-1 shadow-lg"
+                  whileHover={{ y: -3, rotate: -3 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="w-full h-full bg-gradient-to-b from-green-100 to-green-200 rounded-lg p-1">
+                    <div className="w-full h-2 bg-green-300 rounded-full mb-1"></div>
+                    <div className="space-y-1">
+                      {[...Array(4)].map((_, i) => (
+                        <motion.div 
+                          key={i} 
+                          className="w-full h-1 bg-green-300 rounded"
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+                
+                <motion.div 
+                  className="w-20 h-24 bg-gray-800 rounded-lg p-1 shadow-lg"
+                  whileHover={{ y: -3 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="w-full h-full bg-gradient-to-b from-white to-green-50 rounded p-1">
+                    <div className="w-full h-2 bg-green-200 rounded mb-1"></div>
+                    <div className="grid grid-cols-2 gap-1">
+                      {[...Array(6)].map((_, i) => (
+                        <motion.div 
+                          key={i} 
+                          className="h-2 bg-green-200 rounded"
+                          animate={{ 
+                            backgroundColor: ['#d1fae5', '#a7f3d0', '#d1fae5'],
+                            scale: [1, 1.05, 1]
+                          }}
+                          transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+                
+                <motion.div 
+                  className="w-16 h-24 bg-gray-900 rounded-xl p-1 shadow-lg"
+                  whileHover={{ y: -3, rotate: 3 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="w-full h-full bg-gradient-to-b from-emerald-100 to-lime-100 rounded-lg p-1">
+                    <div className="w-full h-2 bg-emerald-300 rounded-full mb-1"></div>
+                    <div className="space-y-1">
+                      {[...Array(4)].map((_, i) => (
+                        <motion.div 
+                          key={i} 
+                          className="w-full h-1 bg-emerald-300 rounded"
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.4 }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+
+              <h3 className="text-xl font-semibold mb-4 text-gray-900">Design Tools & Software</h3>
               <motion.div 
-                className="grid grid-cols-2 gap-4"
+                className="grid grid-cols-2 gap-3"
                 variants={containerVariants}
               >
                 {[
-                  { title: "Design", tools: "Figma, Adobe XD" },
-                  { title: "Prototyping", tools: "InVision, Principle" },
-                  { title: "Research", tools: "Hotjar, Maze" },
-                  { title: "Collaboration", tools: "Miro, FigJam" }
+                  'Figma', 'Adobe XD', 'Sketch', 'Photoshop',
+                  'Illustrator', 'InVision', 'Principle', 'Framer'
                 ].map((tool, index) => (
-                  <motion.div 
-                    key={index}
-                    className="text-center p-4 bg-white rounded-lg border border-[#8dceaa] hover:border-green-300 transition-colors"
+                  <motion.div
+                    key={tool}
+                    className="bg-green-50 text-green-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
                     variants={itemVariants}
                     whileHover={{
-                      y: -5,
                       scale: 1.05,
+                      backgroundColor: "#dcfce7",
                       transition: { duration: 0.2 }
                     }}
-                    whileTap={{
-                      scale: 0.95,
-                      transition: { duration: 0.1 }
-                    }}
                   >
-                    <h4 className="font-semibold text-green-900">{tool.title}</h4>
-                    <p className="text-sm text-green-900">{tool.tools}</p>
+                    {tool}
                   </motion.div>
                 ))}
               </motion.div>
@@ -253,13 +426,23 @@ export default function UIUXDesignPage() {
 
       {/* Services Grid */}
       <motion.section 
-        className="py-16 bg-[#f4fbf6]"
+        className="py-16 bg-green-50/30 relative overflow-hidden"
         ref={servicesRef}
         initial="hidden"
         animate={servicesInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Background Design Elements */}
+        <motion.div 
+          className="absolute inset-0 opacity-5"
+          style={{ y: colorFloatY }}
+        >
+          <div className="absolute top-20 left-1/4 w-24 h-24 bg-green-300 rounded-full blur-xl"></div>
+          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-emerald-300 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 left-10 w-16 h-16 bg-lime-300 rounded-2xl transform rotate-45 blur-lg"></div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <motion.div 
             className="text-center mb-12"
             variants={fadeInUp}
@@ -310,47 +493,62 @@ export default function UIUXDesignPage() {
               }
             ].map((service, index) => (
               <motion.div 
-                key={index}
-                className="bg-white p-6 rounded-xl border border-[#8dceaa] hover:border-green-300 transition-all duration-300 hover:shadow-lg"
+                key={service.title}
+                className="bg-white rounded-2xl p-6 shadow-lg relative overflow-hidden"
                 variants={itemVariants}
                 whileHover={{
-                  y: -10,
-                  scale: 1.02,
+                  y: -5,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
                   transition: { duration: 0.3 }
                 }}
               >
-                <motion.div 
-                  className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4"
-                  whileHover={{
-                    scale: 1.1,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={service.icon} />
-                  </svg>
-                </motion.div>
-                
-                <h3 className="text-xl font-semibold mb-3 text-green-900">{service.title}</h3>
+                {/* Service-specific visual mockup */}
+                <div className="mb-4 relative h-16 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg overflow-hidden">
+                  <motion.div 
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={{ 
+                      background: [
+                        'linear-gradient(45deg, #f0fdf4, #dcfce7)',
+                        'linear-gradient(45deg, #dcfce7, #a7f3d0)',
+                        'linear-gradient(45deg, #a7f3d0, #f0fdf4)'
+                      ]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  >
+                    {/* Service icon with animation */}
+                    <motion.div
+                      animate={{ 
+                        scale: [1, 1.1, 1],
+                        rotate: [0, 5, 0]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        {/* Different icons per service */}
+                      </svg>
+                    </motion.div>
+                  </motion.div>
+                </div>
+
+                <h3 className="text-xl font-semibold mb-3 text-gray-900">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
                 
                 <motion.ul 
-                  className="text-sm space-y-2"
+                  className="space-y-2"
                   variants={containerVariants}
                 >
                   {service.features.map((feature, featureIndex) => (
                     <motion.li 
-                      key={featureIndex}
-                      className="text-gray-600"
+                      key={feature}
+                      className="flex items-center text-sm text-gray-600"
                       variants={itemVariants}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ 
-                        delay: 0.8 + index * 0.1 + featureIndex * 0.05,
-                        duration: 0.3
-                      }}
                     >
-                      • {feature}
+                      <motion.div 
+                        className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"
+                        animate={{ scale: [1, 1.3, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: featureIndex * 0.2 }}
+                      />
+                      {feature}
                     </motion.li>
                   ))}
                 </motion.ul>

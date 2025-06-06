@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
@@ -84,32 +84,110 @@ const statsVariants = {
 export default function PerformanceOptimizationPage() {
   const heroRef = useRef(null);
   const overviewRef = useRef(null);
-  const optimizationRef = useRef(null);
+  const metricsRef = useRef(null);
+  const areasRef = useRef(null);
   const benefitsRef = useRef(null);
   const ctaRef = useRef(null);
+  const containerRef = useRef(null);
 
   const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
   const overviewInView = useInView(overviewRef, { once: true, amount: 0.2 });
-  const optimizationInView = useInView(optimizationRef, { once: true, amount: 0.2 });
+  const metricsInView = useInView(metricsRef, { once: true, amount: 0.2 });
+  const areasInView = useInView(areasRef, { once: true, amount: 0.2 });
   const benefitsInView = useInView(benefitsRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
+  // Parallax scroll effects
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const chartY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const speedometerRotate = useTransform(scrollYProgress, [0.2, 0.8], [0, 180]);
+  const dashboardY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const metricsScale = useTransform(scrollYProgress, [0.3, 0.7], [0.8, 1.2]);
+
   return (
-    <main>
+    <main ref={containerRef}>
       <Navigation />
       
       {/* Hero Section */}
       <motion.section 
-        className="pt-32 pb-16 bg-[#FFF9EF]"
+        className="pt-32 pb-16 bg-orange-50/50 relative overflow-hidden"
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Performance Charts */}
+        <motion.div 
+          className="absolute top-10 right-10 opacity-10"
+          style={{ y: chartY }}
+        >
+          <div className="w-32 h-24 bg-orange-200 rounded-xl shadow-lg p-2">
+            <div className="grid grid-cols-6 gap-1 h-full items-end">
+              {[60, 80, 90, 75, 95, 85].map((height, i) => (
+                <motion.div 
+                  key={i} 
+                  className="bg-orange-400 rounded-sm"
+                  style={{ height: `${height}%` }}
+                  animate={{ height: [`${height}%`, `${height + 10}%`, `${height}%`] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Floating Speed Indicators */}
+        <motion.div 
+          className="absolute top-20 left-20 opacity-20"
+          animate={{ 
+            y: [0, -15, 0],
+            rotate: [0, 360, 0]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="w-16 h-16 bg-orange-200 rounded-full shadow-lg flex items-center justify-center relative">
+            <div className="w-12 h-12 border-4 border-orange-400 rounded-full relative">
+              <div className="absolute top-1 left-1/2 w-1 h-4 bg-orange-600 rounded transform -translate-x-1/2 origin-bottom rotate-45"></div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Performance Dashboard */}
+        <motion.div 
+          className="absolute bottom-20 left-1/4 opacity-15"
+          style={{ y: dashboardY }}
+        >
+          <div className="w-24 h-16 bg-orange-300 rounded-lg shadow-lg p-2">
+            <div className="flex justify-between mb-1">
+              {[...Array(3)].map((_, i) => (
+                <motion.div 
+                  key={i} 
+                  className="w-2 h-2 bg-orange-500 rounded-full"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.5 }}
+                />
+              ))}
+            </div>
+            <div className="space-y-1">
+              <div className="w-full h-1 bg-orange-400 rounded"></div>
+              <div className="w-3/4 h-1 bg-orange-400 rounded"></div>
+              <div className="w-1/2 h-1 bg-orange-400 rounded"></div>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 bg-orange-100 rounded-xl mb-6 shadow-lg border border-orange-200"
+              className="inline-flex items-center justify-center w-20 h-20 border-2 border-orange-600 bg-orange-100 rounded-xl mb-6 shadow-lg"
               variants={iconVariants}
               whileHover={{
                 scale: 1.1,
@@ -121,30 +199,35 @@ export default function PerformanceOptimizationPage() {
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ 
-                  duration: 1.5, 
-                  delay: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <motion.path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ 
+                    duration: 1.5, 
+                    delay: 0.8,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                />
               </motion.svg>
             </motion.div>
             
             <motion.h1 
-              className="text-4xl sm:text-5xl font-bold mb-6 text-[#8e4d2f]"
+              className="text-4xl sm:text-5xl font-bold mb-6 text-orange-900"
               variants={fadeInUp}
             >
               Performance Optimization
             </motion.h1>
             
             <motion.p 
-              className="text-xl text-[#77574a] max-w-2xl mx-auto lead"
+              className="text-xl text-gray-700 max-w-2xl mx-auto lead"
               variants={fadeInUp}
             >
-              Lightning-fast websites and applications that deliver exceptional performance and user experience.
+              Boost your website's speed and performance with our comprehensive optimization services.
             </motion.p>
           </div>
         </div>
@@ -152,80 +235,171 @@ export default function PerformanceOptimizationPage() {
 
       {/* Overview Section */}
       <motion.section 
-        className="py-16 bg-white"
+        className="py-16 bg-white relative overflow-hidden"
         ref={overviewRef}
         initial="hidden"
         animate={overviewInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Performance Graphs */}
+        <motion.div 
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 opacity-5"
+          style={{ scale: metricsScale }}
+        >
+          <div className="w-40 h-32 bg-orange-100 rounded-2xl p-4">
+            <div className="w-full h-full relative">
+              <svg className="w-full h-full" viewBox="0 0 100 60">
+                <motion.path
+                  d="M 10 50 Q 30 20 50 30 T 90 10"
+                  fill="none"
+                  stroke="#f97316"
+                  strokeWidth="2"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+              </svg>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
-              <h2 className="text-3xl font-bold mb-6 text-[#8e4d2f]">Speed That Converts</h2>
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">
+                Lightning-Fast Performance
+              </h2>
               <p className="text-gray-600 mb-6">
-                Optimize your website's performance to improve user experience, search rankings, and conversion rates. 
-                Our comprehensive optimization services ensure your digital properties load fast and perform flawlessly.
+                In today's digital landscape, speed is everything. Users expect websites to load in under 3 seconds, 
+                and search engines prioritize fast-loading sites. Our performance optimization services ensure your 
+                website delivers exceptional speed and user experience.
               </p>
+              
               <motion.div 
                 className="space-y-4"
                 variants={containerVariants}
               >
-                {[
-                  'Website speed optimization',
-                  'Core Web Vitals optimization',
-                  'Database and server optimization',
-                  'Image and asset optimization',
-                  'CDN and caching strategies'
-                ].map((item, index) => (
-                  <motion.div 
-                    key={index}
-                    className="flex items-start space-x-3"
-                    variants={itemVariants}
-                  >
-                    <div className="flex-shrink-0 w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center mt-1">
-                      <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
-                    </div>
-                    <span className="text-[#77574a]">{item}</span>
-                  </motion.div>
-                ))}
+                <motion.div 
+                  className="flex items-start space-x-3"
+                  variants={itemVariants}
+                >
+                  <div className="flex-shrink-0 w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center mt-1">
+                    <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
+                  </div>
+                  <div className="text-gray-600">
+                    <strong>Speed Analysis:</strong> Comprehensive performance audits and bottleneck identification
+                  </div>
+                </motion.div>
+                
+                <motion.div 
+                  className="flex items-start space-x-3"
+                  variants={itemVariants}
+                >
+                  <div className="flex-shrink-0 w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center mt-1">
+                    <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
+                  </div>
+                  <div className="text-gray-600">
+                    <strong>Code Optimization:</strong> Minification, compression, and efficient coding practices
+                  </div>
+                </motion.div>
+                
+                <motion.div 
+                  className="flex items-start space-x-3"
+                  variants={itemVariants}
+                >
+                  <div className="flex-shrink-0 w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center mt-1">
+                    <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
+                  </div>
+                  <div className="text-gray-600">
+                    <strong>Resource Optimization:</strong> Image compression and lazy loading implementation
+                  </div>
+                </motion.div>
+                
+                <motion.div 
+                  className="flex items-start space-x-3"
+                  variants={itemVariants}
+                >
+                  <div className="flex-shrink-0 w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center mt-1">
+                    <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
+                  </div>
+                  <div className="text-gray-600">
+                    <strong>Caching Strategy:</strong> Advanced caching solutions for optimal performance
+                  </div>
+                </motion.div>
               </motion.div>
             </motion.div>
             
+            {/* Performance Dashboard Mockup */}
             <motion.div 
-              className="bg-orange-50 p-8 rounded-xl border border-orange-100"
+              className="bg-white rounded-2xl p-8 shadow-xl relative border border-orange-100"
               variants={fadeInUp}
               whileHover={{
                 y: -5,
-                boxShadow: "0 25px 50px -12px rgba(251, 146, 60, 0.25)",
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
                 transition: { duration: 0.3 }
               }}
             >
-              <h3 className="text-2xl font-bold mb-6 text-[#ef5f00]">Performance Metrics</h3>
-              <motion.div 
-                className="grid grid-cols-2 gap-4"
-                variants={containerVariants}
-              >
+              {/* Speedometer Visualization */}
+              <div className="text-center mb-6">
+                <div className="relative w-32 h-32 mx-auto mb-4">
+                  <svg className="w-full h-full" viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="50" fill="none" stroke="#fed7aa" strokeWidth="8"/>
+                    <motion.circle 
+                      cx="60" cy="60" r="50" 
+                      fill="none" 
+                      stroke="#f97316" 
+                      strokeWidth="8"
+                      strokeDasharray={314}
+                      strokeDashoffset={314 * 0.25}
+                      animate={{ strokeDashoffset: [314 * 0.25, 314 * 0.05, 314 * 0.25] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    <motion.line
+                      x1="60" y1="60" x2="60" y2="20"
+                      stroke="#f97316" strokeWidth="3" strokeLinecap="round"
+                      style={{ transformOrigin: '60px 60px' }}
+                      animate={{ rotate: [0, 270, 0] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <motion.div 
+                      className="text-2xl font-bold text-orange-600"
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      95
+                    </motion.div>
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Performance Score</h3>
+              </div>
+
+              {/* Performance Metrics */}
+              <div className="grid grid-cols-2 gap-4">
                 {[
-                  { label: 'Page Speed', value: '< 3 sec' },
-                  { label: 'Core Web Vitals', value: 'Green scores' },
-                  { label: 'Lighthouse', value: '90+ score' },
-                  { label: 'Mobile Performance', value: 'Optimized' }
+                  { label: 'Load Time', value: '1.2s', color: '#f97316' },
+                  { label: 'TTFB', value: '0.3s', color: '#fb923c' },
+                  { label: 'CLS', value: '0.05', color: '#fdba74' },
+                  { label: 'FCP', value: '0.8s', color: '#fed7aa' }
                 ].map((metric, index) => (
                   <motion.div
                     key={metric.label}
-                    className="text-center p-4 bg-[#FFEED6] rounded-lg border border-orange-200 hover:border-orange-300 transition-colors"
+                    className="text-center p-3 bg-orange-50 rounded-lg"
                     variants={itemVariants}
                     whileHover={{
                       scale: 1.05,
-                      backgroundColor: "#ffecd1",
+                      backgroundColor: "#fff7ed",
                       transition: { duration: 0.2 }
                     }}
                   >
-                    <h4 className="font-semibold text-[#8e4d2f]">{metric.label}</h4>
-                    <p className="text-sm text-gray-600">{metric.value}</p>
+                    <div className="text-lg font-bold" style={{ color: metric.color }}>
+                      {metric.value}
+                    </div>
+                    <div className="text-sm text-gray-600">{metric.label}</div>
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -234,9 +408,9 @@ export default function PerformanceOptimizationPage() {
       {/* Optimization Areas */}
       <motion.section 
         className="py-16 bg-orange-50"
-        ref={optimizationRef}
+        ref={areasRef}
         initial="hidden"
-        animate={optimizationInView ? "visible" : "hidden"}
+        animate={areasInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
         <div className="container">

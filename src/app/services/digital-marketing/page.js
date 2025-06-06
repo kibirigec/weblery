@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
@@ -77,22 +77,142 @@ export default function DigitalMarketingPage() {
   const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
+  const containerRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const chartY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const socialY = useTransform(scrollYProgress, [0.2, 0.8], [50, -50]);
+  const analyticsScale = useTransform(scrollYProgress, [0.3, 0.7], [0.9, 1.1]);
+  const campaignY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+
   return (
-    <main>
+    <main ref={containerRef}>
       <Navigation />
       
-      {/* Hero Section */}
+      {/* Hero Section with marketing visualizations */}
       <motion.section 
-        className="pt-32 pb-16 bg-yellow-50"
+        className="pt-32 pb-16 bg-purple-50/50 relative overflow-hidden"
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Analytics Dashboard */}
+        <motion.div 
+          className="absolute top-10 right-10 opacity-10"
+          style={{ y: chartY }}
+        >
+          <div className="w-32 h-24 bg-purple-200 rounded-xl shadow-lg p-3">
+            <div className="flex justify-between items-end h-full space-x-1">
+              {[65, 80, 45, 90, 75, 95].map((height, i) => (
+                <motion.div 
+                  key={i} 
+                  className="bg-purple-400 rounded-sm flex-1"
+                  style={{ height: `${height}%` }}
+                  animate={{ 
+                    height: [`${height}%`, `${height + 15}%`, `${height}%`],
+                    backgroundColor: ['#c084fc', '#a855f7', '#c084fc']
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 }}
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Floating Social Media Icons */}
+        <motion.div 
+          className="absolute top-20 left-20 opacity-20"
+          style={{ y: socialY }}
+        >
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { icon: "📱", color: "bg-purple-200" },
+              { icon: "📊", color: "bg-violet-200" },
+              { icon: "💬", color: "bg-purple-300" },
+              { icon: "🎯", color: "bg-indigo-200" }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                className={`w-8 h-8 ${item.color} rounded-lg shadow-lg flex items-center justify-center text-sm`}
+                animate={{ 
+                  y: [0, -10, 0],
+                  rotate: [0, 5, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  duration: 2 + i * 0.5,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                  ease: "easeInOut"
+                }}
+              >
+                {item.icon}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Campaign Performance Indicator */}
+        <motion.div 
+          className="absolute bottom-20 right-32 opacity-15"
+          style={{ y: campaignY }}
+        >
+          <div className="w-20 h-12 bg-purple-300 rounded-lg shadow-lg p-2">
+            <div className="flex justify-between items-center mb-1">
+              <div className="text-xs font-bold text-purple-700">ROI</div>
+              <motion.div 
+                className="text-xs font-bold text-purple-800"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                245%
+              </motion.div>
+            </div>
+            <div className="w-full h-2 bg-purple-400 rounded-full relative overflow-hidden">
+              <motion.div 
+                className="absolute left-0 top-0 h-full bg-purple-600 rounded-full"
+                animate={{ width: ['0%', '85%', '0%'] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Floating Engagement Metrics */}
+        <motion.div 
+          className="absolute top-1/3 left-1/4 opacity-10"
+          animate={{ 
+            y: [0, -15, 0],
+            x: [0, 10, 0]
+          }}
+          transition={{ 
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="w-16 h-10 bg-purple-200 rounded-lg shadow-lg p-1">
+            <div className="flex items-center justify-center h-full">
+              <motion.div 
+                className="text-xs font-bold text-purple-600"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                +47%
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 bg-yellow-100 rounded-xl mb-6 shadow-lg border-2 border-yellow-600"
+              className="inline-flex items-center justify-center w-20 h-20 bg-purple-100 rounded-xl mb-6 shadow-lg border-2 border-purple-600"
               variants={iconVariants}
               whileHover={{
                 scale: 1.1,
@@ -100,7 +220,7 @@ export default function DigitalMarketingPage() {
               }}
             >
               <motion.svg 
-                className="w-10 h-10 text-yellow-600" 
+                className="w-10 h-10 text-purple-600" 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -117,7 +237,7 @@ export default function DigitalMarketingPage() {
             </motion.div>
             
             <motion.h1 
-              className="text-4xl sm:text-5xl font-bold mb-6 text-yellow-900"
+              className="text-4xl sm:text-5xl font-bold mb-6 text-purple-900"
               variants={fadeInUp}
             >
               Digital Marketing
@@ -133,19 +253,60 @@ export default function DigitalMarketingPage() {
         </div>
       </motion.section>
 
-      {/* Overview Section */}
+      {/* Overview Section with enhanced marketing dashboard */}
       <motion.section 
-        className="section"
+        className="py-16 bg-white relative overflow-hidden"
         ref={overviewRef}
         initial="hidden"
         animate={overviewInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
+        {/* Parallax Marketing Dashboard */}
+        <motion.div 
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 opacity-5"
+          style={{ scale: analyticsScale }}
+        >
+          <div className="w-48 h-32 bg-purple-100 rounded-2xl p-4">
+            <div className="grid grid-cols-3 gap-2 h-full">
+              <div className="bg-purple-200 rounded p-1">
+                <div className="text-xs font-bold text-purple-700 mb-1">Clicks</div>
+                <motion.div 
+                  className="text-lg font-bold text-purple-800"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  12.5K
+                </motion.div>
+              </div>
+              <div className="bg-violet-200 rounded p-1">
+                <div className="text-xs font-bold text-violet-700 mb-1">Views</div>
+                <motion.div 
+                  className="text-lg font-bold text-violet-800"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                >
+                  89.2K
+                </motion.div>
+              </div>
+              <div className="bg-purple-300 rounded p-1">
+                <div className="text-xs font-bold text-purple-700 mb-1">Conv</div>
+                <motion.div 
+                  className="text-lg font-bold text-purple-800"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                >
+                  8.7%
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
               <motion.h2 
-                className="text-3xl font-bold mb-6 text-yellow-900"
+                className="text-3xl font-bold mb-6 text-purple-900"
                 variants={itemVariants}
               >
                 Strategic Digital Growth
@@ -180,7 +341,7 @@ export default function DigitalMarketingPage() {
                     }}
                   >
                     <motion.svg 
-                      className="w-6 h-6 text-yellow-500 mt-0.5 flex-shrink-0" 
+                      className="w-6 h-6 text-purple-500 mt-0.5 flex-shrink-0" 
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
@@ -194,53 +355,130 @@ export default function DigitalMarketingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </motion.svg>
-                    <span className="text-yellow-900">{item}</span>
+                    <span className="text-purple-900">{item}</span>
                   </motion.li>
                 ))}
               </motion.ul>
             </motion.div>
             
+            {/* Enhanced Marketing Dashboard */}
             <motion.div 
-              className="bg-yellow-50 p-8 rounded-xl border border-yellow-100"
+              className="bg-white rounded-2xl p-8 shadow-xl relative border border-purple-100"
               variants={fadeInUp}
               whileHover={{
-                scale: 1.02,
+                y: -5,
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
                 transition: { duration: 0.3 }
               }}
             >
-              <motion.h3 
-                className="text-2xl font-bold mb-6 text-yellow-900"
-                variants={itemVariants}
-              >
-                Marketing Channels
-              </motion.h3>
-              
+              {/* Multi-Platform Dashboard Mockup */}
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Campaign Dashboard</h3>
+                
+                {/* Social Media Platform Mockups */}
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  <motion.div 
+                    className="bg-violet-50 rounded-lg p-2 border border-violet-200"
+                    whileHover={{ scale: 1.05, backgroundColor: "#e5e7eb" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="w-4 h-4 bg-violet-500 rounded mb-1"></div>
+                    <div className="text-xs font-semibold text-violet-700">Facebook</div>
+                    <motion.div 
+                      className="text-sm font-bold text-violet-800"
+                      animate={{ opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      2.1K
+                    </motion.div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="bg-pink-50 rounded-lg p-2 border border-pink-200"
+                    whileHover={{ scale: 1.05, backgroundColor: "#fce7f3" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="w-4 h-4 bg-pink-500 rounded mb-1"></div>
+                    <div className="text-xs font-semibold text-pink-700">Instagram</div>
+                    <motion.div 
+                      className="text-sm font-bold text-pink-800"
+                      animate={{ opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+                    >
+                      3.7K
+                    </motion.div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="bg-sky-50 rounded-lg p-2 border border-sky-200"
+                    whileHover={{ scale: 1.05, backgroundColor: "#e0f2fe" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="w-4 h-4 bg-sky-500 rounded mb-1"></div>
+                    <div className="text-xs font-semibold text-sky-700">Twitter</div>
+                    <motion.div 
+                      className="text-sm font-bold text-sky-800"
+                      animate={{ opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+                    >
+                      1.9K
+                    </motion.div>
+                  </motion.div>
+                </div>
+
+                {/* Performance Chart Visualization */}
+                <div className="bg-purple-50 rounded-lg p-3 border border-purple-200">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-semibold text-purple-700">Campaign Performance</span>
+                    <motion.span 
+                      className="text-sm font-bold text-purple-800"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      ↗ +47%
+                    </motion.span>
+                  </div>
+                  <div className="flex items-end space-x-1 h-12">
+                    {[30, 45, 35, 60, 55, 70, 65].map((height, i) => (
+                      <motion.div 
+                        key={i}
+                        className="bg-purple-400 rounded-sm flex-1"
+                        style={{ height: `${height}%` }}
+                        animate={{ 
+                          height: [`${height}%`, `${height + 10}%`, `${height}%`] 
+                        }}
+                        transition={{ 
+                          duration: 2, 
+                          repeat: Infinity, 
+                          delay: i * 0.2,
+                          ease: "easeInOut"
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold mb-4 text-gray-900">Marketing Channels</h3>
               <motion.div 
-                className="grid grid-cols-2 gap-4"
+                className="grid grid-cols-2 gap-3"
                 variants={containerVariants}
               >
                 {[
-                  { title: "Search Marketing", channels: "Google Ads, SEO" },
-                  { title: "Social Media", channels: "Facebook, Instagram, LinkedIn" },
-                  { title: "Email Marketing", channels: "Mailchimp, ConvertKit" },
-                  { title: "Analytics", channels: "Google Analytics, Data Studio" }
+                  'SEO/SEM', 'Social Media', 'Email Marketing', 'Content Marketing',
+                  'PPC Ads', 'Influencer', 'Analytics', 'Automation'
                 ].map((channel, index) => (
-                  <motion.div 
-                    key={index}
-                    className="text-center p-4 bg-white rounded-lg border border-yellow-200 hover:border-yellow-300 transition-colors"
+                  <motion.div
+                    key={channel}
+                    className="bg-purple-50 text-purple-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
                     variants={itemVariants}
                     whileHover={{
-                      y: -5,
                       scale: 1.05,
+                      backgroundColor: "#f3f4f6",
                       transition: { duration: 0.2 }
                     }}
-                    whileTap={{
-                      scale: 0.95,
-                      transition: { duration: 0.1 }
-                    }}
                   >
-                    <h4 className="font-semibold text-yellow-900">{channel.title}</h4>
-                    <p className="text-sm text-yellow-900">{channel.channels}</p>
+                    {channel}
                   </motion.div>
                 ))}
               </motion.div>
@@ -249,25 +487,25 @@ export default function DigitalMarketingPage() {
         </div>
       </motion.section>
 
-      {/* Services Grid */}
+      {/* Services Grid enhanced with campaign mockups */}
       <motion.section 
-        className="section bg-yellow-50"
+        className="py-16 bg-purple-50/30 relative overflow-hidden"
         ref={servicesRef}
         initial="hidden"
         animate={servicesInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="container">
-          <motion.div 
-            className="text-center mb-12"
-            variants={fadeInUp}
-          >
-            <h2 className="text-3xl font-bold mb-4 text-yellow-900">Marketing Services</h2>
-            <p className="text-xl !text-[#5d4200] max-w-2xl mx-auto">
-              Comprehensive digital marketing solutions tailored to your business goals.
-            </p>
-          </motion.div>
-          
+        {/* Parallax Background Marketing Elements */}
+        <motion.div 
+          className="absolute inset-0 opacity-5"
+          style={{ y: socialY }}
+        >
+          <div className="absolute top-20 left-1/4 w-20 h-20 bg-purple-300 rounded-2xl blur-xl"></div>
+          <div className="absolute bottom-20 right-1/4 w-28 h-28 bg-violet-300 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 left-10 w-12 h-12 bg-purple-300 rounded-xl transform rotate-45 blur-lg"></div>
+        </motion.div>
+
+        <div className="container relative z-10">
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             variants={containerVariants}
@@ -309,7 +547,7 @@ export default function DigitalMarketingPage() {
             ].map((service, index) => (
               <motion.div 
                 key={index}
-                className="bg-white p-6 rounded-xl border border-yellow-200 hover:border-yellow-300 transition-all duration-300 hover:shadow-lg"
+                className="bg-white p-6 rounded-xl border border-purple-200 hover:border-purple-300 transition-all duration-300 hover:shadow-lg"
                 variants={itemVariants}
                 whileHover={{
                   y: -10,
@@ -318,22 +556,22 @@ export default function DigitalMarketingPage() {
                 }}
               >
                 <motion.div 
-                  className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4"
+                  className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4"
                   whileHover={{
                     scale: 1.1,
                     transition: { duration: 0.2 }
                   }}
                 >
-                  <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={service.icon} />
                   </svg>
                 </motion.div>
                 
-                <h3 className="text-xl font-semibold mb-3 text-yellow-900">{service.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-purple-900">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
                 
                 <motion.ul 
-                  className="text-sm text-yellow-900 space-y-2"
+                  className="text-sm text-purple-900 space-y-2"
                   variants={containerVariants}
                 >
                   {service.features.map((feature, featureIndex) => (
@@ -394,7 +632,7 @@ export default function DigitalMarketingPage() {
               <motion.div variants={itemVariants}>
                 <Link 
                   href="/#services" 
-                  className="inline-flex items-center justify-center px-8 py-3 bg-white text-yellow-600 font-semibold rounded-lg hover:bg-yellow-50 transition-colors duration-200"
+                  className="inline-flex items-center justify-center px-8 py-3 bg-white text-purple-600 font-semibold rounded-lg hover:bg-purple-50 transition-colors duration-200"
                 >
                   <motion.span
                     whileHover={{ scale: 1.05 }}
