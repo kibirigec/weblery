@@ -67,6 +67,37 @@ const iconVariants = {
   },
 };
 
+const buttonVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  hover: {
+    y: -2,
+    scale: 1.02,
+    transition: {
+      duration: 0.2,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  tap: {
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
+
 // AI Integration Service Data
 const aiIntegrationService = {
   title: "AI Integration",
@@ -84,6 +115,7 @@ const aiIntegrationService = {
   tagColor: "#374151",
   techBg: "#fefefe",
   techColor: "#374151",
+  titleContentColor: "text-gray-900",
   backgroundPattern: (
     <div className="absolute inset-0">
       <div className="absolute top-10 left-10 w-20 h-20 border border-white/20 rounded-2xl rotate-12"></div>
@@ -455,15 +487,20 @@ export default function AIIntegrationPage() {
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ 
-                  duration: 1.5, 
-                  delay: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                <motion.path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ 
+                    duration: 1.5, 
+                    delay: 0.5,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                />
               </motion.svg>
             </motion.div>
             
@@ -484,12 +521,12 @@ export default function AIIntegrationPage() {
             {/* Learn More Button */}
             <motion.button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-8 py-4 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-200 shadow-lg hover:shadow-xl"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center justify-center px-8 py-4 bg-gray-700 text-white font-semibold rounded-lg shadow-lg transition-shadow duration-200 hover:shadow-xl cursor-pointer hover:underline decoration-white"
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
             >
-              <span className="mr-2">Why AI Integration is Critical</span>
+              <span className="mr-2 ">Why AI Integration is Critical</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -609,11 +646,8 @@ export default function AIIntegrationPage() {
                       transition: { duration: 0.2 }
                     }}
                   >
-                    <motion.svg 
-                      className="w-6 h-6 text-gray-600 mt-0.5 flex-shrink-0" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
+                    <motion.div 
+                      className="flex-shrink-0 w-5 h-5 bg-gray-100 rounded-full flex items-center justify-center mt-1" 
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ 
@@ -622,8 +656,8 @@ export default function AIIntegrationPage() {
                         ease: [0.25, 0.46, 0.45, 0.94]
                       }}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </motion.svg>
+                      <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
+                    </motion.div>
                     <span>{item}</span>
                   </motion.li>
                 ))}
@@ -713,7 +747,7 @@ export default function AIIntegrationPage() {
                           }}
                         />
                       ))}
-                    </div>
+        </div>
                     
                     {/* Connection Lines */}
                     <div className="flex-1 flex items-center">
@@ -732,8 +766,8 @@ export default function AIIntegrationPage() {
                           }}
                         />
                       ))}
-                    </div>
-                    
+          </div>
+          
                     {/* Output Layer */}
                     <div className="flex flex-col space-y-1">
                       {[...Array(2)].map((_, i) => (
@@ -753,7 +787,7 @@ export default function AIIntegrationPage() {
                       ))}
                     </div>
                   </div>
-                </div>
+              </div>
 
                 {/* AI Metrics */}
                 <div className="grid grid-cols-2 gap-3">
@@ -761,24 +795,24 @@ export default function AIIntegrationPage() {
                     <div className="text-xs font-semibold text-gray-700 mb-1">Accuracy</div>
                     <motion.div 
                       className="text-lg font-bold text-gray-800"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      // animate={{ scale: [1, 1.1, 1] }}
+                      // transition={{ duration: 2, repeat: Infinity }}
                     >
                       94.7%
                     </motion.div>
-                  </div>
+            </div>
                   
                   <div className="bg-gradient-to-r from-blue-50 to-gray-50 rounded-lg p-3 border border-gray-200">
                     <div className="text-xs font-semibold text-gray-700 mb-1">Processing</div>
                     <motion.div 
                       className="text-lg font-bold text-gray-800"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                      // animate={{ scale: [1, 1.1, 1] }}
+                      // transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
                     >
                       2.1ms
                     </motion.div>
-                  </div>
-                </div>
+              </div>
+            </div>
               </div>
 
               <h3 className="text-xl font-semibold mb-4 text-gray-900">AI Technologies</h3>
@@ -852,21 +886,26 @@ export default function AIIntegrationPage() {
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
               variants={containerVariants}
+              
             >
-              <motion.div variants={itemVariants}>
+              <motion.div 
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#contact" 
                   className="inline-flex items-center justify-center px-8 py-3 bg-gray-800 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg "
                 >
                   <motion.span
-                    // whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Start Your AI Project
+                Start Your AI Project
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
-              <motion.div variants={itemVariants}>
+              <motion.div
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#services" 
                   className="inline-flex items-center justify-center px-8 py-3 bg-white text-gray-800 font-semibold rounded-lg hover:bg-gray-50 transition-colors duration-200"
@@ -875,9 +914,9 @@ export default function AIIntegrationPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    View All Services
+                View All Services
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
             </motion.div>
           </motion.div>

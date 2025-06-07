@@ -25,6 +25,7 @@ const mobileAppService = {
   paragraphColor: "text-green-600",  
   techBg: "#fdf2f8",
   techColor: "#be185d",
+  titleContentColor: "text-pink-900",
   backgroundPattern: (
     <div className="absolute inset-0">
       <div className="absolute top-10 left-10 w-20 h-20 border border-white/20 rounded-2xl rotate-12"></div>
@@ -216,6 +217,37 @@ const iconVariants = {
   },
 };
 
+const buttonVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  hover: {
+    y: -2,
+    scale: 1.02,
+    transition: {
+      duration: 0.2,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  tap: {
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
+
 const statsVariants = {
   hidden: { 
     scale: 0.8,
@@ -350,15 +382,20 @@ export default function MobileAppDevelopmentPage() {
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ 
-                  duration: 1.5, 
-                  delay: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                <motion.path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ 
+                    duration: 1.5, 
+                    delay: 0.5,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                />
               </motion.svg>
             </motion.div>
             
@@ -379,12 +416,12 @@ export default function MobileAppDevelopmentPage() {
             {/* Learn More Button */}
             <motion.button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-8 py-4 bg-[#891347] !text-[#ffb1c6] font-semibold rounded-lg hover:bg-pink-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#891347] !text-[#ffb1c6] font-semibold rounded-lg shadow-lg transition-shadow duration-200 hover:shadow-xl cursor-pointer hover:underline decoration-[#ffb1c6]"
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
             >
-              <span className="mr-2">Why Mobile Apps are Essential</span>
+              <span className="mr-2 ">Why Mobile Apps are Essential</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -479,10 +516,10 @@ export default function MobileAppDevelopmentPage() {
                 >
                   <div className="flex-shrink-0 w-5 h-5 bg-pink-100 rounded-full flex items-center justify-center mt-1">
                     <div className="w-2 h-2 bg-pink-600 rounded-full"></div>
-                  </div>
+                </div>
                   <div className="text-pink-900">
                     <strong>Cross-Platform Compatibility:</strong> Reach users on both iOS and Android
-                  </div>
+              </div>
                 </motion.div>
               </motion.div>
             </motion.div>
@@ -515,9 +552,9 @@ export default function MobileAppDevelopmentPage() {
                           transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
                         />
                       ))}
-                    </div>
+                </div>
                     <div className="w-full h-12 bg-blue-400 rounded"></div>
-                  </div>
+                </div>
                 </motion.div>
                 
                 <motion.div 
@@ -536,12 +573,12 @@ export default function MobileAppDevelopmentPage() {
                           transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
                         />
                       ))}
-                    </div>
+            </div>
                     <div className="w-full h-12 bg-pink-400 rounded"></div>
-                  </div>
+                </div>
                 </motion.div>
               </div>
-
+              
               <h3 className="text-xl font-semibold mb-4 text-pink-900">Technologies We Use</h3>
               <motion.div 
                 className="grid grid-cols-2 gap-3"
@@ -728,31 +765,35 @@ export default function MobileAppDevelopmentPage() {
               className="flex flex-col sm:flex-row gap-4 justify-center"
               variants={containerVariants}
             >
-              <motion.div variants={itemVariants}>
+              <motion.div 
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#contact" 
-                  className="inline-flex items-center justify-center px-8 py-3 bg-[#891347] !text-[#ffb1c6] font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center justify-center px-8 py-3 bg-[#891347] !text-[#ffb1c6] font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl cursor-pointer hover:underline decoration-[#ffb1c6]"
                 >
                   <motion.span
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Start Your App Project
+                Start Your App Project
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
-              <motion.div variants={itemVariants}>
+              <motion.div 
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#services" 
-                  className="inline-flex items-center justify-center px-8 py-3 bg-white text-pink-500 font-semibold rounded-lg hover:bg-pink-50 transition-colors duration-200"
+                  className="inline-flex items-center justify-center px-8 py-3 bg-white text-pink-500 font-semibold rounded-lg hover:bg-pink-50 transition-colors duration-200 cursor-pointer hover:underline decoration-[#ffb1c6]"
                 >
                   <motion.span
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    View All Services
+                View All Services
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
             </motion.div>
           </motion.div>

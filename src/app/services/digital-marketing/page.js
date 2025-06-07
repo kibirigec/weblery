@@ -24,6 +24,7 @@ const digitalMarketingService = {
   tagColor: "#b45309",
   techBg: "#fefdf8",
   techColor: "#b45309",
+  titleContentColor: "text-amber-900",
   backgroundPattern: (
     <div className="absolute inset-0">
       <div className="absolute top-10 left-10 w-24 h-6 bg-white/10 rounded-full rotate-12"></div>
@@ -215,6 +216,37 @@ const iconVariants = {
   },
 };
 
+const buttonVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  hover: {
+    y: -2,
+    scale: 1.02,
+    transition: {
+      duration: 0.2,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  tap: {
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
+
 export default function DigitalMarketingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
@@ -371,19 +403,24 @@ export default function DigitalMarketingPage() {
               // }}
             >
               <motion.svg 
-                className="w-10 h-10 text-yellow-600 " 
+                className="w-10 h-10 text-yellow-600" 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ 
-                  duration: 1.5, 
-                  delay: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                <motion.path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ 
+                    duration: 1.5, 
+                    delay: 0.5,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                />
               </motion.svg>
             </motion.div>
             
@@ -404,12 +441,12 @@ export default function DigitalMarketingPage() {
             {/* Learn More Button */}
             <motion.button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-8 py-4 bg-[#5d4200] text-[#ebc06c] font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            > {/* bg-[#5d4200] !text-[#ebc06c]*/}
-              <span className="mr-2">Why Digital Marketing is Essential</span>
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#5d4200] text-[#ebc06c] font-semibold rounded-lg shadow-lg transition-shadow duration-200 hover:shadow-xl cursor-pointer hover:underline decoration-[#ebc06c]"
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
+            >
+              <span className="mr-2 ">Why Digital Marketing is Essential</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -505,11 +542,8 @@ export default function DigitalMarketingPage() {
                       transition: { duration: 0.2 }
                     }}
                   >
-                    <motion.svg 
-                      className="w-6 h-6 text-yellow-500 mt-0.5 flex-shrink-0" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
+                    <motion.div 
+                      className="flex-shrink-0 w-5 h-5 bg-yellow-100 rounded-full flex items-center justify-center mt-1" 
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ 
@@ -518,8 +552,8 @@ export default function DigitalMarketingPage() {
                         ease: [0.25, 0.46, 0.45, 0.94]
                       }}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </motion.svg>
+                      <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    </motion.div>
                     <span className="text-yellow-900">{item}</span>
                   </motion.li>
                 ))}
@@ -602,7 +636,7 @@ export default function DigitalMarketingPage() {
                     >
                       ↗ +47%
                     </motion.span>
-                  </div>
+                </div>
                   <div className="flex items-end space-x-1 h-12">
                     {[30, 45, 35, 60, 55, 70, 65].map((height, i) => (
                       <motion.div 
@@ -620,7 +654,7 @@ export default function DigitalMarketingPage() {
                         }}
                       />
                     ))}
-                  </div>
+                </div>
                 </div>
               </div>
 
@@ -727,9 +761,9 @@ export default function DigitalMarketingPage() {
                     transition: { duration: 0.2 }
                   }}
                 >
-                    <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={service.icon} />
-                  </svg>
+                </svg>
                 </motion.div>
                 
                 <h3 className="text-xl font-semibold mb-3 text-yellow-900">{service.title}</h3>
@@ -781,7 +815,9 @@ export default function DigitalMarketingPage() {
               className="flex flex-col sm:flex-row gap-4 justify-center"
               variants={containerVariants}
             >
-              <motion.div variants={itemVariants}>
+              <motion.div 
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#contact" 
                   className="inline-flex items-center justify-center px-8 py-3 bg-[#5d4200] !text-[#ebc06c] font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
@@ -790,11 +826,13 @@ export default function DigitalMarketingPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Start Your Campaign
+                Start Your Campaign
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
-              <motion.div variants={itemVariants}>
+              <motion.div 
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#services" 
                   className="inline-flex items-center justify-center px-8 py-3 bg-white text-yellow-600 font-semibold rounded-lg hover:bg-yellow-50 transition-colors duration-200"
@@ -803,9 +841,9 @@ export default function DigitalMarketingPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    View All Services
+                View All Services
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
             </motion.div>
           </motion.div>

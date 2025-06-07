@@ -67,6 +67,37 @@ const iconVariants = {
   },
 };
 
+const buttonVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  hover: {
+    y: -2,
+    scale: 1.02,
+    transition: {
+      duration: 0.2,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  tap: {
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
+
 // UI/UX Design Service Data
 const uiUxDesignService = {
   title: "UI/UX Design",
@@ -84,6 +115,7 @@ const uiUxDesignService = {
   tagColor: "#15803d",
   techBg: "#f7fee7",
   techColor: "#15803d",
+  titleContentColor: "text-green-900",
   backgroundPattern: (
     <div className="absolute inset-0">
       <div className="absolute top-10 left-10 w-16 h-16 border-2 border-white/20 rounded-2xl rotate-45"></div>
@@ -348,15 +380,20 @@ export default function UIUXDesignPage() {
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ 
-                  duration: 1.5, 
-                  delay: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                <motion.path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ 
+                    duration: 1.5, 
+                    delay: 0.5,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                />
               </motion.svg>
             </motion.div>
             
@@ -377,12 +414,12 @@ export default function UIUXDesignPage() {
             {/* Learn More Button */}
             <motion.button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-8 py-4 bg-[#205026] text-[#b9f0b7] font-semibold rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#205026] text-[#b9f0b7] font-semibold rounded-lg shadow-lg transition-shadow duration-200 hover:shadow-xl cursor-pointer hover:underline decoration-[#b9f0b7]"
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
             >
-              <span className="mr-2">Why Great Design is Essential</span>
+              <span className="mr-2 ">Why Great Design is Essential</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -464,11 +501,8 @@ export default function UIUXDesignPage() {
                       transition: { duration: 0.2 }
                     }}
                   >
-                    <motion.svg 
-                      className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
+                    <motion.div 
+                      className="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mt-1" 
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ 
@@ -477,8 +511,8 @@ export default function UIUXDesignPage() {
                         ease: [0.25, 0.46, 0.45, 0.94]
                       }}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </motion.svg>
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    </motion.div>
                     <span className="text-green-900">{item}</span>
                   </motion.li>
                 ))}
@@ -514,7 +548,7 @@ export default function UIUXDesignPage() {
                         />
                       ))}
                     </div>
-                  </div>
+            </div>
                 </motion.div>
                 
                 <motion.div 
@@ -536,8 +570,8 @@ export default function UIUXDesignPage() {
                           transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
                         />
                       ))}
-                    </div>
-                  </div>
+                </div>
+                </div>
                 </motion.div>
                 
                 <motion.div 
@@ -556,8 +590,8 @@ export default function UIUXDesignPage() {
                           transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.4 }}
                         />
                       ))}
-                    </div>
-                  </div>
+                </div>
+                </div>
                 </motion.div>
               </div>
 
@@ -690,10 +724,10 @@ export default function UIUXDesignPage() {
                     >
                       <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         {/* Different icons per service */}
-                      </svg>
+                </svg>
                     </motion.div>
                   </motion.div>
-                </div>
+              </div>
 
                 <h3 className="text-xl font-semibold mb-3 text-green-900">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
@@ -816,7 +850,9 @@ export default function UIUXDesignPage() {
               className="flex flex-col sm:flex-row gap-4 justify-center"
               variants={containerVariants}
             >
-              <motion.div variants={itemVariants}>
+              <motion.div
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#contact" 
                   className="inline-flex items-center justify-center px-8 py-3 bg-[#205026] !text-[#b9f0b7] font-semibold rounded-lg transition-colors shadow-lg hover:shadow-xl"
@@ -825,11 +861,13 @@ export default function UIUXDesignPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Start Your Design Project
+                Start Your Design Project
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
-              <motion.div variants={itemVariants}>
+              <motion.div 
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#services" 
                   className="inline-flex items-center justify-center px-8 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors duration-200"
@@ -838,9 +876,9 @@ export default function UIUXDesignPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    View All Services
+                View All Services
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
             </motion.div>
           </motion.div>

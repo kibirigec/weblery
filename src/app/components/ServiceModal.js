@@ -96,7 +96,7 @@ const ServiceModal = ({ isOpen, onClose, service }) => {
                         {service.title}
                       </h2>
                       <p 
-                        className={`text-sm sm:text-base lg:text-lg mt-1 ${service.subtitleColor?.startsWith('#') ? '' : service.subtitleColor}`}
+                        className={`text-sm sm:text-base lg:text-lg mt-0.5 ${service.subtitleColor?.startsWith('#') ? '' : service.subtitleColor}`}
                         style={service.subtitleColor?.startsWith('#') ? { color: service.subtitleColor } : {}}
                       >
                         {service.subtitle}
@@ -126,14 +126,14 @@ const ServiceModal = ({ isOpen, onClose, service }) => {
                 <div className="max-w-5xl mx-auto">
                   {/* Importance Section */}
                   <motion.section 
-                    className="mb-8 sm:mb-12"
+                    className="mb-8 sm:mb-12 mt-8 sm:mt-12"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.6 }}
                   >
-                    <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-gray-900">Why {service.title} is Critical for Your Business.</h3>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-start">
                       <div>
+                        <h3 className={`text-lg sm:text-xl font-bold mb-4 sm:mb-6 ${service.titleContentColor || 'text-gray-900'}`}>Why {service.title} is Critical for Your Business.</h3>
                         <p className="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed">
                           {service.importance.overview}
                         </p>
@@ -147,7 +147,7 @@ const ServiceModal = ({ isOpen, onClose, service }) => {
                               transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
                             >
                               <div 
-                                className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${service.accentBg?.startsWith('#') ? '' : service.accentBg}`}
+                                className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${service.accentBg?.startsWith('#') ? '' : service.accentBg}`}
                                 style={service.accentBg?.startsWith('#') ? { backgroundColor: service.accentBg } : {}}
                               >
                                 <svg 
@@ -160,7 +160,7 @@ const ServiceModal = ({ isOpen, onClose, service }) => {
                                 </svg>
                               </div>
                               <div>
-                                <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">{point.title}</h4>
+                                <h4 className={`font-semibold mb-1 text-sm sm:text-base ${service.titleContentColor || 'text-gray-900'}`}>{point.title}</h4>
                                 <p className="text-gray-600 text-sm sm:text-base">{point.description}</p>
                               </div>
                             </motion.div>
@@ -183,7 +183,7 @@ const ServiceModal = ({ isOpen, onClose, service }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
                   >
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 text-gray-900">Business Impact & ROI</h3>
+                    <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 ${service.titleContentColor || 'text-gray-900'}`}>Business Impact & ROI</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                       {service.businessImpact.metrics.map((metric, index) => (
                         <motion.div
@@ -205,7 +205,7 @@ const ServiceModal = ({ isOpen, onClose, service }) => {
                               {metric.value}
                             </span>
                           </div>
-                          <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">{metric.label}</h4>
+                          <h4 className={`font-semibold mb-2 text-sm sm:text-base ${service.titleContentColor || 'text-gray-900'}`}>{metric.label}</h4>
                           <p className="text-xs sm:text-sm text-gray-600">{metric.description}</p>
                         </motion.div>
                       ))}
@@ -219,7 +219,7 @@ const ServiceModal = ({ isOpen, onClose, service }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.6 }}
                   >
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 text-gray-900">Our Implementation Strategy</h3>
+                    <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 ${service.titleContentColor || 'text-gray-900'}`}>Our Implementation Strategy</h3>
                     <div className="space-y-4 sm:space-y-6">
                       {service.implementation.phases.map((phase, index) => (
                         <motion.div
@@ -241,7 +241,7 @@ const ServiceModal = ({ isOpen, onClose, service }) => {
                             </span>
                           </div>
                           <div className="flex-1">
-                            <h4 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">{phase.title}</h4>
+                            <h4 className={`text-lg sm:text-xl font-semibold mb-2 ${service.titleContentColor || 'text-gray-900'}`}>{phase.title}</h4>
                             <p className="text-gray-600 mb-3 text-sm sm:text-base">{phase.description}</p>
                             <div className="flex flex-wrap gap-1.5 sm:gap-2">
                               {phase.deliverables.map((deliverable, delIndex) => (
@@ -270,7 +270,7 @@ const ServiceModal = ({ isOpen, onClose, service }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8, duration: 0.6 }}
                   >
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 text-gray-900">Technologies We Use</h3>
+                    <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 ${service.titleContentColor || 'text-gray-900'}`}>Technologies We Use</h3>
                     <motion.div 
                       className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-6 rounded-xl ${service.techBg?.startsWith('#') ? '' : service.techBg}`}
                       style={service.techBg?.startsWith('#') ? { backgroundColor: service.techBg } : {}}

@@ -67,6 +67,37 @@ const iconVariants = {
   },
 };
 
+const buttonVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  hover: {
+    y: -2,
+    scale: 1.02,
+    transition: {
+      duration: 0.2,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  tap: {
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
+
 const statsVariants = {
   hidden: { 
     scale: 0.8,
@@ -99,6 +130,7 @@ const performanceOptimizationService = {
   tagColor: "#c2410c",
   techBg: "#fffbf5",
   techColor: "#c2410c",
+  titleContentColor: "text-orange-900",
   backgroundPattern: (
     <div className="absolute inset-0">
       <div className="absolute top-10 left-10 w-20 h-20 border border-white/20 rounded-2xl rotate-12"></div>
@@ -349,15 +381,20 @@ export default function PerformanceOptimizationPage() {
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ 
-                  duration: 1.5, 
-                  delay: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <motion.path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ 
+                    duration: 1.5, 
+                    delay: 0.5,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                />
               </motion.svg>
             </motion.div>
             
@@ -378,12 +415,12 @@ export default function PerformanceOptimizationPage() {
             {/* Learn More Button */}
             <motion.button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-8 py-4 bg-[#713719] !text-[#ffb694] font-semibold rounded-lg hover:bg-orange-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex  bg-[#713719] !text-[#ffb694] items-center justify-center px-8 py-4  font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 cursor-pointer hover:underline decoration-[#ffb694]"
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
             >
-              <span className="mr-2">Why Speed Matters for Business</span>
+              <span className="mr-2 ">Why Speed Matters for Business</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -529,10 +566,10 @@ export default function PerformanceOptimizationPage() {
                     >
                       95
                     </motion.div>
-                  </div>
+            </div>
                 </div>
                 <h3 className="text-lg font-semibold text-orange-900 mb-2">Performance Score</h3>
-              </div>
+                </div>
 
               {/* Performance Metrics */}
               <div className="grid grid-cols-2 gap-4">
@@ -554,7 +591,7 @@ export default function PerformanceOptimizationPage() {
                   >
                     <div className="text-lg font-bold" style={{ color: metric.color }}>
                       {metric.value}
-                    </div>
+                </div>
                     <div className="text-sm text-orange-900">{metric.label}</div>
                   </motion.div>
                 ))}
@@ -639,9 +676,9 @@ export default function PerformanceOptimizationPage() {
                     transition: { duration: 0.2 }
                   }}
                 >
-                  <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={area.icon} />
-                  </svg>
+                </svg>
                 </motion.div>
                 <h3 className="text-xl font-semibold mb-3 text-[#8e4d2f]">{area.title}</h3>
                 <p className="text-gray-600 mb-4">{area.description}</p>
@@ -726,9 +763,9 @@ export default function PerformanceOptimizationPage() {
                     transition: { duration: 0.2 }
                   }}
                 >
-                  <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={benefit.icon} />
-                  </svg>
+                </svg>
                 </motion.div>
                 <h3 className="text-xl font-semibold mb-3 text-[#8e4d2f]">{benefit.title}</h3>
                 <p className="text-gray-600">{benefit.description}</p>
@@ -759,7 +796,9 @@ export default function PerformanceOptimizationPage() {
               className="flex flex-col sm:flex-row gap-4 justify-center"
               variants={containerVariants}
             >
-              <motion.div variants={itemVariants}>
+              <motion.div 
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#contact" 
                   className="inline-flex items-center justify-center px-8 py-3 bg-[#713719] !text-[#ffb694] font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
@@ -768,11 +807,13 @@ export default function PerformanceOptimizationPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Start Optimization
+                Start Optimization
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
-              <motion.div variants={itemVariants}>
+              <motion.div 
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
                 <Link 
                   href="/#services" 
                   className="inline-flex items-center justify-center px-8 py-3 bg-white text-orange-600 font-semibold rounded-lg transition-colors duration-200"
@@ -781,9 +822,9 @@ export default function PerformanceOptimizationPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    View All Services
+                View All Services
                   </motion.span>
-                </Link>
+              </Link>
               </motion.div>
             </motion.div>
           </motion.div>

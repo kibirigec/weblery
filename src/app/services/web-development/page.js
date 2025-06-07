@@ -24,6 +24,7 @@ const webDevelopmentService = {
   tagColor: "#1e40af",
   techBg: "#f0f9ff",
   techColor: "#1e40af",
+  titleContentColor: "text-blue-900",
   backgroundPattern: (
     <div className="absolute inset-0">
       <div className="absolute top-10 left-10 w-20 h-20 border-2 border-white/20 rounded-lg rotate-12"></div>
@@ -215,6 +216,37 @@ const iconVariants = {
   },
 };
 
+const buttonVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  hover: {
+    y: -2,
+    scale: 1.02,
+    transition: {
+      duration: 0.2,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+  tap: {
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
+
 export default function WebDevelopmentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
@@ -333,15 +365,20 @@ export default function WebDevelopmentPage() {
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ 
-                  duration: 1.5, 
-                  delay: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                <motion.path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ 
+                    duration: 4.5, 
+                    delay: 0.5,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                />
               </motion.svg>
             </motion.div>
             
@@ -362,12 +399,12 @@ export default function WebDevelopmentPage() {
             {/* Learn More Button */}
             <motion.button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-8 py-4 bg-[#344479] !text-[#dce1ff] font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#344479] !text-[#dce1ff] font-semibold rounded-lg shadow-lg transition-shadow duration-200 hover:shadow-xl"
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
             >
-              <span className="mr-2">Why Web Development is Critical</span>
+              <span className="mr-2 ">Why Web Development is Critical</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -430,11 +467,8 @@ export default function WebDevelopmentPage() {
                     //   transition: { duration: 0.2 }
                     // }}
                   >
-                    <motion.svg 
-                      className="w-6 h-6 text-blue-500 mt-0.5 flex-shrink-0" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
+                    <motion.div 
+                      className="flex-shrink-0 w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center mt-1" 
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ 
@@ -443,8 +477,8 @@ export default function WebDevelopmentPage() {
                         ease: [0.25, 0.46, 0.45, 0.94]
                       }}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </motion.svg>
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    </motion.div>
                     <span className="!text-blue-900">{item}</span>
                   </motion.li>
                 ))}
@@ -471,10 +505,10 @@ export default function WebDevelopmentPage() {
                     <div className="w-3 h-3 bg-red-400 rounded-full"></div>
                     <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                  </div>
+            </div>
                   <div className="flex-1 bg-white rounded mx-4 px-3 py-1 text-xs text-gray-500">
                     https://your-website.com
-                  </div>
+                </div>
                 </div>
                 <div className="h-40 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
                   <motion.div 
@@ -486,7 +520,7 @@ export default function WebDevelopmentPage() {
                       <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
                       </svg>
-                    </div>
+                </div>
                     <div className="text-xs text-blue-600 font-medium">Modern Web Design</div>
                   </motion.div>
                 </div>
@@ -618,12 +652,12 @@ export default function WebDevelopmentPage() {
                   {service.imageSlot === "shopping" && (
                     <svg className="w-full h-full text-blue-300" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-                    </svg>
+                </svg>
                   )}
                   {service.imageSlot === "dashboard" && (
                     <svg className="w-full h-full text-blue-300" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                    </svg>
+                </svg>
                   )}
                 </motion.div>
 
@@ -635,9 +669,9 @@ export default function WebDevelopmentPage() {
                     transition: { duration: 0.2 }
                   }}
                 >
-                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={service.icon} />
-                  </svg>
+                </svg>
                 </motion.div>
                 
                 <h3 className="text-xl font-semibold mb-3 text-blue-900 relative z-10">{service.title}</h3>
@@ -657,7 +691,7 @@ export default function WebDevelopmentPage() {
                       {feature}
                     </motion.li>
                   ))}
-                </ul>
+              </ul>
               </motion.div>
             ))}
           </motion.div>
@@ -735,7 +769,7 @@ export default function WebDevelopmentPage() {
               <motion.div variants={itemVariants}>
                 <Link href="/#contact">
                   <motion.div
-                    className="inline-flex items-center justify-center px-8 py-3 bg-[#344479] !text-[#dce1ff] font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl cursor-pointer"
+                    className="inline-flex items-center justify-center px-8 py-3 bg-[#344479] !text-[#dce1ff] font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl cursor-pointer hover:underline decoration-[#dce1ff]"
                     whileHover={{
                       scale: 1.05,
                       y: -2,
@@ -746,15 +780,15 @@ export default function WebDevelopmentPage() {
                       transition: { duration: 0.1 }
                     }}
                   >
-                    Start Your Web Project
+                Start Your Web Project
                   </motion.div>
-                </Link>
+              </Link>
               </motion.div>
               
               <motion.div variants={itemVariants}>
                 <Link href="/#services">
                   <motion.div
-                    className="inline-flex items-center justify-center px-8 py-3 bg-white text-black font-semibold rounded-lg hover:bg-blue-50 transition-colors duration-200 cursor-pointer"
+                    className="inline-flex items-center justify-center px-8 py-3 bg-white text-black font-semibold rounded-lg hover:bg-blue-50 transition-colors duration-200 cursor-pointer hover:underline decoration-black"
                     whileHover={{
                       scale: 1.05,
                       y: -2,
@@ -765,9 +799,9 @@ export default function WebDevelopmentPage() {
                       transition: { duration: 0.1 }
                     }}
                   >
-                    View All Services
+                View All Services
                   </motion.div>
-                </Link>
+              </Link>
               </motion.div>
             </motion.div>
           </div>
