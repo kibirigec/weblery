@@ -70,20 +70,20 @@ const iconVariants = {
 // AI Integration Service Data
 const aiIntegrationService = {
   title: "AI Integration",
-  subtitle: "Intelligent automation that transforms business operations",
+  subtitle: "Intelligent solutions that transform your business operations",
   icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
-  headerBg: "bg-gradient-to-br from-gray-700 to-gray-800",
-  iconBg: "bg-white/20",
-  iconColor: "text-white",
-  titleColor: "text-white",
-  subtitleColor: "text-gray-200",
-  accentBg: "bg-gray-100",
-  accentColor: "text-gray-700",
-  visualBg: "bg-gray-50",
-  tagBg: "bg-gray-100",
-  tagColor: "text-gray-700",
-  techBg: "bg-gray-50",
-  techColor: "text-gray-700",
+  headerBg: "#374151",
+  iconBg: "#ffffff33",
+  iconColor: "#d1d5db",
+  titleColor: "#f9fafb",
+  subtitleColor: "#e5e7eb",
+  accentBg: "#f9fafb",
+  accentColor: "#4b5563",
+  visualBg: "#fefefe",
+  tagBg: "#f9fafb",
+  tagColor: "#374151",
+  techBg: "#fefefe",
+  techColor: "#374151",
   backgroundPattern: (
     <div className="absolute inset-0">
       <div className="absolute top-10 left-10 w-20 h-20 border border-white/20 rounded-2xl rotate-12"></div>

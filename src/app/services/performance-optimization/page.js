@@ -85,20 +85,20 @@ const statsVariants = {
 // Performance Optimization Service Data
 const performanceOptimizationService = {
   title: "Performance Optimization",
-  subtitle: "Lightning-fast experiences that convert visitors into customers",
+  subtitle: "Lightning-fast experiences that keep users engaged",
   icon: "M13 10V3L4 14h7v7l9-11h-7z",
-  headerBg: "bg-gradient-to-br from-orange-500 to-orange-600",
-  iconBg: "bg-white/20",
-  iconColor: "text-white",
-  titleColor: "text-white",
-  subtitleColor: "text-orange-100",
-  accentBg: "bg-orange-100",
-  accentColor: "text-orange-700",
-  visualBg: "bg-orange-50",
-  tagBg: "bg-orange-100",
-  tagColor: "text-orange-700",
-  techBg: "bg-orange-50",
-  techColor: "text-orange-700",
+  headerBg: "#c2410c",
+  iconBg: "#ffffff33",
+  iconColor: "#fdba74",
+  titleColor: "#fed7aa",
+  subtitleColor: "#fde68a",
+  accentBg: "#fff7ed",
+  accentColor: "#ea580c",
+  visualBg: "#fffbf5",
+  tagBg: "#fff7ed",
+  tagColor: "#c2410c",
+  techBg: "#fffbf5",
+  techColor: "#c2410c",
   backgroundPattern: (
     <div className="absolute inset-0">
       <div className="absolute top-10 left-10 w-20 h-20 border border-white/20 rounded-2xl rotate-12"></div>
