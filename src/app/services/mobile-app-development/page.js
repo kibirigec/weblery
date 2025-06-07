@@ -1,10 +1,160 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
+import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
+
+// Mobile App Development Service Data
+const mobileAppService = {
+  title: "Mobile App Development",
+  subtitle: "Native and cross-platform apps that engage users everywhere",
+  icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
+  headerBg: "#891347",
+  iconBg: "#ffffff33",
+  iconColor: "#ffb1c6", //dark secondary color
+  titleColor: "#fce7f3",
+  subtitleColor: "#f9a8d4",
+  accentBg: "#fce7f3",
+  accentColor: "#be185d",
+  visualBg: "#fdf2f8",
+  tagBg: "#fce7f3",
+  tagColor: "#be185d",
+  paragraphColor: "text-green-600",  
+  techBg: "#fdf2f8",
+  techColor: "#be185d",
+  backgroundPattern: (
+    <div className="absolute inset-0">
+      <div className="absolute top-10 left-10 w-20 h-20 border border-white/20 rounded-2xl rotate-12"></div>
+      <div className="absolute bottom-10 right-10 w-16 h-16 bg-white/10 rounded-full"></div>
+      <div className="absolute top-1/2 right-1/4 w-12 h-12 border border-white/20 rounded-lg transform -rotate-45"></div>
+    </div>
+  ),
+  importance: {
+    overview: "Mobile apps are no longer optional—they're essential for business survival. With 6.8 billion smartphone users worldwide and mobile commerce expected to reach $3.56 trillion by 2024, businesses without mobile presence are invisible to their customers. Mobile apps drive 3x higher engagement than mobile websites, generate 157% more revenue per user, and create direct communication channels that build lasting customer relationships.",
+    keyPoints: [
+      {
+        title: "Mobile-First World",
+        description: "Users spend 90% of their mobile time in apps. Without a mobile app, you're missing 90% of potential customer interactions and engagement opportunities."
+      },
+      {
+        title: "Superior User Experience",
+        description: "Native apps are 2.5x faster than mobile websites, provide offline functionality, and leverage device features for seamless, intuitive experiences."
+      },
+      {
+        title: "Direct Customer Connection",
+        description: "Push notifications have 50% higher open rates than emails, enabling instant communication and driving immediate action from your audience."
+      },
+      {
+        title: "Revenue Generation",
+        description: "Mobile apps generate 3x more revenue per user than mobile websites through in-app purchases, subscriptions, and enhanced conversion funnels."
+      },
+      {
+        title: "Brand Loyalty & Retention",
+        description: "App users are 3x more likely to reorder and have 2x higher lifetime value, creating sustainable competitive advantages through habit formation."
+      }
+    ],
+    visualization: (
+      <div className="space-y-4">
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h4 className="font-semibold text-gray-900 mb-3">Mobile App Performance</h4>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">User Engagement</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-20 h-2 bg-pink-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-pink-600">300%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Load Speed</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-16 h-2 bg-pink-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-pink-600">250%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Conversion Rate</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-18 h-2 bg-pink-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-pink-600">157%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-pink-600 mb-1">$3.56T</div>
+          <div className="text-sm text-gray-600">Mobile Commerce by 2024</div>
+        </div>
+      </div>
+    )
+  },
+  businessImpact: {
+    metrics: [
+      {
+        value: "300%",
+        label: "Higher Engagement",
+        description: "Mobile apps drive significantly more user engagement than websites"
+      },
+      {
+        value: "157%",
+        label: "More Revenue",
+        description: "Apps generate substantially higher revenue per user"
+      },
+      {
+        value: "50%",
+        label: "Better Reach",
+        description: "Push notifications have higher open rates than email"
+      }
+    ]
+  },
+  implementation: {
+    phases: [
+      {
+        title: "Strategy & Planning",
+        description: "Define app objectives, target audience, platform strategy, and create detailed technical specifications.",
+        deliverables: ["Market Research", "User Personas", "Technical Specs", "Platform Strategy"]
+      },
+      {
+        title: "Design & Prototyping",
+        description: "Create intuitive user interfaces, interactive prototypes, and comprehensive design systems for optimal UX.",
+        deliverables: ["UI/UX Design", "Interactive Prototypes", "Design System", "User Testing"]
+      },
+      {
+        title: "Development & Testing",
+        description: "Build robust, scalable mobile applications with comprehensive testing across devices and platforms.",
+        deliverables: ["Native Development", "Cross-Platform Code", "Quality Assurance", "Performance Testing"]
+      },
+      {
+        title: "Launch & Optimization",
+        description: "Deploy to app stores, monitor performance, gather user feedback, and continuously improve the app experience.",
+        deliverables: ["App Store Deployment", "Analytics Setup", "User Feedback", "Ongoing Updates"]
+      }
+    ]
+  },
+  technologies: [
+    "React Native",
+    "Flutter",
+    "Swift",
+    "Kotlin",
+    "Xamarin",
+    "Ionic",
+    "Firebase",
+    "AWS Mobile",
+    "GraphQL",
+    "Redux",
+    "TypeScript",
+    "Jest"
+  ]
+};
 
 // Animation variants - Reusable across all service pages
 const fadeInUp = {
@@ -82,6 +232,7 @@ const statsVariants = {
 };
 
 export default function MobileAppDevelopmentPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const heroRef = useRef(null);
   const importanceRef = useRef(null);
   const overviewRef = useRef(null);
@@ -172,7 +323,7 @@ export default function MobileAppDevelopmentPage() {
         >
           <div className="w-12 h-12 bg-pink-300 rounded-xl shadow-lg flex items-center justify-center">
             <svg className="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
             </svg>
           </div>
         </motion.div>
@@ -187,7 +338,7 @@ export default function MobileAppDevelopmentPage() {
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 border-2 border-pink-600 bg-pink-100 rounded-xl mb-6 shadow-lg"
+              className="inline-flex items-center justify-center w-20 h-20 bg-pink-100 rounded-xl mb-6 shadow-lg border-2 border-pink-600"
               variants={iconVariants}
               whileHover={{
                 scale: 1.1,
@@ -195,7 +346,7 @@ export default function MobileAppDevelopmentPage() {
               }}
             >
               <motion.svg 
-                className="w-10 h-10 text-pink-600" 
+                className="w-10 h-10 text-pink-700" 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -219,120 +370,35 @@ export default function MobileAppDevelopmentPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl text-gray-700 max-w-2xl mx-auto lead"
+              className="text-xl text-gray-700 max-w-2xl mx-auto mb-8 lead"
               variants={fadeInUp}
             >
-              Native and cross-platform mobile applications that deliver exceptional user experiences on iOS and Android.
+              Native iOS and Android apps that deliver exceptional user experiences and drive business growth.
             </motion.p>
+
+            {/* Learn More Button */}
+            <motion.button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#891347] !text-[#ffb1c6] font-semibold rounded-lg hover:bg-pink-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="mr-2">Why Mobile Apps are Essential</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </motion.button>
           </div>
         </div>
       </motion.section>
 
-      {/* Importance Section */}
-      <motion.section 
-        className="py-16 bg-white relative overflow-hidden"
-        ref={importanceRef}
-        initial="hidden"
-        animate={importanceInView ? "visible" : "hidden"}
-        variants={containerVariants}
-      >
-        {/* Parallax Background Elements */}
-        <motion.div 
-          className="absolute inset-0 opacity-5"
-          style={{ scale: backgroundScale }}
-        >
-          <div className="absolute top-10 left-10 w-40 h-40 bg-pink-200 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-10 right-10 w-60 h-60 bg-pink-100 rounded-full blur-3xl"></div>
-        </motion.div>
-
-        <div className="container relative z-10">
-          <motion.div 
-            className="text-center mb-12"
-            variants={fadeInUp}
-          >
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">Why Mobile Apps Matter</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              In today's mobile-first world, having a well-designed mobile app is crucial for business success.
-            </p>
-          </motion.div>
-          
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            variants={containerVariants}
-          >
-            <motion.div 
-              className="text-center p-6 relative"
-              variants={itemVariants}
-              whileHover={{
-                y: -10,
-                transition: { duration: 0.3 }
-              }}
-            >
-              {/* Mobile stat icon */}
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center opacity-50">
-                <svg className="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              </div>
-              <motion.div 
-                className="text-4xl font-bold text-pink-600 mb-2"
-                variants={statsVariants}
-              >
-                85%
-              </motion.div>
-              <p className="text-gray-600">of people prefer mobile apps over mobile websites</p>
-            </motion.div>
-            
-            <motion.div 
-              className="text-center p-6 relative"
-              variants={itemVariants}
-              whileHover={{
-                y: -10,
-                transition: { duration: 0.3 }
-              }}
-            >
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center opacity-50">
-                <svg className="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </div>
-              <motion.div 
-                className="text-4xl font-bold text-pink-600 mb-2"
-                variants={statsVariants}
-              >
-                3x
-              </motion.div>
-              <p className="text-gray-600">higher engagement rates compared to mobile web</p>
-            </motion.div>
-            
-            <motion.div 
-              className="text-center p-6 relative"
-              variants={itemVariants}
-              whileHover={{
-                y: -10,
-                transition: { duration: 0.3 }
-              }}
-            >
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center opacity-50">
-                <svg className="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                </svg>
-              </div>
-              <motion.div 
-                className="text-4xl font-bold text-pink-600 mb-2"
-                variants={statsVariants}
-              >
-                23%
-              </motion.div>
-              <p className="text-gray-600">increase in revenue with mobile app presence</p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </motion.section>
+      {/* Importance Section bg-[#891347] !text-[#ffb1c6]  */}
+      
 
       {/* Overview Section */}
       <motion.section 
-        className="py-16 bg-pink-50/30 relative overflow-hidden"
+        className="py-16 bg-white relative overflow-hidden"
         ref={overviewRef}
         initial="hidden"
         animate={overviewInView ? "visible" : "hidden"}
@@ -358,7 +424,7 @@ export default function MobileAppDevelopmentPage() {
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">
+              <h2 className="text-2xl font-bold mb-6 text-pink-900">
                 Why Choose Our Mobile App Development Services?
               </h2>
               <p className="text-gray-600 mb-6">
@@ -378,7 +444,7 @@ export default function MobileAppDevelopmentPage() {
                   <div className="flex-shrink-0 w-5 h-5 bg-pink-100 rounded-full flex items-center justify-center mt-1">
                     <div className="w-2 h-2 bg-pink-600 rounded-full"></div>
                   </div>
-                  <div className="text-gray-600">
+                  <div className="text-pink-900">
                     <strong>User Experience Focus:</strong> We prioritize intuitive design and seamless navigation
                   </div>
                 </motion.div>
@@ -390,7 +456,7 @@ export default function MobileAppDevelopmentPage() {
                   <div className="flex-shrink-0 w-5 h-5 bg-pink-100 rounded-full flex items-center justify-center mt-1">
                     <div className="w-2 h-2 bg-pink-600 rounded-full"></div>
                   </div>
-                  <div className="text-gray-600">
+                  <div className="text-pink-900">
                     <strong>Performance Optimization:</strong> Fast loading times and efficient resource usage
                   </div>
                 </motion.div>
@@ -402,7 +468,7 @@ export default function MobileAppDevelopmentPage() {
                   <div className="flex-shrink-0 w-5 h-5 bg-pink-100 rounded-full flex items-center justify-center mt-1">
                     <div className="w-2 h-2 bg-pink-600 rounded-full"></div>
                   </div>
-                  <div className="text-gray-600">
+                  <div className="text-pink-900">
                     <strong>Scalability:</strong> Built to grow with your business needs
                   </div>
                 </motion.div>
@@ -414,7 +480,7 @@ export default function MobileAppDevelopmentPage() {
                   <div className="flex-shrink-0 w-5 h-5 bg-pink-100 rounded-full flex items-center justify-center mt-1">
                     <div className="w-2 h-2 bg-pink-600 rounded-full"></div>
                   </div>
-                  <div className="text-gray-600">
+                  <div className="text-pink-900">
                     <strong>Cross-Platform Compatibility:</strong> Reach users on both iOS and Android
                   </div>
                 </motion.div>
@@ -423,7 +489,7 @@ export default function MobileAppDevelopmentPage() {
             
             {/* Enhanced Mobile Mockup with Apps */}
             <motion.div 
-              className="bg-white rounded-2xl p-8 shadow-xl relative"
+              className="bg-pink-50/30 border-2 border-pink-900 rounded-2xl p-8 shadow-xl relative"
               variants={fadeInUp}
               whileHover={{
                 y: -5,
@@ -476,7 +542,7 @@ export default function MobileAppDevelopmentPage() {
                 </motion.div>
               </div>
 
-              <h3 className="text-xl font-semibold mb-4 text-gray-900">Technologies We Use</h3>
+              <h3 className="text-xl font-semibold mb-4 text-pink-900">Technologies We Use</h3>
               <motion.div 
                 className="grid grid-cols-2 gap-3"
                 variants={containerVariants}
@@ -489,11 +555,11 @@ export default function MobileAppDevelopmentPage() {
                     key={tech}
                     className="bg-pink-50 text-pink-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
                     variants={itemVariants}
-                    whileHover={{
-                      scale: 1.05,
-                      backgroundColor: "#fce7f3",
-                      transition: { duration: 0.2 }
-                    }}
+                    // whileHover={{
+                    //   scale: 1.05,
+                    //   backgroundColor: "#fce7f3",
+                    //   transition: { duration: 0.2 }
+                    // }}
                   >
                     {tech}
                   </motion.div>
@@ -603,7 +669,7 @@ export default function MobileAppDevelopmentPage() {
 
       {/* CTA Section */}
       <motion.section 
-        className="py-16 bg-[#191113] relative overflow-hidden"
+        className="py-16 bg-[#1e0f13] relative overflow-hidden"
         ref={ctaRef}
         initial="hidden"
         animate={ctaInView ? "visible" : "hidden"}
@@ -692,6 +758,13 @@ export default function MobileAppDevelopmentPage() {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Service Modal */}
+      <ServiceModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        service={mobileAppService}
+      />
 
       <Footer />
     </main>

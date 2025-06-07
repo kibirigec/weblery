@@ -1,10 +1,159 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
+import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
+
+// Digital Marketing Service Data
+const digitalMarketingService = {
+  title: "Digital Marketing",
+  subtitle: "Strategic campaigns that drive growth and maximize ROI",
+  icon: "M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z",
+  headerBg: "bg-gradient-to-br from-yellow-600 to-yellow-700",
+  iconBg: "bg-white/20",
+  iconColor: "text-white",
+  titleColor: "text-white",
+  subtitleColor: "text-yellow-100",
+  accentBg: "bg-yellow-100",
+  accentColor: "text-yellow-600",
+  visualBg: "bg-yellow-50",
+  tagBg: "bg-yellow-100",
+  tagColor: "text-yellow-700",
+  techBg: "bg-yellow-50",
+  techColor: "text-yellow-700",
+  backgroundPattern: (
+    <div className="absolute inset-0">
+      <div className="absolute top-10 left-10 w-24 h-6 bg-white/10 rounded-full rotate-12"></div>
+      <div className="absolute bottom-10 right-10 w-16 h-16 border-2 border-white/20 rounded-xl rotate-45"></div>
+      <div className="absolute top-1/2 right-1/4 w-8 h-8 bg-white/10 rounded-full"></div>
+    </div>
+  ),
+  importance: {
+    overview: "Digital marketing is no longer optional—it's essential for business survival and growth. In a world where 4.9 billion people are online, digital marketing provides unparalleled opportunities to reach, engage, and convert your ideal customers. It's not just about visibility; it's about building meaningful relationships, driving qualified traffic, and generating measurable ROI that directly impacts your bottom line.",
+    keyPoints: [
+      {
+        title: "Massive Reach & Targeting",
+        description: "Digital marketing allows you to reach millions of potential customers while precisely targeting those most likely to convert, maximizing efficiency and ROI."
+      },
+      {
+        title: "Measurable Results",
+        description: "Unlike traditional marketing, digital campaigns provide detailed analytics and real-time data, allowing for immediate optimization and clear ROI tracking."
+      },
+      {
+        title: "Cost-Effective Growth",
+        description: "Digital marketing typically costs 62% less than traditional marketing while generating 3x more leads, making it essential for budget-conscious businesses."
+      },
+      {
+        title: "Customer Behavior Insights",
+        description: "Digital platforms provide deep insights into customer behavior, preferences, and journey stages, enabling personalized experiences that drive conversions."
+      },
+      {
+        title: "Competitive Necessity",
+        description: "With 81% of retail shoppers researching online before buying, businesses without strong digital presence lose customers to competitors who invest in digital marketing."
+      }
+    ],
+    visualization: (
+      <div className="space-y-4">
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h4 className="font-semibold text-yellow-900 mb-3">Marketing ROI Comparison</h4>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Lead Generation</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-22 h-2 bg-yellow-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-yellow-600">+320%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Brand Awareness</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-20 h-2 bg-yellow-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-yellow-600">+280%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Customer Acquisition</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-18 h-2 bg-yellow-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-yellow-600">+240%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-yellow-600 mb-1">$5.44</div>
+          <div className="text-sm text-gray-600">ROI per $1 Spent</div>
+        </div>
+      </div>
+    )
+  },
+  businessImpact: {
+    metrics: [
+      {
+        value: "400%",
+        label: "Lead Increase",
+        description: "Strategic digital campaigns dramatically boost qualified leads"
+      },
+      {
+        value: "5.4x",
+        label: "ROI Average",
+        description: "Digital marketing delivers exceptional return on investment"
+      },
+      {
+        value: "78%",
+        label: "Brand Awareness",
+        description: "Comprehensive campaigns significantly increase brand recognition"
+      }
+    ]
+  },
+  implementation: {
+    phases: [
+      {
+        title: "Strategy & Research",
+        description: "Comprehensive market analysis, competitor research, and strategic planning to identify opportunities and develop targeted campaigns.",
+        deliverables: ["Market Analysis", "Competitor Research", "Customer Personas", "Marketing Strategy"]
+      },
+      {
+        title: "Campaign Development",
+        description: "Creating compelling content, designing creatives, and setting up tracking systems across multiple digital channels.",
+        deliverables: ["Content Creation", "Ad Creatives", "Landing Pages", "Analytics Setup"]
+      },
+      {
+        title: "Multi-Channel Execution",
+        description: "Launching coordinated campaigns across SEO, PPC, social media, email, and content marketing channels.",
+        deliverables: ["Campaign Launch", "Social Media Management", "Email Campaigns", "Content Publishing"]
+      },
+      {
+        title: "Optimization & Scaling",
+        description: "Continuous monitoring, A/B testing, and optimization to improve performance and scale successful campaigns.",
+        deliverables: ["Performance Reports", "A/B Testing", "Campaign Optimization", "Scaling Strategy"]
+      }
+    ]
+  },
+  technologies: [
+    "Google Ads",
+    "Facebook Ads", 
+    "Google Analytics",
+    "HubSpot",
+    "Mailchimp",
+    "Hootsuite",
+    "SEMrush",
+    "Ahrefs",
+    "Buffer",
+    "Canva",
+    "Zapier",
+    "Hotjar"
+  ]
+};
 
 // Animation variants - Reusable across all service pages
 const fadeInUp = {
@@ -67,6 +216,8 @@ const iconVariants = {
 };
 
 export default function DigitalMarketingPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const heroRef = useRef(null);
   const overviewRef = useRef(null);
   const servicesRef = useRef(null);
@@ -95,7 +246,7 @@ export default function DigitalMarketingPage() {
       
       {/* Hero Section with marketing visualizations */}
       <motion.section 
-        className="pt-32 pb-16 bg-purple-50/50 relative overflow-hidden"
+        className="pt-32 pb-16 bg-[#fff8f4] relative overflow-hidden"
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
@@ -106,12 +257,12 @@ export default function DigitalMarketingPage() {
           className="absolute top-10 right-10 opacity-10"
           style={{ y: chartY }}
         >
-          <div className="w-32 h-24 bg-purple-200 rounded-xl shadow-lg p-3">
+          <div className="w-32 h-24 bg-yellow-200 rounded-xl shadow-lg p-3">
             <div className="flex justify-between items-end h-full space-x-1">
               {[65, 80, 45, 90, 75, 95].map((height, i) => (
                 <motion.div 
                   key={i} 
-                  className="bg-purple-400 rounded-sm flex-1"
+                  className="bg-yellow-400 rounded-sm flex-1"
                   style={{ height: `${height}%` }}
                   animate={{ 
                     height: [`${height}%`, `${height + 15}%`, `${height}%`],
@@ -131,9 +282,9 @@ export default function DigitalMarketingPage() {
         >
           <div className="grid grid-cols-2 gap-2">
             {[
-              { icon: "📱", color: "bg-purple-200" },
+              { icon: "📱", color: "bg-yellow-200" },
               { icon: "📊", color: "bg-violet-200" },
-              { icon: "💬", color: "bg-purple-300" },
+              { icon: "💬", color: "bg-yellow-300" },
               { icon: "🎯", color: "bg-indigo-200" }
             ].map((item, i) => (
               <motion.div 
@@ -162,20 +313,20 @@ export default function DigitalMarketingPage() {
           className="absolute bottom-20 right-32 opacity-15"
           style={{ y: campaignY }}
         >
-          <div className="w-20 h-12 bg-purple-300 rounded-lg shadow-lg p-2">
+          <div className="w-20 h-12 bg-yellow-300 rounded-lg shadow-lg p-2">
             <div className="flex justify-between items-center mb-1">
-              <div className="text-xs font-bold text-purple-700">ROI</div>
+              <div className="text-xs font-bold text-yellow-700">ROI</div>
               <motion.div 
-                className="text-xs font-bold text-purple-800"
+                className="text-xs font-bold text-yellow-800"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
                 245%
               </motion.div>
             </div>
-            <div className="w-full h-2 bg-purple-400 rounded-full relative overflow-hidden">
+            <div className="w-full h-2 bg-yellow-400 rounded-full relative overflow-hidden">
               <motion.div 
-                className="absolute left-0 top-0 h-full bg-purple-600 rounded-full"
+                className="absolute left-0 top-0 h-full bg-yellow-600 rounded-full"
                 animate={{ width: ['0%', '85%', '0%'] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               />
@@ -196,10 +347,10 @@ export default function DigitalMarketingPage() {
             ease: "easeInOut"
           }}
         >
-          <div className="w-16 h-10 bg-purple-200 rounded-lg shadow-lg p-1">
+          <div className="w-16 h-10 bg-yellow-200 rounded-lg shadow-lg p-1">
             <div className="flex items-center justify-center h-full">
               <motion.div 
-                className="text-xs font-bold text-purple-600"
+                className="text-xs font-bold text-yellow-600"
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
@@ -212,15 +363,15 @@ export default function DigitalMarketingPage() {
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 bg-purple-100 rounded-xl mb-6 shadow-lg border-2 border-purple-600"
+              className="inline-flex items-center justify-center w-20 h-20 bg-yellow-100 rounded-xl mb-6 shadow-lg border-2 border-yellow-600"
               variants={iconVariants}
-              whileHover={{
-                scale: 1.1,
-                transition: { duration: 0.3 }
-              }}
+              // whileHover={{
+              //   scale: 1.1,
+              //   transition: { duration: 0.3 }
+              // }}
             >
               <motion.svg 
-                className="w-10 h-10 text-purple-600" 
+                className="w-10 h-10 text-yellow-600 " 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -237,18 +388,32 @@ export default function DigitalMarketingPage() {
             </motion.div>
             
             <motion.h1 
-              className="text-4xl sm:text-5xl font-bold mb-6 text-purple-900"
+              className="text-4xl sm:text-5xl font-bold mb-6 text-yellow-900"
               variants={fadeInUp}
             >
               Digital Marketing
             </motion.h1>
             
             <motion.p 
-              className="text-xl text-gray-700 max-w-2xl mx-auto lead"
+              className="text-xl text-gray-700 max-w-2xl mx-auto mb-8 lead"
               variants={fadeInUp}
             >
               Strategic digital marketing campaigns that drive growth, increase brand awareness, and maximize ROI.
             </motion.p>
+
+            {/* Learn More Button */}
+            <motion.button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#5d4200] text-[#ebc06c] font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            > {/* bg-[#5d4200] !text-[#ebc06c]*/}
+              <span className="mr-2">Why Digital Marketing is Essential</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </motion.button>
           </div>
         </div>
       </motion.section>
@@ -266,12 +431,12 @@ export default function DigitalMarketingPage() {
           className="absolute right-0 top-1/2 transform -translate-y-1/2 opacity-5"
           style={{ scale: analyticsScale }}
         >
-          <div className="w-48 h-32 bg-purple-100 rounded-2xl p-4">
+          <div className="w-48 h-32 bg-yellow-100 rounded-2xl p-4">
             <div className="grid grid-cols-3 gap-2 h-full">
-              <div className="bg-purple-200 rounded p-1">
-                <div className="text-xs font-bold text-purple-700 mb-1">Clicks</div>
+              <div className="bg-yellow-200 rounded p-1">
+                <div className="text-xs font-bold text-yellow-700 mb-1">Clicks</div>
                 <motion.div 
-                  className="text-lg font-bold text-purple-800"
+                  className="text-lg font-bold text-yellow-800"
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
@@ -279,7 +444,7 @@ export default function DigitalMarketingPage() {
                 </motion.div>
               </div>
               <div className="bg-violet-200 rounded p-1">
-                <div className="text-xs font-bold text-violet-700 mb-1">Views</div>
+                    <div className="text-xs font-bold text-violet-700 mb-1">Views</div>
                 <motion.div 
                   className="text-lg font-bold text-violet-800"
                   animate={{ scale: [1, 1.1, 1] }}
@@ -288,10 +453,10 @@ export default function DigitalMarketingPage() {
                   89.2K
                 </motion.div>
               </div>
-              <div className="bg-purple-300 rounded p-1">
-                <div className="text-xs font-bold text-purple-700 mb-1">Conv</div>
+              <div className="bg-yellow-300 rounded p-1">
+                <div className="text-xs font-bold text-yellow-700 mb-1">Conv</div>
                 <motion.div 
-                  className="text-lg font-bold text-purple-800"
+                  className="text-lg font-bold text-yellow-800"
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 2, repeat: Infinity, delay: 1 }}
                 >
@@ -306,7 +471,7 @@ export default function DigitalMarketingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
               <motion.h2 
-                className="text-3xl font-bold mb-6 text-purple-900"
+                className="text-3xl font-bold mb-6 text-yellow-900"
                 variants={itemVariants}
               >
                 Strategic Digital Growth
@@ -341,7 +506,7 @@ export default function DigitalMarketingPage() {
                     }}
                   >
                     <motion.svg 
-                      className="w-6 h-6 text-purple-500 mt-0.5 flex-shrink-0" 
+                      className="w-6 h-6 text-yellow-500 mt-0.5 flex-shrink-0" 
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
@@ -355,7 +520,7 @@ export default function DigitalMarketingPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </motion.svg>
-                    <span className="text-purple-900">{item}</span>
+                    <span className="text-yellow-900">{item}</span>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -363,7 +528,7 @@ export default function DigitalMarketingPage() {
             
             {/* Enhanced Marketing Dashboard */}
             <motion.div 
-              className="bg-white rounded-2xl p-8 shadow-xl relative border border-purple-100"
+              className="bg-white rounded-2xl p-8 shadow-xl relative border-2 border-yellow-900"
               variants={fadeInUp}
               whileHover={{
                 y: -5,
@@ -379,7 +544,7 @@ export default function DigitalMarketingPage() {
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   <motion.div 
                     className="bg-violet-50 rounded-lg p-2 border border-violet-200"
-                    whileHover={{ scale: 1.05, backgroundColor: "#e5e7eb" }}
+                    // whileHover={{ scale: 1.05, backgroundColor: "#e5e7eb" }}
                     transition={{ duration: 0.2 }}
                   >
                     <div className="w-4 h-4 bg-violet-500 rounded mb-1"></div>
@@ -395,7 +560,7 @@ export default function DigitalMarketingPage() {
                   
                   <motion.div 
                     className="bg-pink-50 rounded-lg p-2 border border-pink-200"
-                    whileHover={{ scale: 1.05, backgroundColor: "#fce7f3" }}
+                    // whileHover={{ scale: 1.05, backgroundColor: "#fce7f3" }}
                     transition={{ duration: 0.2 }}
                   >
                     <div className="w-4 h-4 bg-pink-500 rounded mb-1"></div>
@@ -411,7 +576,7 @@ export default function DigitalMarketingPage() {
                   
                   <motion.div 
                     className="bg-sky-50 rounded-lg p-2 border border-sky-200"
-                    whileHover={{ scale: 1.05, backgroundColor: "#e0f2fe" }}
+                    // whileHover={{ scale: 1.05, backgroundColor: "#e0f2fe" }}
                     transition={{ duration: 0.2 }}
                   >
                     <div className="w-4 h-4 bg-sky-500 rounded mb-1"></div>
@@ -427,11 +592,11 @@ export default function DigitalMarketingPage() {
                 </div>
 
                 {/* Performance Chart Visualization */}
-                <div className="bg-purple-50 rounded-lg p-3 border border-purple-200">
+                <div className="bg-yellow-50 rounded-lg p-3 ">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-semibold text-purple-700">Campaign Performance</span>
+                    <span className="text-sm font-semibold text-yellow-700">Campaign Performance</span>
                     <motion.span 
-                      className="text-sm font-bold text-purple-800"
+                      className="text-sm font-bold text-yellow-800"
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
@@ -442,7 +607,7 @@ export default function DigitalMarketingPage() {
                     {[30, 45, 35, 60, 55, 70, 65].map((height, i) => (
                       <motion.div 
                         key={i}
-                        className="bg-purple-400 rounded-sm flex-1"
+                        className="bg-yellow-400 rounded-sm flex-1"
                         style={{ height: `${height}%` }}
                         animate={{ 
                           height: [`${height}%`, `${height + 10}%`, `${height}%`] 
@@ -459,7 +624,7 @@ export default function DigitalMarketingPage() {
                 </div>
               </div>
 
-              <h3 className="text-xl font-semibold mb-4 text-gray-900">Marketing Channels</h3>
+              <h3 className="text-xl font-semibold mb-4 text-yellow-900">Marketing Channels</h3>
               <motion.div 
                 className="grid grid-cols-2 gap-3"
                 variants={containerVariants}
@@ -470,13 +635,13 @@ export default function DigitalMarketingPage() {
                 ].map((channel, index) => (
                   <motion.div
                     key={channel}
-                    className="bg-purple-50 text-purple-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
+                      className="bg-yellow-50 text-yellow-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
                     variants={itemVariants}
-                    whileHover={{
-                      scale: 1.05,
-                      backgroundColor: "#f3f4f6",
-                      transition: { duration: 0.2 }
-                    }}
+                    // whileHover={{
+                    //   scale: 1.05,
+                    //   backgroundColor: "#f3f4f6",
+                    //   transition: { duration: 0.2 }
+                    // }}
                   >
                     {channel}
                   </motion.div>
@@ -489,7 +654,7 @@ export default function DigitalMarketingPage() {
 
       {/* Services Grid enhanced with campaign mockups */}
       <motion.section 
-        className="py-16 bg-purple-50/30 relative overflow-hidden"
+        className="py-16 bg-yellow-50/30 relative overflow-hidden"
         ref={servicesRef}
         initial="hidden"
         animate={servicesInView ? "visible" : "hidden"}
@@ -500,9 +665,9 @@ export default function DigitalMarketingPage() {
           className="absolute inset-0 opacity-5"
           style={{ y: socialY }}
         >
-          <div className="absolute top-20 left-1/4 w-20 h-20 bg-purple-300 rounded-2xl blur-xl"></div>
+          <div className="absolute top-20 left-1/4 w-20 h-20 bg-yellow-300 rounded-2xl blur-xl"></div>
           <div className="absolute bottom-20 right-1/4 w-28 h-28 bg-violet-300 rounded-full blur-2xl"></div>
-          <div className="absolute top-1/2 left-10 w-12 h-12 bg-purple-300 rounded-xl transform rotate-45 blur-lg"></div>
+          <div className="absolute top-1/2 left-10 w-12 h-12 bg-yellow-300 rounded-xl transform rotate-45 blur-lg"></div>
         </motion.div>
 
         <div className="container relative z-10">
@@ -547,7 +712,7 @@ export default function DigitalMarketingPage() {
             ].map((service, index) => (
               <motion.div 
                 key={index}
-                className="bg-white p-6 rounded-xl border border-purple-200 hover:border-purple-300 transition-all duration-300 hover:shadow-lg"
+                className="bg-white p-6 rounded-xl border-2 border-yellow-900  transition-all hover:shadow-lg"
                 variants={itemVariants}
                 whileHover={{
                   y: -10,
@@ -556,22 +721,22 @@ export default function DigitalMarketingPage() {
                 }}
               >
                 <motion.div 
-                  className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4"
+                  className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4"
                   whileHover={{
                     scale: 1.1,
                     transition: { duration: 0.2 }
                   }}
                 >
-                  <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={service.icon} />
                   </svg>
                 </motion.div>
                 
-                <h3 className="text-xl font-semibold mb-3 text-purple-900">{service.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-yellow-900">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
                 
                 <motion.ul 
-                  className="text-sm text-purple-900 space-y-2"
+                  className="text-sm text-yellow-900 space-y-2"
                   variants={containerVariants}
                 >
                   {service.features.map((feature, featureIndex) => (
@@ -632,7 +797,7 @@ export default function DigitalMarketingPage() {
               <motion.div variants={itemVariants}>
                 <Link 
                   href="/#services" 
-                  className="inline-flex items-center justify-center px-8 py-3 bg-white text-purple-600 font-semibold rounded-lg hover:bg-purple-50 transition-colors duration-200"
+                  className="inline-flex items-center justify-center px-8 py-3 bg-white text-yellow-600 font-semibold rounded-lg hover:bg-yellow-50 transition-colors duration-200"
                 >
                   <motion.span
                     whileHover={{ scale: 1.05 }}
@@ -646,6 +811,13 @@ export default function DigitalMarketingPage() {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Service Modal */}
+      <ServiceModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        service={digitalMarketingService}
+      />
 
       <Footer />
     </main>

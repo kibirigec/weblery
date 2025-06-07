@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
+import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
 
 // Animation variants - Reusable across all service pages
@@ -66,7 +67,157 @@ const iconVariants = {
   },
 };
 
+// AI Integration Service Data
+const aiIntegrationService = {
+  title: "AI Integration",
+  subtitle: "Intelligent automation that transforms business operations",
+  icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+  headerBg: "bg-gradient-to-br from-gray-700 to-gray-800",
+  iconBg: "bg-white/20",
+  iconColor: "text-white",
+  titleColor: "text-white",
+  subtitleColor: "text-gray-200",
+  accentBg: "bg-gray-100",
+  accentColor: "text-gray-700",
+  visualBg: "bg-gray-50",
+  tagBg: "bg-gray-100",
+  tagColor: "text-gray-700",
+  techBg: "bg-gray-50",
+  techColor: "text-gray-700",
+  backgroundPattern: (
+    <div className="absolute inset-0">
+      <div className="absolute top-10 left-10 w-20 h-20 border border-white/20 rounded-2xl rotate-12"></div>
+      <div className="absolute bottom-10 right-10 w-16 h-16 bg-white/10 rounded-full"></div>
+      <div className="absolute top-1/2 right-1/4 w-12 h-12 border border-white/20 rounded-lg transform -rotate-45"></div>
+    </div>
+  ),
+  importance: {
+    overview: "Artificial Intelligence is reshaping the business landscape at an unprecedented pace. Companies that integrate AI strategically are seeing 15% revenue increases and 25% cost reductions. AI integration isn't just about automation—it's about unlocking human potential, making data-driven decisions at scale, and creating competitive advantages that compound over time. The question isn't whether to adopt AI, but how quickly you can implement it effectively.",
+    keyPoints: [
+      {
+        title: "Operational Efficiency",
+        description: "AI automates repetitive tasks, reducing manual work by up to 80% and allowing teams to focus on high-value strategic activities that drive growth."
+      },
+      {
+        title: "Data-Driven Insights",
+        description: "AI processes vast amounts of data to reveal patterns humans miss, enabling better decision-making and predicting trends before competitors."
+      },
+      {
+        title: "Enhanced Customer Experience",
+        description: "AI-powered personalization and 24/7 intelligent support increase customer satisfaction by 35% while reducing response times dramatically."
+      },
+      {
+        title: "Scalable Innovation",
+        description: "AI systems learn and improve continuously, providing scalable solutions that grow more valuable over time without proportional cost increases."
+      },
+      {
+        title: "Competitive Differentiation",
+        description: "Early AI adopters create moats that are difficult for competitors to overcome, establishing market leadership through technological advantage."
+      }
+    ],
+    visualization: (
+      <div className="space-y-4">
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h4 className="font-semibold text-gray-900 mb-3">AI Implementation Impact</h4>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Process Automation</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-20 h-2 bg-gray-600 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-gray-700">80%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Decision Speed</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-18 h-2 bg-gray-600 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-gray-700">70%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Error Reduction</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-22 h-2 bg-gray-600 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-gray-700">90%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-gray-700 mb-1">40%</div>
+          <div className="text-sm text-gray-600">Revenue Growth Potential</div>
+        </div>
+      </div>
+    )
+  },
+  businessImpact: {
+    metrics: [
+      {
+        value: "15%",
+        label: "Revenue Increase",
+        description: "AI-driven businesses see significant revenue growth through optimization"
+      },
+      {
+        value: "25%",
+        label: "Cost Reduction",
+        description: "Intelligent automation reduces operational costs substantially"
+      },
+      {
+        value: "60%",
+        label: "Faster Decisions",
+        description: "AI-powered insights accelerate critical business decisions"
+      }
+    ]
+  },
+  implementation: {
+    phases: [
+      {
+        title: "AI Readiness Assessment",
+        description: "Evaluate your current infrastructure, data quality, and organizational readiness for AI implementation.",
+        deliverables: ["Infrastructure Audit", "Data Assessment", "ROI Analysis", "Implementation Roadmap"]
+      },
+      {
+        title: "Pilot Project Development",
+        description: "Identify high-impact use cases and develop proof-of-concept AI solutions to demonstrate value.",
+        deliverables: ["Use Case Identification", "Prototype Development", "Performance Testing", "Success Metrics"]
+      },
+      {
+        title: "Full-Scale Implementation",
+        description: "Deploy AI solutions across your organization with proper training, integration, and monitoring systems.",
+        deliverables: ["System Integration", "User Training", "Monitoring Setup", "Performance Optimization"]
+      },
+      {
+        title: "Optimization & Scaling",
+        description: "Continuously improve AI performance and expand implementation to additional use cases and departments.",
+        deliverables: ["Performance Tuning", "Model Updates", "Scaling Strategy", "Advanced Features"]
+      }
+    ]
+  },
+  technologies: [
+    "TensorFlow",
+    "PyTorch",
+    "OpenAI GPT",
+    "Hugging Face",
+    "scikit-learn",
+    "Azure AI",
+    "Google AI",
+    "AWS ML",
+    "Computer Vision",
+    "NLP",
+    "MLOps",
+    "AutoML"
+  ]
+};
+
 export default function AIIntegrationPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const heroRef = useRef(null);
   const overviewRef = useRef(null);
   const useCasesRef = useRef(null);
@@ -324,11 +475,25 @@ export default function AIIntegrationPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl text-gray-700 max-w-2xl mx-auto lead"
+              className="text-xl text-gray-700 max-w-2xl mx-auto mb-8 lead"
               variants={fadeInUp}
             >
               Intelligent automation and AI-powered features to streamline operations and enhance user engagement.
             </motion.p>
+
+            {/* Learn More Button */}
+            <motion.button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center justify-center px-8 py-4 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-200 shadow-lg hover:shadow-xl"
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="mr-2">Why AI Integration is Critical</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </motion.button>
           </div>
         </div>
       </motion.section>
@@ -346,7 +511,7 @@ export default function AIIntegrationPage() {
           className="absolute left-0 top-1/2 transform -translate-y-1/2 opacity-5"
           style={{ scale: aiElementsScale }}
         >
-          <div className="w-40 h-48 bg-purple-100 rounded-2xl p-4">
+          <div className="w-40 h-48 bg-gray-100 rounded-2xl p-4">
             <div className="w-full h-full relative">
               {/* AI Model Architecture */}
               <div className="grid grid-cols-3 gap-2 h-full">
@@ -354,7 +519,7 @@ export default function AIIntegrationPage() {
                   {[...Array(4)].map((_, i) => (
                     <motion.div 
                       key={i}
-                      className="w-full h-4 bg-purple-200 rounded"
+                      className="w-full h-4 bg-gray-200 rounded"
                       animate={{ 
                         backgroundColor: ['#e9d5ff', '#c4b5fd', '#e9d5ff'],
                         scale: [1, 1.05, 1]
@@ -371,7 +536,7 @@ export default function AIIntegrationPage() {
                   {[...Array(6)].map((_, i) => (
                     <motion.div 
                       key={i}
-                      className="w-full h-3 bg-purple-300 rounded"
+                      className="w-full h-3 bg-gray-300 rounded"
                       animate={{ 
                         backgroundColor: ['#c4b5fd', '#a78bfa', '#c4b5fd'],
                         scale: [1, 1.1, 1]
@@ -388,7 +553,7 @@ export default function AIIntegrationPage() {
                   {[...Array(3)].map((_, i) => (
                     <motion.div 
                       key={i}
-                      className="w-full h-5 bg-purple-400 rounded"
+                        className="w-full h-5 bg-gray-400 rounded"
                       animate={{ 
                         backgroundColor: ['#a78bfa', '#8b5cf6', '#a78bfa'],
                         scale: [1, 1.15, 1]
@@ -467,7 +632,7 @@ export default function AIIntegrationPage() {
             
             {/* Enhanced AI Integration Dashboard */}
             <motion.div 
-              className="bg-white rounded-2xl p-8 shadow-xl relative border border-purple-100"
+              className="bg-white rounded-2xl p-8 shadow-xl relative border-2 border-gray-900"
               variants={fadeInUp}
               whileHover={{
                 y: -5,
@@ -480,11 +645,11 @@ export default function AIIntegrationPage() {
                 <h3 className="text-lg font-semibold mb-4 text-gray-900">AI Model Performance</h3>
                 
                 {/* Neural Network Layers Visualization */}
-                <div className="bg-purple-50 rounded-lg p-4 mb-4 border border-purple-200">
+                <div className="bg-gray-50 rounded-lg p-4 mb-4 border border-gray-200">
                   <div className="flex justify-between items-center mb-3">
-                    <span className="text-sm font-semibold text-purple-700">Processing Layers</span>
+                    <span className="text-sm font-semibold text-gray-700">Processing Layers</span>
                     <motion.span 
-                      className="text-sm font-bold text-purple-800"
+                      className="text-sm font-bold text-gray-800"
                       animate={{ opacity: [0.7, 1, 0.7] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
@@ -498,10 +663,10 @@ export default function AIIntegrationPage() {
                       {[...Array(4)].map((_, i) => (
                         <motion.div 
                           key={i}
-                          className="w-3 h-3 bg-purple-300 rounded-full"
+                          className="w-3 h-3 bg-gray-300 rounded-full"
                           animate={{ 
                             scale: [1, 1.2, 1],
-                            backgroundColor: ['#c4b5fd', '#a78bfa', '#c4b5fd']
+                            backgroundColor: ['#c4b5fd', '#a78bfa', '#c4b5fd'] //come back here , also remove the animation on the 94.7%
                           }}
                           transition={{ 
                             duration: 1.5, 
@@ -517,7 +682,7 @@ export default function AIIntegrationPage() {
                       {[...Array(3)].map((_, i) => (
                         <motion.div 
                           key={i}
-                          className="flex-1 h-px bg-purple-300 mx-1"
+                          className="flex-1 h-px bg-gray-300 mx-1"
                           animate={{ 
                             opacity: [0.3, 1, 0.3],
                             scaleX: [0.8, 1, 0.8]
@@ -536,7 +701,7 @@ export default function AIIntegrationPage() {
                       {[...Array(6)].map((_, i) => (
                         <motion.div 
                           key={i}
-                          className="w-2 h-2 bg-purple-400 rounded-full"
+                          className="w-2 h-2 bg-gray-400 rounded-full"
                           animate={{ 
                             scale: [1, 1.3, 1],
                             backgroundColor: ['#a78bfa', '#8b5cf6', '#a78bfa']
@@ -555,7 +720,7 @@ export default function AIIntegrationPage() {
                       {[...Array(3)].map((_, i) => (
                         <motion.div 
                           key={i}
-                          className="flex-1 h-px bg-purple-400 mx-1"
+                          className="flex-1 h-px bg-gray-400 mx-1"
                           animate={{ 
                             opacity: [0.3, 1, 0.3],
                             scaleX: [0.8, 1, 0.8]
@@ -574,7 +739,7 @@ export default function AIIntegrationPage() {
                       {[...Array(2)].map((_, i) => (
                         <motion.div 
                           key={i}
-                          className="w-4 h-4 bg-purple-500 rounded-full"
+                          className="w-4 h-4 bg-gray-500 rounded-full"
                           animate={{ 
                             scale: [1, 1.4, 1],
                             backgroundColor: ['#8b5cf6', '#7c3aed', '#8b5cf6']
@@ -592,10 +757,10 @@ export default function AIIntegrationPage() {
 
                 {/* AI Metrics */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3 border border-purple-200">
-                    <div className="text-xs font-semibold text-purple-700 mb-1">Accuracy</div>
+                  <div className="bg-gradient-to-r from-gray-50 to-gray-50 rounded-lg p-3 border border-gray-200">
+                    <div className="text-xs font-semibold text-gray-700 mb-1">Accuracy</div>
                     <motion.div 
-                      className="text-lg font-bold text-purple-800"
+                      className="text-lg font-bold text-gray-800"
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
@@ -603,10 +768,10 @@ export default function AIIntegrationPage() {
                     </motion.div>
                   </div>
                   
-                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3 border border-blue-200">
-                    <div className="text-xs font-semibold text-blue-700 mb-1">Processing</div>
+                  <div className="bg-gradient-to-r from-blue-50 to-gray-50 rounded-lg p-3 border border-gray-200">
+                    <div className="text-xs font-semibold text-gray-700 mb-1">Processing</div>
                     <motion.div 
-                      className="text-lg font-bold text-blue-800"
+                      className="text-lg font-bold text-gray-800"
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
                     >
@@ -627,13 +792,13 @@ export default function AIIntegrationPage() {
                 ].map((tech, index) => (
                   <motion.div
                     key={tech}
-                    className="bg-purple-50 text-purple-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
+                    className="bg-gray-50 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
                     variants={itemVariants}
-                    whileHover={{
-                      scale: 1.05,
-                      backgroundColor: "#f3e8ff",
-                      transition: { duration: 0.2 }
-                    }}
+                    // whileHover={{
+                    //   scale: 1.05,
+                    //   backgroundColor: "#f3e8ff",
+                    //   transition: { duration: 0.2 }
+                    // }}
                   >
                     {tech}
                   </motion.div>
@@ -646,7 +811,7 @@ export default function AIIntegrationPage() {
 
       {/* Use Cases section with AI implementation visuals */}
       <motion.section 
-        className="py-16 bg-purple-50/30 relative overflow-hidden"
+        className="py-16 bg-gray-50/30 relative overflow-hidden"
         ref={useCasesRef}
         initial="hidden"
         animate={useCasesInView ? "visible" : "hidden"}
@@ -657,9 +822,9 @@ export default function AIIntegrationPage() {
           className="absolute inset-0 opacity-5"
           style={{ y: dataFlowY }}
         >
-          <div className="absolute top-20 left-1/4 w-24 h-24 bg-purple-300 rounded-full blur-xl"></div>
-          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-pink-300 rounded-2xl blur-2xl transform rotate-45"></div>
-          <div className="absolute top-1/2 left-10 w-16 h-16 bg-blue-300 rounded-xl blur-lg"></div>
+          <div className="absolute top-20 left-1/4 w-24 h-24 bg-gray-300 rounded-full blur-xl"></div>
+          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-gray-300 rounded-2xl blur-2xl transform rotate-45"></div>
+          <div className="absolute top-1/2 left-10 w-16 h-16 bg-gray-300 rounded-xl blur-lg"></div>
         </motion.div>
 
         <div className="container relative z-10">
@@ -691,10 +856,10 @@ export default function AIIntegrationPage() {
               <motion.div variants={itemVariants}>
                 <Link 
                   href="/#contact" 
-                  className="inline-flex items-center justify-center px-8 py-3 bg-gray-800 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center justify-center px-8 py-3 bg-gray-800 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg "
                 >
                   <motion.span
-                    whileHover={{ scale: 1.05 }}
+                    // whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     Start Your AI Project
@@ -718,6 +883,13 @@ export default function AIIntegrationPage() {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Service Modal */}
+      <ServiceModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        service={aiIntegrationService}
+      />
 
       <Footer />
     </main>

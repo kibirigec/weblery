@@ -1,10 +1,159 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
+import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
+
+// Web Development Service Data
+const webDevelopmentService = {
+  title: "Web Development",
+  subtitle: "Building the foundation of your digital presence",
+  icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+  headerBg: "bg-gradient-to-br from-blue-600 to-blue-800",
+  iconBg: "bg-white/20",
+  iconColor: "text-white",
+  titleColor: "text-white",
+  subtitleColor: "text-blue-100",
+  accentBg: "bg-blue-100",
+  accentColor: "text-blue-600",
+  visualBg: "bg-blue-50",
+  tagBg: "bg-blue-100",
+  tagColor: "text-blue-700",
+  techBg: "bg-blue-50",
+  techColor: "text-blue-700",
+  backgroundPattern: (
+    <div className="absolute inset-0">
+      <div className="absolute top-10 left-10 w-20 h-20 border-2 border-white/20 rounded-lg rotate-12"></div>
+      <div className="absolute bottom-10 right-10 w-16 h-16 border-2 border-white/20 rounded-full"></div>
+      <div className="absolute top-1/2 right-1/4 w-12 h-12 bg-white/10 rounded-lg transform -rotate-45"></div>
+    </div>
+  ),
+  importance: {
+    overview: "In today's digital-first world, your website is often the first point of contact between your business and potential customers. Professional web development isn't just about having an online presence—it's about creating a powerful digital foundation that drives growth, builds credibility, and delivers exceptional user experiences that convert visitors into loyal customers.",
+    keyPoints: [
+      {
+        title: "First Impressions Matter",
+        description: "94% of first impressions are design-related. A professionally developed website establishes instant credibility and trust with your audience."
+      },
+      {
+        title: "24/7 Business Presence",
+        description: "Your website works around the clock, providing information, capturing leads, and processing transactions even when you're not available."
+      },
+      {
+        title: "Competitive Advantage",
+        description: "A well-designed, fast-loading website gives you a significant edge over competitors with outdated or poorly performing sites."
+      },
+      {
+        title: "Scalable Growth Platform",
+        description: "Modern web development creates a foundation that can grow with your business, accommodating new features and increased traffic."
+      },
+      {
+        title: "Data-Driven Insights",
+        description: "Professional websites come with analytics integration, providing valuable insights into customer behavior and business performance."
+      }
+    ],
+    visualization: (
+      <div className="space-y-4">
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h4 className="font-semibold text-blue-900 mb-3">Website Performance Impact</h4>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Load Speed Improvement</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-20 h-2 bg-blue-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-blue-600">85%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">User Engagement</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-18 h-2 bg-blue-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-blue-600">75%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Conversion Rate</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-16 h-2 bg-blue-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-blue-600">65%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-blue-600 mb-1">200%</div>
+          <div className="text-sm text-gray-600">Average ROI Increase</div>
+        </div>
+      </div>
+    )
+  },
+  businessImpact: {
+    metrics: [
+      {
+        value: "75%",
+        label: "More Leads",
+        description: "Professional websites generate significantly more qualified leads"
+      },
+      {
+        value: "3x",
+        label: "Better SEO",
+        description: "Modern development practices improve search engine rankings"
+      },
+      {
+        value: "50%",
+        label: "Lower Bounce Rate",
+        description: "Well-designed sites keep visitors engaged longer"
+      }
+    ]
+  },
+  implementation: {
+    phases: [
+      {
+        title: "Discovery & Strategy",
+        description: "We analyze your business goals, target audience, and technical requirements to create a comprehensive development strategy.",
+        deliverables: ["Requirements Analysis", "User Research", "Technical Architecture", "Project Timeline"]
+      },
+      {
+        title: "Design & Prototyping",
+        description: "Creating wireframes, mockups, and interactive prototypes that align with your brand and user experience goals.",
+        deliverables: ["Wireframes", "UI/UX Design", "Interactive Prototype", "Design System"]
+      },
+      {
+        title: "Development & Integration",
+        description: "Building your website using modern technologies, ensuring performance, security, and scalability.",
+        deliverables: ["Frontend Development", "Backend Integration", "CMS Setup", "Third-party Integrations"]
+      },
+      {
+        title: "Testing & Launch",
+        description: "Comprehensive testing across devices and browsers, followed by deployment and ongoing support.",
+        deliverables: ["Quality Assurance", "Performance Testing", "Deployment", "Training & Support"]
+      }
+    ]
+  },
+  technologies: [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "MongoDB",
+    "PostgreSQL",
+    "AWS",
+    "Docker",
+    "GraphQL",
+    "Redis",
+    "Stripe",
+    "Firebase"
+  ]
+};
 
 // Animation variants
 const fadeInUp = {
@@ -67,23 +216,28 @@ const iconVariants = {
 };
 
 export default function WebDevelopmentPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const heroRef = useRef(null);
   const overviewRef = useRef(null);
   const servicesRef = useRef(null);
+  const processRef = useRef(null);
   const ctaRef = useRef(null);
-  const containerRef = useRef(null);
 
   const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
   const overviewInView = useInView(overviewRef, { once: true, amount: 0.2 });
   const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
+  const processInView = useInView(processRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
-  // Parallax scroll effects
+  const containerRef = useRef(null);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
 
+  // Parallax scroll effects
   const heroImageY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const heroImageRotate = useTransform(scrollYProgress, [0, 1], [0, 5]);
   const overviewImageY = useTransform(scrollYProgress, [0.2, 0.8], [50, -50]);
@@ -96,7 +250,7 @@ export default function WebDevelopmentPage() {
       
       {/* Hero Section */}
       <motion.section 
-        className="pt-32 pb-16 bg-blue-50 relative overflow-hidden"
+        className="pt-32 pb-16 bg-blue-50/50 relative overflow-hidden"
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
@@ -130,7 +284,7 @@ export default function WebDevelopmentPage() {
             ease: "easeInOut"
           }}
         >
-          <div className="w-32 h-20 bg-white rounded-lg shadow-lg p-3 border border-blue-200">
+          <div className="w-32 h-20 bg-white rounded-lg shadow-lg p-3 border-2 border-blue-900">
             <div className="flex space-x-1 mb-2">
               <div className="w-2 h-2 bg-red-400 rounded-full"></div>
               <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
@@ -157,7 +311,7 @@ export default function WebDevelopmentPage() {
             delay: 2
           }}
         >
-          <div className="w-24 h-24 bg-white rounded-xl shadow-lg p-3 border border-blue-200 flex items-center justify-center">
+          <div className="w-24 h-24 bg-white rounded-xl shadow-lg p-3 border-2 border-blue-900 flex items-center justify-center">
             <svg className="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
             </svg>
@@ -167,7 +321,7 @@ export default function WebDevelopmentPage() {
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-xl mb-6 shadow-lg border-2 border-blue-600"
+                className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-xl mb-6 shadow-lg border-2 border-blue-600"
               variants={iconVariants}
               whileHover={{
                 scale: 1.1,
@@ -187,7 +341,7 @@ export default function WebDevelopmentPage() {
                   ease: [0.25, 0.46, 0.45, 0.94]
                 }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
               </motion.svg>
             </motion.div>
             
@@ -199,16 +353,30 @@ export default function WebDevelopmentPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl max-w-2xl mx-auto lead"
+              className="text-xl text-gray-700 max-w-2xl mx-auto mb-8 lead"
               variants={fadeInUp}
             >
-              Modern, responsive websites and web applications that deliver exceptional user experiences and drive results.
+              Custom web solutions that drive results. From responsive websites to complex web applications.
             </motion.p>
+
+            {/* Learn More Button */}
+            <motion.button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#344479] !text-[#dce1ff] font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="mr-2">Why Web Development is Critical</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </motion.button>
           </div>
         </div>
       </motion.section>
 
-      {/* Overview Section */}
+      {/* Overview Section bg-[#344479] !text-[#dce1ff]*/}
       <motion.section 
         className="section relative overflow-hidden"
         ref={overviewRef}
@@ -257,10 +425,10 @@ export default function WebDevelopmentPage() {
                     key={index}
                     className="flex items-start gap-3"
                     variants={itemVariants}
-                    whileHover={{
-                      x: 5,
-                      transition: { duration: 0.2 }
-                    }}
+                    // whileHover={{
+                    //   x: 5,
+                    //   transition: { duration: 0.2 }
+                    // }}
                   >
                     <motion.svg 
                       className="w-6 h-6 text-blue-500 mt-0.5 flex-shrink-0" 
@@ -285,17 +453,17 @@ export default function WebDevelopmentPage() {
             
             {/* Image Slot with Browser Mockup */}
             <motion.div 
-              className="bg-blue-50 p-8 rounded-xl border border-blue-100 relative"
+              className="bg-blue-50 p-8 rounded-xl border-2 border-blue-900 relative"
               variants={fadeInUp}
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.3 }
-              }}
+              // whileHover={{
+              //   scale: 1.02,
+              //   transition: { duration: 0.3 }
+              // }}
             >
               {/* Browser Window Mockup */}
               <motion.div 
                 className="bg-white rounded-lg shadow-xl mb-6 overflow-hidden"
-                whileHover={{ y: -5 }}
+                // whileHover={{ y: -5 }}
                 transition={{ duration: 0.3 }}
               >
                 <div className="bg-gray-100 px-4 py-3 flex items-center space-x-2 border-b">
@@ -343,7 +511,7 @@ export default function WebDevelopmentPage() {
                 ].map((stack, index) => (
                   <motion.div 
                     key={index}
-                    className="text-center p-4 bg-white rounded-lg border border-blue-100 hover:border-blue-200 transition-colors"
+                    className="text-center p-4 bg-white rounded-lg border-2 border-blue-900 hover:border-blue-200 transition-colors"
                     variants={itemVariants}
                     whileHover={{
                       y: -5,
@@ -428,7 +596,7 @@ export default function WebDevelopmentPage() {
             ].map((service, index) => (
               <motion.div 
                 key={index}
-                className="bg-white p-6 rounded-xl border border-blue-100 hover:border-blue-200 transition-all duration-300 hover:shadow-lg relative overflow-hidden"
+                className="bg-white p-6 rounded-xl border-2 border-blue-900  transition-all duration-300 hover:shadow-lg relative overflow-hidden"
                 variants={itemVariants}
                 whileHover={{
                   y: -10,
@@ -586,7 +754,7 @@ export default function WebDevelopmentPage() {
               <motion.div variants={itemVariants}>
                 <Link href="/#services">
                   <motion.div
-                    className="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-500 font-semibold rounded-lg hover:bg-blue-50 transition-colors duration-200 cursor-pointer"
+                    className="inline-flex items-center justify-center px-8 py-3 bg-white text-black font-semibold rounded-lg hover:bg-blue-50 transition-colors duration-200 cursor-pointer"
                     whileHover={{
                       scale: 1.05,
                       y: -2,
@@ -605,6 +773,13 @@ export default function WebDevelopmentPage() {
           </div>
         </div>
       </motion.section>
+
+      {/* Service Modal */}
+      <ServiceModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        service={webDevelopmentService}
+      />
 
       <Footer />
     </main>

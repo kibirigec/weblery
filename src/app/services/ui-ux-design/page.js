@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
+import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
 
 // Animation variants - Reusable across all service pages
@@ -66,7 +67,157 @@ const iconVariants = {
   },
 };
 
+// UI/UX Design Service Data
+const uiUxDesignService = {
+  title: "UI/UX Design",
+  subtitle: "Creating experiences that users love and businesses benefit from",
+  icon: "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01",
+  headerBg: "bg-gradient-to-br from-green-600 to-emerald-700",
+  iconBg: "bg-white/20",
+  iconColor: "text-white",
+  titleColor: "text-white",
+  subtitleColor: "text-green-100",
+  accentBg: "bg-green-100",
+  accentColor: "text-green-600",
+  visualBg: "bg-green-50",
+  tagBg: "bg-green-100",
+  tagColor: "text-green-700",
+  techBg: "bg-green-50",
+  techColor: "text-green-700",
+  backgroundPattern: (
+    <div className="absolute inset-0">
+      <div className="absolute top-10 left-10 w-16 h-16 border-2 border-white/20 rounded-2xl rotate-45"></div>
+      <div className="absolute bottom-10 right-10 w-20 h-20 border-2 border-white/20 rounded-full"></div>
+      <div className="absolute top-1/2 right-1/4 w-12 h-12 bg-white/10 rounded-xl transform rotate-12"></div>
+    </div>
+  ),
+  importance: {
+    overview: "User experience design is the cornerstone of digital success. In an era where users have countless options, exceptional UI/UX design is what differentiates market leaders from followers. It's not just about making things look good—it's about creating intuitive, efficient, and delightful experiences that drive user engagement, reduce churn, and ultimately fuel business growth.",
+    keyPoints: [
+      {
+        title: "User Retention & Engagement",
+        description: "88% of users are less likely to return to a site after a bad user experience. Great UX design keeps users engaged and coming back."
+      },
+      {
+        title: "Conversion Rate Optimization",
+        description: "Well-designed user interfaces can increase conversion rates by up to 200%. Every design decision impacts your bottom line."
+      },
+      {
+        title: "Reduced Development Costs",
+        description: "Investing in UX design early reduces development costs by up to 50% by identifying and solving problems before coding begins."
+      },
+      {
+        title: "Brand Differentiation",
+        description: "Superior design creates emotional connections with users, building brand loyalty and distinguishing you from competitors."
+      },
+      {
+        title: "Accessibility & Inclusion",
+        description: "Inclusive design expands your market reach, ensuring your product is usable by everyone, including users with disabilities."
+      }
+    ],
+    visualization: (
+      <div className="space-y-4">
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h4 className="font-semibold text-green-900 mb-3">Design Impact Metrics</h4>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">User Satisfaction</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-22 h-2 bg-green-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-green-600">92%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Task Completion</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-20 h-2 bg-green-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-green-600">87%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Error Reduction</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-18 h-2 bg-green-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-green-600">78%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-green-600 mb-1">300%</div>
+          <div className="text-sm text-gray-600">ROI on UX Investment</div>
+        </div>
+      </div>
+    )
+  },
+  businessImpact: {
+    metrics: [
+      {
+        value: "200%",
+        label: "Higher Conversions",
+        description: "Well-designed interfaces significantly boost conversion rates"
+      },
+      {
+        value: "2.5x",
+        label: "User Engagement",
+        description: "Users spend more time on well-designed applications"
+      },
+      {
+        value: "60%",
+        label: "Reduced Support",
+        description: "Intuitive design reduces customer support requests"
+      }
+    ]
+  },
+  implementation: {
+    phases: [
+      {
+        title: "User Research & Analysis",
+        description: "Deep dive into user behavior, needs, and pain points through research, interviews, and data analysis.",
+        deliverables: ["User Personas", "Journey Maps", "Competitive Analysis", "Research Insights"]
+      },
+      {
+        title: "Information Architecture",
+        description: "Organizing and structuring content and functionality to create intuitive navigation and user flows.",
+        deliverables: ["Site Maps", "User Flows", "Wireframes", "Content Strategy"]
+      },
+      {
+        title: "Visual Design & Prototyping",
+        description: "Creating beautiful, on-brand visual designs and interactive prototypes for testing and validation.",
+        deliverables: ["Visual Mockups", "Design System", "Interactive Prototypes", "Brand Guidelines"]
+      },
+      {
+        title: "Testing & Optimization",
+        description: "Validating designs through user testing and iterating based on feedback and data.",
+        deliverables: ["Usability Testing", "A/B Testing", "Performance Analysis", "Final Designs"]
+      }
+    ]
+  },
+  technologies: [
+    "Figma",
+    "Sketch",
+    "Adobe XD",
+    "InVision",
+    "Principle",
+    "Framer",
+    "Miro",
+    "Hotjar",
+    "Maze",
+    "Lookback",
+    "UsabilityHub",
+    "Optimal Workshop"
+  ]
+};
+
 export default function UIUXDesignPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const heroRef = useRef(null);
   const overviewRef = useRef(null);
   const servicesRef = useRef(null);
@@ -217,16 +368,30 @@ export default function UIUXDesignPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl text-gray-700 max-w-2xl mx-auto lead"
+              className="text-xl text-gray-700 max-w-2xl mx-auto mb-8 lead"
               variants={fadeInUp}
             >
               User-centered design solutions that create intuitive, beautiful, and engaging digital experiences.
             </motion.p>
+
+            {/* Learn More Button */}
+            <motion.button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#205026] text-[#b9f0b7] font-semibold rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="mr-2">Why Great Design is Essential</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </motion.button>
           </div>
         </div>
       </motion.section>
 
-      {/* Overview Section */}
+      {/* Overview Section bg-[#205026] !text-[#b9f0b7]*/}
       <motion.section 
         className="py-16 bg-white relative overflow-hidden"
         ref={overviewRef}
@@ -322,7 +487,7 @@ export default function UIUXDesignPage() {
             
             {/* Enhanced Design Showcase */}
             <motion.div 
-              className="bg-white rounded-2xl p-8 shadow-xl relative border border-green-100"
+              className="bg-white rounded-2xl p-8 shadow-xl relative border-2 border-green-900"
               variants={fadeInUp}
               whileHover={{
                 y: -5,
@@ -409,11 +574,11 @@ export default function UIUXDesignPage() {
                     key={tool}
                     className="bg-green-50 text-green-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
                     variants={itemVariants}
-                    whileHover={{
-                      scale: 1.05,
-                      backgroundColor: "#dcfce7",
-                      transition: { duration: 0.2 }
-                    }}
+                    // whileHover={{
+                    //   scale: 1.05,
+                    //   backgroundColor: "#dcfce7",
+                    //   transition: { duration: 0.2 }
+                    // }}
                   >
                     {tool}
                   </motion.div>
@@ -454,7 +619,7 @@ export default function UIUXDesignPage() {
           </motion.div>
           
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 border-1 border-green-50 rounded-2xl p-4"
             variants={containerVariants}
           >
             {[
@@ -494,7 +659,7 @@ export default function UIUXDesignPage() {
             ].map((service, index) => (
               <motion.div 
                 key={service.title}
-                className="bg-white rounded-2xl p-6 shadow-lg relative overflow-hidden"
+                className="bg-white border-2 border-green-900 rounded-2xl p-6 shadow-lg relative overflow-hidden"
                 variants={itemVariants}
                 whileHover={{
                   y: -5,
@@ -506,14 +671,14 @@ export default function UIUXDesignPage() {
                 <div className="mb-4 relative h-16 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg overflow-hidden">
                   <motion.div 
                     className="absolute inset-0 flex items-center justify-center"
-                    animate={{ 
-                      background: [
-                        'linear-gradient(45deg, #f0fdf4, #dcfce7)',
-                        'linear-gradient(45deg, #dcfce7, #a7f3d0)',
-                        'linear-gradient(45deg, #a7f3d0, #f0fdf4)'
-                      ]
-                    }}
-                    transition={{ duration: 4, repeat: Infinity }}
+                    // animate={{ 
+                    //   background: [
+                    //     'linear-gradient(45deg, #f0fdf4, #dcfce7)',
+                    //     'linear-gradient(45deg, #dcfce7, #a7f3d0)',
+                    //     'linear-gradient(45deg, #a7f3d0, #f0fdf4)'
+                    //   ]
+                    // }}
+                    // transition={{ duration: 4, repeat: Infinity }}
                   >
                     {/* Service icon with animation */}
                     <motion.div
@@ -530,7 +695,7 @@ export default function UIUXDesignPage() {
                   </motion.div>
                 </div>
 
-                <h3 className="text-xl font-semibold mb-3 text-gray-900">{service.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-green-900">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
                 
                 <motion.ul 
@@ -540,7 +705,7 @@ export default function UIUXDesignPage() {
                   {service.features.map((feature, featureIndex) => (
                     <motion.li 
                       key={feature}
-                      className="flex items-center text-sm text-gray-600"
+                      className="flex items-center text-sm text-green-900"
                       variants={itemVariants}
                     >
                       <motion.div 
@@ -681,6 +846,13 @@ export default function UIUXDesignPage() {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Service Modal */}
+      <ServiceModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        service={uiUxDesignService}
+      />
 
       <Footer />
     </main>

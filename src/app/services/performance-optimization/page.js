@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
+import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
 
 // Animation variants - Reusable across all service pages
@@ -81,7 +82,156 @@ const statsVariants = {
   },
 };
 
+// Performance Optimization Service Data
+const performanceOptimizationService = {
+  title: "Performance Optimization",
+  subtitle: "Lightning-fast experiences that convert visitors into customers",
+  icon: "M13 10V3L4 14h7v7l9-11h-7z",
+  headerBg: "bg-gradient-to-br from-orange-500 to-orange-600",
+  iconBg: "bg-white/20",
+  iconColor: "text-white",
+  titleColor: "text-white",
+  subtitleColor: "text-orange-100",
+  accentBg: "bg-orange-100",
+  accentColor: "text-orange-700",
+  visualBg: "bg-orange-50",
+  tagBg: "bg-orange-100",
+  tagColor: "text-orange-700",
+  techBg: "bg-orange-50",
+  techColor: "text-orange-700",
+  backgroundPattern: (
+    <div className="absolute inset-0">
+      <div className="absolute top-10 left-10 w-20 h-20 border border-white/20 rounded-2xl rotate-12"></div>
+      <div className="absolute bottom-10 right-10 w-16 h-16 bg-white/10 rounded-full"></div>
+      <div className="absolute top-1/2 right-1/4 w-12 h-12 border border-white/20 rounded-lg transform -rotate-45"></div>
+    </div>
+  ),
+  importance: {
+    overview: "Website performance isn't just about speed—it's about revenue, user satisfaction, and competitive advantage. A 1-second delay in page load time reduces conversions by 7%, while a 100ms improvement can boost conversions by 1%. With 53% of users abandoning sites that take longer than 3 seconds to load, performance optimization is the difference between business success and failure in the digital age.",
+    keyPoints: [
+      {
+        title: "Revenue Impact",
+        description: "Every 100ms improvement in load time increases conversions by 1%. For e-commerce sites, this translates to millions in additional revenue annually."
+      },
+      {
+        title: "User Experience",
+        description: "Fast sites create positive first impressions, reduce bounce rates by up to 32%, and increase user engagement and satisfaction significantly."
+      },
+      {
+        title: "SEO Rankings",
+        description: "Google uses page speed as a ranking factor. Faster sites rank higher, receive more organic traffic, and dominate search results."
+      },
+      {
+        title: "Mobile Performance",
+        description: "With 60% of searches on mobile, optimized performance ensures your site works flawlessly across all devices and network conditions."
+      },
+      {
+        title: "Competitive Advantage",
+        description: "While competitors struggle with slow sites, your optimized performance creates a superior user experience that drives customer loyalty."
+      }
+    ],
+    visualization: (
+      <div className="space-y-4">
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h4 className="font-semibold text-gray-900 mb-3">Performance Impact</h4>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Load Time Improvement</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-20 h-2 bg-orange-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-orange-600">75%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Bounce Rate Reduction</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-16 h-2 bg-orange-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-orange-600">32%</span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Conversion Increase</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-2 bg-gray-200 rounded-full">
+                  <div className="w-18 h-2 bg-orange-500 rounded-full"></div>
+                </div>
+                <span className="text-sm font-semibold text-orange-600">27%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-orange-600 mb-1">&lt;2s</div>
+          <div className="text-sm text-gray-600">Target Load Time</div>
+        </div>
+      </div>
+    )
+  },
+  businessImpact: {
+    metrics: [
+      {
+        value: "27%",
+        label: "Conversion Boost",
+        description: "Optimized performance directly increases conversion rates"
+      },
+      {
+        value: "32%",
+        label: "Lower Bounce Rate",
+        description: "Fast sites keep users engaged and reduce abandonment"
+      },
+      {
+        value: "75%",
+        label: "Speed Improvement",
+        description: "Comprehensive optimization delivers dramatic speed gains"
+      }
+    ]
+  },
+  implementation: {
+    phases: [
+      {
+        title: "Performance Audit",
+        description: "Comprehensive analysis of current performance bottlenecks, load times, and optimization opportunities.",
+        deliverables: ["Speed Analysis", "Bottleneck Identification", "Optimization Plan", "Baseline Metrics"]
+      },
+      {
+        title: "Technical Optimization",
+        description: "Implement code optimization, image compression, caching strategies, and database improvements.",
+        deliverables: ["Code Optimization", "Image Compression", "Caching Setup", "Database Tuning"]
+      },
+      {
+        title: "Infrastructure Enhancement",
+        description: "Optimize hosting, implement CDN, configure server settings, and enhance delivery mechanisms.",
+        deliverables: ["CDN Implementation", "Server Optimization", "Hosting Upgrade", "Load Balancing"]
+      },
+      {
+        title: "Monitoring & Maintenance",
+        description: "Continuous performance monitoring, regular optimization updates, and proactive maintenance.",
+        deliverables: ["Performance Monitoring", "Regular Updates", "Maintenance Plan", "Reporting Dashboard"]
+      }
+    ]
+  },
+  technologies: [
+    "Lighthouse",
+    "WebPageTest",
+    "GTmetrix",
+    "CloudFlare",
+    "Redis",
+    "Varnish",
+    "Nginx",
+    "Apache",
+    "ImageOptim",
+    "Webpack",
+    "Gzip",
+    "HTTP/2"
+  ]
+};
+
 export default function PerformanceOptimizationPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const heroRef = useRef(null);
   const overviewRef = useRef(null);
   const metricsRef = useRef(null);
@@ -187,7 +337,7 @@ export default function PerformanceOptimizationPage() {
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 border-2 border-orange-600 bg-orange-100 rounded-xl mb-6 shadow-lg"
+              className="inline-flex items-center justify-center w-20 h-20 bg-orange-100 rounded-xl mb-6 shadow-lg border-2 border-orange-900"
               variants={iconVariants}
               whileHover={{
                 scale: 1.1,
@@ -195,24 +345,19 @@ export default function PerformanceOptimizationPage() {
               }}
             >
               <motion.svg 
-                className="w-10 h-10 text-orange-600" 
+                className="w-10 h-10 text-orange-700" 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ 
+                  duration: 1.5, 
+                  delay: 0.8,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
               >
-                <motion.path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ 
-                    duration: 1.5, 
-                    delay: 0.8,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </motion.svg>
             </motion.div>
             
@@ -224,11 +369,25 @@ export default function PerformanceOptimizationPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl text-gray-700 max-w-2xl mx-auto lead"
+              className="text-xl text-gray-700 max-w-2xl mx-auto mb-8 lead"
               variants={fadeInUp}
             >
-              Boost your website's speed and performance with our comprehensive optimization services.
+              Lightning-fast websites and applications that deliver exceptional user experiences and higher conversions.
             </motion.p>
+
+            {/* Learn More Button */}
+            <motion.button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#713719] !text-[#ffb694] font-semibold rounded-lg hover:bg-orange-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="mr-2">Why Speed Matters for Business</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </motion.button>
           </div>
         </div>
       </motion.section>
@@ -266,7 +425,7 @@ export default function PerformanceOptimizationPage() {
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">
+              <h2 className="text-3xl font-bold mb-6 text-orange-900">
                 Lightning-Fast Performance
               </h2>
               <p className="text-gray-600 mb-6">
@@ -286,7 +445,7 @@ export default function PerformanceOptimizationPage() {
                   <div className="flex-shrink-0 w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center mt-1">
                     <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
                   </div>
-                  <div className="text-gray-600">
+                  <div className="text-orange-900">
                     <strong>Speed Analysis:</strong> Comprehensive performance audits and bottleneck identification
                   </div>
                 </motion.div>
@@ -298,7 +457,7 @@ export default function PerformanceOptimizationPage() {
                   <div className="flex-shrink-0 w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center mt-1">
                     <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
                   </div>
-                  <div className="text-gray-600">
+                  <div className="text-orange-900">
                     <strong>Code Optimization:</strong> Minification, compression, and efficient coding practices
                   </div>
                 </motion.div>
@@ -310,7 +469,7 @@ export default function PerformanceOptimizationPage() {
                   <div className="flex-shrink-0 w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center mt-1">
                     <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
                   </div>
-                  <div className="text-gray-600">
+                  <div className="text-orange-900">
                     <strong>Resource Optimization:</strong> Image compression and lazy loading implementation
                   </div>
                 </motion.div>
@@ -322,7 +481,7 @@ export default function PerformanceOptimizationPage() {
                   <div className="flex-shrink-0 w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center mt-1">
                     <div className="w-2 h-2 bg-orange-600 rounded-full"></div>
                   </div>
-                  <div className="text-gray-600">
+                  <div className="text-orange-900">
                     <strong>Caching Strategy:</strong> Advanced caching solutions for optimal performance
                   </div>
                 </motion.div>
@@ -331,7 +490,7 @@ export default function PerformanceOptimizationPage() {
             
             {/* Performance Dashboard Mockup */}
             <motion.div 
-              className="bg-white rounded-2xl p-8 shadow-xl relative border border-orange-100"
+              className="bg-white rounded-2xl p-8 shadow-xl relative border-2 border-orange-900"
               variants={fadeInUp}
               whileHover={{
                 y: -5,
@@ -372,16 +531,16 @@ export default function PerformanceOptimizationPage() {
                     </motion.div>
                   </div>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Performance Score</h3>
+                <h3 className="text-lg font-semibold text-orange-900 mb-2">Performance Score</h3>
               </div>
 
               {/* Performance Metrics */}
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { label: 'Load Time', value: '1.2s', color: '#f97316' },
-                  { label: 'TTFB', value: '0.3s', color: '#fb923c' },
-                  { label: 'CLS', value: '0.05', color: '#fdba74' },
-                  { label: 'FCP', value: '0.8s', color: '#fed7aa' }
+                  { label: 'Load Time', value: '1.2s', color: '#8e4d2f' },
+                  { label: 'TTFB', value: '0.3s', color: '#8e4d2f' },
+                  { label: 'CLS', value: '0.05', color: '#8e4d2f' },
+                  { label: 'FCP', value: '0.8s', color: '#8e4d2f' }
                 ].map((metric, index) => (
                   <motion.div
                     key={metric.label}
@@ -396,7 +555,7 @@ export default function PerformanceOptimizationPage() {
                     <div className="text-lg font-bold" style={{ color: metric.color }}>
                       {metric.value}
                     </div>
-                    <div className="text-sm text-gray-600">{metric.label}</div>
+                    <div className="text-sm text-orange-900">{metric.label}</div>
                   </motion.div>
                 ))}
               </div>
@@ -465,7 +624,7 @@ export default function PerformanceOptimizationPage() {
             ].map((area, index) => (
               <motion.div 
                 key={index}
-                className="bg-white p-6 rounded-xl border border-orange-200 hover:border-orange-300 transition-all duration-300 hover:shadow-lg"
+                className="bg-white p-6 rounded-xl border-2 border-orange-900 hover:border-orange-900 transition-all duration-300 hover:shadow-lg"
                 variants={itemVariants}
                 whileHover={{
                   y: -10,
@@ -630,6 +789,13 @@ export default function PerformanceOptimizationPage() {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Service Modal */}
+      <ServiceModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        service={performanceOptimizationService}
+      />
 
       <Footer />
     </main>
