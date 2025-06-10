@@ -1,11 +1,13 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "motion/react";
-import { useRef, useState } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
+import { Canvas, useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 import {
   fadeInUp,
   containerVariants,
@@ -14,6 +16,474 @@ import {
   buttonVariants,
 } from "./animations";
 import { digitalMarketingService } from "./data";
+
+// Component for particles moving along connection lines
+function MovingParticles({ originPosition, destinations, color }) {
+  const particlesRef = useRef();
+  const tubesRef = useRef([]);
+  const tubeMaterialsRef = useRef([]);
+  
+  // Create particles that will move along the curves
+  const { positions, indices } = useMemo(() => {
+    const positions = [];
+    const indices = [];
+    const count = destinations.length * 3; // 3 particles per connection
+    
+    for (let i = 0; i < count; i++) {
+      positions.push(0, 0, 0);
+      // Store which destination this particle belongs to
+      indices.push(Math.floor(i / 3));
+    }
+    
+    return { positions, indices };
+  }, [destinations]);
+  
+  // Create tube paths
+  const tubes = useMemo(() => {
+    const tubes = [];
+    
+    destinations.forEach((dest, i) => {
+      const origin = new THREE.Vector3(...originPosition);
+      const destination = new THREE.Vector3(...dest);
+      
+      // Calculate curve height based on distance
+      const distance = origin.distanceTo(destination);
+      const midpoint = new THREE.Vector3().addVectors(origin, destination).multiplyScalar(0.5);
+      const normal = new THREE.Vector3().copy(midpoint).normalize();
+      
+      // Pull the midpoint out from the sphere to create an arc
+      midpoint.add(normal.multiplyScalar(distance * 0.3));
+      
+      // Create a quadratic bezier curve
+      const curve = new THREE.QuadraticBezierCurve3(
+        origin.clone().multiplyScalar(1.02), // Slightly outside sphere
+        midpoint,
+        destination.clone().multiplyScalar(1.02) // Slightly outside sphere
+      );
+      
+      // Create tube geometry - path, segments, radius, radial segments, closed
+      const tubeGeometry = new THREE.TubeGeometry(
+        curve, 
+        30,         // tubular segments
+        0.008,      // radius
+        8,          // radial segments
+        false       // closed
+      );
+      
+      tubes.push(tubeGeometry);
+    });
+    
+    return tubes;
+  }, [destinations, originPosition]);
+  
+  // Initialize tube refs
+  useEffect(() => {
+    tubesRef.current = new Array(destinations.length).fill().map((_, i) => tubesRef.current[i] || React.createRef());
+    tubeMaterialsRef.current = new Array(destinations.length).fill().map((_, i) => tubeMaterialsRef.current[i] || React.createRef());
+  }, [destinations.length]);
+  
+  // Update particle positions and tube materials
+  useFrame(({ clock }) => {
+    if (!particlesRef.current) return;
+    
+    const time = clock.getElapsedTime();
+    const positionArray = particlesRef.current.geometry.attributes.position.array;
+    
+    // Update particles
+    for (let i = 0; i < positionArray.length / 3; i++) {
+      const destIndex = indices[i];
+      const origin = new THREE.Vector3(...originPosition);
+      const destination = new THREE.Vector3(...destinations[destIndex]);
+      
+      // Calculate curve height based on distance
+      const distance = origin.distanceTo(destination);
+      const midpoint = new THREE.Vector3().addVectors(origin, destination).multiplyScalar(0.5);
+      const normal = new THREE.Vector3().copy(midpoint).normalize();
+      
+      // Pull the midpoint out from the sphere to create an arc
+      midpoint.add(normal.multiplyScalar(distance * 0.3));
+      
+      // Create a quadratic bezier curve
+      const curve = new THREE.QuadraticBezierCurve3(
+        origin.multiplyScalar(1.02),
+        midpoint,
+        destination.multiplyScalar(1.02)
+      );
+      
+      // Get position along curve based on time - SLOWER SPEED
+      const speed = 0.08 + (i % 3) * 0.04; // Reduced speed values
+      const offset = (i * 0.3) % 1; // Stagger starting positions
+      let t = ((time * speed) + offset) % 1;
+      
+      // Ease in/out for smoother motion at endpoints
+      t = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      
+      const point = curve.getPoint(t);
+      
+      // Update position
+      positionArray[i * 3] = point.x;
+      positionArray[i * 3 + 1] = point.y;
+      positionArray[i * 3 + 2] = point.z;
+    }
+    
+    // Update tube materials
+    tubeMaterialsRef.current.forEach((materialRef, i) => {
+      if (materialRef.current) {
+        // Calculate path progress (0-1) - SLOWER ANIMATION
+        const pathCycleTime = 6; // Seconds for a complete cycle
+        const cyclePosition = ((time * (1 / pathCycleTime)) + (i * 0.1)) % 1;
+        
+        // Update material uniforms
+        materialRef.current.uniforms.time.value = time;
+        materialRef.current.uniforms.progress.value = cyclePosition;
+      }
+    });
+    
+    particlesRef.current.geometry.attributes.position.needsUpdate = true;
+  });
+  
+  return (
+    <>
+      {/* Tube paths */}
+      {tubes.map((tubeGeometry, i) => (
+        <mesh key={i} ref={tubesRef.current[i]}>
+          <primitive object={tubeGeometry} attach="geometry" />
+          <shaderMaterial
+            ref={tubeMaterialsRef.current[i]}
+            transparent={true}
+            vertexShader={`
+              varying vec2 vUv;
+              
+              void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }
+            `}
+            fragmentShader={`
+              uniform vec3 color;
+              uniform float time;
+              uniform float progress;
+              varying vec2 vUv;
+              
+              void main() {
+                // vUv.x is along the tube (0 at start, 1 at end)
+                float distFromWave = abs(vUv.x - progress);
+                float waveLength = 0.4;
+                
+                // Create visible wave section
+                float visibility = distFromWave < waveLength/2.0 
+                  ? 1.0 - (distFromWave / (waveLength/2.0)) 
+                  : 0.0;
+                
+                // Add a stronger tail effect that's always visible at the source
+                float sourceFade = max(0.0, 0.3 - vUv.x * 0.6); // Higher opacity near the source (when vUv.x is close to 0)
+                float tailEffect = vUv.x < progress ? 0.3 : 0.0; // Stronger tail (increased from 0.15 to 0.3)
+                
+                // Add a pulse
+                float pulse = 0.9 + 0.1 * sin(time * 2.0 + vUv.x * 10.0);
+                
+                // Combine effects - ensure source is always visible
+                float alpha = max(max(visibility * pulse, tailEffect), sourceFade);
+                
+                // Never completely transparent
+                alpha = max(alpha, 0.1);
+                
+                // Glow effect
+                vec3 glowColor = mix(color, vec3(1.0, 1.0, 1.0), visibility * 0.7);
+                
+                gl_FragColor = vec4(glowColor, alpha);
+              }
+            `}
+            uniforms={{
+              color: { value: new THREE.Color(color) },
+              time: { value: 0 },
+              progress: { value: 0 }
+            }}
+          />
+        </mesh>
+      ))}
+      
+      {/* Particles along the curves */}
+      <points ref={particlesRef}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={positions.length / 3}
+            array={new Float32Array(positions)}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <pointsMaterial
+          size={0.06}
+          color={color}
+          transparent
+          opacity={0.8}
+          sizeAttenuation={true}
+        />
+      </points>
+    </>
+  );
+}
+
+// 3D Globe Component with connections
+function Globe({ color = '#eab308' }) {
+  const globeGroupRef = useRef();
+  const pointsRef = useRef();
+  const pointsMaterialRef = useRef();
+  
+  // Uganda coordinates (approx lat/long to 3D position)
+  const originPosition = useMemo(() => {
+    // Uganda is roughly at 1°N, 32°E
+    const lat = 1 * (Math.PI / 180);
+    const lng = 32 * (Math.PI / 180);
+    const x = -Math.cos(lat) * Math.sin(lng);
+    const y = Math.sin(lat);
+    const z = Math.cos(lat) * Math.cos(lng);
+    return [x, y, z];
+  }, []);
+  
+  // Generate destination points around the globe
+  const destinations = useMemo(() => {
+    return [
+      { lat: 40, lng: -74 }, // New York
+      { lat: 51, lng: 0 },   // London
+      { lat: 35, lng: 139 }, // Tokyo
+      { lat: -33, lng: 151 }, // Sydney
+      { lat: -1, lng: 36 },  // Nairobi
+      { lat: 19, lng: 72 },  // Mumbai
+      { lat: 55, lng: 37 },  // Moscow
+      { lat: -34, lng: -58 }, // Buenos Aires
+    ].map(({ lat, lng }) => {
+      const latRad = lat * (Math.PI / 180);
+      const lngRad = lng * (Math.PI / 180);
+      const x = -Math.cos(latRad) * Math.sin(lngRad);
+      const y = Math.sin(latRad);
+      const z = Math.cos(latRad) * Math.cos(lngRad);
+      return [x, y, z];
+    });
+  }, []);
+  
+  // Create sphere points with patterns
+  const { positions, sizes, colors } = useMemo(() => {
+    const positions = [];
+    const sizes = [];
+    const colors = [];
+    
+    // Regular distribution for base sphere
+    const baseCount = 1200;
+    for (let i = 0; i < baseCount; i++) {
+      // Random spherical coordinates
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos((Math.random() * 2) - 1);
+      
+      // Convert to cartesian
+      const x = Math.sin(phi) * Math.cos(theta);
+      const y = Math.sin(phi) * Math.sin(theta);
+      const z = Math.cos(phi);
+      
+      positions.push(x, y, z);
+      
+      // Random sizes for dots
+      const size = 0.015 + Math.random() * 0.02;
+      sizes.push(size);
+      
+      // Color variations (staying in amber/yellow palette)
+      colors.push(0.9, 0.6 + Math.random() * 0.3, 0.1 + Math.random() * 0.1);
+    }
+    
+    // Add circular patterns - Spiral pattern 1
+    const circleCount = 80;
+    let centerLat = 35; // Latitude for center of pattern
+    let centerLng = 20; // Longitude for center of pattern
+    
+    // Convert pattern center to 3D coordinates
+    const centerLatRad = centerLat * (Math.PI / 180);
+    const centerLngRad = centerLng * (Math.PI / 180);
+    const centerX = -Math.cos(centerLatRad) * Math.sin(centerLngRad);
+    const centerY = Math.sin(centerLatRad);
+    const centerZ = Math.cos(centerLatRad) * Math.cos(centerLngRad);
+    
+    // Create a basis for the spiral
+    const up = new THREE.Vector3(centerX, centerY, centerZ).normalize();
+    let right = new THREE.Vector3(1, 0, 0);
+    if (Math.abs(up.y) < 0.99) {
+      right.crossVectors(up, new THREE.Vector3(0, 1, 0)).normalize();
+    } else {
+      right.crossVectors(up, new THREE.Vector3(1, 0, 0)).normalize();
+    }
+    const forward = new THREE.Vector3().crossVectors(right, up).normalize();
+    
+    // Add spiral points
+    for (let i = 0; i < circleCount; i++) {
+      const angle = (i / circleCount) * Math.PI * 15;
+      const radius = 0.05 + (i / circleCount) * 0.2;
+      
+      const x = centerX + Math.cos(angle) * radius * right.x + Math.sin(angle) * radius * forward.x;
+      const y = centerY + Math.cos(angle) * radius * right.y + Math.sin(angle) * radius * forward.y;
+      const z = centerZ + Math.cos(angle) * radius * right.z + Math.sin(angle) * radius * forward.z;
+      
+      // Normalize to surface of sphere
+      const length = Math.sqrt(x*x + y*y + z*z);
+      positions.push(x/length, y/length, z/length);
+      
+      // Larger sizes for pattern
+      sizes.push(0.03 + (i / circleCount) * 0.01);
+      
+      // Yellow to amber colors
+      colors.push(0.95, 0.7 + (i / circleCount) * 0.2, 0.2);
+    }
+    
+    // Add circular patterns - Spiral pattern 2
+    centerLat = -20; // Latitude for center of second pattern
+    centerLng = -30; // Longitude for center of second pattern
+    
+    // Convert pattern center to 3D coordinates
+    const centerLatRad2 = centerLat * (Math.PI / 180);
+    const centerLngRad2 = centerLng * (Math.PI / 180);
+    const centerX2 = -Math.cos(centerLatRad2) * Math.sin(centerLngRad2);
+    const centerY2 = Math.sin(centerLatRad2);
+    const centerZ2 = Math.cos(centerLatRad2) * Math.cos(centerLngRad2);
+    
+    // Create a basis for the spiral
+    const up2 = new THREE.Vector3(centerX2, centerY2, centerZ2).normalize();
+    let right2 = new THREE.Vector3(1, 0, 0);
+    if (Math.abs(up2.y) < 0.99) {
+      right2.crossVectors(up2, new THREE.Vector3(0, 1, 0)).normalize();
+    } else {
+      right2.crossVectors(up2, new THREE.Vector3(1, 0, 0)).normalize();
+    }
+    const forward2 = new THREE.Vector3().crossVectors(right2, up2).normalize();
+    
+    // Add spiral points
+    for (let i = 0; i < circleCount; i++) {
+      const angle = (i / circleCount) * Math.PI * 15;
+      const radius = 0.05 + (i / circleCount) * 0.2;
+      
+      const x = centerX2 + Math.cos(angle) * radius * right2.x + Math.sin(angle) * radius * forward2.x;
+      const y = centerY2 + Math.cos(angle) * radius * right2.y + Math.sin(angle) * radius * forward2.y;
+      const z = centerZ2 + Math.cos(angle) * radius * right2.z + Math.sin(angle) * radius * forward2.z;
+      
+      // Normalize to surface of sphere
+      const length = Math.sqrt(x*x + y*y + z*z);
+      positions.push(x/length, y/length, z/length);
+      
+      // Larger sizes for pattern
+      sizes.push(0.03 + (i / circleCount) * 0.01);
+      
+      // Yellow to amber colors
+      colors.push(0.95, 0.7 + (i / circleCount) * 0.2, 0.2);
+    }
+    
+    // Add concentric circles around Uganda
+    const circleRings = 3;
+    const pointsPerRing = 30;
+    
+    for (let ring = 0; ring < circleRings; ring++) {
+      const ringRadius = 0.1 + ring * 0.08;
+      
+      for (let i = 0; i < pointsPerRing; i++) {
+        const angle = (i / pointsPerRing) * Math.PI * 2;
+        
+        const right3 = new THREE.Vector3(1, 0, 0).cross(
+          new THREE.Vector3(originPosition[0], originPosition[1], originPosition[2])
+        ).normalize();
+        
+        const forward3 = new THREE.Vector3(originPosition[0], originPosition[1], originPosition[2])
+          .cross(right3).normalize();
+        
+        const x = originPosition[0] + Math.cos(angle) * ringRadius * right3.x + 
+                  Math.sin(angle) * ringRadius * forward3.x;
+        const y = originPosition[1] + Math.cos(angle) * ringRadius * right3.y + 
+                  Math.sin(angle) * ringRadius * forward3.y;
+        const z = originPosition[2] + Math.cos(angle) * ringRadius * right3.z + 
+                  Math.sin(angle) * ringRadius * forward3.z;
+        
+        // Normalize to surface of sphere
+        const length = Math.sqrt(x*x + y*y + z*z);
+        positions.push(x/length, y/length, z/length);
+        
+        // Larger sizes for rings
+        sizes.push(0.04);
+        
+        // Bright yellow color
+        colors.push(1.0, 0.8, 0.1);
+      }
+    }
+    
+    return { positions, sizes, colors };
+  }, [originPosition]);
+  
+  // Animate the globe rotation
+  useFrame(({ clock }) => {
+    if (globeGroupRef.current) {
+      // Slower rotation - reduced from 0.1 to 0.05
+      globeGroupRef.current.rotation.y = clock.getElapsedTime() * 0.05;
+    }
+    
+    if (pointsMaterialRef.current) {
+      // Pulse the dot sizes - slower pulse
+      pointsMaterialRef.current.size = pointsMaterialRef.current.userData.baseSize * 
+        (1 + 0.1 * Math.sin(clock.getElapsedTime() * 1)); // Reduced from 2 to 1 for slower pulse
+    }
+  });
+  
+  return (
+    // Everything is now in one group that rotates together
+    <group ref={globeGroupRef}>
+      {/* Points for the globe surface */}
+      <points ref={pointsRef}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={positions.length / 3}
+            array={new Float32Array(positions)}
+            itemSize={3}
+          />
+          <bufferAttribute
+            attach="attributes-color"
+            count={colors.length / 3}
+            array={new Float32Array(colors)}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <pointsMaterial
+          ref={pointsMaterialRef}
+          size={0.025}
+          sizeAttenuation={true}
+          vertexColors={true}
+          transparent
+          opacity={0.9}
+          userData={{ baseSize: 0.025 }}
+          depthWrite={false}
+        />
+      </points>
+      
+      {/* Origin point (Uganda) */}
+      <mesh position={[originPosition[0] * 1.02, originPosition[1] * 1.02, originPosition[2] * 1.02]}>
+        <sphereGeometry args={[0.04, 16, 16]} /> {/* Increased from 0.03 to 0.04 */}
+        <meshBasicMaterial color="#ff9900" />
+      </mesh>
+      
+      {/* Destination points */}
+      {destinations.map((position, i) => (
+        <mesh 
+          key={i} 
+          position={[position[0] * 1.02, position[1] * 1.02, position[2] * 1.02]}
+        >
+          <sphereGeometry args={[0.02, 16, 16]} /> {/* Increased from 0.015 to 0.02 */}
+          <meshBasicMaterial color={color} />
+        </mesh>
+      ))}
+      
+      {/* Animated particles and loading bars along the curves */}
+      <MovingParticles 
+        originPosition={originPosition} 
+        destinations={destinations} 
+        color={color} 
+      />
+    </group>
+  );
+}
 
 export default function DigitalMarketingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,179 +516,231 @@ export default function DigitalMarketingPage() {
       
       {/* Hero Section with marketing visualizations */}
       <motion.section 
-        className="pt-32 pb-16 bg-[#fff8f4] relative overflow-hidden"
+        className="pt-36 pb-24 lg:min-h-screen flex items-center bg-gradient-to-br from-yellow-50 to-amber-100 relative overflow-hidden"
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        {/* Parallax Analytics Dashboard */}
-        <motion.div 
-          className="absolute top-10 right-10 opacity-10"
-          style={{ y: chartY }}
-        >
-          <div className="w-32 h-24 bg-yellow-200 rounded-xl shadow-lg p-3">
-            <div className="flex justify-between items-end h-full space-x-1">
-              {[65, 80, 45, 90, 75, 95].map((height, i) => (
-                <motion.div 
-                  key={i} 
-                  className="bg-yellow-400 rounded-sm flex-1"
-                  style={{ height: `${height}%` }}
-                  animate={{ 
-                    height: [`${height}%`, `${height + 15}%`, `${height}%`],
-                    backgroundColor: ['#c084fc', '#a855f7', '#c084fc']
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 }}
-                />
-              ))}
-            </div>
-          </div>
-        </motion.div>
+        {/* Background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-yellow-300/20"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                width: `${Math.random() * 20 + 8}px`,
+                height: `${Math.random() * 20 + 8}px`,
+              }}
+              animate={{
+                y: [0, -15, 0],
+                opacity: [0.1, 0.3, 0.1],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: Math.random() * 3 + 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
 
-        {/* Floating Social Media Icons */}
-        <motion.div 
-          className="absolute top-20 left-20 opacity-20"
-          style={{ y: socialY }}
-        >
-          <div className="grid grid-cols-2 gap-2">
-            {[
-              { icon: "📱", color: "bg-yellow-200" },
-              { icon: "📊", color: "bg-violet-200" },
-              { icon: "💬", color: "bg-yellow-300" },
-              { icon: "🎯", color: "bg-indigo-200" }
-            ].map((item, i) => (
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Content */}
+            <motion.div variants={fadeInUp} className="order-2 lg:order-1">
               <motion.div 
-                key={i}
-                className={`w-8 h-8 ${item.color} rounded-lg shadow-lg flex items-center justify-center text-sm`}
-                animate={{ 
-                  y: [0, -10, 0],
-                  rotate: [0, 5, 0],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ 
-                  duration: 2 + i * 0.5,
-                  repeat: Infinity,
-                  delay: i * 0.3,
-                  ease: "easeInOut"
-                }}
+                className="flex items-center mb-8"
+                variants={itemVariants}
               >
-                {item.icon}
+                <div className="bg-gradient-to-r from-yellow-600 to-amber-700 p-1 rounded-xl shadow-lg">
+                  <motion.div 
+                    className="bg-white rounded-lg flex items-center justify-center w-16 h-16"
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <motion.svg 
+                      className="w-8 h-8 text-yellow-700" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <motion.path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ 
+                          duration: 1.5, 
+                          delay: 0.5,
+                          ease: [0.25, 0.46, 0.45, 0.94]
+                        }}
+                      />
+                    </motion.svg>
+                  </motion.div>
+                </div>
+                <div className="ml-4">
+                  <span className="text-sm font-medium uppercase tracking-wider text-yellow-700">Global Marketing</span>
+                </div>
               </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Campaign Performance Indicator */}
-        <motion.div 
-          className="absolute bottom-20 right-32 opacity-15"
-          style={{ y: campaignY }}
-        >
-          <div className="w-20 h-12 bg-yellow-300 rounded-lg shadow-lg p-2">
-            <div className="flex justify-between items-center mb-1">
-              <div className="text-xs font-bold text-yellow-700">ROI</div>
-              <motion.div 
-                className="text-xs font-bold text-yellow-800"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+              
+              <motion.h1 
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-yellow-900"
+                variants={fadeInUp}
               >
-                245%
+                Digital <br className="hidden lg:block" />
+                <span className="relative">
+                  Marketing
+                  <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-yellow-600"></span>
+                </span>
+              </motion.h1>
+              
+              <motion.p 
+                className="text-xl text-yellow-800/80 mb-10 leading-relaxed"
+                variants={fadeInUp}
+              >
+                Strategic campaigns that drive growth, expand your global reach, and maximize ROI across all digital channels.
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-5"
+                variants={containerVariants}
+              >
+                <motion.button
+                  onClick={() => setIsModalOpen(true)}
+                  className="group relative overflow-hidden bg-yellow-700 text-white font-medium rounded-xl px-8 py-4 transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-yellow-800"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  <span className="relative z-10 flex items-center">
+                    <span className="mr-2">Why Digital Marketing Matters</span>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-yellow-600 to-amber-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </motion.button>
+                
+                <motion.div variants={buttonVariants}>
+                  <Link 
+                    href="/#contact" 
+                    className="group relative overflow-hidden bg-white text-yellow-900 border-2 border-yellow-300 font-medium rounded-xl px-8 py-4 transition-all duration-300 shadow-md hover:shadow-xl flex items-center justify-center"
+                    whileHover="hover"
+                    whileTap="tap"
+                  >
+                    <span className="mr-2">Get Started</span>
+                    <svg className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </Link>
+                </motion.div>
               </motion.div>
-            </div>
-            <div className="w-full h-2 bg-yellow-400 rounded-full relative overflow-hidden">
-              <motion.div 
-                className="absolute left-0 top-0 h-full bg-yellow-600 rounded-full"
-                animate={{ width: ['0%', '85%', '0%'] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
-          </div>
-        </motion.div>
 
-        {/* Floating Engagement Metrics */}
-        <motion.div 
-          className="absolute top-1/3 left-1/4 opacity-10"
-          animate={{ 
-            y: [0, -15, 0],
-            x: [0, 10, 0]
-          }}
-          transition={{ 
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          <div className="w-16 h-10 bg-yellow-200 rounded-lg shadow-lg p-1">
-            <div className="flex items-center justify-center h-full">
+              {/* Scroll indicator */}
               <motion.div 
-                className="text-xs font-bold text-yellow-600"
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                className="mt-16 flex items-center text-yellow-600"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 0.8 }}
               >
-                +47%
+                <div className="w-10 h-px bg-yellow-300 mr-3"></div>
+                <span className="text-sm mr-2">Scroll to explore</span>
+                <motion.svg 
+                  className="w-5 h-5" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  animate={{ y: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </motion.svg>
               </motion.div>
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="container relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 bg-yellow-100 rounded-xl mb-6 shadow-lg border-2 border-yellow-600"
-              variants={iconVariants}
-              // whileHover={{
-              //   scale: 1.1,
-              //   transition: { duration: 0.3 }
-              // }}
-            >
-              <motion.svg 
-                className="w-10 h-10 text-yellow-600" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <motion.path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ 
-                    duration: 1.5, 
-                    delay: 0.5,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                />
-              </motion.svg>
             </motion.div>
-            
-            <motion.h1 
-              className="text-4xl sm:text-5xl font-bold mb-6 text-yellow-900"
-              variants={fadeInUp}
-            >
-              Digital Marketing
-            </motion.h1>
-            
-            <motion.p 
-              className="text-xl text-gray-700 max-w-2xl mx-auto mb-8 lead"
-              variants={fadeInUp}
-            >
-              Strategic digital marketing campaigns that drive growth, increase brand awareness, and maximize ROI.
-            </motion.p>
 
-            {/* Learn More Button */}
-            <motion.button
-              onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center px-8 py-4 bg-[#5d4200] text-[#ebc06c] font-semibold rounded-lg shadow-lg transition-shadow duration-200 hover:shadow-xl cursor-pointer hover:underline decoration-[#ebc06c]"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
+            {/* Right Column - 3D Globe Visualization */}
+            <motion.div 
+              className="order-1 lg:order-2 flex justify-center"
+              variants={fadeInUp}
             >
-              <span className="mr-2 ">Why Digital Marketing is Essential</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </motion.button>
+              <div className="relative">
+                {/* 3D Globe with Three.js */}
+                <motion.div 
+                  className="w-full max-w-xl h-[500px] bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 overflow-hidden relative"
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                >
+                  {/* Header */}
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <div className="text-lg font-semibold text-gray-800">Global Campaign Reach</div>
+                    </div>
+                    <div className="text-sm text-yellow-600 font-medium">Live Data</div>
+                  </div>
+                  
+                  {/* Three.js Canvas for 3D Globe */}
+                  <div className="relative h-[320px] mb-6">
+                    <Canvas
+                      camera={{ position: [0, 0, 2.5], fov: 45 }}
+                      style={{ background: 'transparent' }}
+                    >
+                      <ambientLight intensity={0.5} />
+                      <pointLight position={[10, 10, 10]} />
+                      <Globe color="#eab308" />
+                    </Canvas>
+                  </div>
+                  
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="bg-amber-50 rounded-xl p-4 flex items-center">
+                      <div className="mr-3 bg-amber-100 p-2 rounded-lg">
+                        <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="text-xs text-amber-700 font-medium">Audience Size</div>
+                        <div className="text-lg font-bold text-amber-900">5.2M</div>
+                      </div>
+                    </div>
+                    <div className="bg-amber-50 rounded-xl p-4 flex items-center">
+                      <div className="mr-3 bg-amber-100 p-2 rounded-lg">
+                        <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="text-xs text-amber-700 font-medium">Demographics</div>
+                        <div className="text-lg font-bold text-amber-900">28</div>
+                      </div>
+                    </div>
+                    <div className="bg-amber-50 rounded-xl p-4 flex items-center">
+                      <div className="mr-3 bg-amber-100 p-2 rounded-lg">
+                        <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="text-xs text-amber-700 font-medium">Engagement</div>
+                        <div className="text-lg font-bold text-amber-900">8.7%</div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </motion.section>

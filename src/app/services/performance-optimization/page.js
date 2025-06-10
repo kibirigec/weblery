@@ -50,135 +50,318 @@ export default function PerformanceOptimizationPage() {
       
       {/* Hero Section */}
       <motion.section 
-        className="pt-32 pb-16 bg-orange-50/50 relative overflow-hidden"
+        className="pt-36 pb-24 lg:min-h-screen flex items-center bg-gradient-to-br from-orange-50 to-orange-100 relative overflow-hidden"
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        {/* Parallax Performance Charts */}
-        <motion.div 
-          className="absolute top-10 right-10 opacity-10"
-          style={{ y: chartY }}
-        >
-          <div className="w-32 h-24 bg-orange-200 rounded-xl shadow-lg p-2">
-            <div className="grid grid-cols-6 gap-1 h-full items-end">
-              {[60, 80, 90, 75, 95, 85].map((height, i) => (
-                <motion.div 
-                  key={i} 
-                  className="bg-orange-400 rounded-sm"
-                  style={{ height: `${height}%` }}
-                  animate={{ height: [`${height}%`, `${height + 10}%`, `${height}%`] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                />
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Floating Speed Indicators */}
-        <motion.div 
-          className="absolute top-20 left-20 opacity-20"
-          animate={{ 
-            y: [0, -15, 0],
-            rotate: [0, 360, 0]
-          }}
-          transition={{ 
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          <div className="w-16 h-16 bg-orange-200 rounded-full shadow-lg flex items-center justify-center relative">
-            <div className="w-12 h-12 border-4 border-orange-400 rounded-full relative">
-              <div className="absolute top-1 left-1/2 w-1 h-4 bg-orange-600 rounded transform -translate-x-1/2 origin-bottom rotate-45"></div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Performance Dashboard */}
-        <motion.div 
-          className="absolute bottom-20 left-1/4 opacity-15"
-          style={{ y: dashboardY }}
-        >
-          <div className="w-24 h-16 bg-orange-300 rounded-lg shadow-lg p-2">
-            <div className="flex justify-between mb-1">
-              {[...Array(3)].map((_, i) => (
-                <motion.div 
-                  key={i} 
-                  className="w-2 h-2 bg-orange-500 rounded-full"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.5 }}
-                />
-              ))}
-            </div>
-            <div className="space-y-1">
-              <div className="w-full h-1 bg-orange-400 rounded"></div>
-              <div className="w-3/4 h-1 bg-orange-400 rounded"></div>
-              <div className="w-1/2 h-1 bg-orange-400 rounded"></div>
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="container relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 bg-orange-100 rounded-xl mb-6 shadow-lg border-2 border-orange-900"
-              variants={iconVariants}
-              whileHover={{
-                scale: 1.1,
-                transition: { duration: 0.3 }
+        {/* Background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-orange-300/20"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                width: `${Math.random() * 20 + 8}px`,
+                height: `${Math.random() * 20 + 8}px`,
               }}
-            >
-              <motion.svg 
-                className="w-10 h-10 text-orange-700" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <motion.path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ 
-                    duration: 1.5, 
-                    delay: 0.5,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                />
-              </motion.svg>
-            </motion.div>
-            
-            <motion.h1 
-              className="text-4xl sm:text-5xl font-bold mb-6 text-orange-900"
-              variants={fadeInUp}
-            >
-              Performance Optimization
-            </motion.h1>
-            
-            <motion.p 
-              className="text-xl text-gray-700 max-w-2xl mx-auto mb-8 lead"
-              variants={fadeInUp}
-            >
-              Lightning-fast websites and applications that deliver exceptional user experiences and higher conversions.
-            </motion.p>
+              animate={{
+                y: [0, -15, 0],
+                opacity: [0.1, 0.3, 0.1],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: Math.random() * 3 + 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
 
-            {/* Learn More Button */}
-            <motion.button
-              onClick={() => setIsModalOpen(true)}
-              className="inline-flex  bg-[#713719] !text-[#ffb694] items-center justify-center px-8 py-4  font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 cursor-pointer hover:underline decoration-[#ffb694]"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Content */}
+            <motion.div variants={fadeInUp} className="order-2 lg:order-1">
+              <motion.div 
+                className="flex items-center mb-8"
+                variants={itemVariants}
+              >
+                <div className="bg-gradient-to-r from-orange-600 to-orange-700 p-1 rounded-xl shadow-lg">
+                  <motion.div 
+                    className="bg-white rounded-lg flex items-center justify-center w-16 h-16"
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <motion.svg 
+                      className="w-8 h-8 text-orange-700" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <motion.path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ 
+                          duration: 1.5, 
+                          delay: 0.5,
+                          ease: [0.25, 0.46, 0.45, 0.94]
+                        }}
+                      />
+                    </motion.svg>
+                  </motion.div>
+                </div>
+                <div className="ml-4">
+                  <span className="text-sm font-medium uppercase tracking-wider text-orange-700">Speed Optimization</span>
+                </div>
+              </motion.div>
+              
+              <motion.h1 
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-orange-900"
+                variants={fadeInUp}
+              >
+                Performance <br className="hidden lg:block" />
+                <span className="relative">
+                  Optimization
+                  <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-orange-600"></span>
+                </span>
+              </motion.h1>
+              
+              <motion.p 
+                className="text-xl text-orange-800/80 mb-10 leading-relaxed"
+                variants={fadeInUp}
+              >
+                Lightning-fast websites and applications that deliver exceptional user experiences and higher conversions.
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-5"
+                variants={containerVariants}
+              >
+                <motion.button
+                  onClick={() => setIsModalOpen(true)}
+                  className="group relative overflow-hidden bg-orange-700 text-white font-medium rounded-xl px-8 py-4 transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-orange-800"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  <span className="relative z-10 flex items-center">
+                    <span className="mr-2">Why Speed Matters</span>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </motion.button>
+                
+                <motion.div variants={buttonVariants}>
+                  <Link 
+                    href="/#contact" 
+                    className="group relative overflow-hidden bg-white text-orange-900 border-2 border-orange-300 font-medium rounded-xl px-8 py-4 transition-all duration-300 shadow-md hover:shadow-xl flex items-center justify-center"
+                    whileHover="hover"
+                    whileTap="tap"
+                  >
+                    <span className="mr-2">Get Started</span>
+                    <svg className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </Link>
+                </motion.div>
+              </motion.div>
+
+              {/* Scroll indicator */}
+              <motion.div 
+                className="mt-16 flex items-center text-orange-600"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 0.8 }}
+              >
+                <div className="w-10 h-px bg-orange-300 mr-3"></div>
+                <span className="text-sm mr-2">Scroll to explore</span>
+                <motion.svg 
+                  className="w-5 h-5" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  animate={{ y: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </motion.svg>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Column - Performance Visualization */}
+            <motion.div 
+              className="order-1 lg:order-2 flex justify-center"
+              variants={fadeInUp}
             >
-              <span className="mr-2 ">Why Speed Matters for Business</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </motion.button>
+              <div className="relative">
+                {/* Performance Dashboard Mockup */}
+                <motion.div 
+                  className="w-full max-w-md h-[400px] bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 overflow-hidden relative"
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                >
+                  {/* Dashboard header */}
+                  <div className="flex justify-between items-center mb-6">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                      <div className="text-lg font-semibold text-gray-800">Performance Dashboard</div>
+                    </div>
+                    <div className="flex space-x-2">
+                      {[...Array(3)].map((_, i) => (
+                        <motion.div 
+                          key={i}
+                          className="w-2 h-2 bg-orange-300 rounded-full"
+                          animate={{ opacity: [0.4, 1, 0.4] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Performance graph */}
+                  <div className="h-32 relative mb-6">
+                    <div className="absolute left-0 bottom-0 h-full w-full">
+                      <svg className="w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="none">
+                        {/* Grid lines */}
+                        {[...Array(5)].map((_, i) => (
+                          <line 
+                            key={i} 
+                            x1="0" 
+                            y1={20 * i} 
+                            x2="300" 
+                            y2={20 * i} 
+                            stroke="#e5e7eb" 
+                            strokeWidth="1" 
+                          />
+                        ))}
+                        
+                        {/* "Before" line */}
+                        <motion.path 
+                          d="M0,80 C30,70 60,85 90,75 C120,65 150,80 180,70 C210,60 240,75 270,65 L300,60" 
+                          fill="none" 
+                          stroke="#fda4af" 
+                          strokeWidth="3"
+                          strokeDasharray="5,5"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 1 }}
+                        />
+                        
+                        {/* "After" line */}
+                        <motion.path 
+                          d="M0,60 C30,40 60,45 90,25 C120,15 150,20 180,10 C210,5 240,15 270,10 L300,5" 
+                          fill="none" 
+                          stroke="#f97316" 
+                          strokeWidth="3"
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 2, delay: 0.5 }}
+                        />
+                      </svg>
+                    </div>
+                    
+                    {/* Labels */}
+                    <div className="absolute -left-2 top-0 h-full flex flex-col justify-between text-xs text-gray-500">
+                      <div>Fast</div>
+                      <div>Slow</div>
+                    </div>
+                  </div>
+                  
+                  {/* Legend and stats */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex space-x-4">
+                      <div className="flex items-center">
+                        <div className="w-3 h-3 bg-red-300 rounded-full mr-2"></div>
+                        <span className="text-xs text-gray-600">Before</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
+                        <span className="text-xs text-gray-600">After</span>
+                      </div>
+                    </div>
+                    
+                    <motion.div 
+                      className="flex items-center space-x-1 bg-orange-100 px-3 py-1 rounded-full"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", delay: 1.5 }}
+                    >
+                      <svg className="w-4 h-4 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                      <span className="text-sm font-medium text-orange-800">75% Faster</span>
+                    </motion.div>
+                  </div>
+                  
+                  {/* Performance metrics */}
+                  <div className="grid grid-cols-2 gap-4 mt-8">
+                    {[
+                      { label: "Load Time", before: "4.2s", after: "1.1s" },
+                      { label: "First Contentful Paint", before: "2.8s", after: "0.7s" },
+                      { label: "Time to Interactive", before: "5.6s", after: "1.5s" },
+                      { label: "Speed Index", before: "3.9s", after: "1.0s" }
+                    ].map((metric, i) => (
+                      <motion.div 
+                        key={i}
+                        className="flex flex-col"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 1 + (i * 0.2) }}
+                      >
+                        <span className="text-xs text-gray-500">{metric.label}</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="relative w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                            <motion.div 
+                              className="absolute top-0 left-0 h-full bg-orange-500 rounded-full"
+                              initial={{ width: 0 }}
+                              animate={{ width: "75%" }}
+                              transition={{ duration: 1, delay: 1.5 + (i * 0.1) }}
+                            />
+                          </div>
+                          <div className="flex items-center space-x-1 text-xs">
+                            <span className="line-through text-gray-400">{metric.before}</span>
+                            <span className="font-medium text-orange-700">{metric.after}</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+                
+                {/* Decorative elements */}
+                <motion.div 
+                  className="absolute -top-10 -right-10 w-32 h-32 bg-orange-400 rounded-full opacity-20 z-0"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.2, 0.15, 0.2]
+                  }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <motion.div 
+                  className="absolute -bottom-5 -left-5 w-20 h-20 bg-orange-300 rounded-full opacity-30 z-0"
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    opacity: [0.3, 0.2, 0.3]
+                  }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </div>
+            </motion.div>
           </div>
         </div>
       </motion.section>
@@ -320,7 +503,7 @@ export default function PerformanceOptimizationPage() {
                     >
                       95
                     </motion.div>
-            </div>
+                </div>
                 </div>
                 <h3 className="text-lg font-semibold text-orange-900 mb-2">Performance Score</h3>
                 </div>
@@ -562,23 +745,23 @@ export default function PerformanceOptimizationPage() {
                   >
                 Start Your Optimization
                   </motion.span>
-                </Link>
-                </motion.div>
-                <motion.div 
-                whileHover={{ scale: 1.05 }}
-                variants={itemVariants}>
-                  <Link 
-                    href="/#services" 
+              </Link>
+              </motion.div>
+              <motion.div 
+              whileHover={{ scale: 1.05 }}
+              variants={itemVariants}>
+                <Link 
+                  href="/#services" 
                     className="inline-flex items-center justify-center px-8 py-3 bg-white text-orange-900 font-semibold rounded-lg hover:bg-orange-50 transition-colors duration-200 cursor-pointer hover:underline decoration-orange-900"
-                  >
-                    <motion.span
+                >
+                  <motion.span
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    >
+                  >
                 View All Services
                   </motion.span>
-                  </Link>
-                </motion.div>
+              </Link>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
