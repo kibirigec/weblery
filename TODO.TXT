@@ -27,3 +27,7 @@ unified get started buttons
 responsive services
 
 small wordings besides the icons
+
+i dont think the phone canvas is in the right position
+
+heavy refactoring
