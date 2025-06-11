@@ -171,7 +171,7 @@ export default function PricingPreview() {
               
               {/* CTA */}
               <div className="px-6 pb-6 mt-auto">
-                <Link href="/pricing">
+                <Link href="/onboarding">
                   <div 
                     className="w-full py-2 px-4 rounded-lg font-medium text-center transition-all duration-300 text-white"
                     style={{ background: tier.accentGradient }}

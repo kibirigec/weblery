@@ -187,7 +187,7 @@ export default function Hero() {
               variants={containerVariants}
             >
               <motion.div variants={buttonVariants}>
-                <Link href="#contact">
+                <Link href="/onboarding">
                   <motion.div
                     className="bg-black text-white text-center px-8 rounded-lg py-3 cursor-pointer"
                     variants={buttonVariants}
