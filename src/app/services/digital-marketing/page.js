@@ -491,11 +491,17 @@ export default function DigitalMarketingPage() {
   const heroRef = useRef(null);
   const overviewRef = useRef(null);
   const servicesRef = useRef(null);
+  const strategyRef = useRef(null);
+  const resultsRef = useRef(null);
+  const pricingRef = useRef(null);
   const ctaRef = useRef(null);
 
   const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
   const overviewInView = useInView(overviewRef, { once: true, amount: 0.2 });
   const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
+  const strategyInView = useInView(strategyRef, { once: true, amount: 0.2 });
+  const resultsInView = useInView(resultsRef, { once: true, amount: 0.2 });
+  const pricingInView = useInView(pricingRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
   const containerRef = useRef(null);
@@ -1080,6 +1086,280 @@ export default function DigitalMarketingPage() {
                 </motion.ul>
               </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Pricing Section */}
+      <motion.section
+        ref={pricingRef}
+        className="py-20 bg-yellow-50 relative overflow-hidden"
+        initial="hidden"
+        animate={pricingInView ? "visible" : "hidden"}
+        variants={containerVariants}
+      >
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div 
+            className="absolute top-0 -right-40 w-80 h-80 rounded-full opacity-20"
+            style={{ 
+              background: 'radial-gradient(circle, #fef9c3 0%, rgba(254,249,195,0) 70%)' 
+            }}
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: [0.1, 0.2, 0.1],
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-0 -left-20 w-60 h-60 rounded-full opacity-20"
+            style={{ 
+              background: 'radial-gradient(circle, #fef9c3 0%, rgba(254,249,195,0) 70%)' 
+            }}
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div className="text-center mb-16" variants={fadeInUp}>
+            <motion.h2 
+              className="text-3xl font-bold mb-4 text-yellow-900"
+              variants={fadeInUp}
+            >
+              Digital Marketing Pricing
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-yellow-700/80 max-w-3xl mx-auto"
+              variants={fadeInUp}
+            >
+              Transparent pricing options to maximize your online presence
+            </motion.p>
+          </motion.div>
+
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+            variants={containerVariants}
+          >
+            {/* Starter Campaign Package */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col border border-yellow-100"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+            >
+              <div className="p-6 bg-gradient-to-r from-yellow-500 to-yellow-700 text-white">
+                <h3 className="text-xl font-bold mb-2">Starter Campaign</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold">$2,499</span>
+                  <span className="ml-2 text-sm opacity-80">one-time</span>
+                </div>
+                <p className="mt-3 text-sm opacity-90">Initial marketing boost for small businesses and startups</p>
+              </div>
+              
+              <div className="p-6 flex-grow">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">SEO audit & basic optimization</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Social media profile setup</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Content strategy planning</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">30-day campaign management</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Performance reports</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="px-6 pb-6 mt-auto">
+                <Link href="/contact">
+                  <div className="w-full py-3 px-4 bg-yellow-100 text-yellow-700 rounded-lg font-medium text-center transition-all duration-300 hover:bg-yellow-200">
+                    Get Started
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Growth Package */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col transform scale-105 z-10 border-2 border-yellow-500"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+            >
+              <div className="p-6 bg-gradient-to-r from-yellow-600 to-yellow-800 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0">
+                  <div className="bg-white text-yellow-600 text-xs font-bold uppercase py-1 px-3 transform rotate-12 translate-x-2 -translate-y-1">
+                    Popular
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Growth Package</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold">$4,999</span>
+                  <span className="ml-2 text-sm opacity-80">one-time</span>
+                </div>
+                <p className="mt-3 text-sm opacity-90">Comprehensive marketing solution for growing businesses</p>
+              </div>
+              
+              <div className="p-6 flex-grow">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Complete SEO optimization</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">PPC campaign setup</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Content creation</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Social media management</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">60-day campaign management</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Analytics dashboard</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="px-6 pb-6 mt-auto">
+                <Link href="/contact">
+                  <div className="w-full py-3 px-4 bg-yellow-600 text-white rounded-lg font-medium text-center transition-all duration-300 hover:bg-yellow-700">
+                    Get Started
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Premium Marketing Package */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col border border-yellow-100"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+            >
+              <div className="p-6 bg-gradient-to-r from-amber-600 to-yellow-700 text-white">
+                <h3 className="text-xl font-bold mb-2">Premium Marketing</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold">$9,999</span>
+                  <span className="ml-2 text-sm opacity-80">one-time</span>
+                </div>
+                <p className="mt-3 text-sm opacity-90">Enterprise-level marketing for maximum business impact</p>
+              </div>
+              
+              <div className="p-6 flex-grow">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Advanced SEO strategy</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Multi-channel campaigns</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Conversion optimization</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Email marketing automation</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">90-day campaign management</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Weekly performance reporting</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="px-6 pb-6 mt-auto">
+                <Link href="/contact">
+                  <div className="w-full py-3 px-4 bg-yellow-100 text-yellow-700 rounded-lg font-medium text-center transition-all duration-300 hover:bg-yellow-200">
+                    Contact Us
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.div className="text-center mt-12" variants={fadeInUp}>
+            <p className="text-yellow-700/80 mb-6">
+              All prices are one-time payments. Need a custom solution? Contact us for a tailored quote.
+            </p>
+            <Link href="/pricing">
+              <div className="inline-flex items-center bg-yellow-800 hover:bg-yellow-900 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300">
+                View All Service Packages
+                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </div>
+            </Link>
           </motion.div>
         </div>
       </motion.section>

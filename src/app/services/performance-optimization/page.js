@@ -23,6 +23,7 @@ export default function PerformanceOptimizationPage() {
   const metricsRef = useRef(null);
   const areasRef = useRef(null);
   const benefitsRef = useRef(null);
+  const pricingRef = useRef(null);
   const ctaRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -31,6 +32,7 @@ export default function PerformanceOptimizationPage() {
   const metricsInView = useInView(metricsRef, { once: true, amount: 0.2 });
   const areasInView = useInView(areasRef, { once: true, amount: 0.2 });
   const benefitsInView = useInView(benefitsRef, { once: true, amount: 0.2 });
+  const pricingInView = useInView(pricingRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
   // Parallax scroll effects
@@ -707,6 +709,280 @@ export default function PerformanceOptimizationPage() {
                 <p className="text-gray-600">{benefit.description}</p>
               </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Pricing Section */}
+      <motion.section
+        ref={pricingRef}
+        className="py-20 bg-orange-50 relative overflow-hidden"
+        initial="hidden"
+        animate={pricingInView ? "visible" : "hidden"}
+        variants={containerVariants}
+      >
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div 
+            className="absolute top-0 -right-40 w-80 h-80 rounded-full opacity-20"
+            style={{ 
+              background: 'radial-gradient(circle, #ffedd5 0%, rgba(255,237,213,0) 70%)' 
+            }}
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: [0.1, 0.2, 0.1],
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-0 -left-20 w-60 h-60 rounded-full opacity-20"
+            style={{ 
+              background: 'radial-gradient(circle, #ffedd5 0%, rgba(255,237,213,0) 70%)' 
+            }}
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div className="text-center mb-16" variants={fadeInUp}>
+            <motion.h2 
+              className="text-3xl font-bold mb-4 text-orange-900"
+              variants={fadeInUp}
+            >
+              Performance Optimization Pricing
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-orange-700/80 max-w-3xl mx-auto"
+              variants={fadeInUp}
+            >
+              Transparent pricing options to accelerate your digital presence
+            </motion.p>
+          </motion.div>
+
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+            variants={containerVariants}
+          >
+            {/* Speed Audit Package */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col border border-orange-100"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+            >
+              <div className="p-6 bg-gradient-to-r from-orange-500 to-orange-700 text-white">
+                <h3 className="text-xl font-bold mb-2">Speed Audit</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold">$1,999</span>
+                  <span className="ml-2 text-sm opacity-80">one-time</span>
+                </div>
+                <p className="mt-3 text-sm opacity-90">Initial assessment and recommendations for improvement</p>
+              </div>
+              
+              <div className="p-6 flex-grow">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Comprehensive performance analysis</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Optimization roadmap</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Core Web Vitals report</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Prioritized recommendations</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">One follow-up consultation</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="px-6 pb-6 mt-auto">
+                <Link href="/contact">
+                  <div className="w-full py-3 px-4 bg-orange-100 text-orange-700 rounded-lg font-medium text-center transition-all duration-300 hover:bg-orange-200">
+                    Get Started
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Speed Optimization Package */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col transform scale-105 z-10 border-2 border-orange-500"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+            >
+              <div className="p-6 bg-gradient-to-r from-orange-600 to-orange-800 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0">
+                  <div className="bg-white text-orange-600 text-xs font-bold uppercase py-1 px-3 transform rotate-12 translate-x-2 -translate-y-1">
+                    Popular
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Speed Optimization</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold">$4,499</span>
+                  <span className="ml-2 text-sm opacity-80">one-time</span>
+                </div>
+                <p className="mt-3 text-sm opacity-90">Comprehensive optimization for existing websites and apps</p>
+              </div>
+              
+              <div className="p-6 flex-grow">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Complete performance audit</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Code optimization</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Image optimization</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Caching implementation</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">CDN setup</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">30-day support</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="px-6 pb-6 mt-auto">
+                <Link href="/contact">
+                  <div className="w-full py-3 px-4 bg-orange-600 text-white rounded-lg font-medium text-center transition-all duration-300 hover:bg-orange-700">
+                    Get Started
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Enterprise Performance Package */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col border border-orange-100"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+            >
+              <div className="p-6 bg-gradient-to-r from-red-600 to-orange-700 text-white">
+                <h3 className="text-xl font-bold mb-2">Enterprise Performance</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold">$9,999</span>
+                  <span className="ml-2 text-sm opacity-80">one-time</span>
+                </div>
+                <p className="mt-3 text-sm opacity-90">Complete optimization solution for high-traffic sites</p>
+              </div>
+              
+              <div className="p-6 flex-grow">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Advanced performance audit</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Full-stack optimization</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Database optimization</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Load balancing setup</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Monitoring implementation</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">90-day support</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="px-6 pb-6 mt-auto">
+                <Link href="/contact">
+                  <div className="w-full py-3 px-4 bg-orange-100 text-orange-700 rounded-lg font-medium text-center transition-all duration-300 hover:bg-orange-200">
+                    Contact Us
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.div className="text-center mt-12" variants={fadeInUp}>
+            <p className="text-orange-700/80 mb-6">
+              All prices are one-time payments. Need a custom solution? Contact us for a tailored quote.
+            </p>
+            <Link href="/pricing">
+              <div className="inline-flex items-center bg-orange-800 hover:bg-orange-900 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300">
+                View All Service Packages
+                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </div>
+            </Link>
           </motion.div>
         </div>
       </motion.section>

@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import ServiceModal from '../../components/ServiceModal';
+import PricingSection from '../../components/PricingSection';
 import Link from 'next/link';
 import {
   fadeInUp,
@@ -23,6 +24,7 @@ export default function MobileAppDevelopmentPage() {
   const overviewRef = useRef(null);
   const servicesRef = useRef(null);
   const processRef = useRef(null);
+  const pricingRef = useRef(null);
   const ctaRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -31,6 +33,7 @@ export default function MobileAppDevelopmentPage() {
   const overviewInView = useInView(overviewRef, { once: true, amount: 0.2 });
   const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
   const processInView = useInView(processRef, { once: true, amount: 0.2 });
+  const pricingInView = useInView(pricingRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
   // Parallax scroll effects
@@ -670,6 +673,11 @@ export default function MobileAppDevelopmentPage() {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Pricing Section */}
+      <div ref={pricingRef}>
+        <PricingSection service={mobileAppService} />
+      </div>
 
       {/* CTA Section */}
       <motion.section 

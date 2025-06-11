@@ -22,11 +22,17 @@ export default function AIIntegrationPage() {
   const heroRef = useRef(null);
   const overviewRef = useRef(null);
   const useCasesRef = useRef(null);
+  const processRef = useRef(null);
+  const techRef = useRef(null);
+  const pricingRef = useRef(null);
   const ctaRef = useRef(null);
 
   const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
   const overviewInView = useInView(overviewRef, { once: true, amount: 0.2 });
   const useCasesInView = useInView(useCasesRef, { once: true, amount: 0.2 });
+  const processInView = useInView(processRef, { once: true, amount: 0.2 });
+  const techInView = useInView(techRef, { once: true, amount: 0.2 });
+  const pricingInView = useInView(pricingRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
   const containerRef = useRef(null);
@@ -486,6 +492,279 @@ export default function AIIntegrationPage() {
 
         <div className="container relative z-10">
           {/* Enhanced use cases with AI visualization mockups */}
+        </div>
+      </motion.section>
+
+      {/* Pricing Section */}
+      <motion.section
+        ref={pricingRef}
+        className="py-20 bg-gray-100 relative overflow-hidden"
+        initial="hidden"
+        animate={pricingInView ? "visible" : "hidden"}
+        variants={containerVariants}
+      >
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div 
+            className="absolute top-0 -right-40 w-80 h-80 rounded-full opacity-20"
+            style={{ 
+              background: 'radial-gradient(circle, #f5f5f5 0%, rgba(245,245,245,0) 70%)' 
+            }}
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: [0.1, 0.2, 0.1],
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-0 -left-20 w-60 h-60 rounded-full opacity-20"
+            style={{ 
+              background: 'radial-gradient(circle, #f5f5f5 0%, rgba(245,245,245,0) 70%)' 
+            }}
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div className="text-center mb-16" variants={fadeInUp}>
+            <motion.h2 
+              className="text-3xl font-bold mb-4 text-gray-900"
+              variants={fadeInUp}
+            >
+              AI Integration Pricing
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-gray-700/80 max-w-3xl mx-auto"
+              variants={fadeInUp}
+            >
+              Transform your business with intelligent AI solutions at transparent pricing
+            </motion.p>
+          </motion.div>
+
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+            variants={containerVariants}
+          >
+            {/* Basic Integration Package */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col border border-gray-200"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+            >
+              <div className="p-6 bg-gradient-to-r from-gray-700 to-gray-900 text-white">
+                <h3 className="text-xl font-bold mb-2">Basic Integration</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold">$5,999</span>
+                  <span className="ml-2 text-sm opacity-80">one-time</span>
+                </div>
+                <p className="mt-3 text-sm opacity-90">Entry-level AI solution for specific business needs</p>
+              </div>
+              
+              <div className="p-6 flex-grow">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">AI model selection</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Single integration point</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Basic automation</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Data processing setup</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">30-day support</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="px-6 pb-6 mt-auto">
+                <Link href="/contact">
+                  <div className="w-full py-3 px-4 bg-gray-100 text-gray-700 rounded-lg font-medium text-center transition-all duration-300 hover:bg-gray-200">
+                    Get Started
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Advanced AI Solution Package */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col transform scale-105 z-10 border-2 border-black"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+            >
+              <div className="p-6 bg-gradient-to-r from-gray-800 to-black text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0">
+                  <div className="bg-white text-black text-xs font-bold uppercase py-1 px-3 transform rotate-12 translate-x-2 -translate-y-1">
+                    Popular
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Advanced AI Solution</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold">$12,999</span>
+                  <span className="ml-2 text-sm opacity-80">one-time</span>
+                </div>
+                <p className="mt-3 text-sm opacity-90">Comprehensive AI solution for business optimization</p>
+              </div>
+              
+              <div className="p-6 flex-grow">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Custom AI development</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Multiple integration points</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Advanced automation</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Data analysis dashboard</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">API development</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">60-day support</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="px-6 pb-6 mt-auto">
+                <Link href="/contact">
+                  <div className="w-full py-3 px-4 bg-black text-white rounded-lg font-medium text-center transition-all duration-300 hover:bg-gray-800">
+                    Get Started
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Enterprise AI Package */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col border border-gray-200"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+            >
+              <div className="p-6 bg-gradient-to-r from-gray-700 to-gray-900 text-white">
+                <h3 className="text-xl font-bold mb-2">Enterprise AI</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold">Custom</span>
+                </div>
+                <p className="mt-3 text-sm opacity-90">Full-scale AI implementation for enterprise needs</p>
+              </div>
+              
+              <div className="p-6 flex-grow">
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Enterprise-grade AI</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Machine learning models</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Complex automation</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Data pipeline setup</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">Custom algorithms</span>
+                  </li>
+                  <li className="flex items-start text-sm">
+                    <svg className="w-5 h-5 mr-2 mt-0.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-600">90-day support</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="px-6 pb-6 mt-auto">
+                <Link href="/contact">
+                  <div className="w-full py-3 px-4 bg-gray-100 text-gray-700 rounded-lg font-medium text-center transition-all duration-300 hover:bg-gray-200">
+                    Contact Us
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.div className="text-center mt-12" variants={fadeInUp}>
+            <p className="text-gray-700/80 mb-6">
+              All prices are one-time payments. Need a custom solution? Contact us for a tailored quote.
+            </p>
+            <Link href="/pricing">
+              <div className="inline-flex items-center bg-black hover:bg-gray-900 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300">
+                View All Service Packages
+                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </div>
+            </Link>
+          </motion.div>
         </div>
       </motion.section>
 

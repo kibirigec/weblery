@@ -18,6 +18,8 @@ time icon in perfomance optimization
 
 double animations on hover fix
 
+all animations fix, seems they have a begin position that holds them
+
 unified icons for services
 
 bubbles in cta for other services
@@ -31,3 +33,11 @@ small wordings besides the icons
 i dont think the phone canvas is in the right position
 
 heavy refactoring
+
+remove ModiApp
+
+uniformity everywhere, even servicess
+
+think of liquid glass
+
+underline from left to right

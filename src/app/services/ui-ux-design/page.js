@@ -22,12 +22,14 @@ export default function UIUXDesignPage() {
   const overviewRef = useRef(null);
   const servicesRef = useRef(null);
   const processRef = useRef(null);
+  const pricingRef = useRef(null);
   const ctaRef = useRef(null);
 
   const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
   const overviewInView = useInView(overviewRef, { once: true, amount: 0.2 });
   const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
   const processInView = useInView(processRef, { once: true, amount: 0.2 });
+  const pricingInView = useInView(pricingRef, { once: true, amount: 0.2 });
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
   const containerRef = useRef(null);
@@ -771,6 +773,209 @@ export default function UIUXDesignPage() {
                 <p className="text-gray-600">{step.description}</p>
               </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Pricing Section */}
+      <motion.section 
+        className="section bg-gradient-to-b from-white to-green-50 relative overflow-hidden py-20"
+        ref={pricingRef}
+        initial="hidden"
+        animate={pricingInView ? "visible" : "hidden"}
+        variants={containerVariants}
+      >
+        {/* Background decoration */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <motion.div 
+            className="absolute top-10 -left-10 w-40 h-40 rounded-full"
+            style={{ 
+              background: `radial-gradient(circle, ${uiUxDesignService.accentBg || "#f0fdf4"}40 0%, ${uiUxDesignService.accentBg || "#f0fdf4"}00 70%)` 
+            }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-20 -right-10 w-60 h-60 rounded-full"
+            style={{ 
+              background: `radial-gradient(circle, ${uiUxDesignService.accentBg || "#f0fdf4"}30 0%, ${uiUxDesignService.accentBg || "#f0fdf4"}00 60%)` 
+            }}
+            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <motion.h2 
+              className="text-3xl font-bold mb-3"
+              style={{ color: uiUxDesignService.titleContentColor || "#166534" }}
+              variants={itemVariants}
+            >
+              UI/UX Design Packages
+            </motion.h2>
+            <motion.p 
+              className="text-gray-600 max-w-2xl mx-auto text-lg"
+              variants={itemVariants}
+            >
+              Transparent pricing for user-centered design solutions
+            </motion.p>
+          </div>
+          
+          {/* Pricing cards */}
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"
+            variants={containerVariants}
+          >
+            {[
+              {
+                name: "Essential Design",
+                price: "$3,499",
+                features: [
+                  "User research & analysis",
+                  "Information architecture",
+                  "Wireframes (up to 6 screens)",
+                  "Basic UI design",
+                  "Style guide",
+                  "Design handoff",
+                  "1 round of revisions"
+                ],
+                popular: false,
+                buttonText: "Get Started",
+                description: "Perfect for startups and small projects"
+              },
+              {
+                name: "Professional Design",
+                price: "$6,999",
+                features: [
+                  "Comprehensive user research",
+                  "User personas & journey maps",
+                  "Information architecture",
+                  "Wireframes (up to 12 screens)",
+                  "High-fidelity UI design",
+                  "Interactive prototype",
+                  "Custom design system",
+                  "2 rounds of revisions",
+                  "Developer handoff assets"
+                ],
+                popular: true,
+                buttonText: "Most Popular",
+                description: "Comprehensive solution for medium-sized projects"
+              },
+              {
+                name: "Enterprise UX",
+                price: "$12,999",
+                features: [
+                  "In-depth user research",
+                  "User testing & validation",
+                  "Complete information architecture",
+                  "Wireframes (unlimited screens)",
+                  "Premium UI design",
+                  "Advanced interactions",
+                  "Comprehensive design system",
+                  "Accessibility compliance",
+                  "Animation specifications",
+                  "3 rounds of revisions",
+                  "Complete documentation"
+                ],
+                popular: false,
+                buttonText: "Enterprise Solution",
+                description: "Full-scale design solution for complex projects"
+              }
+            ].map((plan, index) => (
+              <motion.div 
+                key={plan.name}
+                className={`bg-white rounded-xl overflow-hidden transition-all duration-300 ${
+                  plan.popular 
+                    ? 'border-2 shadow-lg md:-mt-4 md:mb-4' 
+                    : 'border shadow-md'
+                }`}
+                style={{ 
+                  borderColor: plan.popular ? uiUxDesignService.accentColor : '#d1fae5'
+                }}
+                variants={itemVariants}
+                transition={{ 
+                  duration: 0.5, 
+                  ease: "easeInOut",
+                  delay: index * 0.2
+                }}
+                whileHover={{ 
+                  y: -5,
+                  boxShadow: plan.popular 
+                    ? '0 20px 30px -10px rgba(0, 0, 0, 0.2)' 
+                    : '0 15px 20px -5px rgba(0, 0, 0, 0.1)'
+                }}
+              >
+                {plan.popular && (
+                  <div 
+                    className="py-1 text-center text-xs font-semibold text-white"
+                    style={{ backgroundColor: uiUxDesignService.accentColor }}
+                  >
+                    Most Popular
+                  </div>
+                )}
+                
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                  <p className="text-sm text-gray-500 mb-4 min-h-[40px]">{plan.description}</p>
+                  
+                  <div className="flex items-baseline mb-4">
+                    <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
+                    <span className="ml-1 text-sm text-gray-500">one-time</span>
+                  </div>
+                  
+                  <button 
+                    className="w-full py-3 px-4 rounded-lg text-sm font-medium transition-all duration-200 mb-6"
+                    style={{ 
+                      backgroundColor: plan.popular ? uiUxDesignService.accentColor : 'transparent',
+                      color: plan.popular ? 'white' : uiUxDesignService.accentColor,
+                      border: plan.popular ? 'none' : `2px solid ${uiUxDesignService.accentColor}`
+                    }}
+                  >
+                    {plan.buttonText}
+                  </button>
+                  
+                  <ul className="space-y-3">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
+                        <svg 
+                          className="w-4 h-4 flex-shrink-0 mr-2 mt-0.5" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                          style={{ color: uiUxDesignService.accentColor }}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-600 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+          
+          {/* Additional information */}
+          <motion.div 
+            className="mt-12 text-center max-w-3xl mx-auto"
+            variants={fadeInUp}
+          >
+            <p className="text-gray-500 text-sm">
+              * All prices are one-time payments for design services. Implementation and development services are available separately. Custom packages available for specific requirements.
+            </p>
+            <div className="mt-6">
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="inline-flex items-center text-sm font-medium"
+                style={{ color: uiUxDesignService.accentColor }}
+              >
+                <span>Need a custom design solution?</span>
+                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
           </motion.div>
         </div>
       </motion.section>

@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
+import PricingPreview from "./components/PricingPreview";
 import About from "./components/About";
 import Process from "./components/Process";
 import Contact from "./components/Contact";
@@ -49,6 +50,9 @@ export default function Home() {
       </motion.div>
       <motion.div variants={sectionVariants}>
         <Services />
+      </motion.div>
+      <motion.div variants={sectionVariants}>
+        <PricingPreview />
       </motion.div>
       <motion.div variants={sectionVariants}>
         <About />
