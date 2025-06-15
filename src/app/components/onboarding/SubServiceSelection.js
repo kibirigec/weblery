@@ -28,22 +28,6 @@ export default function SubServiceSelection({
     return selectedSubServices[activeService?.slug] || [];
   };
   
-  const goToNextService = () => {
-    if (activeServiceIndex < filteredServices.length - 1) {
-      setActiveServiceIndex(prev => prev + 1);
-    } else {
-      onContinue();
-    }
-  };
-  
-  const goToPreviousService = () => {
-    if (activeServiceIndex > 0) {
-      setActiveServiceIndex(prev => prev - 1);
-    } else {
-      onBack();
-    }
-  };
-
   const getServiceIconBgClass = (service) => {
     switch(service?.hoverColor) {
       case 'pink': return 'bg-pink-100';
@@ -118,7 +102,8 @@ export default function SubServiceSelection({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.3 }}
-          className="mb-10"
+          className="mb-8"
+          data-active-service={activeService?.slug}
         >
           {activeService && (
             <>
@@ -141,7 +126,7 @@ export default function SubServiceSelection({
 
               <h3 className="text-lg font-semibold mb-4">Select specific options for {activeService.title}:</h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {activeService.subServices.map((subService) => {
                   const isSelected = getActiveServiceSubServices().includes(subService.id);
                   
@@ -180,26 +165,6 @@ export default function SubServiceSelection({
           )}
         </motion.div>
       </AnimatePresence>
-
-      <div className="flex justify-between">
-        <motion.button
-          onClick={goToPreviousService}
-          className="px-6 py-2 rounded-lg border-2 border-gray-300 text-gray-700 font-medium"
-          whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {activeServiceIndex === 0 ? 'Back to Services' : 'Previous Service'}
-        </motion.button>
-        
-        <motion.button
-          onClick={goToNextService}
-          className="px-8 py-3 rounded-lg bg-black text-white font-medium"
-          whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          {activeServiceIndex < filteredServices.length - 1 ? 'Next Service' : 'Continue'}
-        </motion.button>
-      </div>
     </div>
   );
 } 

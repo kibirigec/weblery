@@ -3,7 +3,7 @@
 import { motion } from 'motion/react';
 import Link from 'next/link';
 
-export default function OnboardingLayout({ children, currentStep, steps, progress, onStepClick }) {
+export default function OnboardingLayout({ children, currentStep, steps, progress, onStepClick, navigationButtons }) {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
@@ -69,14 +69,23 @@ export default function OnboardingLayout({ children, currentStep, steps, progres
       </div>
 
       {/* Main content */}
-      <div className="flex-grow flex items-start justify-center py-12">
+      <div className="flex-grow flex items-start justify-center py-12 pb-24">
         <div className="container mx-auto px-4 max-w-4xl">
           {children}
         </div>
       </div>
       
-      {/* Footer */}
-      <footer className="py-6 bg-gray-50 border-t border-gray-100">
+      {/* Fixed navigation footer */}
+      {navigationButtons && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-4 px-4 z-50">
+          <div className="container mx-auto max-w-4xl flex justify-between">
+            {navigationButtons}
+          </div>
+        </div>
+      )}
+      
+      {/* Regular footer */}
+      <footer className="py-6 bg-gray-50 border-t border-gray-100 mt-auto">
         <div className="container mx-auto px-4 text-center text-gray-500 text-sm">
           <p>You can save your progress and return at any time.</p>
         </div>

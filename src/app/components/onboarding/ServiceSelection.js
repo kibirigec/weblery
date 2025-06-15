@@ -45,18 +45,10 @@ export default function ServiceSelection({ selectedServices, onSelectService, on
 
   const getBorderClass = (hoverColor, isSelected) => {
     if (isSelected) {
-      switch(hoverColor) {
-        case 'pink': return 'border-pink-300';
-        case 'blue': return 'border-blue-300';
-        case 'yellow': return 'border-yellow-300';
-        case 'green': return 'border-green-300';
-        case 'orange': return 'border-orange-300';
-        case 'black': return 'border-gray-400';
-        default: return 'border-gray-300';
-      }
+      return 'border-black border-2';
     }
     
-    return 'border-transparent hover:border-gray-200';
+    return 'border-transparent hover:border-gray-200 border';
   };
 
   return (
@@ -74,7 +66,7 @@ export default function ServiceSelection({ selectedServices, onSelectService, on
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
         variants={{
           hidden: { opacity: 0 },
           show: {
@@ -97,7 +89,7 @@ export default function ServiceSelection({ selectedServices, onSelectService, on
                 hidden: { opacity: 0, y: 20 },
                 show: { opacity: 1, y: 0 }
               }}
-              className={`cursor-pointer rounded-xl p-6 border-2 transition-all duration-300 ${
+              className={`cursor-pointer rounded-xl p-6 transition-all duration-300 ${
                 getBorderClass(service.hoverColor, isSelected)
               } ${isSelected ? 'bg-gray-50' : 'bg-white'}`}
               onClick={() => onSelectService(service.slug)}
@@ -172,31 +164,6 @@ export default function ServiceSelection({ selectedServices, onSelectService, on
           );
         })}
       </motion.div>
-
-      <div className="flex justify-between">
-        <motion.button
-          onClick={onBack}
-          className="px-6 py-2 rounded-lg border-2 border-gray-300 text-gray-700 font-medium"
-          whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Back
-        </motion.button>
-        
-        <motion.button
-          onClick={onContinue}
-          className={`px-8 py-3 rounded-lg font-medium ${
-            selectedServices.length > 0 
-              ? 'bg-black text-white' 
-              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-          }`}
-          whileHover={selectedServices.length > 0 ? { y: -2 } : {}}
-          whileTap={selectedServices.length > 0 ? { scale: 0.98 } : {}}
-          disabled={selectedServices.length === 0}
-        >
-          Continue
-        </motion.button>
-      </div>
     </div>
   );
 } 

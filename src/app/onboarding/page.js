@@ -1,279 +1,436 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import OnboardingLayout from '../components/onboarding/OnboardingLayout';
-import Welcome from '../components/onboarding/Welcome';
-import ServiceSelection from '../components/onboarding/ServiceSelection';
-import SubServiceSelection from '../components/onboarding/SubServiceSelection';
+import TrackSelection from '../components/onboarding/TrackSelection';
 import PackageSelection from '../components/onboarding/PackageSelection';
+import CustomPlanBuilder from '../components/onboarding/CustomPlanBuilder';
 import Summary from '../components/onboarding/Summary';
 import ContactInfo from '../components/onboarding/ContactInfo';
 
-const steps = [
-  { id: 'welcome', name: 'Welcome' },
-  { id: 'services', name: 'Services' },
-  { id: 'subservices', name: 'Details' },
-  { id: 'packages', name: 'Packages' },
+const PACKAGES = {
+  silver: {
+    name: "Silver Package",
+    price: 9999,
+    services: [
+      { name: "Web Development", price: 6000 },
+      { name: "UI/UX Design", price: 4000 },
+      { name: "SEO Optimization", price: 1000 },
+      { name: "1 month support", price: 1000 }
+    ],
+    discount: 2010,
+    timeline: "4-6 weeks"
+  },
+  gold: {
+    name: "Gold Package",
+    price: 19999,
+    services: [
+      { name: "Web Development", price: 6000 },
+      { name: "UI/UX Design", price: 4000 },
+      { name: "Digital Marketing", price: 5000 },
+      { name: "Performance Optimization", price: 3000 },
+      { name: "3 months support", price: 3000 }
+    ],
+    discount: 2000,
+    timeline: "8-10 weeks"
+  },
+  platinum: {
+    name: "Platinum Package",
+    price: 39999,
+    services: [
+      { name: "Web Development", price: 6000 },
+      { name: "Mobile App Development", price: 8000 },
+      { name: "UI/UX Design", price: 4000 },
+      { name: "Digital Marketing", price: 5000 },
+      { name: "AI Integration", price: 10000 },
+      { name: "6 months support", price: 6000 },
+      { name: "Priority support", price: 2000 }
+    ],
+    discount: 6000,
+    timeline: "10-14 weeks"
+  }
+};
+
+const SERVICES = {
+  mobileApp: {
+    name: "Mobile App Development",
+    basePrice: 8000,
+    baseInclusions: [
+      "Basic app structure and architecture",
+      "Single platform development (iOS or Android)",
+      "Basic UI/UX implementation",
+      "Core functionality development",
+      "Basic testing and deployment"
+    ],
+    subServices: [
+      {
+        name: "iOS Development",
+        price: 2000,
+        description: "Swift/SwiftUI development, iOS-specific features, App Store deployment, iOS device testing"
+      },
+      {
+        name: "Android Development",
+        price: 2000,
+        description: "Kotlin/Java development, Android-specific features, Play Store deployment, Android device testing"
+      },
+      {
+        name: "Cross-Platform Development",
+        price: 3000,
+        description: "React Native or Flutter, Platform-specific optimizations, Unified codebase, Multi-platform testing"
+      },
+      {
+        name: "App Maintenance & Support",
+        price: 1000,
+        description: "Bug fixes and updates, Performance monitoring, Security patches, Technical support"
+      }
+    ]
+  },
+  webDev: {
+    name: "Web Development",
+    basePrice: 6000,
+    baseInclusions: [
+      "Basic website structure",
+      "Responsive design",
+      "Core functionality",
+      "Basic SEO setup",
+      "Initial deployment"
+    ],
+    subServices: [
+      {
+        name: "Frontend Development",
+        price: 1500,
+        description: "Modern framework (React, Vue, etc.), Interactive UI components, Performance optimization, Cross-browser compatibility"
+      },
+      {
+        name: "Backend Development",
+        price: 2000,
+        description: "API development, Database integration, Server setup, Security implementation"
+      },
+      {
+        name: "E-commerce Solutions",
+        price: 2500,
+        description: "Product management, Shopping cart, Payment integration, Order management"
+      },
+      {
+        name: "CMS Development",
+        price: 1500,
+        description: "Content management interface, User roles and permissions, Media management, Content workflow"
+      }
+    ]
+  },
+  aiIntegration: {
+    name: "AI Integration",
+    basePrice: 10000,
+    baseInclusions: [
+      "AI strategy consultation",
+      "Basic model integration",
+      "Data pipeline setup",
+      "Initial testing"
+    ],
+    subServices: [
+      {
+        name: "ML Model Development",
+        price: 5000,
+        description: "Model architecture design, Training pipeline, Model optimization, Performance testing"
+      },
+      {
+        name: "Data Analysis",
+        price: 3000,
+        description: "Data processing, Statistical analysis, Visualization, Insights generation"
+      },
+      {
+        name: "Process Automation",
+        price: 2000,
+        description: "Workflow analysis, Automation implementation, Integration with existing systems, Monitoring setup"
+      },
+      {
+        name: "AI Chatbots",
+        price: 2500,
+        description: "Conversation design, NLP integration, Multi-channel deployment, Analytics setup"
+      }
+    ]
+  },
+  digitalMarketing: {
+    name: "Digital Marketing",
+    basePrice: 5000,
+    baseInclusions: [
+      "Marketing strategy",
+      "Basic analytics setup",
+      "Initial campaign planning",
+      "Performance tracking"
+    ],
+    subServices: [
+      {
+        name: "SEO",
+        price: 1500,
+        description: "Keyword research, On-page optimization, Technical SEO, Performance tracking"
+      },
+      {
+        name: "SEM",
+        price: 2000,
+        description: "Campaign setup, Ad creation, Budget management, Performance optimization"
+      },
+      {
+        name: "Social Media Marketing",
+        price: 1500,
+        description: "Content strategy, Platform management, Community engagement, Analytics reporting"
+      },
+      {
+        name: "Content Marketing",
+        price: 2000,
+        description: "Content strategy, Content creation, Distribution planning, Performance analysis"
+      }
+    ]
+  },
+  uiuxDesign: {
+    name: "UI/UX Design",
+    basePrice: 4000,
+    baseInclusions: [
+      "Basic user research",
+      "Wireframe creation",
+      "Basic UI design",
+      "Initial usability testing"
+    ],
+    subServices: [
+      {
+        name: "Wireframing",
+        price: 1000,
+        description: "User flow mapping, Interactive wireframes, User feedback integration, Iteration support"
+      },
+      {
+        name: "Prototyping",
+        price: 1500,
+        description: "High-fidelity prototypes, User interaction design, Animation and transitions, User testing support"
+      },
+      {
+        name: "User Research",
+        price: 2000,
+        description: "User interviews, Usability testing, Data analysis, Recommendations"
+      },
+      {
+        name: "Usability Testing",
+        price: 1500,
+        description: "Test planning, User recruitment, Test execution, Analysis and reporting"
+      }
+    ]
+  },
+  performanceOptimization: {
+    name: "Performance Optimization",
+    basePrice: 3000,
+    baseInclusions: [
+      "Initial performance audit",
+      "Basic optimization",
+      "Monitoring setup",
+      "Initial recommendations"
+    ],
+    subServices: [
+      {
+        name: "Speed Optimization",
+        price: 1500,
+        description: "Load time improvement, Resource optimization, Caching implementation, Performance testing"
+      },
+      {
+        name: "SEO Optimization",
+        price: 1000,
+        description: "Meta tag improvement, Schema markup, Technical enhancements, SEO performance validation"
+      },
+      {
+        name: "Security Audit",
+        price: 2000,
+        description: "Vulnerability assessment, Security testing, Compliance checks, Fix recommendations"
+      },
+      {
+        name: "Performance Monitoring",
+        price: 1000,
+        description: "Monitoring tool setup, Alert configuration, Performance reporting, Support for improvements"
+      }
+    ]
+  }
+};
+
+const STEPS = [
+  { id: 'track-selection', name: 'Choose Path' },
+  { id: 'package-selection', name: 'Select Package' },
+  { id: 'custom-plan', name: 'Custom Plan' },
   { id: 'summary', name: 'Summary' },
-  { id: 'contact', name: 'Contact' },
+  { id: 'contact', name: 'Contact' }
 ];
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState('welcome');
-  const [progress, setProgress] = useState(0);
-  const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedSubServices, setSelectedSubServices] = useState({});
+  const [currentStep, setCurrentStep] = useState('track-selection');
+  const [selectedTrack, setSelectedTrack] = useState(null);
   const [selectedPackage, setSelectedPackage] = useState(null);
+  const [selectedServices, setSelectedServices] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
-  const [recommendations, setRecommendations] = useState([]);
+  const [estimatedTimeline, setEstimatedTimeline] = useState('');
 
-  // Save progress to localStorage
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedState = {
-        currentStep,
-        selectedServices,
-        selectedSubServices,
-        selectedPackage,
-        totalPrice,
-      };
-      localStorage.setItem('onboardingProgress', JSON.stringify(savedState));
-    }
-  }, [currentStep, selectedServices, selectedSubServices, selectedPackage, totalPrice]);
-
-  // Load saved progress
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedProgress = localStorage.getItem('onboardingProgress');
-      if (savedProgress) {
-        try {
-          const parsedProgress = JSON.parse(savedProgress);
-          setCurrentStep(parsedProgress.currentStep);
-          setSelectedServices(parsedProgress.selectedServices);
-          setSelectedSubServices(parsedProgress.selectedSubServices);
-          setSelectedPackage(parsedProgress.selectedPackage);
-          setTotalPrice(parsedProgress.totalPrice);
-        } catch (e) {
-          console.error('Error loading saved progress:', e);
-        }
-      }
-    }
-  }, []);
-
-  // Update progress percentage
-  useEffect(() => {
-    const stepIndex = steps.findIndex(step => step.id === currentStep);
-    setProgress((stepIndex / (steps.length - 1)) * 100);
-  }, [currentStep]);
-
-  // Generate recommendations based on selected services
-  useEffect(() => {
-    if (selectedServices.length > 0) {
-      // Simple recommendation logic - could be enhanced with more complex rules
-      const serviceRecommendations = [];
-      
-      if (selectedServices.includes('mobile-app-development') && 
-          !selectedServices.includes('ui-ux-design')) {
-        serviceRecommendations.push('ui-ux-design');
-      }
-      
-      if (selectedServices.includes('web-development') && 
-          !selectedServices.includes('performance-optimization')) {
-        serviceRecommendations.push('performance-optimization');
-      }
-      
-      if ((selectedServices.includes('web-development') || 
-           selectedServices.includes('mobile-app-development')) && 
-          !selectedServices.includes('digital-marketing')) {
-        serviceRecommendations.push('digital-marketing');
-      }
-      
-      setRecommendations(serviceRecommendations);
-    }
-  }, [selectedServices]);
-
-  // Calculate total price based on selections
-  useEffect(() => {
-    let basePrice = 0;
-    
-    // If a package is selected, use that as the base price
+  const calculateTotalPrice = () => {
     if (selectedPackage) {
-      if (selectedPackage === 'Silver') basePrice = 9999;
-      if (selectedPackage === 'Gold') basePrice = 19999;
-      if (selectedPackage === 'Platinum') basePrice = 39999;
-    } else {
-      // Otherwise calculate based on individual services
-      // This is a simplified pricing model - would need to be adjusted with real pricing
-      selectedServices.forEach(service => {
-        switch(service) {
-          case 'mobile-app-development': basePrice += 8000; break;
-          case 'web-development': basePrice += 6000; break;
-          case 'ai-integration': basePrice += 10000; break;
-          case 'digital-marketing': basePrice += 5000; break;
-          case 'ui-ux-design': basePrice += 4000; break;
-          case 'performance-optimization': basePrice += 3000; break;
-          default: basePrice += 4000;
-        }
-      });
-      
-      // Add costs for sub-services
-      Object.values(selectedSubServices).flat().forEach(subService => {
-        basePrice += 500; // Add a nominal fee for each sub-service
-      });
+      return PACKAGES[selectedPackage].price;
     }
-    
-    setTotalPrice(basePrice);
-  }, [selectedServices, selectedSubServices, selectedPackage]);
 
-  const goToStep = (step) => {
-    setCurrentStep(step);
+    let total = 0;
+    Object.entries(selectedServices).forEach(([serviceId, service]) => {
+      total += SERVICES[serviceId].basePrice;
+      service.selectedSubServices.forEach(subService => {
+        total += SERVICES[serviceId].subServices.find(s => s.name === subService).price;
+      });
+    });
+    return total;
   };
 
-  const goToNextStep = () => {
-    const currentIndex = steps.findIndex(step => step.id === currentStep);
-    if (currentIndex < steps.length - 1) {
-      setCurrentStep(steps[currentIndex + 1].id);
-    } else {
-      // Submit and redirect logic
+  const calculateTimeline = () => {
+    if (selectedPackage) {
+      return PACKAGES[selectedPackage].timeline;
+    }
+
+    const serviceCount = Object.keys(selectedServices).length;
+    if (serviceCount <= 2) return "4-6 weeks";
+    if (serviceCount <= 4) return "8-10 weeks";
+    return "10-14 weeks";
+  };
+
+  const handleTrackSelection = (track) => {
+    setSelectedTrack(track);
+    setCurrentStep(track === 'package' ? 'package-selection' : 'custom-plan');
+  };
+
+  const handlePackageSelection = (packageId) => {
+    setSelectedPackage(packageId);
+    setTotalPrice(PACKAGES[packageId].price);
+    setEstimatedTimeline(PACKAGES[packageId].timeline);
+    setCurrentStep('summary');
+  };
+
+  const handleServiceSelection = (serviceId, isSelected) => {
+    setSelectedServices(prev => {
+      if (isSelected) {
+        return {
+          ...prev,
+          [serviceId]: {
+            selectedSubServices: []
+          }
+        };
+      } else {
+        const newServices = { ...prev };
+        delete newServices[serviceId];
+        return newServices;
+      }
+    });
+  };
+
+  const handleSubServiceSelection = (serviceId, subServiceName, isSelected) => {
+    setSelectedServices(prev => ({
+      ...prev,
+      [serviceId]: {
+        ...prev[serviceId],
+        selectedSubServices: isSelected
+          ? [...(prev[serviceId].selectedSubServices || []), subServiceName]
+          : (prev[serviceId].selectedSubServices || []).filter(s => s !== subServiceName)
+      }
+    }));
+  };
+
+  const handleContinue = () => {
+    if (currentStep === 'track-selection') {
+      // Already handled by handleTrackSelection
+    } else if (currentStep === 'package-selection' || currentStep === 'custom-plan') {
+      setTotalPrice(calculateTotalPrice());
+      setEstimatedTimeline(calculateTimeline());
+      setCurrentStep('summary');
+    } else if (currentStep === 'summary') {
+      setCurrentStep('contact');
+    } else if (currentStep === 'contact') {
       router.push('/onboarding/confirmation');
     }
   };
 
-  const goToPreviousStep = () => {
-    const currentIndex = steps.findIndex(step => step.id === currentStep);
-    if (currentIndex > 0) {
-      setCurrentStep(steps[currentIndex - 1].id);
+  const handleBack = () => {
+    if (currentStep === 'package-selection' || currentStep === 'custom-plan') {
+      setCurrentStep('track-selection');
+    } else if (currentStep === 'summary') {
+      setCurrentStep(selectedTrack === 'package' ? 'package-selection' : 'custom-plan');
+    } else if (currentStep === 'contact') {
+      setCurrentStep('summary');
     }
   };
 
-  const handleServiceSelection = (serviceSlug) => {
-    setSelectedServices(prev => {
-      if (prev.includes(serviceSlug)) {
-        // Remove service and its sub-services
-        const updatedSubServices = { ...selectedSubServices };
-        delete updatedSubServices[serviceSlug];
-        setSelectedSubServices(updatedSubServices);
-        return prev.filter(s => s !== serviceSlug);
-      } else {
-        // Add service
-        return [...prev, serviceSlug];
-      }
-    });
+  const calculateProgress = () => {
+    const currentIndex = STEPS.findIndex(step => step.id === currentStep);
+    return ((currentIndex + 1) / STEPS.length) * 100;
   };
 
-  const handleSubServiceSelection = (serviceSlug, subService) => {
-    setSelectedSubServices(prev => {
-      const current = prev[serviceSlug] || [];
-      if (current.includes(subService)) {
-        // Remove sub-service
-        return {
-          ...prev,
-          [serviceSlug]: current.filter(s => s !== subService)
-        };
-      } else {
-        // Add sub-service
-        return {
-          ...prev,
-          [serviceSlug]: [...current, subService]
-        };
-      }
-    });
-  };
-
-  const handlePackageSelection = (packageName) => {
-    if (selectedPackage === packageName) {
-      setSelectedPackage(null);
-    } else {
-      setSelectedPackage(packageName);
-      // When selecting a package, clear individual selections
-      setSelectedServices([]);
-      setSelectedSubServices({});
+  const handleStepClick = (stepId) => {
+    const currentIndex = STEPS.findIndex(step => step.id === currentStep);
+    const targetIndex = STEPS.findIndex(step => step.id === stepId);
+    
+    if (targetIndex < currentIndex) {
+      setCurrentStep(stepId);
     }
-  };
-
-  const handleRecommendationAccept = (serviceSlug) => {
-    handleServiceSelection(serviceSlug);
-    setRecommendations(prev => prev.filter(rec => rec !== serviceSlug));
   };
 
   const renderStep = () => {
     switch (currentStep) {
-      case 'welcome':
-        return <Welcome onContinue={goToNextStep} />;
-      case 'services':
+      case 'track-selection':
+        return <TrackSelection onSelect={handleTrackSelection} />;
+      case 'package-selection':
         return (
-          <ServiceSelection 
-            selectedServices={selectedServices}
-            onSelectService={handleServiceSelection}
-            onContinue={goToNextStep}
-            onBack={goToPreviousStep}
-          />
-        );
-      case 'subservices':
-        return (
-          <SubServiceSelection 
-            selectedServices={selectedServices}
-            selectedSubServices={selectedSubServices}
-            onSelectSubService={handleSubServiceSelection}
-            onContinue={goToNextStep}
-            onBack={goToPreviousStep}
-          />
-        );
-      case 'packages':
-        return (
-          <PackageSelection 
+          <PackageSelection
+            packages={PACKAGES}
             selectedPackage={selectedPackage}
-            onSelectPackage={handlePackageSelection}
-            onContinue={goToNextStep}
-            onBack={goToPreviousStep}
+            onSelect={handlePackageSelection}
+            onBack={handleBack}
+          />
+        );
+      case 'custom-plan':
+        return (
+          <CustomPlanBuilder
+            services={SERVICES}
+            selectedServices={selectedServices}
+            onServiceSelect={handleServiceSelection}
+            onSubServiceSelect={handleSubServiceSelection}
+            onContinue={handleContinue}
+            onBack={handleBack}
           />
         );
       case 'summary':
         return (
           <Summary 
-            selectedServices={selectedServices}
-            selectedSubServices={selectedSubServices}
+            selectedTrack={selectedTrack}
             selectedPackage={selectedPackage}
+            selectedServices={selectedServices}
+            packages={PACKAGES}
+            services={SERVICES}
             totalPrice={totalPrice}
-            recommendations={recommendations}
-            onAcceptRecommendation={handleRecommendationAccept}
-            onContinue={goToNextStep}
-            onBack={goToPreviousStep}
+            estimatedTimeline={estimatedTimeline}
+            onContinue={handleContinue}
+            onBack={handleBack}
           />
         );
       case 'contact':
         return (
           <ContactInfo 
             totalPrice={totalPrice}
-            onSubmit={goToNextStep}
-            onBack={goToPreviousStep}
+            estimatedTimeline={estimatedTimeline}
+            onContinue={handleContinue}
+            onBack={handleBack}
           />
         );
       default:
-        return <Welcome onContinue={goToNextStep} />;
+        return null;
     }
   };
 
   return (
     <OnboardingLayout 
       currentStep={currentStep}
-      steps={steps}
-      progress={progress}
-      onStepClick={goToStep}
-    >
-      <motion.div
-        key={currentStep}
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -20 }}
-        transition={{ duration: 0.3 }}
-        className="w-full"
+      steps={STEPS}
+      progress={calculateProgress()}
+      onStepClick={handleStepClick}
       >
         {renderStep()}
-      </motion.div>
     </OnboardingLayout>
   );
 } 
