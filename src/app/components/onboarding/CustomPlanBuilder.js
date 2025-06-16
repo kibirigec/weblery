@@ -73,7 +73,7 @@ export default function CustomPlanBuilder({
           {/* Desktop Summary Sidebar */}
           {!isMobile && (
             <div className="w-80">
-              <div className="sticky top-8">
+              <div className="sticky top-40">
                 <ServiceSummary
                   services={services}
                   selectedServices={selectedServices}

@@ -295,13 +295,24 @@ export default function OnboardingPage() {
   const handleTrackSelection = (track) => {
     setSelectedTrack(track);
     setCurrentStep(track === 'package' ? 'package-selection' : 'custom-plan');
+    window.scrollTo(0, 0);
   };
 
   const handlePackageSelection = (packageId) => {
+    if (packageId === 'custom') {
+      setSelectedTrack('custom');
+      setSelectedPackage(null);
+      setTotalPrice(0);
+      setEstimatedTimeline('');
+      setCurrentStep('custom-plan');
+      window.scrollTo(0, 0);
+      return;
+    }
     setSelectedPackage(packageId);
     setTotalPrice(PACKAGES[packageId].price);
     setEstimatedTimeline(PACKAGES[packageId].timeline);
     setCurrentStep('summary');
+    window.scrollTo(0, 0);
   };
 
   const handleServiceSelection = (serviceId, isSelected) => {
@@ -340,8 +351,10 @@ export default function OnboardingPage() {
       setTotalPrice(calculateTotalPrice());
       setEstimatedTimeline(calculateTimeline());
       setCurrentStep('summary');
+      window.scrollTo(0, 0);
     } else if (currentStep === 'summary') {
       setCurrentStep('contact');
+      window.scrollTo(0, 0);
     } else if (currentStep === 'contact') {
       router.push('/onboarding/confirmation');
     }
@@ -350,10 +363,13 @@ export default function OnboardingPage() {
   const handleBack = () => {
     if (currentStep === 'package-selection' || currentStep === 'custom-plan') {
       setCurrentStep('track-selection');
+      window.scrollTo(0, 0);
     } else if (currentStep === 'summary') {
       setCurrentStep(selectedTrack === 'package' ? 'package-selection' : 'custom-plan');
+      window.scrollTo(0, 0);
     } else if (currentStep === 'contact') {
       setCurrentStep('summary');
+      window.scrollTo(0, 0);
     }
   };
 
@@ -368,6 +384,7 @@ export default function OnboardingPage() {
     
     if (targetIndex < currentIndex) {
       setCurrentStep(stepId);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -380,7 +397,7 @@ export default function OnboardingPage() {
           <PackageSelection
             packages={PACKAGES}
             selectedPackage={selectedPackage}
-            onSelect={handlePackageSelection}
+            onContinue={handlePackageSelection}
             onBack={handleBack}
           />
         );

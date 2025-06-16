@@ -2,60 +2,86 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+// For icons, you can use a library like lucide-react: `npm install lucide-react`
+import { ArrowLeft, ArrowRight, AlertCircle } from 'lucide-react';
 
+// --- Reusable Input Field Component ---
+const InputField = ({ label, name, type = 'text', value, onChange, placeholder, error }) => (
+  <div>
+    <label htmlFor={name} className="block text-sm font-medium text-slate-700 mb-1.5">
+      {label}
+    </label>
+    <input
+      type={type}
+      id={name}
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className={`w-full px-4 py-2 rounded-lg border bg-slate-50 transition-colors ${
+        error 
+        ? 'border-red-400 text-red-800 focus:ring-red-500' 
+        : 'border-slate-300 focus:ring-black'
+      } focus:outline-none focus:ring-2 focus:border-transparent`}
+    />
+    {error && (
+      <p className="mt-1.5 flex items-center text-sm text-red-600">
+        <AlertCircle className="w-4 h-4 mr-1.5" /> {error}
+      </p>
+    )}
+  </div>
+);
+
+// --- Reusable Textarea Field Component ---
+const TextareaField = ({ label, name, value, onChange, placeholder, error, rows = 4 }) => (
+    <div>
+        <label htmlFor={name} className="block text-sm font-medium text-slate-700 mb-1.5">
+            {label}
+        </label>
+        <textarea
+            id={name}
+            name={name}
+            value={value}
+            onChange={onChange}
+            rows={rows}
+            placeholder={placeholder}
+            className={`w-full px-4 py-2 rounded-lg border bg-slate-50 transition-colors ${
+                error 
+                ? 'border-red-400 text-red-800 focus:ring-red-500' 
+                : 'border-slate-300 focus:ring-black'
+            } focus:outline-none focus:ring-2 focus:border-transparent`}
+        />
+        {error && (
+            <p className="mt-1.5 flex items-center text-sm text-red-600">
+                <AlertCircle className="w-4 h-4 mr-1.5" /> {error}
+            </p>
+        )}
+    </div>
+);
+
+// --- Main ContactInfo Component ---
 export default function ContactInfo({ totalPrice, estimatedTimeline, onContinue, onBack }) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    projectDescription: '',
-    timeline: '',
-    budget: ''
+    name: '', email: '', company: '', phone: '', projectDescription: '', timeline: '', budget: ''
   });
-
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    // Clear error when user starts typing
+    setFormData(prev => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
+      setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
 
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
-    }
-    
-    if (!formData.company.trim()) {
-      newErrors.company = 'Company name is required';
-    }
-    
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-    }
-    
-    if (!formData.projectDescription.trim()) {
-      newErrors.projectDescription = 'Project description is required';
-    }
-
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email format';
+    if (!formData.company.trim()) newErrors.company = 'Company name is required';
+    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
+    if (!formData.projectDescription.trim()) newErrors.projectDescription = 'A project description is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -63,185 +89,111 @@ export default function ContactInfo({ totalPrice, estimatedTimeline, onContinue,
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onContinue();
+      onContinue(formData);
     }
   };
 
-  return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="flex justify-between items-center mb-8">
-        <button
-          onClick={onBack}
-          className="px-6 py-2 rounded-lg border-2 border-gray-300 text-gray-700 font-medium hover:bg-gray-50"
-        >
-          Back
-        </button>
-        <h1 className="text-3xl font-bold">Contact Information</h1>
-        <div className="w-24"></div> {/* Spacer for alignment */}
-      </div>
-
-      <div className="bg-white rounded-2xl shadow-lg p-8">
-        <div className="mb-8">
-          <h2 className="text-xl font-bold mb-2">Project Summary</h2>
-          <div className="flex justify-between items-center text-gray-600">
-            <span>Estimated Total:</span>
-            <span className="font-medium">${totalPrice.toLocaleString()}</span>
-          </div>
-          <div className="flex justify-between items-center text-gray-600">
-            <span>Estimated Timeline:</span>
-            <span className="font-medium">{estimatedTimeline}</span>
-          </div>
+  const renderSummaryCard = () => (
+    <div className="bg-[#f5f5f5] rounded-xl border border-[#e0e0e0]  p-6">
+        <h3 className="text-lg font-semibold text-[#6e6e73] mb-4">Your Plan</h3>
+        <div className="space-y-3">
+            <div className="flex justify-between items-center text-slate-600">
+                <span>Total Price</span>
+                <span className="font-medium text-slate-900">${totalPrice.toLocaleString()}</span>
+            </div>
+            <div className="flex justify-between items-center text-slate-600">
+                <span>Timeline</span>
+                <span className="font-medium text-slate-900">{estimatedTimeline}</span>
+            </div>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name *
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  errors.name ? 'border-red-500' : 'border-gray-300'
-                } focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent`}
-                placeholder="John Doe"
-              />
-              {errors.name && (
-                <p className="mt-1 text-sm text-red-500">{errors.name}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  errors.email ? 'border-red-500' : 'border-gray-300'
-                } focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent`}
-                placeholder="john@company.com"
-              />
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Company Name *
-              </label>
-              <input
-                type="text"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  errors.company ? 'border-red-500' : 'border-gray-300'
-                } focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent`}
-                placeholder="Acme Inc."
-              />
-              {errors.company && (
-                <p className="mt-1 text-sm text-red-500">{errors.company}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Phone Number *
-              </label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  errors.phone ? 'border-red-500' : 'border-gray-300'
-                } focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent`}
-                placeholder="+1 (555) 000-0000"
-              />
-              {errors.phone && (
-                <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Project Description *
-            </label>
-            <textarea
-              name="projectDescription"
-              value={formData.projectDescription}
-              onChange={handleChange}
-              rows={4}
-              className={`w-full px-4 py-2 rounded-lg border ${
-                errors.projectDescription ? 'border-red-500' : 'border-gray-300'
-              } focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent`}
-              placeholder="Tell us about your project goals, requirements, and any specific features you'd like to include..."
-            />
-            {errors.projectDescription && (
-              <p className="mt-1 text-sm text-red-500">{errors.projectDescription}</p>
-            )}
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Desired Timeline
-              </label>
-              <select
-                name="timeline"
-                value={formData.timeline}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-              >
-                <option value="">Select a timeline</option>
-                <option value="asap">As soon as possible</option>
-                <option value="1-2months">1-2 months</option>
-                <option value="2-3months">2-3 months</option>
-                <option value="3-6months">3-6 months</option>
-                <option value="6+months">6+ months</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Budget Range
-              </label>
-              <select
-                name="budget"
-                value={formData.budget}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-              >
-                <option value="">Select a budget range</option>
-                <option value="5k-10k">$5,000 - $10,000</option>
-                <option value="10k-25k">$10,000 - $25,000</option>
-                <option value="25k-50k">$25,000 - $50,000</option>
-                <option value="50k+">$50,000+</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="pt-6">
-            <motion.button
-              type="submit"
-              className="w-full py-3 rounded-lg bg-black text-white font-medium hover:bg-gray-900"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Submit Project Request
-            </motion.button>
-          </div>
-        </form>
-      </div>
     </div>
   );
-} 
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="max-w-7xl mx-auto px-4 py-0"
+    >
+      <div className="text-center mb-10">
+        <h1 className="text-4xl font-extrabold tracking-tight text-grey-900">Contact Information</h1>
+        <p className="mt-2 text-lg text-slate-600">One final step. Please tell us about yourself and your project.</p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-12 items-start">
+        
+        {/* --- Left Column: The Form --- */}
+        <form onSubmit={handleSubmit} className="lg:col-span-2 bg-white rounded-xl border border-[#e0e0e0]  p-6 md:p-8">
+          <fieldset className="space-y-6">
+            <legend className="text-xl font-semibold text-slate-800 mb-4 border-b border-slate-200 w-full pb-3">
+              About You
+            </legend>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <InputField label="Full Name *" name="name" value={formData.name} onChange={handleChange} error={errors.name} placeholder="John Doe" />
+                <InputField label="Email Address *" name="email" type="email" value={formData.email} onChange={handleChange} error={errors.email} placeholder="john@company.com" />
+                <InputField label="Company Name *" name="company" value={formData.company} onChange={handleChange} error={errors.company} placeholder="Acme Inc." />
+                <InputField label="Phone Number *" name="phone" type="tel" value={formData.phone} onChange={handleChange} error={errors.phone} placeholder="0771234321" />
+            </div>
+          </fieldset>
+          
+          <fieldset className="space-y-6 mt-10">
+            <legend className="text-xl font-semibold text-slate-800 mb-4 border-b border-slate-200 w-full pb-3">
+              About Your Project
+            </legend>
+            <TextareaField label="Project Description *" name="projectDescription" value={formData.projectDescription} onChange={handleChange} error={errors.projectDescription} placeholder="Tell us about your project goals, key features, and target audience..." />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 {/* This could be its own SelectField component, but is simple enough here */}
+                <div>
+                    <label htmlFor="timeline" className="block text-sm font-medium text-slate-700 mb-1.5">Desired Timeline</label>
+                    <select id="timeline" name="timeline" value={formData.timeline} onChange={handleChange} className="w-full px-4 py-2 rounded-lg border bg-slate-50 border-slate-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                        <option value="">Select a timeline</option>
+                        <option value="asap">As soon as possible</option>
+                        <option value="1-2months">1-2 months</option>
+                        <option value="2-3months">2-3 months</option>
+                        <option value="3-6months">3-6 months</option>
+                    </select>
+                </div>
+                 <div>
+                    <label htmlFor="budget" className="block text-sm font-medium text-slate-700 mb-1.5">Budget Range</label>
+                    <select id="budget" name="budget" value={formData.budget} onChange={handleChange} className="w-full px-4 py-2 rounded-lg border bg-slate-50 border-slate-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                        <option value="">Select a budget range</option>
+                        <option value="5k-10k">$5,000 - $10,000</option>
+                        <option value="10k-25k">$10,000 - $25,000</option>
+                        <option value="25k-50k">$25,000 - $50,000</option>
+                        <option value="50k+">$50,000+</option>
+                    </select>
+                </div>
+            </div>
+          </fieldset>
+        </form>
+
+        {/* --- Right Column: Sticky Summary & Desktop Actions --- */}
+        <div className="lg:col-span-1 lg:sticky lg:top-40 mt-8 lg:mt-0 space-y-4">
+            {renderSummaryCard()}
+            <div className="hidden lg:flex flex-col space-y-3">
+                <motion.button type="submit" onClick={handleSubmit} className="w-full px-6 py-3 rounded-lg bg-black text-white font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center">
+                    Submit Project Request <ArrowRight className="w-4 h-4 ml-2" />
+                </motion.button>
+                <button onClick={onBack} className="w-full px-6 py-3 rounded-lg text-slate-700 font-medium hover:bg-slate-100 transition-colors">
+                    Back to Summary
+                </button>
+            </div>
+        </div>
+      </div>
+
+      {/* --- Mobile-Only Fixed Footer --- */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-gray-200 py-3 px-4 z-40">
+        <div className="flex justify-between items-center gap-3">
+          <button onClick={onBack} className="px-5 py-2.5 rounded-lg border border-slate-300 text-slate-800 font-semibold hover:bg-slate-50 transition-colors flex items-center">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back
+          </button>
+          <motion.button type="submit" onClick={handleSubmit} className="px-5 py-2.5 rounded-lg bg-black text-white font-semibold hover:bg-gray-800 transition-colors flex items-center">
+            Submit <ArrowRight className="w-4 h-4 ml-2" />
+          </motion.button>
+        </div>
+      </div>
+      
+      <div className="h-24 lg:h-0"></div>
+    </motion.div>
+  );
+}

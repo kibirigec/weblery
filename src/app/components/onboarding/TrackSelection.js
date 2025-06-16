@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function TrackSelection({ onSelect }) {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-0">
       <h1 className="text-4xl font-bold text-center mb-8">Choose Your Path</h1>
       <p className="text-lg text-gray-600 text-center mb-12">
         Select a pre-made package or build your own custom plan tailored to your needs

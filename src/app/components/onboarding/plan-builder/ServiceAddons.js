@@ -1,55 +1,81 @@
 import { motion } from 'framer-motion';
 
-export default function ServiceAddons({ service, serviceId, selectedSubServices, onSubServiceSelect }) {
+export default function ServiceAddons({
+  service,
+  serviceId,
+  selectedSubServices,
+  onSubServiceSelect,
+}) {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1, // Each child will animate in 0.1s after the previous one
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 },
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="mt-4 space-y-4"
+      // This main container just needs to control the stagger timing
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden" // Ensures a clean exit animation if needed
+      className="mt-4 border-t border-gray-200 pt-4"
     >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1, duration: 0.3 }}
-        className="text-sm"
-      >
-        <p className="font-medium mb-2">Available Add-ons:</p>
-        <div className="space-y-2">
-          {service.subServices.map((subService, index) => (
+      <p className="font-semibold text-gray-700 mb-3">Available Add-ons:</p>
+      <div className="space-y-3">
+        {service.subServices.map((subService) => {
+          const isSelected = selectedSubServices?.includes(subService.name);
+          return (
             <motion.div
-              key={`${serviceId}-${subService.name}-${index}`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 + (index * 0.1), duration: 0.3 }}
-              className={`flex items-center justify-between p-2 rounded-lg ${
-                selectedSubServices?.includes(subService.name)
-                  ? 'bg-gray-50 border-2 border-black'
+              key={`${serviceId}-${subService.name}`}
+              variants={itemVariants}
+              className={`rounded-lg transition-colors duration-200 ${
+                isSelected
+                  ? 'bg-white border-2 border-black'
                   : 'bg-gray-50 border-2 border-transparent'
               }`}
             >
-              <div>
-                <p className="font-medium">{subService.name}</p>
-                <p className="text-sm text-gray-600">{subService.description}</p>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-medium">${subService.price.toLocaleString()}</span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const isSelected = !selectedSubServices?.includes(subService.name);
-                    onSubServiceSelect(serviceId, subService.name, isSelected);
-                  }}
-                  className="px-3 py-1 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400"
-                >
-                  {selectedSubServices?.includes(subService.name) ? 'Remove' : 'Add'}
-                </button>
+              {/* --- RESPONSIVE LAYOUT CONTAINER --- */}
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 p-3">
+                
+                {/* Left Side: Name, Description, and Price (on desktop) */}
+                <div className="flex-grow">
+                  <p className={`font-medium ${isSelected ? 'text-black' : 'text-gray-900'}`}>{subService.name}</p>
+                  {subService.description && (
+                    <p className={`text-sm ${isSelected ? 'text-gray-800' : 'text-gray-600'} mt-1`}>{subService.description}</p>
+                  )}
+                  <span className="text-sm font-semibold text-gray-800 md:block mt-2">
+                    +${subService.price.toLocaleString()}
+                  </span>
+                </div>
+
+                {/* Right Side: Button */}
+                <div className="flex w-full md:w-auto items-center justify-between md:justify-end">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSubServiceSelect(serviceId, subService.name, !isSelected);
+                    }}
+                    aria-label={isSelected ? `Remove ${subService.name}` : `Add ${subService.name}`}
+                    className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer border bg-white text-gray-800 border-gray-300 hover:border-gray-400`}
+                  >
+                    {isSelected ? 'Remove' : 'Add'}
+                  </button>
+                </div>
               </div>
             </motion.div>
-          ))}
-        </div>
-      </motion.div>
+          );
+        })}
+      </div>
     </motion.div>
   );
-} 
+}
