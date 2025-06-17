@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-
+import { Package, UserRoundCog } from 'lucide-react';
 export default function TrackSelection({ onSelect }) {
   return (
     <div className="max-w-4xl mx-auto px-4 py-0">
@@ -13,11 +13,14 @@ export default function TrackSelection({ onSelect }) {
       <div className="grid md:grid-cols-2 gap-8">
         <motion.div
           whileTap={{ scale: 0.98 }}
-          className="bg-white rounded-2xl shadow-lg p-8 cursor-pointer border-2 border-transparent hover:border-black transition-all"
+          className="bg-white rounded-2xl border border-[#e0e0e0] p-8 cursor-pointer border-2 hover:border-black  transition-all"
           onClick={() => onSelect('package')}
         >
-          <div className="text-4xl mb-4">🔹</div>
-          <h2 className="text-2xl font-bold mb-4">Choose a Pre-Made Package</h2>
+          <div className="text-6xl mb-4">
+            <Package
+
+           /></div>
+            <h2 className="text-2xl font-bold mb-4">Choose a Pre-Made Package</h2>
           <p className="text-gray-600 mb-6">
             Select from our carefully curated packages that combine the most popular services at the best value
           </p>
@@ -39,10 +42,10 @@ export default function TrackSelection({ onSelect }) {
 
         <motion.div
           whileTap={{ scale: 0.98 }}
-          className="bg-white rounded-2xl shadow-lg p-8 cursor-pointer border-2 border-transparent hover:border-black transition-all"
+          className="bg-white rounded-2xl  p-8 cursor-pointer border-2 border-[#e0e0e0]  hover:border-black transition-all"
           onClick={() => onSelect('custom')}
         >
-          <div className="text-4xl mb-4">⚙️</div>
+          <div className="text-4xl mb-4"><UserRoundCog /></div>
           <h2 className="text-2xl font-bold mb-4">Build Your Own Plan</h2>
           <p className="text-gray-600 mb-6">
             Create a custom plan by selecting individual services and add-ons that match your specific requirements

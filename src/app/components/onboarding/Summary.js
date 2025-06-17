@@ -57,7 +57,7 @@ export default function Summary({
     const pkg = packages[selectedPackage];
     const iconMap = { silver: '🥈', gold: '🥇', platinum: '👑' };
     return (
-      <motion.div variants={cardVariants} className="bg-white rounded-xl border border-gray-200 shadow-sm">
+      <motion.div variants={cardVariants} className="bg-white rounded-xl border border-[#e0e0e0] shadow-sm">
         <div className="p-6 md:p-8">
           <div className="flex items-center mb-6">
             <div className="text-4xl mr-4">{iconMap[selectedPackage]}</div>
@@ -69,7 +69,7 @@ export default function Summary({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-800">Included Services</h3>
             {pkg.services.map((service, index) => (
-              <LineItem key={index} label={service.name} value={`$${service.price.toLocaleString()}`} labelSize="text-base" />
+              <LineItem key={index} label={service.name} value={`$${service.price.toLocaleString()}`} labelSize="text-sm " labelColor='text-gray-900' />
             ))}
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function Summary({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="bg-white rounded-xl border border-gray-200 p-6"
+                className="bg-white rounded-xl border border-[#e0e0e0] p-6"
               >
                 <div className="space-y-4">
                   {/* --- NEW HIERARCHY --- */}
@@ -108,10 +108,11 @@ export default function Summary({
                   
                   {/* Sub-services: Indented, smaller, and lighter text */}
                   {selectedSubServices.length > 0 && (
-                    <div className="pt-2 pl-6 space-y-3">
+                    <div className="pt-2 pl-2 space-y-3">
                       {selectedSubServices.map((subServiceName) => {
                         const subService = serviceData.subServices.find(s => s.name === subServiceName);
                         return (
+                          
                           <LineItem 
                             key={subServiceName} 
                             label={subService.name} 
