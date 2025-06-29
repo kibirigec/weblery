@@ -143,9 +143,9 @@ export default function Navigation() {
               variants={brandVariants}
             >
               <motion.button 
-                className="hover-text focus:outline-none z-50 relative text-black opacity-50 cursor-not-allowed" 
-                disabled
-                aria-label="Menu (disabled)"
+                className="hover-text focus:outline-none z-50 relative text-black" 
+                onClick={toggleMenu}
+                aria-label="Menu"
                 type="button"
                 whileHover={{
                   scale: 1.05,
@@ -157,7 +157,7 @@ export default function Navigation() {
                 }}
               >
                 <span className="font-medium text-black">
-                  Menu
+                  {isMenuOpen ? 'Close' : 'Menu'}
                 </span>
               </motion.button>
             </motion.div>
@@ -166,7 +166,7 @@ export default function Navigation() {
       </div>
 
       {/* Mobile menu - Always in DOM but translated out of view when closed */}
-      {/* {isMobile && (
+      {isMobile && (
         <div 
           className={`fixed inset-0 bg-white z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}
           aria-hidden={!isMenuOpen}
@@ -187,7 +187,7 @@ export default function Navigation() {
             </div>
           </div>
         </div>
-      )} */}
+      )}
     </motion.nav>
   );
 } 

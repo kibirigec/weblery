@@ -15,6 +15,7 @@ import {
   buttonVariants,
 } from "./animations";
 import { webDevelopmentService } from "./data";
+import { SERVICES } from '../../../config/services';
 
 export default function WebDevelopmentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -831,37 +832,11 @@ export default function WebDevelopmentPage() {
       {/* Pricing Section */}
       <motion.section
         ref={pricingRef}
-        className="py-20 bg-blue-50 relative overflow-hidden"
+        className="py-20 bg-white relative overflow-hidden"
         initial="hidden"
         animate={pricingInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div 
-            className="absolute top-0 -right-40 w-80 h-80 rounded-full opacity-20"
-            style={{ 
-              background: 'radial-gradient(circle, #dbeafe 0%, rgba(219,234,254,0) 70%)' 
-            }}
-            animate={{ 
-              scale: [1, 1.1, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div 
-            className="absolute bottom-0 -left-20 w-60 h-60 rounded-full opacity-20"
-            style={{ 
-              background: 'radial-gradient(circle, #dbeafe 0%, rgba(219,234,254,0) 70%)' 
-            }}
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
-        </div>
-
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-16" variants={fadeInUp}>
             <motion.h2 
@@ -871,226 +846,22 @@ export default function WebDevelopmentPage() {
               Web Development Pricing
             </motion.h2>
             <motion.p 
-              className="text-xl text-blue-700/80 max-w-3xl mx-auto"
+              className="text-xl text-gray-700/80 max-w-3xl mx-auto"
               variants={fadeInUp}
             >
-              Transparent pricing options to match your business needs and objectives
+              Our Web Development services start at ${SERVICES['web-development'].basePrice.toLocaleString()}.
+              For a detailed breakdown and custom solutions, use our plan builder.
             </motion.p>
-          </motion.div>
-
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
-            variants={containerVariants}
-          >
-            {/* Standard Package */}
-            <motion.div
-              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col border border-blue-100"
-              variants={itemVariants}
-              whileHover={{ 
-                y: -5,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-              }}
-            >
-              <div className="p-6 bg-gradient-to-r from-blue-500 to-blue-700 text-white">
-                <h3 className="text-xl font-bold mb-2">Standard</h3>
-                <div className="flex items-baseline">
-                  <span className="text-3xl font-extrabold">$4,999</span>
-                  <span className="ml-2 text-sm opacity-80">one-time</span>
+            <motion.div className="mt-8" variants={fadeInUp}>
+              <Link href="/onboarding?service=web-development">
+                <div className="inline-flex items-center bg-black hover:bg-gray-900 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300">
+                  Build Your Web Development Plan
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
                 </div>
-                <p className="mt-3 text-sm opacity-90">Entry-level website for small businesses and startups</p>
-              </div>
-              
-              <div className="p-6 flex-grow">
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Responsive website (up to 5 pages)</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Mobile-friendly design</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Basic SEO optimization</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Contact form integration</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">3 months of support</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="px-6 pb-6 mt-auto">
-                <Link href="/contact">
-                  <div className="w-full py-3 px-4 bg-blue-100 text-blue-700 rounded-lg font-medium text-center transition-all duration-300 hover:bg-blue-200">
-                    Get Started
-                  </div>
-                </Link>
-              </div>
+              </Link>
             </motion.div>
-
-            {/* Advanced Package */}
-            <motion.div
-              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col transform scale-105 z-10 border-2 border-blue-500"
-              variants={itemVariants}
-              whileHover={{ 
-                y: -5,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-              }}
-            >
-              <div className="p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0">
-                  <div className="bg-white text-blue-600 text-xs font-bold uppercase py-1 px-3 transform rotate-12 translate-x-2 -translate-y-1">
-                    Popular
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Advanced</h3>
-                <div className="flex items-baseline">
-                  <span className="text-3xl font-extrabold">$9,999</span>
-                  <span className="ml-2 text-sm opacity-80">one-time</span>
-                </div>
-                <p className="mt-3 text-sm opacity-90">Full-featured web solution for growing businesses</p>
-              </div>
-              
-              <div className="p-6 flex-grow">
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Custom web application</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">CMS integration</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">User authentication</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Payment processing</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Advanced SEO optimization</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">6 months of support</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="px-6 pb-6 mt-auto">
-                <Link href="/contact">
-                  <div className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg font-medium text-center transition-all duration-300 hover:bg-blue-700">
-                    Get Started
-                  </div>
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Enterprise Package */}
-            <motion.div
-              className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 flex flex-col border border-blue-100"
-              variants={itemVariants}
-              whileHover={{ 
-                y: -5,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-              }}
-            >
-              <div className="p-6 bg-gradient-to-r from-indigo-600 to-blue-700 text-white">
-                <h3 className="text-xl font-bold mb-2">Enterprise</h3>
-                <div className="flex items-baseline">
-                  <span className="text-3xl font-extrabold">Custom</span>
-                </div>
-                <p className="mt-3 text-sm opacity-90">Comprehensive solution for established organizations</p>
-              </div>
-              
-              <div className="p-6 flex-grow">
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Enterprise web platform</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Custom admin dashboard</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Third-party API integrations</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">Advanced security features</span>
-                  </li>
-                  <li className="flex items-start text-sm">
-                    <svg className="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-gray-600">12 months of support</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="px-6 pb-6 mt-auto">
-                <Link href="/contact">
-                  <div className="w-full py-3 px-4 bg-blue-100 text-blue-700 rounded-lg font-medium text-center transition-all duration-300 hover:bg-blue-200">
-                    Contact Us
-                  </div>
-                </Link>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          <motion.div className="text-center mt-12" variants={fadeInUp}>
-            <p className="text-blue-700/80 mb-6">
-              All prices are one-time payments. Need a custom solution? Contact us for a tailored quote.
-            </p>
-            <Link href="/pricing">
-              <div className="inline-flex items-center bg-blue-800 hover:bg-blue-900 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300">
-                View All Service Packages
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </div>
-            </Link>
           </motion.div>
         </div>
       </motion.section>

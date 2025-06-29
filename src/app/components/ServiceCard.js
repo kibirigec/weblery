@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 export default function ServiceCard({ 
   icon, 
@@ -15,48 +15,6 @@ export default function ServiceCard({
   setActiveCard
 }) {
   const cardRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const entry = entries[0];
-          
-          // Only take action when intersection state changes
-          if (entry.isIntersecting) {
-            // Calculate how centered the element is
-            const viewportHeight = window.innerHeight;
-            const boundingRect = entry.target.getBoundingClientRect();
-            const elementCenter = boundingRect.top + boundingRect.height / 2;
-            const viewportCenter = viewportHeight / 2;
-            const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
-            
-            // If this element is closer to center than threshold, activate it
-            const centerThreshold = viewportHeight * 0.2; // 20% of viewport height
-            
-            if (distanceFromCenter < centerThreshold) {
-              setActiveCard(index);
-            }
-          }
-        },
-        {
-          root: null,
-          rootMargin: '0px',
-          threshold: [0.1, 0.5, 0.9], // Track multiple thresholds for smoother transitions
-        }
-      );
-
-      if (cardRef.current) {
-        observer.observe(cardRef.current);
-      }
-
-      return () => {
-        if (cardRef.current) {
-          observer.unobserve(cardRef.current);
-        }
-      };
-    }
-  }, [index, setActiveCard]);
 
   // Get color classes based on hoverColor
   const getIconBgClass = () => {
@@ -147,7 +105,7 @@ export default function ServiceCard({
   };
 
   return (
-    <Link href={`/services/${slug}`} className="block no-underline service-card-link">
+    <Link href={`/services/${slug}`} className="block no-underline">
       <div 
         ref={cardRef}
         className={`card hover-lift group service-card-${hoverColor} cursor-pointer transition-all duration-300 hover:shadow-lg border border-transparent hover:border-gray-200 bg-white overflow-hidden ${isActive ? 'is-active' : ''}`}

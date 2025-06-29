@@ -3,56 +3,9 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import Link from 'next/link';
+import { PACKAGES } from '../../config/services';
 
 // Simplified pricing tiers for the home page
-const pricingTiers = [
-  {
-    name: "Silver",
-    price: "$9,999",
-    description: "Essential digital solutions for startups and small businesses",
-    accentColor: "#94a3b8", // slate-400
-    accentGradient: "linear-gradient(135deg, #cbd5e1, #94a3b8)",
-    popular: false,
-    features: [
-      "Responsive website (up to 5 pages)",
-      "Basic SEO optimization",
-      "Social media profile setup",
-      "Basic UI/UX design",
-      "3 months of support"
-    ]
-  },
-  {
-    name: "Gold",
-    price: "$19,999",
-    description: "Comprehensive digital solutions for growing businesses",
-    accentColor: "#ca8a04", // yellow-600
-    accentGradient: "linear-gradient(135deg, #facc15, #ca8a04)",
-    popular: true,
-    features: [
-      "Custom web application",
-      "Single platform mobile app",
-      "Complete digital marketing",
-      "Advanced UI/UX design",
-      "Performance optimization"
-    ]
-  },
-  {
-    name: "Platinum",
-    price: "$39,999",
-    description: "Enterprise-grade digital ecosystem for established businesses",
-    accentColor: "#0f766e", // teal-700
-    accentGradient: "linear-gradient(135deg, #2dd4bf, #0f766e)",
-    popular: false,
-    features: [
-      "Enterprise web platform",
-      "Cross-platform mobile apps",
-      "Advanced marketing campaigns",
-      "Custom AI integration",
-      "Comprehensive optimization"
-    ]
-  }
-];
-
 export default function PricingPreview() {
   const pricingRef = useRef(null);
   const isInView = useInView(pricingRef, { once: true, amount: 0.2 });
@@ -79,6 +32,11 @@ export default function PricingPreview() {
       },
     },
   };
+
+  const pricingTiers = Object.entries(PACKAGES).map(([name, details]) => ({
+    name,
+    ...details,
+  }));
 
   return (
     <section id="pricing" className="py-20 bg-gray-50" ref={pricingRef}>
@@ -131,19 +89,18 @@ export default function PricingPreview() {
             >
               {/* Header */}
               <div 
-                className="p-6 text-white"
-                style={{ background: tier.accentGradient }}
+                className="p-6 text-white bg-gray-900"
               >
                 <div className="flex justify-between items-start">
                   <h3 className="text-xl font-bold">{tier.name}</h3>
                   {tier.popular && (
-                    <div className="bg-white text-yellow-600 text-xs font-bold uppercase py-1 px-2 rounded-full">
+                    <div className="bg-white text-gray-800 text-xs font-bold uppercase py-1 px-2 rounded-full">
                       Recommended
                     </div>
                   )}
                 </div>
                 <div className="mt-4">
-                  <span className="text-3xl font-bold">{tier.price}</span>
+                  <span className="text-3xl font-bold">${tier.price.toLocaleString()}</span>
                   <span className="ml-2 text-sm opacity-90">one-time</span>
                 </div>
               </div>
@@ -155,11 +112,10 @@ export default function PricingPreview() {
                   {tier.features.map((feature, featIndex) => (
                     <li key={featIndex} className="flex items-start text-sm">
                       <svg 
-                        className="w-5 h-5 mr-2 mt-0.5 flex-shrink-0" 
+                        className="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-gray-700" 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
-                        style={{ color: tier.accentColor }}
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
@@ -171,12 +127,11 @@ export default function PricingPreview() {
               
               {/* CTA */}
               <div className="px-6 pb-6 mt-auto">
-                <Link href="/onboarding">
+                <Link href="/pricing">
                   <div 
-                    className="w-full py-2 px-4 rounded-lg font-medium text-center transition-all duration-300 text-white"
-                    style={{ background: tier.accentGradient }}
+                    className="w-full py-2 px-4 rounded-lg font-medium text-center transition-all duration-300 text-white bg-gray-900"
                   >
-                    {tier.popular ? 'Get Started' : 'View Details'}
+                    {tier.popular ? 'View Details' : 'View Details'}
                   </div>
                 </Link>
               </div>

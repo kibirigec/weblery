@@ -9,6 +9,8 @@ import About from "./components/About";
 import Process from "./components/Process";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Portfolio from "./components/Portfolio";
+import AnimatedSection from "./components/AnimatedSection";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -17,21 +19,6 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.1,
-    },
-  },
-};
-
-const sectionVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 20,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.46, 0.45, 0.94], // Apple's preferred easing curve
     },
   },
 };
@@ -45,27 +32,30 @@ export default function Home() {
       animate="visible"
     >
       <Navigation />
-      <motion.div variants={sectionVariants}>
+      <AnimatedSection>
         <Hero />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
+      </AnimatedSection>
+      <AnimatedSection>
         <Services />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
+      </AnimatedSection>
+      <AnimatedSection>
         <PricingPreview />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
+      </AnimatedSection>
+      <AnimatedSection>
+        <Portfolio />
+      </AnimatedSection>
+      <AnimatedSection>
         <About />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
+      </AnimatedSection>
+      <AnimatedSection>
         <Process />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
+      </AnimatedSection>
+      <AnimatedSection>
         <Contact />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
+      </AnimatedSection>
+      <AnimatedSection>
         <Footer />
-      </motion.div>
+      </AnimatedSection>
     </motion.div>
   );
 }

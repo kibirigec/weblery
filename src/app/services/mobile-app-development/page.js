@@ -5,7 +5,6 @@ import { useRef, useState } from "react";
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import ServiceModal from '../../components/ServiceModal';
-import PricingSection from '../../components/PricingSection';
 import Link from 'next/link';
 import {
   fadeInUp,
@@ -16,6 +15,7 @@ import {
   statsVariants,
 } from "./animations";
 import { mobileAppService } from "./data";
+import { SERVICES } from '../../../config/services';
 
 export default function MobileAppDevelopmentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -675,9 +675,41 @@ export default function MobileAppDevelopmentPage() {
       </motion.section>
 
       {/* Pricing Section */}
-      <div ref={pricingRef}>
-        <PricingSection service={mobileAppService} />
-      </div>
+      <motion.section
+        ref={pricingRef}
+        className="py-20 bg-white relative overflow-hidden"
+        initial="hidden"
+        animate={pricingInView ? "visible" : "hidden"}
+        variants={containerVariants}
+      >
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div className="text-center mb-16" variants={fadeInUp}>
+            <motion.h2 
+              className="text-3xl font-bold mb-4 text-pink-900"
+              variants={fadeInUp}
+            >
+              Mobile App Development Pricing
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-pink-900 max-w-3xl mx-auto"
+              variants={fadeInUp}
+            >
+              Our <span className = "!text-pink-900">Mobile App Development</span> services start at ${SERVICES['mobile-app-development'].basePrice.toLocaleString()}.
+              For a detailed breakdown and custom solutions, use our plan builder.
+            </motion.p>
+            <motion.div className="mt-8" variants={fadeInUp}>
+              <Link href="/onboarding?service=mobile-app-development">
+                <div className="inline-flex items-center bg-black hover:bg-gray-900 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300">
+                  Build Your Mobile App Plan
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </div>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
 
       {/* CTA Section */}
       <motion.section 
