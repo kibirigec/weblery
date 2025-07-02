@@ -4,6 +4,7 @@ export const performanceOptimizationService = {
   title: "Performance Optimization",
   subtitle: "Lightning-fast experiences that keep users engaged",
   icon: "M13 10V3L4 14h7v7l9-11h-7z",
+  hoverColor: "orange",
   headerBg: "#c2410c",
   iconBg: "#ffffff33",
   iconColor: "#fdba74",

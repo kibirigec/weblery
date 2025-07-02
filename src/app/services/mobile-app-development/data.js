@@ -4,6 +4,7 @@ export const mobileAppService = {
   title: "Mobile App Development",
   subtitle: "Native and cross-platform apps that engage users everywhere",
   icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
+  hoverColor: "pink",
   headerBg: "#891347",
   iconBg: "#ffffff33",
   iconColor: "#ffb1c6", //dark secondary color

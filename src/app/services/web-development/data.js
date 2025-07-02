@@ -4,6 +4,7 @@ export const webDevelopmentService = {
   title: "Web Development",
   subtitle: "Building the foundation of your digital presence",
   icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+  hoverColor: "blue",
   headerBg: "#1e3a8a",
   iconBg: "#ffffff33",
   iconColor: "#93c5fd",
