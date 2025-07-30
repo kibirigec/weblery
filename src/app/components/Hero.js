@@ -1,278 +1,195 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
-import ParticleNetwork from './ParticleNetwork';
+import {
+  motion,
+  useScroll,
+  useMotionValueEvent,
+  useAnimation,
+  useTransform,
+} from "motion/react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import Link from 'next/link';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const textVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 30,
-    filter: "blur(10px)",
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.8,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-};
-
-const buttonVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 20,
-    scale: 0.95,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-  hover: {
-    y: -2,
-    scale: 1.02,
-    transition: {
-      duration: 0.2,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-  tap: {
-    scale: 0.98,
-    transition: {
-      duration: 0.1,
-    },
-  },
-};
-
-const featureVariants = {
-  hidden: { 
-    opacity: 0, 
-    x: -20,
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-};
-
-const visualVariants = {
-  hidden: { 
-    opacity: 0, 
-    scale: 0.8,
-    y: 40,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      duration: 1,
-      ease: [0.25, 0.46, 0.45, 0.94],
-      delay: 0.3,
-    },
-  },
-};
-
 export default function Hero() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    
+    // Check if screen is mobile size
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const targetRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start start", "end start"],
+  });
+
+  const containerControls = useAnimation();
+  const videoWrapperControls = useAnimation();
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const mobilePadding = isMobile ? 4 : 8;
+    const mobileScale = isMobile ? 0.985 : 0.975;
+    const mobileBorderRadius = isMobile ? "0.75rem" : "1.5rem";
+    
+    if (v > 0) {
+      containerControls.start({
+        paddingLeft: 0,
+        paddingRight: 0,
+        scale: 1,
+        transition: { duration: 0.5, ease: "easeOut" },
+      });
+      videoWrapperControls.start({
+        borderRadius: "0px",
+        transition: { duration: 0.5, ease: "easeOut" },
+      });
+    } else {
+      containerControls.start({
+        paddingLeft: mobilePadding,
+        paddingRight: mobilePadding,
+        scale: mobileScale,
+        transition: { duration: 0.5, ease: "easeOut" },
+      });
+      videoWrapperControls.start({
+        borderRadius: mobileBorderRadius,
+        transition: { duration: 0.5, ease: "easeOut" },
+      });
+    }
+  });
+
+  const top = useTransform(scrollYProgress, [0, 0.5], ["10vh", "0%"]);
+  const y = useTransform(scrollYProgress, [0, 0.5], ["0%", "0"]);
+  const height = useTransform(scrollYProgress, [0, 0.5], ["90vh", "100vh"]);
+
+  const textOpacity = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8], [1, 0, 0, 0, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.2], [0, -20]);
+
+  const animatedText = [
+    {
+      text: "We build amazing digital experiences.",
+      opacity: useTransform(scrollYProgress, [0.2, 0.3, 0.4, 0.5], [0, 1, 1, 0]),
+      y: useTransform(scrollYProgress, [0.2, 0.3, 0.4, 0.5], [20, 0, 0, -20]),
+    },
+    {
+      text: "From web and mobile apps...",
+      opacity: useTransform(scrollYProgress, [0.4, 0.5, 0.6, 0.7], [0, 1, 1, 0]),
+      y: useTransform(scrollYProgress, [0.4, 0.5, 0.6, 0.7], [20, 0, 0, -20]),
+    },
+    {
+      text: "...to AI-powered solutions.",
+      opacity: useTransform(scrollYProgress, [0.6, 0.7, 0.8, 0.9], [0, 1, 1, 0]),
+      y: useTransform(scrollYProgress, [0.6, 0.7, 0.8, 0.9], [20, 0, 0, -20]),
+    },
+    {
+      text: "Let's create something incredible together.",
+      opacity: useTransform(scrollYProgress, [0.8, 0.9, 1], [0, 1, 1]),
+      y: useTransform(scrollYProgress, [0.8, 0.9, 1], [20, 0, 0]),
+    },
+  ];
+
+  const videos = useMemo(() => ["/vid1.mp4", "/vid2.mp4", "/vid3.mp4"], []);
+  const video = useMemo(
+    () => videos[Math.floor(Math.random() * videos.length)],
+    [videos]
+  );
 
   return (
-    <section className="min-h-screen flex items-center pt-20 pb-16" ref={ref}>
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-          {/* Left Column - Text Content */}
-          <motion.div 
-            className="flex flex-col justify-center"
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+    <section ref={targetRef} className="relative h-[300vh] bg-white">
+      <motion.div
+        className="sticky left-0 w-full flex items-end justify-center"
+        style={{ top, y }}
+      >
+        <motion.div
+          className="relative w-full bg-white"
+          initial={{ 
+            paddingLeft: isMobile ? 16 : 30, 
+            paddingRight: isMobile ? 16 : 30, 
+            scale: isMobile ? 0.985 : 0.975 
+          }}
+          animate={containerControls}
+          style={{ transformOrigin: "top center", height }}
+        >
+          <motion.div
+            className="w-full h-full overflow-hidden relative"
+            initial={{ borderRadius: isMobile ? "0.75rem" : "1.5rem" }}
+            animate={videoWrapperControls}
+            style={{ borderRadius: isMobile ? "0.75rem" : "1.5rem" }}
           >
-            {/* <div className="inline-flex items-center bg-black bg-opacity-5 rounded-full px-4 py-2 mb-6">
-              <span className="w-2 h-2 rounded-full bg-black mr-2"></span>
-              <span className="text-sm text-[#C0C0C0] font-medium">Award-Winning Digital Agency</span>
-            </div> */}
-            <motion.h1 
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-dark mb-6 leading-tight"
-              variants={textVariants}
-            >
-              Transform Your Digital
-              <motion.span 
-                className="block text-black"
-                variants={textVariants}
-              >
-                Presence
-              </motion.span>
-            </motion.h1>
-            
-            <motion.p 
-              className="text-xl sm:text-2xl text-gray mb-6 lead max-w-2xl"
-              variants={textVariants}
-            >
-              We are a cutting-edge digital media agency specializing in app development, 
-              web solutions, AI integration, and strategic marketing. Let us elevate your business 
-              to the next level.
-            </motion.p>
-            
-            <motion.ul 
-              className="flex flex-wrap gap-x-8 gap-y-3 mb-10"
-              variants={containerVariants}
-            >
-              {[
-                "Custom Solutions",
-                "Cutting-Edge Tech", 
-                "Expert Team",
-                "Result-Driven"
-              ].map((feature, index) => (
-                <motion.li 
-                  key={index}
-                  className="flex items-center"
-                  variants={featureVariants}
-                  whileHover={{
-                    x: 5,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <motion.svg 
-                    className="w-5 h-5 mr-2 text-black" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ 
-                      duration: 0.5, 
-                      delay: 0.5 + index * 0.1,
-                      ease: [0.25, 0.46, 0.45, 0.94]
+            {/* Background Video */}
+            <video
+              className="w-full h-full object-cover"
+              src={video}
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+
+            {/* Safe Overlay */}
+            <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none" />
+
+            {/* Foreground Text */}
+            <div className="absolute inset-0 flex items-center justify-center z-20 text-center text-white p-4 sm:p-6 lg:p-8">
+              <motion.div style={{ opacity: textOpacity, y: textY }}>
+                <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 sm:mb-4 leading-tight">
+                  Transform Your Digital Presence
+                </h1>
+                <p className="text-lg xs:text-xl sm:text-2xl max-w-xs xs:max-w-sm sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
+                  We are a cutting-edge digital media agency specializing in app development,
+                  web solutions, AI integration, and strategic marketing.
+                </p>
+              </motion.div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                {animatedText.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    style={{
+                      opacity: item.opacity,
+                      y: item.y,
                     }}
+                    className="absolute text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold px-4 sm:px-0 text-center"
                   >
-                    <motion.path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M5 13l4 4L19 7"
-                    />
-                  </motion.svg>
-                  <span>{feature}</span>
-                </motion.li>
-              ))}
-            </motion.ul>
-            
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-4"
-              variants={containerVariants}
-            >
-              <motion.div variants={buttonVariants}>
-                <Link href="/onboarding">
-                  <motion.div
-                    className="bg-black text-white text-center px-8 rounded-lg py-3 cursor-pointer"
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                  >
-                    Start Your Project
+                    {item.text}
                   </motion.div>
-                </Link>
-              </motion.div>
-              
-              <motion.div variants={buttonVariants}>
-                <Link href="#portfolio">
-                  <motion.div
-                    className="bg-white border-2 border-black text-center text-black px-8 py-3 rounded-lg cursor-pointer"
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                  >
-                    View Our Work
-                  </motion.div>
-                </Link>
-              </motion.div>
-            </motion.div>
+                ))}
+              </div>
+            </div>
+            {/* Sticky Buttons */}
+            <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4 z-30 px-4 sm:px-0">
+              <Link href="/onboarding" passHref>
+                <motion.div
+                  className="w-full sm:w-auto min-h-[44px] px-6 py-3 bg-white text-black rounded-md border border-gray-300 text-base sm:text-lg font-semibold shadow-lg hover:bg-gray-100 transition-colors cursor-pointer flex items-center justify-center"
+                  whileHover={isMobile ? {} : { scale: 1.05 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  Start Your Project
+                </motion.div>
+              </Link>
+              <Link href="#services" passHref>
+                <motion.div
+                  className="w-full sm:w-auto min-h-[44px] px-6 py-3 border-2 border-white text-white rounded-md text-base sm:text-lg font-semibold hover:bg-white/20 transition-colors cursor-pointer flex items-center justify-center"
+                  whileHover={isMobile ? {} : { scale: 1.05 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  View All Services
+                </motion.div>
+              </Link>
+            </div>
           </motion.div>
-          
-          {/* Right Column - Particle Network Animation */}
-          <motion.div 
-            className="flex items-center justify-center lg:justify-end"
-            variants={visualVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-          >
-            <motion.div 
-              className="w-full max-w-lg h-96 rounded-lg overflow-hidden bg-gray-50 relative"
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
-              }}
-            >
-              <ParticleNetwork />
-              <motion.div 
-                className="absolute bottom-4 right-4 bg-white px-4 py-2 rounded-lg shadow-md"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ 
-                  opacity: 1, 
-                  y: 0,
-                  transition: { 
-                    delay: 1,
-                    duration: 0.5,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }
-                }}
-                whileHover={{
-                  y: -2,
-                  transition: { duration: 0.2 }
-                }}
-              >
-                <div className="text-xs text-gray-500 mb-1">Trusted by industry leaders</div>
-                <div className="flex gap-3">
-                  {[1, 2, 3, 4].map((_, index) => (
-                    <motion.div 
-                      key={index}
-                      className="w-6 h-6 bg-gray-200 rounded-full"
-                      initial={{ scale: 0 }}
-                      animate={{ 
-                        scale: 1,
-                        transition: { 
-                          delay: 1.2 + index * 0.1,
-                          duration: 0.3,
-                          ease: [0.25, 0.46, 0.45, 0.94]
-                        }
-                      }}
-                      whileHover={{
-                        scale: 1.1,
-                        transition: { duration: 0.2 }
-                      }}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
-} 
+}

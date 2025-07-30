@@ -1,7 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(rg:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(pkill:*)",
+      "Bash(ls:*)",
+      "Bash(ffprobe:*)",
+      "Bash(cat:*)",
+      "Bash(mdls:*)",
+      "Bash(system_profiler:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
