@@ -117,8 +117,9 @@ export default function ServiceCard({
               fill="none" 
               viewBox="0 0 24 24" 
               stroke="currentColor"
+              strokeWidth="1.5"
             >
-              {icon}
+              <path d={icon} />
             </svg>
           </div>
           <h3 className="text-xl font-semibold mb-3">{title}</h3>

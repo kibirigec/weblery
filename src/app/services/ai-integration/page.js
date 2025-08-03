@@ -2,7 +2,7 @@
 
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
-import Navigation from '../../components/Navigation';
+
 import Footer from '../../components/Footer';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
@@ -50,7 +50,7 @@ export default function AIIntegrationPage() {
 
   return (
     <main ref={containerRef}>
-      <Navigation />
+      
       
       {/* Hero Section with AI visualizations */}
       <motion.section 

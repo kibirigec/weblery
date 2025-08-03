@@ -102,7 +102,7 @@ export default function Services() {
           <motion.div variants={headerVariants}>
             <Link href="/services">
               <motion.div 
-                className="inline-flex items-center text-sm font-medium hover:underline cursor-pointer"
+                className="inline-flex items-center text-sm font-medium cursor-pointer"
                 whileHover={{ 
                   x: 5,
                   transition: { duration: 0.2 }

@@ -3,7 +3,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import Link from 'next/link';
-import Navigation from '../components/Navigation';
+
 import Footer from '../components/Footer';
 import { PACKAGES } from '../../config/services';
 
@@ -45,7 +45,7 @@ export default function ComprehensivePricing() {
 
   return (
     <>
-      <Navigation />
+      
       <main className="pt-28 pb-20 bg-white min-h-screen">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">

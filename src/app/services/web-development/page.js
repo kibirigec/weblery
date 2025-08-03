@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef, useState, useEffect } from "react";
-import Navigation from '../../components/Navigation';
+
 import Footer from '../../components/Footer';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
@@ -118,7 +118,7 @@ export default function WebDevelopmentPage() {
 
   return (
     <main ref={containerRef}>
-      <Navigation />
+      
       
       {/* Hero Section - Redesigned */}
       <motion.section 

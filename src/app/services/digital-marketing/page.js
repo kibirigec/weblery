@@ -2,7 +2,7 @@
 
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import React, { useRef, useState, useMemo, useEffect } from "react";
-import Navigation from '../../components/Navigation';
+
 import Footer from '../../components/Footer';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
@@ -519,7 +519,7 @@ export default function DigitalMarketingPage() {
 
   return (
     <main ref={containerRef}>
-      <Navigation />
+      
       
       {/* Hero Section with marketing visualizations */}
       <motion.section 
