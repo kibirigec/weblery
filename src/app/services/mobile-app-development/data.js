@@ -2,6 +2,19 @@ import React from 'react';
 
 export const mobileAppService = {
   title: "Mobile App Development",
+  slug: "mobile-app-development",
+  description: "Native and cross-platform apps that engage users everywhere",
+  media: [
+    { type: 'image', src: '/services/mobile-app-image.jpg' },
+    { type: 'image', src: '/services/mobile-app-image2.jpg' },
+    { type: 'image', src: '/services/mobile-app-image3.jpg' },
+  ],
+  animatedText: [
+    "Engage users on the go.",
+    "Build for iOS and Android.",
+    "Create seamless experiences.",
+    "Launch your app with confidence.",
+  ],
   subtitle: "Native and cross-platform apps that engage users everywhere",
   icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
   hoverColor: "pink",

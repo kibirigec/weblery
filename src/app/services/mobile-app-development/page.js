@@ -10,16 +10,13 @@ import {
   fadeInUp,
   containerVariants,
   itemVariants,
-  iconVariants,
-  buttonVariants,
-  statsVariants,
 } from "./animations";
 import { mobileAppService } from "./data";
 import { SERVICES } from '../../../config/services';
+import ServiceHero from "../../components/ServiceHero";
 
 export default function MobileAppDevelopmentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const heroRef = useRef(null);
   const importanceRef = useRef(null);
   const overviewRef = useRef(null);
   const servicesRef = useRef(null);
@@ -28,7 +25,6 @@ export default function MobileAppDevelopmentPage() {
   const ctaRef = useRef(null);
   const containerRef = useRef(null);
 
-  const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
   const importanceInView = useInView(importanceRef, { once: true, amount: 0.2 });
   const overviewInView = useInView(overviewRef, { once: true, amount: 0.2 });
   const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
@@ -42,363 +38,13 @@ export default function MobileAppDevelopmentPage() {
     offset: ["start end", "end start"]
   });
 
-  const phoneY = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const appIconsY = useTransform(scrollYProgress, [0.2, 0.8], [100, -100]);
-  const floatingElementsY = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const backgroundScale = useTransform(scrollYProgress, [0.3, 0.7], [1, 1.2]);
+  const appIconsY = useTransform(scrollYProgress, [0, 1], ['-10%', '30%']);
+  const floatingElementsY = useTransform(scrollYProgress, [0, 1], ['-5%', '25%']);
 
   return (
     <main ref={containerRef}>
       
-      
-      {/* Hero Section */}
-      <motion.section 
-        className="pt-20 pb-16 lg:min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-pink-50 via-pink-50/80 to-rose-50"
-        ref={heroRef}
-        initial="hidden"
-        animate={heroInView ? "visible" : "hidden"}
-        variants={containerVariants}
-      >
-        {/* Background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full bg-pink-300/20"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                width: `${Math.random() * 20 + 8}px`,
-                height: `${Math.random() * 20 + 8}px`,
-              }}
-              animate={{
-                y: [0, -15, 0],
-                opacity: [0.1, 0.3, 0.1],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: Math.random() * 3 + 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* App icons pattern background */}
-        <motion.div 
-          className="absolute right-0 top-1/4 opacity-10 hidden lg:block"
-          style={{ y: phoneY }}
-        >
-          <div className="grid grid-cols-3 gap-3 w-60">
-            {[...Array(9)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="aspect-square rounded-2xl bg-gradient-to-br from-pink-200 to-pink-300"
-                animate={{
-                  scale: [1, i % 3 === 0 ? 1.1 : 1.05, 1],
-                  boxShadow: [
-                    "0px 0px 0px rgba(0,0,0,0)",
-                    "0px 4px 8px rgba(0,0,0,0.1)",
-                    "0px 0px 0px rgba(0,0,0,0)"
-                  ]
-                }}
-                transition={{
-                  duration: 3 + i * 0.2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.3
-                }}
-              />
-            ))}
-          </div>
-        </motion.div>
-
-        <div className="container relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Column - Content */}
-            <motion.div variants={fadeInUp} className="order-2 lg:order-1">
-              <motion.div 
-                className="flex items-center mb-8"
-                variants={itemVariants}
-              >
-                <div className="bg-gradient-to-r from-pink-600 to-rose-700 p-1 rounded-xl shadow-lg">
-                  <motion.div 
-                    className="bg-white rounded-lg flex items-center justify-center w-16 h-16"
-                    whileHover={{
-                      scale: 1.05,
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    <motion.svg 
-                      className="w-8 h-8 text-pink-700" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <motion.path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ 
-                          duration: 1.5, 
-                          delay: 0.5,
-                          ease: [0.25, 0.46, 0.45, 0.94]
-                        }}
-                      />
-                    </motion.svg>
-                  </motion.div>
-                </div>
-                <div className="ml-4">
-                  <span className="text-sm font-medium uppercase tracking-wider text-pink-700">Native Applications</span>
-                </div>
-              </motion.div>
-              
-              <motion.h1 
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-pink-900"
-                variants={fadeInUp}
-              >
-                Mobile App <br className="hidden lg:block" />
-                <span className="relative">
-                  Development
-                  <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-pink-600"></span>
-                </span>
-              </motion.h1>
-              
-              <motion.p 
-                className="text-xl text-pink-800/80 mb-10 leading-relaxed"
-                variants={fadeInUp}
-              >
-                Native iOS and Android apps that deliver exceptional user experiences and drive business growth.
-              </motion.p>
-
-              {/* CTA Buttons */}
-              <motion.div 
-                className="flex flex-col sm:flex-row gap-5"
-                variants={containerVariants}
-              >
-                <motion.button
-                  onClick={() => setIsModalOpen(true)}
-                  className="group relative overflow-hidden bg-pink-700 text-white font-medium rounded-xl px-8 py-4 transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-pink-800"
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <span className="relative z-10 flex items-center">
-                    <span className="mr-2">Why Mobile Apps are Essential</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-pink-600 to-pink-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                </motion.button>
-                
-                <motion.div variants={buttonVariants}>
-                  <Link 
-                    href="/#contact" 
-                    className="group relative overflow-hidden bg-white text-pink-900 border-2 border-pink-300 font-medium rounded-xl px-8 py-4 transition-all duration-300 shadow-md hover:shadow-xl flex items-center justify-center"
-                    whileHover="hover"
-                    whileTap="tap"
-                  >
-                    <span className="relative z-10 flex items-center">
-                      <span className="mr-2">Get Started</span>
-                      <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </span>
-                    <span className="absolute inset-0 bg-gradient-to-r from-pink-50 to-pink-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  </Link>
-                </motion.div>
-              </motion.div>
-              
-              {/* Scroll Indicator */}
-              <motion.div 
-                className="hidden lg:flex items-center mt-14 text-pink-600"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.5, duration: 0.8 }}
-              >
-                <div className="mr-3 h-px w-8 bg-pink-400"></div>
-                <span className="text-sm font-medium">Scroll to explore</span>
-                <motion.div 
-                  className="ml-2"
-                  animate={{ y: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-            
-            {/* Right Column - Mobile App Showcase */}
-            <motion.div 
-              className="order-1 lg:order-2"
-              variants={fadeInUp}
-            >
-              <div className="relative mx-auto max-w-xs lg:max-w-sm">
-                {/* Phone mockup */}
-                <motion.div 
-                  className="relative mx-auto z-20"
-                  animate={{ 
-                    y: [0, -10, 0],
-                  }}
-                  transition={{ 
-                    duration: 3.5,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <div className="w-64 h-[500px] bg-black rounded-[45px] p-1.5 shadow-xl border border-gray-800 relative overflow-hidden">
-                    {/* Dynamic Island */}
-                    <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-16 h-5 bg-black rounded-full z-30"></div>
-                    
-                    {/* Phone screen */}
-                    <div className="w-full h-full bg-gradient-to-b from-pink-100 via-white to-rose-50 rounded-[42px] overflow-hidden">
-                      {/* True Depth Camera/Sensors in Dynamic Island */}
-                      <div className="absolute top-3.5 left-1/2 transform -translate-x-1/2 w-14 h-4 flex justify-center items-center z-40">
-                        <div className="w-2.5 h-2.5 rounded-full bg-gray-800 mr-5 flex items-center justify-center">
-                          <div className="w-1.5 h-1.5 bg-blue-500/30 rounded-full"></div>
-                        </div>
-                        <div className="w-4 h-1.5 bg-gray-800 rounded-full flex items-center justify-center">
-                          <div className="w-2 h-0.5 bg-green-500/20 rounded-full"></div>
-                        </div>
-                      </div>
-                      
-                      {/* App content container with consistent bezels */}
-                      <div className="h-full flex flex-col">
-                        {/* App header */}
-                        <div className="bg-pink-600 h-14 px-4 flex items-center justify-between pt-2">
-                          <div className="flex items-center">
-                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>
-                          </div>
-                          <div className="text-white text-sm font-medium mt-1.5">ModiApp</div>
-                          <div className="w-5 h-5 flex items-center justify-center">
-                            <div className="w-4 h-1 bg-white rounded-full"></div>
-                          </div>
-                        </div>
-                        
-                        {/* App content */}
-                        <div className="flex-1 p-4 pb-20 overflow-hidden"> {/* Added pb-20 to make room for tab bar */}
-                          {/* Search bar */}
-                          <div className="bg-white border border-pink-200 rounded-full mb-5 h-10 px-4 flex items-center">
-                            <svg className="w-4 h-4 text-pink-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                            <div className="text-xs text-pink-400">Search...</div>
-                          </div>
-                          
-                          {/* Featured item */}
-                          <div className="bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl h-40 mb-5 p-4 relative overflow-hidden">
-                            {/* Content overlay */}
-                            <div className="relative z-10 h-full flex flex-col justify-between">
-                              <div>
-                                <div className="text-white text-xs font-medium mb-1">FEATURED</div>
-                                <div className="text-white text-lg font-bold">New Collection</div>
-                              </div>
-                              <motion.div 
-                                className="bg-white w-10 h-10 rounded-full flex items-center justify-center"
-                                animate={{ 
-                                  scale: [1, 1.1, 1],
-                                  boxShadow: [
-                                    "0px 0px 0px rgba(0,0,0,0.1)",
-                                    "0px 4px 12px rgba(0,0,0,0.2)",
-                                    "0px 0px 0px rgba(0,0,0,0.1)"
-                                  ]
-                                }}
-                                transition={{ duration: 3, repeat: Infinity }}
-                              >
-                                <svg className="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                              </motion.div>
-                            </div>
-                            
-                            {/* Background shapes */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-pink-400 rounded-full translate-x-10 -translate-y-10 opacity-30"></div>
-                            <div className="absolute bottom-0 left-0 w-20 h-20 bg-rose-300 rounded-full -translate-x-6 translate-y-6 opacity-30"></div>
-                          </div>
-                          
-                          {/* App grid */}
-                          <div>
-                            <div className="flex justify-between items-center mb-4">
-                              <div className="text-pink-900 font-medium text-sm">Categories</div>
-                              <div className="text-pink-500 text-xs">View All</div>
-                            </div>
-                            
-                            <div className="grid grid-cols-3 gap-4">
-                              {[
-                                { icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6", label: "Home" },
-                                { icon: "M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z", label: "Shop" },
-                                { icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z", label: "Saved" }
-                              ].map((item, idx) => (
-                                <motion.div
-                                  key={idx}
-                                  className="bg-white shadow-sm rounded-xl p-2 flex flex-col items-center justify-center"
-                                  whileHover={{ y: -2, boxShadow: "0px 4px 12px rgba(0,0,0,0.1)" }}
-                                >
-                                  <div className="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center mb-1">
-                                    <svg className="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                                    </svg>
-                                  </div>
-                                  <div className="text-pink-900 text-xs">{item.label}</div>
-                                </motion.div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Tab bar - positioned with consistent bottom bezel */}
-                        <div className="absolute bottom-1.5 left-1.5 right-1.5 h-16 bg-white border-t border-pink-100 rounded-b-[40px] px-6 flex items-center justify-between">
-                          {["M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6", 
-                            "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z", 
-                            "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
-                            "M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                          ].map((icon, idx) => (
-                            <motion.div 
-                              key={idx}
-                              className={`w-8 h-8 flex items-center justify-center ${idx === 0 ? 'text-pink-600' : 'text-gray-400'}`}
-                              whileHover={{ scale: 1.15 }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icon} />
-                              </svg>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      {/* Home indicator */}
-                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-black rounded-full shadow-sm"></div>
-                    </div>
-                  </div>
-                </motion.div>
-                
-                {/* Decorative elements */}
-                <motion.div 
-                  className="absolute top-10 -left-10 w-32 h-32 bg-pink-500/10 rounded-full blur-2xl"
-                  animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.3, 0.5] }}
-                  transition={{ duration: 5, repeat: Infinity }}
-                />
-                <motion.div 
-                  className="absolute bottom-10 -right-10 w-40 h-40 bg-rose-500/10 rounded-full blur-2xl"
-                  animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.2, 0.5] }}
-                  transition={{ duration: 4, repeat: Infinity, delay: 2 }}
-                />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
+      <ServiceHero service={mobileAppService} onOpenModal={() => setIsModalOpen(true)} />
 
       {/* Importance Section bg-[#891347] !text-[#ffb1c6]  */}
       
@@ -812,4 +458,4 @@ export default function MobileAppDevelopmentPage() {
       <Footer />
     </main>
   );
-} 
+}

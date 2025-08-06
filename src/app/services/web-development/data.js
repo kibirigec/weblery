@@ -2,6 +2,19 @@ import React from 'react';
 
 export const webDevelopmentService = {
   title: "Web Development",
+  slug: "web-development",
+  description: "Building the foundation of your digital presence",
+  media: [
+    { type: 'video', src: '/services/website-background.mp4' },
+    { type: 'image', src: '/services/web-image.jpg' },
+    { type: 'image', src: '/services/random-image.jpg' },
+  ],
+  animatedText: [
+    "Build responsive websites.",
+    "Create powerful web apps.",
+    "Deliver seamless experiences.",
+    "Grow your business online.",
+  ],
   subtitle: "Building the foundation of your digital presence",
   icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
   hoverColor: "blue",

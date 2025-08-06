@@ -2,6 +2,19 @@ import React from 'react';
 
 export const digitalMarketingService = {
   title: "Digital Marketing",
+  slug: "digital-marketing",
+  description: "Strategic campaigns that drive growth and maximize ROI",
+  media: [
+    { type: 'video', src: '/services/digital-marketing-background.mp4' },
+    { type: 'image', src: '/services/digital-marketing-bg.mp4' },
+    { type: 'image', src: '/services/automation-image.jpg' },
+  ],
+  animatedText: [
+    "Reach your target audience.",
+    "Drive meaningful engagement.",
+    "Convert leads into customers.",
+    "Grow your brand with data.",
+  ],
   subtitle: "Strategic campaigns that drive growth and maximize ROI",
   icon: "M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z",
   hoverColor: "yellow",

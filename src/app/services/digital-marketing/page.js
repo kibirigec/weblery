@@ -12,11 +12,10 @@ import {
   fadeInUp,
   containerVariants,
   itemVariants,
-  iconVariants,
-  buttonVariants,
 } from "./animations";
 import { digitalMarketingService } from "./data";
 import { SERVICES } from '../../../config/services';
+import ServiceHero from '../../components/ServiceHero';
 
 // Component for particles moving along connection lines
 function MovingParticles({ originPosition, destinations, color }) {
@@ -489,7 +488,6 @@ function Globe({ color = '#eab308' }) {
 export default function DigitalMarketingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  const heroRef = useRef(null);
   const overviewRef = useRef(null);
   const servicesRef = useRef(null);
   const strategyRef = useRef(null);
@@ -497,7 +495,6 @@ export default function DigitalMarketingPage() {
   const pricingRef = useRef(null);
   const ctaRef = useRef(null);
 
-  const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
   const overviewInView = useInView(overviewRef, { once: true, amount: 0.2 });
   const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
   const strategyInView = useInView(strategyRef, { once: true, amount: 0.2 });
@@ -512,245 +509,13 @@ export default function DigitalMarketingPage() {
     offset: ["start end", "end start"]
   });
 
-  const chartY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const socialY = useTransform(scrollYProgress, [0.2, 0.8], [50, -50]);
-  const analyticsScale = useTransform(scrollYProgress, [0.3, 0.7], [0.9, 1.1]);
-  const campaignY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const analyticsScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  const socialY = useTransform(scrollYProgress, [0, 1], ['-20%', '20%']);
 
   return (
     <main ref={containerRef}>
       
-      
-      {/* Hero Section with marketing visualizations */}
-      <motion.section 
-        className="pt-36 pb-24 lg:min-h-screen flex items-center bg-gradient-to-br from-yellow-50 to-amber-100 relative overflow-hidden"
-        ref={heroRef}
-        initial="hidden"
-        animate={heroInView ? "visible" : "hidden"}
-        variants={containerVariants}
-      >
-        {/* Background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full bg-yellow-300/20"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                width: `${Math.random() * 20 + 8}px`,
-                height: `${Math.random() * 20 + 8}px`,
-              }}
-              animate={{
-                y: [0, -15, 0],
-                opacity: [0.1, 0.3, 0.1],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: Math.random() * 3 + 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Column - Content */}
-            <motion.div variants={fadeInUp} className="order-2 lg:order-1">
-              <motion.div 
-                className="flex items-center mb-8"
-                variants={itemVariants}
-              >
-                <div className="bg-gradient-to-r from-yellow-600 to-amber-700 p-1 rounded-xl shadow-lg">
-                  <motion.div 
-                    className="bg-white rounded-lg flex items-center justify-center w-16 h-16"
-                    whileHover={{
-                      scale: 1.05,
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    <motion.svg 
-                      className="w-8 h-8 text-yellow-700" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <motion.path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ 
-                          duration: 1.5, 
-                          delay: 0.5,
-                          ease: [0.25, 0.46, 0.45, 0.94]
-                        }}
-                      />
-                    </motion.svg>
-                  </motion.div>
-                </div>
-                <div className="ml-4">
-                  <span className="text-sm font-medium uppercase tracking-wider text-yellow-700">Global Marketing</span>
-                </div>
-              </motion.div>
-              
-              <motion.h1 
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-yellow-900"
-                variants={fadeInUp}
-              >
-                Digital <br className="hidden lg:block" />
-                <span className="relative">
-                  Marketing
-                  <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-yellow-600"></span>
-                </span>
-              </motion.h1>
-              
-              <motion.p 
-                className="text-xl text-yellow-800/80 mb-10 leading-relaxed"
-                variants={fadeInUp}
-              >
-                Strategic campaigns that drive growth, expand your global reach, and maximize ROI across all digital channels.
-              </motion.p>
-
-              {/* CTA Buttons */}
-              <motion.div 
-                className="flex flex-col sm:flex-row gap-5"
-                variants={containerVariants}
-              >
-                <motion.button
-                  onClick={() => setIsModalOpen(true)}
-                  className="group relative overflow-hidden bg-yellow-700 text-white font-medium rounded-xl px-8 py-4 transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-yellow-800"
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <span className="relative z-10 flex items-center">
-                    <span className="mr-2">Why Digital Marketing Matters</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-yellow-600 to-amber-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                </motion.button>
-                
-                <motion.div variants={buttonVariants}>
-                  <Link 
-                    href="/#contact" 
-                    className="group relative overflow-hidden bg-white text-yellow-900 border-2 border-yellow-300 font-medium rounded-xl px-8 py-4 transition-all duration-300 shadow-md hover:shadow-xl flex items-center justify-center"
-                    whileHover="hover"
-                    whileTap="tap"
-                  >
-                    <span className="mr-2">Get Started</span>
-                    <svg className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </Link>
-                </motion.div>
-              </motion.div>
-
-              {/* Scroll indicator */}
-              <motion.div 
-                className="mt-16 flex items-center text-yellow-600"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 0.8 }}
-              >
-                <div className="w-10 h-px bg-yellow-300 mr-3"></div>
-                <span className="text-sm mr-2">Scroll to explore</span>
-                <motion.svg 
-                  className="w-5 h-5" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                  animate={{ y: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </motion.svg>
-              </motion.div>
-            </motion.div>
-
-            {/* Right Column - 3D Globe Visualization */}
-            <motion.div 
-              className="order-1 lg:order-2 flex justify-center"
-              variants={fadeInUp}
-            >
-              <div className="relative">
-                {/* 3D Globe with Three.js */}
-                <motion.div 
-                  className="w-full max-w-xl h-[500px] bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 overflow-hidden relative"
-                  initial={{ y: 40, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                >
-                  {/* Header */}
-                  <div className="flex justify-between items-center mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <div className="text-lg font-semibold text-gray-800">Global Campaign Reach</div>
-                    </div>
-                    <div className="text-sm text-yellow-600 font-medium">Live Data</div>
-                  </div>
-                  
-                  {/* Three.js Canvas for 3D Globe */}
-                  <div className="relative h-[320px] mb-6">
-                    <Canvas
-                      camera={{ position: [0, 0, 2.5], fov: 45 }}
-                      style={{ background: 'transparent' }}
-                    >
-                      <ambientLight intensity={0.5} />
-                      <pointLight position={[10, 10, 10]} />
-                      <Globe color="#eab308" />
-                    </Canvas>
-                  </div>
-                  
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="bg-amber-50 rounded-xl p-4 flex items-center">
-                      <div className="mr-3 bg-amber-100 p-2 rounded-lg">
-                        <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-xs text-amber-700 font-medium">Audience Size</div>
-                        <div className="text-lg font-bold text-amber-900">5.2M</div>
-                      </div>
-                    </div>
-                    <div className="bg-amber-50 rounded-xl p-4 flex items-center">
-                      <div className="mr-3 bg-amber-100 p-2 rounded-lg">
-                        <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-xs text-amber-700 font-medium">Demographics</div>
-                        <div className="text-lg font-bold text-amber-900">28</div>
-                      </div>
-                    </div>
-                    <div className="bg-amber-50 rounded-xl p-4 flex items-center">
-                      <div className="mr-3 bg-amber-100 p-2 rounded-lg">
-                        <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-xs text-amber-700 font-medium">Engagement</div>
-                        <div className="text-lg font-bold text-amber-900">8.7%</div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
+      <ServiceHero service={digitalMarketingService} onOpenModal={() => setIsModalOpen(true)} />
 
       {/* Overview Section with enhanced marketing dashboard */}
       <motion.section 
@@ -1194,4 +959,4 @@ export default function DigitalMarketingPage() {
       <Footer />
     </main>
   );
-} 
+}

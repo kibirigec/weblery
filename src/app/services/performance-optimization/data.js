@@ -2,6 +2,19 @@ import React from 'react';
 
 export const performanceOptimizationService = {
   title: "Performance Optimization",
+  slug: "performance-optimization",
+  description: "Lightning-fast experiences that keep users engaged",
+  media: [
+    { type: 'image', src: '/services/optimization-image.jpg' },
+    { type: 'image', src: '/services/random-image-2.jpg' },
+    { type: 'image', src: '/services/random-image-3.jpg' },
+  ],
+  animatedText: [
+    "Speed up your website.",
+    "Improve user experience.",
+    "Boost your SEO rankings.",
+    "Convert more visitors.",
+  ],
   subtitle: "Lightning-fast experiences that keep users engaged",
   icon: "M13 10V3L4 14h7v7l9-11h-7z",
   hoverColor: "orange",

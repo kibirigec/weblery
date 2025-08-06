@@ -2,6 +2,19 @@ import React from 'react';
 
 export const uiUxDesignService = {
   title: "UI/UX Design",
+  slug: "ui-ux-design",
+  description: "Beautiful, intuitive designs that users love and businesses trust",
+  media: [
+    { type: 'video', src: '/services/ui-background.mp4' },
+    { type: 'image', src: '/services/ui-image.jpg' },
+    { type: 'image', src: '/services/ui-image-2.jpg' },
+  ],
+  animatedText: [
+    "Craft intuitive interfaces.",
+    "Create delightful experiences.",
+    "Design for user engagement.",
+    "Bring your vision to life.",
+  ],
   subtitle: "Beautiful, intuitive designs that users love and businesses trust",
   icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
   hoverColor: "green",
