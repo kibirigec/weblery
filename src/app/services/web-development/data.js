@@ -4,11 +4,7 @@ export const webDevelopmentService = {
   title: "Web Development",
   slug: "web-development",
   description: "Building the foundation of your digital presence",
-  media: [
-    { type: 'video', src: '/services/website-background.mp4' },
-    { type: 'image', src: '/services/web-image.jpg' },
-    { type: 'image', src: '/services/random-image.jpg' },
-  ],
+  media: { type: 'video', src: '/services/website-background.mp4' },
   animatedText: [
     "Build responsive websites.",
     "Create powerful web apps.",

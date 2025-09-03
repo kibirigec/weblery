@@ -143,75 +143,10 @@ export default function PerformanceOptimizationPage() {
             
             {/* Performance Dashboard Mockup */}
             <motion.div 
-              className="bg-white rounded-2xl p-8 shadow-xl relative border-2 border-orange-900"
+              className="rounded-2xl overflow-hidden"
               variants={fadeInUp}
-              whileHover={{
-                y: -5,
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                transition: { duration: 0.3 }
-              }}
             >
-              {/* Speedometer Visualization */}
-              <div className="text-center mb-6">
-                <div className="relative w-32 h-32 mx-auto mb-4">
-                  <svg className="w-full h-full" viewBox="0 0 120 120">
-                    <circle cx="60" cy="60" r="50" fill="none" stroke="#fed7aa" strokeWidth="8"/>
-                    <motion.circle 
-                      cx="60" cy="60" r="50" 
-                      fill="none" 
-                      stroke="#f97316" 
-                      strokeWidth="8"
-                      strokeDasharray={314}
-                      strokeDashoffset={314 * 0.25}
-                      animate={{ strokeDashoffset: [314 * 0.25, 314 * 0.05, 314 * 0.25] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                    <motion.line
-                      x1="60" y1="60" x2="60" y2="20"
-                      stroke="#f97316" strokeWidth="3" strokeLinecap="round"
-                      style={{ transformOrigin: '60px 60px' }}
-                      animate={{ rotate: [0, 270, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div 
-                      className="text-2xl font-bold text-orange-600"
-                      animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      95
-                    </motion.div>
-                </div>
-                </div>
-                <h3 className="text-lg font-semibold text-orange-900 mb-2">Performance Score</h3>
-                </div>
-
-              {/* Performance Metrics */}
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { label: 'Load Time', value: '1.2s', color: '#8e4d2f' },
-                  { label: 'TTFB', value: '0.3s', color: '#8e4d2f' },
-                  { label: 'CLS', value: '0.05', color: '#8e4d2f' },
-                  { label: 'FCP', value: '0.8s', color: '#8e4d2f' }
-                ].map((metric, index) => (
-                  <motion.div
-                    key={metric.label}
-                    className="text-center p-3 bg-orange-50 rounded-lg"
-                    variants={itemVariants}
-                    whileHover={{
-                      scale: 1.05,
-                      backgroundColor: "#fff7ed",
-                      transition: { duration: 0.2 }
-                    }}
-                  >
-                    <div className="text-lg font-bold" style={{ color: metric.color }}>
-                      {metric.value}
-                </div>
-                    <div className="text-sm text-orange-900">{metric.label}</div>
-                  </motion.div>
-                ))}
-              </div>
+              <img src="/services/random-image-2.jpg" alt="Performance Optimization" className="w-full h-full object-cover rounded-2xl" />
             </motion.div>
           </div>
         </div>

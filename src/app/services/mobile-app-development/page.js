@@ -142,82 +142,10 @@ export default function MobileAppDevelopmentPage() {
             
             {/* Enhanced Mobile Mockup with Apps */}
             <motion.div 
-              className="bg-pink-50/30 border-2 border-pink-900 rounded-2xl p-8 shadow-xl relative"
+              className="rounded-2xl overflow-hidden"
               variants={fadeInUp}
-              whileHover={{
-                y: -5,
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                transition: { duration: 0.3 }
-              }}
             >
-              {/* Dual Phone Mockup */}
-              <div className="flex justify-center space-x-4 mb-6">
-                <motion.div 
-                  className="w-24 h-44 bg-gray-900 rounded-2xl p-1 shadow-xl"
-                  whileHover={{ y: -5, rotate: -2 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="w-full h-full bg-gradient-to-b from-blue-100 to-blue-200 rounded-xl p-2">
-                    <div className="w-full h-3 bg-blue-300 rounded-full mb-2"></div>
-                    <div className="grid grid-cols-2 gap-1 mb-2">
-                      {[...Array(6)].map((_, i) => (
-                        <motion.div 
-                          key={i} 
-                          className="w-full h-4 bg-blue-300 rounded"
-                          animate={{ opacity: [0.5, 1, 0.5] }}
-                          transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                        />
-                      ))}
-                </div>
-                    <div className="w-full h-12 bg-blue-400 rounded"></div>
-                </div>
-                </motion.div>
-                
-                <motion.div 
-                  className="w-24 h-44 bg-gray-900 rounded-2xl p-1 shadow-xl"
-                  whileHover={{ y: -5, rotate: 2 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="w-full h-full bg-gradient-to-b from-pink-100 to-pink-200 rounded-xl p-2">
-                    <div className="w-full h-3 bg-pink-300 rounded-full mb-2"></div>
-                    <div className="grid grid-cols-2 gap-1 mb-2">
-                      {[...Array(6)].map((_, i) => (
-                        <motion.div 
-                          key={i} 
-                          className="w-full h-4 bg-pink-300 rounded"
-                          animate={{ opacity: [0.5, 1, 0.5] }}
-                          transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-                        />
-                      ))}
-            </div>
-                    <div className="w-full h-12 bg-pink-400 rounded"></div>
-                </div>
-                </motion.div>
-              </div>
-              
-              <h3 className="text-xl font-semibold mb-4 text-pink-900">Technologies We Use</h3>
-              <motion.div 
-                className="grid grid-cols-2 gap-3"
-                variants={containerVariants}
-              >
-                {[
-                  'React Native', 'Flutter', 'Swift', 'Kotlin',
-                  'Firebase', 'Node.js', 'MongoDB', 'PostgreSQL'
-                ].map((tech, index) => (
-                  <motion.div
-                    key={tech}
-                    className="bg-pink-50 text-pink-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
-                    variants={itemVariants}
-                    // whileHover={{
-                    //   scale: 1.05,
-                    //   backgroundColor: "#fce7f3",
-                    //   transition: { duration: 0.2 }
-                    // }}
-                  >
-                    {tech}
-                  </motion.div>
-                ))}
-              </motion.div>
+              <img src="/services/mobile-app-image2.jpg" alt="Mobile App Development" className="w-full h-full object-cover rounded-2xl" />
             </motion.div>
           </div>
         </div>

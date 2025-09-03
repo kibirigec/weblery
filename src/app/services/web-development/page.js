@@ -121,81 +121,10 @@ export default function WebDevelopmentPage() {
             
             {/* Image Slot with Browser Mockup */}
             <motion.div 
-              className="bg-blue-50 p-8 rounded-xl border-2 border-blue-900 relative"
+              className="overflow-hidden rounded-2xl"
               variants={fadeInUp}
-              // whileHover={{
-              //   scale: 1.02,
-              //   transition: { duration: 0.3 }
-              // }}
             >
-              {/* Browser Window Mockup */}
-              <motion.div 
-                className="bg-white rounded-lg shadow-xl mb-6 overflow-hidden"
-                // whileHover={{ y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="bg-gray-100 px-4 py-3 flex items-center space-x-2 border-b">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-            </div>
-                  <div className="flex-1 bg-white rounded mx-4 px-3 py-1 text-xs text-gray-500">
-                    https://your-website.com
-                </div>
-                </div>
-                <div className="h-40 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
-                  <motion.div 
-                    className="text-center"
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <div className="w-16 h-16 bg-blue-200 rounded-lg mx-auto mb-3 flex items-center justify-center">
-                      <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
-                      </svg>
-                </div>
-                    <div className="text-xs text-blue-600 font-medium">Modern Web Design</div>
-                  </motion.div>
-                </div>
-              </motion.div>
-
-              <motion.h3 
-                className="text-2xl font-bold mb-6 text-blue-900"
-                variants={itemVariants}
-              >
-                Our Tech Stack
-              </motion.h3>
-              
-              <motion.div 
-                className="grid grid-cols-2 gap-4"
-                variants={containerVariants}
-              >
-                {[
-                  { title: "Frontend", tech: "React, Next.js, Vue.js" },
-                  { title: "Backend", tech: "Node.js, Python, PHP" },
-                  { title: "Database", tech: "MongoDB, MySQL" },
-                  { title: "Cloud", tech: "AWS, Vercel, Netlify" }
-                ].map((stack, index) => (
-                  <motion.div 
-                    key={index}
-                    className="text-center p-4 bg-white rounded-lg border-2 border-blue-900 hover:border-blue-200 transition-colors"
-                    variants={itemVariants}
-                    whileHover={{
-                      y: -5,
-                      scale: 1.05,
-                      transition: { duration: 0.2 }
-                    }}
-                    whileTap={{
-                      scale: 0.95,
-                      transition: { duration: 0.1 }
-                    }}
-                  >
-                    <h4 className="font-semibold text-blue-900">{stack.title}</h4>
-                    <p className="text-sm text-gray-600">{stack.tech}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
+              <img src="/services/web-image.jpg" alt="Web Development" className="w-full h-full object-cover rounded-2xl" />
             </motion.div>
           </div>
         </div>

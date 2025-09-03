@@ -4,11 +4,7 @@ export const performanceOptimizationService = {
   title: "Performance Optimization",
   slug: "performance-optimization",
   description: "Lightning-fast experiences that keep users engaged",
-  media: [
-    { type: 'image', src: '/services/optimization-image.jpg' },
-    { type: 'image', src: '/services/random-image-2.jpg' },
-    { type: 'image', src: '/services/random-image-3.jpg' },
-  ],
+  media: { type: 'image', src: '/services/optimization-image.jpg' },
   animatedText: [
     "Speed up your website.",
     "Improve user experience.",

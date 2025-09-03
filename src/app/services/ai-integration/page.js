@@ -180,14 +180,9 @@ export default function AIIntegrationPage() {
             {/* Replace Enhanced AI Integration Dashboard with AITechnologyMap */}
             <motion.div 
               variants={fadeInUp}
-              whileHover={{
-                y: -5,
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                transition: { duration: 0.3 }
-              }}
             >
-              <div className="bg-white rounded-2xl overflow-hidden shadow-xl relative border border-gray-900" style={{ height: "500px" }}>
-                <AITechnologyMap />
+              <div className="rounded-2xl overflow-hidden" style={{ height: "500px" }}>
+                <img src="/services/ai-image.jpg" alt="AI Integration" className="w-full h-full object-cover rounded-2xl" />
               </div>
             </motion.div>
           </div>

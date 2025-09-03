@@ -4,11 +4,7 @@ export const mobileAppService = {
   title: "Mobile App Development",
   slug: "mobile-app-development",
   description: "Native and cross-platform apps that engage users everywhere",
-  media: [
-    { type: 'image', src: '/services/mobile-app-image.jpg' },
-    { type: 'image', src: '/services/mobile-app-image2.jpg' },
-    { type: 'image', src: '/services/mobile-app-image3.jpg' },
-  ],
+  media: { type: 'image', src: '/services/mobile-app-image.jpg' },
   animatedText: [
     "Engage users on the go.",
     "Build for iOS and Android.",

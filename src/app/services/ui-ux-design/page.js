@@ -138,103 +138,10 @@ export default function UIUXDesignPage() {
             
             {/* Enhanced Design Showcase */}
             <motion.div 
-              className="bg-white rounded-2xl p-8 shadow-xl relative border-2 border-green-900"
+              className="rounded-2xl overflow-hidden"
               variants={fadeInUp}
-              whileHover={{
-                y: -5,
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                transition: { duration: 0.3 }
-              }}
             >
-              {/* Multiple Device Mockup */}
-              <div className="flex justify-center space-x-4 mb-6">
-                <motion.div 
-                  className="w-16 h-24 bg-gray-900 rounded-xl p-1 shadow-lg"
-                  whileHover={{ y: -3, rotate: -3 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="w-full h-full bg-gradient-to-b from-green-100 to-green-200 rounded-lg p-1">
-                    <div className="w-full h-2 bg-green-300 rounded-full mb-1"></div>
-                    <div className="space-y-1">
-                      {[...Array(4)].map((_, i) => (
-                        <motion.div 
-                          key={i} 
-                          className="w-full h-1 bg-green-300 rounded"
-                          animate={{ opacity: [0.5, 1, 0.5] }}
-                          transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-                
-                <motion.div 
-                  className="w-20 h-24 bg-gray-800 rounded-lg p-1 shadow-lg"
-                  whileHover={{ y: -3 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="w-full h-full bg-gradient-to-b from-white to-green-50 rounded p-1">
-                    <div className="w-full h-2 bg-green-200 rounded mb-1"></div>
-                    <div className="grid grid-cols-2 gap-1">
-                      {[...Array(6)].map((_, i) => (
-                        <motion.div 
-                          key={i} 
-                          className="h-2 bg-green-200 rounded"
-                          animate={{ 
-                            backgroundColor: ['#d1fae5', '#a7f3d0', '#d1fae5'],
-                            scale: [1, 1.05, 1]
-                          }}
-                          transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                        />
-                      ))}
-                </div>
-                </div>
-                </motion.div>
-                
-                <motion.div 
-                  className="w-16 h-24 bg-gray-900 rounded-xl p-1 shadow-lg"
-                  whileHover={{ y: -3, rotate: 3 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="w-full h-full bg-gradient-to-b from-emerald-100 to-lime-100 rounded-lg p-1">
-                    <div className="w-full h-2 bg-emerald-300 rounded-full mb-1"></div>
-                    <div className="space-y-1">
-                      {[...Array(4)].map((_, i) => (
-                        <motion.div 
-                          key={i} 
-                          className="w-full h-1 bg-emerald-300 rounded"
-                          animate={{ opacity: [0.5, 1, 0.5] }}
-                          transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.4 }}
-                        />
-                      ))}
-                </div>
-                </div>
-                </motion.div>
-              </div>
-
-              <h3 className="text-xl font-semibold mb-4 text-gray-900">Design Tools & Software</h3>
-              <motion.div 
-                className="grid grid-cols-2 gap-3"
-                variants={containerVariants}
-              >
-                {[
-                  'Figma', 'Adobe XD', 'Sketch', 'Photoshop',
-                  'Illustrator', 'InVision', 'Principle', 'Framer'
-                ].map((tool, index) => (
-                  <motion.div
-                    key={tool}
-                    className="bg-green-50 text-green-700 px-3 py-2 rounded-lg text-sm font-medium text-center"
-                    variants={itemVariants}
-                    // whileHover={{
-                    //   scale: 1.05,
-                    //   backgroundColor: "#dcfce7",
-                    //   transition: { duration: 0.2 }
-                    // }}
-                  >
-                    {tool}
-                  </motion.div>
-                ))}
-              </motion.div>
+              <img src="/services/ui-image-3.jpg" alt="UI/UX Design" className="w-full h-full object-cover rounded-2xl" />
             </motion.div>
           </div>
         </div>

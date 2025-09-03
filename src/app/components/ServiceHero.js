@@ -97,11 +97,7 @@ export default function ServiceHero({ service, onOpenModal }) {
     },
   ];
 
-  const media = useMemo(() => service.media, [service.media]);
-  const mediaItem = useMemo(
-    () => media[Math.floor(Math.random() * media.length)],
-    [media]
-  );
+  const mediaItem = service.media;
 
   return (
     <section ref={targetRef} className="relative h-[300vh] bg-white">
@@ -152,7 +148,10 @@ export default function ServiceHero({ service, onOpenModal }) {
                 <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-3 sm:mb-4 leading-tight">
                   {service.title}
                 </h1>
-                <p className="text-lg xs:text-xl sm:text-2xl max-w-xs xs:max-w-sm sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
+                <p 
+                  className="text-lg xs:text-xl sm:text-2xl max-w-xs xs:max-w-sm sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4 sm:px-0"
+                  style={{ color: '#F9FAFB' }}
+                >
                   {service.description}
                 </p>
               </motion.div>

@@ -4,11 +4,7 @@ export const aiIntegrationService = {
   title: "AI Integration",
   slug: "ai-integration",
   description: "Intelligent solutions that transform your business operations",
-  media: [
-    { type: 'video', src: '/services/ai-background.mp4' },
-    { type: 'image', src: '/services/ai-image.jpg' },
-    { type: 'image', src: '/services/ai-image-2.jpg' },
-  ],
+  media: { type: 'video', src: '/services/ai-background.mp4' },
   animatedText: [
     "Automate complex tasks.",
     "Gain data-driven insights.",
