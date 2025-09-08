@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useAnimation } from "framer-motion";
-import { useState, useEffect } from 'react';
-import { navContainerVariants, childVariants } from './animations';
+import { useState, useEffect } from "react";
+import { navContainerVariants, childVariants } from "./animations";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +15,7 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const servicesSection = document.getElementById('services');
+      const servicesSection = document.getElementById("services");
       if (servicesSection) {
         const { top } = servicesSection.getBoundingClientRect();
         if (top < 100 && !isScrolled) {
@@ -28,8 +28,8 @@ export default function Navigation() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isScrolled]);
 
   useEffect(() => {
@@ -55,8 +55,8 @@ export default function Navigation() {
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const toggleMenu = () => {
@@ -68,7 +68,7 @@ export default function Navigation() {
   };
 
   return (
-    <motion.nav 
+    <motion.nav
       className="fixed top-4 left-0 right-0 mx-auto z-50 bg-white bg-opacity-80 backdrop-blur-sm transition-all duration-300 shadow-lg overflow-hidden"
       variants={navContainerVariants}
       initial="visible"
@@ -76,49 +76,66 @@ export default function Navigation() {
     >
       <div className="container px-8">
         <div className="flex items-center justify-between h-16">
-          <motion.div className="flex items-center" variants={childVariants} animate={childControls}>
-            <motion.h1 
-              className="nav-brand text-black"
-              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+          <div className="hidden md:block">
+            <motion.a
+              key="ModiQube"
+              href="#"
+              className="hover-text text-gray-700 hover:text-black transition-colors relative no-underline"
+              variants={childVariants}
+              animate={childControls}
+              whileHover={{ y: -2, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
             >
               ModiQube
-            </motion.h1>
+            </motion.a>
+          </div>
+
+          <motion.div
+            className="hidden md:flex items-center space-x-10"
+            variants={childVariants}
+            animate={childControls}
+          >
+            {["Services", "About", "Portfolio"].map((item) => (
+              <motion.a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="hover-text text-gray-700 hover:text-black transition-colors relative no-underline"
+                variants={childVariants}
+                animate={childControls}
+                whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
+              >
+                {item}
+              </motion.a>
+            ))}
           </motion.div>
 
-          <motion.div className="hidden md:flex justify-center space-x-10" variants={childVariants} animate={childControls}>
-              {['Services', 'About', 'Portfolio'].map((item) => (
-                <motion.a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="hover-text text-gray-700 hover:text-black transition-colors relative no-underline"
-                  variants={childVariants} animate={childControls}
-                  whileHover={{ y: -2, transition: { duration: 0.2 } }}
-                  whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
-                >
-                  {item}
-
-                </motion.a>
-              ))}
-            </motion.div>
-
-          <div className="hidden md:block" variants={childVariants} animate={childControls}>
+          <div
+            className="hidden md:block"
+            variants={childVariants}
+            animate={childControls}
+          >
             <motion.a
               key="Contact"
               href="#contact"
               className="hover-text text-gray-700 hover:text-black transition-colors relative no-underline"
-              variants={childVariants} animate={childControls}
+              variants={childVariants}
+              animate={childControls}
               whileHover={{ y: -2, transition: { duration: 0.2 } }}
               whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
             >
               Contact
-              
             </motion.a>
           </div>
 
           {isMobile && (
-            <motion.div className="md:hidden" variants={childVariants} animate={childControls}>
-              <motion.button 
-                className="hover-text focus:outline-none z-50 relative text-black" 
+            <motion.div
+              className="md:hidden"
+              variants={childVariants}
+              animate={childControls}
+            >
+              <motion.button
+                className="hover-text focus:outline-none z-50 relative text-black"
                 onClick={toggleMenu}
                 aria-label="Menu"
                 type="button"
@@ -126,7 +143,7 @@ export default function Navigation() {
                 whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
               >
                 <span className="font-medium text-black">
-                  {isMenuOpen ? 'Close' : 'Menu'}
+                  {isMenuOpen ? "Close" : "Menu"}
                 </span>
               </motion.button>
             </motion.div>
@@ -135,21 +152,53 @@ export default function Navigation() {
       </div>
 
       {isMobile && (
-        <div 
-          className={`fixed inset-0 bg-white z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}
+        <div
+          className={`fixed inset-0 bg-white z-40 transform transition-transform duration-300 ease-in-out ${
+            isMenuOpen ? "translate-y-0" : "-translate-y-full"
+          }`}
           aria-hidden={!isMenuOpen}
         >
           <div className="container h-full flex flex-col pt-20 pb-6">
             <div className="flex flex-col space-y-6 text-left text-2xl">
-              <a href="#services" className="py-2 touch-manipulation" onClick={handleLinkClick}>Services</a>
-              <a href="#about" className="py-2 touch-manipulation" onClick={handleLinkClick}>About</a>
-              <a href="#portfolio" className="py-2 touch-manipulation" onClick={handleLinkClick}>Portfolio</a>
-              <a href="#contact" className="py-2 touch-manipulation" onClick={handleLinkClick}>Contact</a>
+              <a
+                href="#services"
+                className="py-2 touch-manipulation"
+                onClick={handleLinkClick}
+              >
+                Services
+              </a>
+              <a
+                href="#about"
+                className="py-2 touch-manipulation"
+                onClick={handleLinkClick}
+              >
+                About
+              </a>
+              <a
+                href="#portfolio"
+                className="py-2 touch-manipulation"
+                onClick={handleLinkClick}
+              >
+                Portfolio
+              </a>
+              <a
+                href="#contact"
+                className="py-2 touch-manipulation"
+                onClick={handleLinkClick}
+              >
+                Contact
+              </a>
             </div>
             <div className="mt-auto">
               <div className="border-t border-gray-100 pt-6 mt-6">
                 <p className="text-sm text-gray text-left">
-                  Get in touch: <a href="mailto:hello@modiqube.com" className="font-medium hover:underline">hello@modiqube.com</a>
+                  Get in touch:{" "}
+                  <a
+                    href="mailto:hello@modiqube.com"
+                    className="font-medium hover:underline"
+                  >
+                    hello@modiqube.com
+                  </a>
                 </p>
               </div>
             </div>
