@@ -71,7 +71,7 @@ export default function Hero() {
   const y = useTransform(scrollYProgress, [0, 0.5], ['0%', '0']);
   const height = useTransform(scrollYProgress, [0, 0.5], ['90vh', '100vh']);
 
-  const textOpacity = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8], [1, 0, 0, 0, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.2, 0.3, 0.4, 0.5], [1, 0, 0, 0, 0]);
   const textY = useTransform(scrollYProgress, [0, 0.2], [0, -20]);
 
   const animatedText = [
@@ -104,7 +104,7 @@ export default function Hero() {
   );
 
   return (
-    <section ref={targetRef} className="relative h-[300vh]" style={{ backgroundColor: '#f2f0ef' }}>
+    <section ref={targetRef} className="relative h-[800vh]" style={{ backgroundColor: '#f2f0ef' }}>
       <motion.div
         className="sticky left-0 w-full flex items-end justify-center"
         style={{ top, y }}
