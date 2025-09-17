@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import Navigation from "./components/Navigation";
-import Hero from "./components/Hero";
-import Services from "./components/Services";
-import PricingPreview from "./components/PricingPreview";
-import About from "./components/About";
-import Process from "./components/Process";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import Portfolio from "./components/Portfolio";
-import AnimatedSection from "./components/AnimatedSection";
+import { motion } from 'framer-motion';
+import Navigation from './components/Navigation';
+import NewHero from './components/NewHero';
+import Hero from './components/Hero';
+import Services from './components/Services';
+import PricingPreview from './components/PricingPreview';
+import About from './components/About';
+import Process from './components/Process';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import Portfolio from './components/Portfolio';
+import AnimatedSection from './components/AnimatedSection';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -32,9 +33,8 @@ export default function Home() {
       animate="visible"
     >
       <Navigation />
-      <AnimatedSection>
-        <Hero />
-      </AnimatedSection>
+      <NewHero />
+      <Hero />
       <AnimatedSection>
         <Services />
       </AnimatedSection>
