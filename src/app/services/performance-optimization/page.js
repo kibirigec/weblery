@@ -3,7 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 
-import Footer from '../../components/Footer';
+import ServiceNavBar from '../../components/ServiceNavBar';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
 import {
@@ -42,7 +42,7 @@ export default function PerformanceOptimizationPage() {
 
   return (
     <main ref={containerRef}>
-      
+      <ServiceNavBar />
       <ServiceHero service={performanceOptimizationService} onOpenModal={() => setIsModalOpen(true)} />
 
       {/* Overview Section */}
@@ -425,7 +425,7 @@ export default function PerformanceOptimizationPage() {
         service={performanceOptimizationService}
       />
 
-      <Footer />
+      
     </main>
   );
 }

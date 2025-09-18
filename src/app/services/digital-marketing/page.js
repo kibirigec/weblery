@@ -3,7 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import React, { useRef, useState, useMemo, useEffect } from "react";
 
-import Footer from '../../components/Footer';
+import ServiceNavBar from '../../components/ServiceNavBar';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
 import { Canvas, useFrame } from '@react-three/fiber';
@@ -514,7 +514,7 @@ export default function DigitalMarketingPage() {
 
   return (
     <main ref={containerRef}>
-      
+      <ServiceNavBar />
       <ServiceHero service={digitalMarketingService} onOpenModal={() => setIsModalOpen(true)} />
 
       {/* Overview Section with enhanced marketing dashboard */}
@@ -841,7 +841,7 @@ export default function DigitalMarketingPage() {
         service={digitalMarketingService}
       />
 
-      <Footer />
+      
     </main>
   );
 }

@@ -4,7 +4,7 @@ import React from 'react';
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 
-import Footer from '../../components/Footer';
+import ServiceNavBar from '../../components/ServiceNavBar';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
 import {
@@ -44,7 +44,7 @@ export default function WebDevelopmentPage() {
 
   return (
     <main ref={containerRef}>
-      
+      <ServiceNavBar />
       <ServiceHero service={webDevelopmentService} onOpenModal={() => setIsModalOpen(true)} />
 
       {/* Overview Section bg-[#344479] !text-[#dce1ff]*/}
@@ -415,7 +415,7 @@ export default function WebDevelopmentPage() {
         service={webDevelopmentService}
       />
 
-      <Footer />
+      
     </main>
   );
 }

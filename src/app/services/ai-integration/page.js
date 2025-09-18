@@ -3,7 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 
-import Footer from '../../components/Footer';
+import ServiceNavBar from '../../components/ServiceNavBar';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
 import AITechnologyMap from '../../components/AITechnologyMap';
@@ -45,7 +45,7 @@ export default function AIIntegrationPage() {
 
   return (
     <main ref={containerRef}>
-      
+      <ServiceNavBar />
       <ServiceHero service={aiIntegrationService} onOpenModal={() => setIsModalOpen(true)} />
 
       {/* Overview Section with AI dashboard */}
@@ -313,7 +313,7 @@ export default function AIIntegrationPage() {
         service={aiIntegrationService}
       />
 
-      <Footer />
+      
     </main>
   );
 }

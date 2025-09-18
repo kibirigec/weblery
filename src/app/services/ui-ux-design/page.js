@@ -3,7 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 
-import Footer from '../../components/Footer';
+import ServiceNavBar from '../../components/ServiceNavBar';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
 import {
@@ -42,7 +42,7 @@ export default function UIUXDesignPage() {
 
   return (
     <main ref={containerRef}>
-      
+      <ServiceNavBar />
       <ServiceHero service={uiUxDesignService} onOpenModal={() => setIsModalOpen(true)} />
 
       {/* Overview Section bg-[#205026] !text-[#b9f0b7]*/}
@@ -453,7 +453,7 @@ export default function UIUXDesignPage() {
         service={uiUxDesignService}
       />
 
-      <Footer />
+      
     </main>
   );
 }

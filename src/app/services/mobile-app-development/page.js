@@ -3,7 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 
-import Footer from '../../components/Footer';
+import ServiceNavBar from '../../components/ServiceNavBar';
 import ServiceModal from '../../components/ServiceModal';
 import Link from 'next/link';
 import {
@@ -43,7 +43,7 @@ export default function MobileAppDevelopmentPage() {
 
   return (
     <main ref={containerRef}>
-      
+      <ServiceNavBar />
       <ServiceHero service={mobileAppService} onOpenModal={() => setIsModalOpen(true)} />
 
       {/* Importance Section bg-[#891347] !text-[#ffb1c6]  */}
@@ -383,7 +383,7 @@ export default function MobileAppDevelopmentPage() {
         service={mobileAppService}
       />
 
-      <Footer />
+      
     </main>
   );
 }
