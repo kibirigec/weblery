@@ -152,7 +152,7 @@ export default function ServiceCard({
   };
 
   return (
-    <Link href={`/services/${slug}`} className="block no-underline">
+    <Link href={`/services/${slug}`} className="block no-underline h-full">
     <style jsx>{`
         @keyframes shine-continuous {
           0% { 
@@ -165,12 +165,12 @@ export default function ServiceCard({
       `}</style>
       <div
         ref={cardRef}
-        className={`card hover-lift group service-card-${hoverColor} cursor-pointer transition-all duration-300 hover:shadow-lg border border-transparent hover:border-gray-200 bg-white overflow-hidden ${
+        className={`card hover-lift group service-card-${hoverColor} cursor-pointer transition-all duration-300 hover:shadow-lg border border-transparent hover:border-gray-200 bg-white overflow-hidden flex flex-col h-full ${
           isActive ? 'is-active' : ''
         }`}
         style={slug === 'ai-integration' ? { border: '2px solid #b8860b', } : {}}
       >
-        <div className="p-6">
+        <div className="p-6 flex-grow">
           <div
             className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${getIconBgClass()}`}
           >
@@ -210,7 +210,9 @@ export default function ServiceCard({
               </div>
             </div>
           )}
+          </div>
 
+          <div className="p-6 pt-0">
           <div className="inline-flex items-center text-black hover:text-gray-600 font-medium transition-colors duration-200">
             Learn More
             <svg

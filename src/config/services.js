@@ -18,7 +18,7 @@ export const servicesList = [
   {
     icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945",
     title: "Web Development",
-    description: "Modern, responsive websites and web apps.",
+    description: "Modern, responsive websites and web apps, a must have for your business to not miss out on the global online presence.",
     hoverColor: "blue",
     slug: "web-development",
     features: ["Landing Pages", "eCommerce Stores", "Hosting", "Custom CMS"]
@@ -26,7 +26,7 @@ export const servicesList = [
   {
     icon: "M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
     title: "Digital Marketing",
-    description: "Grow your brand and drive sales with targeted online campaigns.",
+    description: "Grow your brand and drive sales with targeted online campaigns, all this with the power of Social Media platforms like TikTok, Facebook and others.",
     hoverColor: "yellow",
     slug: "digital-marketing",
     features: ["SEO", "PPC Campaigns", "Social Media", "Content Marketing"]
@@ -34,7 +34,7 @@ export const servicesList = [
   {
     icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
     title: "UI/UX Design",
-    description: "Beautiful and intuitive interfaces that delight users.",
+    description: "Beautiful and intuitive interfaces that delight users. Beautiful online stores, websites and applications are the beginning of better customer interaction and engagement",
     hoverColor: "green",
     slug: "ui-ux-design",
     features: ["User Research", "Wireframing", "Prototyping", "User Testing"]
@@ -42,7 +42,7 @@ export const servicesList = [
   {
     icon: "M13 10V3L4 14h7v7l9-11h-7z",
     title: "Performance Optimization",
-    description: "Boost website and app speed, security, and reliability.",
+    description: "Boost website and app speed, security, and reliability. Your online presence needs to feel as smooth and intuitive as possible. No Lag time, more customers for you.",
     hoverColor: "orange",
     slug: "performance-optimization",
     features: ["Speed Optimization", "Code Refactoring", "Caching", "Load Balancing"]
@@ -75,7 +75,7 @@ export const SERVICES = {
   },
   webDev: {
     name: "Web Development",
-    basePrice: 100_000,
+    basePrice: 150_000,
     baseInclusions: [
       "Basic website structure",
       "Responsive design",
@@ -84,14 +84,14 @@ export const SERVICES = {
       "Only for display",
     ],
     subServices: [
-      { name: "Backend Development", price: 50_000, description: "User Entry Forms, Database integration, Server setup, More Complex needs" },
+      { name: "Backend Development", price: 70_000, description: "User Entry Forms, Database integration, Server setup, More Complex needs" },
       { name: "E-commerce Solutions", price: 70_000, description: "Product management, Shopping cart, Payment integration, Order management" },
-      { name: "CMS Development", price: 40_000, description: "Content management interface, User roles and permissions, Media management, Content workflow" },
+      { name: "CMS Development", price: 50_000, description: "Content management interface, User roles and permissions, Media management, Content workflow" },
     ],
   },
   aiIntegration: {
     name: "AI Integration",
-    basePrice: 50_000,
+    basePrice: 150_000,
     baseInclusions: ["AI strategy consultation", "Basic model integration", "Simple AI Agent", "Initial testing"],
     subServices: [
       { name: "Custom AI Agent Deployment", price: 70_000, description: "End-to-end setup of a tailored AI agent for customer support, sales, or internal operations." },
@@ -102,7 +102,7 @@ export const SERVICES = {
   },
   digitalMarketing: {
     name: "Digital Marketing",
-    basePrice: 120_000,
+    basePrice: 30_000,
     baseInclusions: [
       "Tailored marketing strategy to grow your brand",
       "Analytics setup to track performance",
@@ -152,27 +152,27 @@ export const SERVICES = {
 export const PACKAGES = {
   silver: {
     name: "Silver",
-    price: 130000,
+    price: 250000,
     description: "Essential digital solutions for startups and small businesses",
     features: [
       "Responsive website (up to 5 pages)",
       "Basic SEO optimization",
       "Social media profile setup",
       "Basic UI/UX design",
-      "3 months of support"
+      "1 month of in-person support"
     ],
     services: [
-      { name: "Web Development", price: 100000 },
-      { name: "UI/UX Design", price: 30000 },
-      { name: "SEO Optimization", price: 15000 },
-      { name: "1 month support", price: 10000 },
+      { name: "Web Development", price: 150000 },
+      { name: "UI/UX Design", price: 80000 },
+      { name: "SEO Optimization", price: 60000 },
+      { name: "1 month in-Person support", price: 10000 },
     ],
-    discount: 25000,
+    discount: 50000,
     timeline: "4 Days",
   },
   gold: {
     name: "Gold",
-    price: 200000,
+    price: 350000,
     description: "Comprehensive digital solutions for growing businesses",
     features: [
       "Custom web application",
@@ -182,18 +182,18 @@ export const PACKAGES = {
       "Performance optimization"
     ],
     services: [
-      { name: "Web Development", price: 100000 },
-      { name: "UI/UX Design", price: 30000 },
+      { name: "Web Development", price: 150000 },
+      { name: "UI/UX Design", price: 80000 },
       { name: "Digital Marketing (Social Media)", price: 30000 },
-      { name: "Simple AI Agent", price: 50000 },
-      { name: "3 months support", price: 30000 },
+      { name: "Simple AI Agent", price: 150000 },
+      { name: "3 months in-Person support", price: 30000 },
     ],
-    discount: 40000,
+    discount: 90000,
     timeline: "6 Days",
   },
   platinum: {
     name: "Platinum",
-    price: 300000,
+    price: 500000,
     description: "Enterprise-grade digital ecosystem for established businesses",
     features: [
       "Enterprise web platform",
@@ -203,14 +203,14 @@ export const PACKAGES = {
       "Comprehensive optimization"
     ],
     services: [
-      { name: "Web Development", price: 100000 },
+      { name: "Web Development", price: 150000 },
       { name: "Mobile App Development", price: 70000 },
-      { name: "UI/UX Design", price: 30000 },
+      { name: "UI/UX Design", price: 80000 },
       { name: "Digital Marketing (Social Media)", price: 30000 },
-      { name: "Complex AI Agents", price: 70000 },
-      { name: "6 months support", price: 60000 },
+      { name: "Complex AI Agents", price: 200000 },
+      { name: "6 months in-Person support", price: 60000 },
     ],
-    discount: 60000,
+    discount: 90000,
     timeline: "10 Days",
   }
 };
