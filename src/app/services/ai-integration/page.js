@@ -128,15 +128,15 @@ export default function AIIntegrationPage() {
                 className="text-3xl font-bold mb-6 text-gray-900"
                 variants={itemVariants}
               >
-                Transform Your Business with AI
+                AI Agents, They don't need salaries!
               </motion.h2>
               
               <motion.p 
                 className="text-gray-600 mb-6"
                 variants={itemVariants}
               >
-                Harness the power of artificial intelligence to automate processes, gain insights from data, 
-                and create intelligent user experiences. Our AI integration services help you stay ahead of the competition.
+                With the advancement of Artificial Intelligence, we can now have AI agents that can work 24/7 and never miss a detail.
+                They are automatically triggered by events and can perform tasks without human intervention.
               </motion.p>
               
               <motion.ul 
@@ -144,12 +144,15 @@ export default function AIIntegrationPage() {
                 variants={containerVariants}
               >
                 {[
-                  "Custom chatbots and virtual assistants",
-                  "Machine learning model development",
-                  "Natural language processing solutions",
-                  "Computer vision and image recognition",
-                  "Predictive analytics and data insights"
-                ].map((item, index) => (
+  "Customer agents that answer questions, upsell, and book appointments automatically",
+  "Finance agents that reconcile invoices, flag fraud, and generate reports overnight",
+  "Sales agents that nurture leads, send follow-ups, and schedule meetings for your team",
+  "Marketing agents that test campaigns in real time and shift budget to what’s working",
+  "Operations agents that track inventory, reorder supplies, and prevent stockouts",
+  "HR agents that screen candidates, schedule interviews, and onboard new hires",
+  "Compliance agents that monitor regulations and alert you before issues arise"
+]
+.map((item, index) => (
                   <motion.li 
                     key={index}
                     className="flex items-start gap-3"
@@ -232,7 +235,7 @@ export default function AIIntegrationPage() {
               className="text-xl text-gray-700/80 max-w-3xl mx-auto"
               variants={fadeInUp}
             >
-              Our AI Integration services start at ${SERVICES['ai-integration'].basePrice.toLocaleString()}.
+              Our AI Integration services start at ${SERVICES['aiIntegration'].basePrice.toLocaleString()}.
               For a detailed breakdown and custom solutions, use our plan builder.
             </motion.p>
             <motion.div className="mt-8" variants={fadeInUp}>

@@ -2,482 +2,215 @@ export const servicesList = [
   {
     icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
     title: "Mobile App Development",
-    description: "Native and cross-platform mobile applications built with the latest technologies for iOS and Android platforms.",
-    hoverColor: "#831843",
+    description: "Connect more with your customers, with a personalized mobile application. Look even more professional and trustworthy, and ease customer-centric actions.",
+    hoverColor: "pink",
     slug: "mobile-app-development",
-    features: ["iOS & Android","Maintenance & Support","Push Notifications","In-App Purchases",]
+    features: ["iOS & Android", "Maintenance & Support", "Push Notifications", "In-App Purchases"]
   },
   {
-    icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+    icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1",
     title: "Custom AI Integration",
-    description: "Intelligent automation and AI-powered features to automate operations and even reduce labor costs.",
-    hoverColor: "#000000",
+    description: "Automate many repetitive tasks, save labor costs and have AI agents do most of the work, all day long, no complaints.",
+    hoverColor: "black",
     slug: "ai-integration",
-    features: ["New-Voicebots", "Chatbots", "Data Analysis", "Automation"]
+    features: ["Voicebots", "Chatbots", "Data Analysis", "Automation"]
   },
   {
-    icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+    icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945",
     title: "Web Development",
-    description: "Modern, responsive websites and web applications that deliver exceptional user experiences and improve business visibility.",
-    hoverColor: "#1e3a8a",
+    description: "Modern, responsive websites and web apps.",
+    hoverColor: "blue",
     slug: "web-development",
     features: ["Landing Pages", "eCommerce Stores", "Hosting", "Custom CMS"]
   },
   {
     icon: "M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
-    title: "Digital Marketing Strategy",
-    description: "Social media marketing campaigns and strategies to maximize your reach and conversion rates.",
-    hoverColor: "#a16207",
+    title: "Digital Marketing",
+    description: "Grow your brand and drive sales with targeted online campaigns.",
+    hoverColor: "yellow",
     slug: "digital-marketing",
     features: ["SEO", "PPC Campaigns", "Social Media", "Content Marketing"]
   },
   {
     icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
     title: "UI/UX Design",
-    description: "Intuitive and beautiful user interfaces that provide seamless experiences across all devices.",
-    hoverColor: "#14532d",
+    description: "Beautiful and intuitive interfaces that delight users.",
+    hoverColor: "green",
     slug: "ui-ux-design",
     features: ["User Research", "Wireframing", "Prototyping", "User Testing"]
   },
   {
     icon: "M13 10V3L4 14h7v7l9-11h-7z",
     title: "Performance Optimization",
-    description: "Speed and performance optimization to ensure your digital products load fast and run smoothly.",
-    hoverColor: "#7c2d12",
+    description: "Boost website and app speed, security, and reliability.",
+    hoverColor: "orange",
     slug: "performance-optimization",
     features: ["Speed Optimization", "Code Refactoring", "Caching", "Load Balancing"]
   }
 ];
 
 export const SERVICES = {
-  'mobile-app-development': {
-    name: 'Mobile App Development',
-    basePrice: 8000,
-    description: 'Native and cross-platform mobile applications',
+  mobileApp: {
+    name: "Mobile App Development",
+    basePrice: 70_000,
     baseInclusions: [
-      'Basic app structure and architecture',
-      'Single platform development (iOS or Android)',
-      'Basic UI/UX implementation',
-      'Core functionality development',
-      'Basic testing and deployment'
+      "Basic app structure and architecture",
+      "Single platform development (iOS or Android)",
+      "Basic UI/UX implementation",
+      "Core functionality development",
+      "Basic testing and deployment",
     ],
-    subServices: {
-      'ios-development': {
-        name: 'iOS Development',
-        price: 2000,
-        description: 'Native iOS application development',
-        inclusions: [
-          'Swift/SwiftUI development',
-          'iOS-specific features',
-          'App Store deployment',
-          'iOS device testing'
-        ]
+    subServices: [
+      {
+        name: "Cross-Platform Development",
+        price: 120_000,
+        description: "React Native or Flutter, Platform-specific optimizations, Unified codebase, Multi-platform testing",
       },
-      'android-development': {
-        name: 'Android Development',
-        price: 2000,
-        description: 'Native Android application development',
-        inclusions: [
-          'Kotlin/Java development',
-          'Android-specific features',
-          'Play Store deployment',
-          'Android device testing'
-        ]
+      {
+        name: "App Maintenance & Support",
+        price: 20_000,
+        description: "Bug fixes and updates, Performance monitoring, Security patches, Technical support",
       },
-      'cross-platform': {
-        name: 'Cross-Platform Development',
-        price: 3000,
-        description: 'React Native or Flutter development',
-        inclusions: [
-          'Cross-platform framework setup',
-          'Platform-specific optimizations',
-          'Unified codebase',
-          'Multi-platform testing'
-        ]
-      },
-      'app-maintenance': {
-        name: 'App Maintenance & Support',
-        price: 1000,
-        description: 'Ongoing maintenance and support',
-        inclusions: [
-          'Bug fixes and updates',
-          'Performance monitoring',
-          'Security patches',
-          'Technical support'
-        ]
-      }
-    }
+    ],
   },
-  'web-development': {
-    name: 'Web Development',
-    basePrice: 6000,
-    description: 'Custom web applications and websites',
+  webDev: {
+    name: "Web Development",
+    basePrice: 100_000,
     baseInclusions: [
-      'Basic website structure',
-      'Responsive design',
-      'Core functionality',
-      'Basic SEO setup',
-      'Initial deployment'
+      "Basic website structure",
+      "Responsive design",
+      "Core functionality",
+      "Basic SEO setup",
+      "Only for display",
     ],
-    subServices: {
-      'frontend': {
-        name: 'Frontend Development',
-        price: 1500,
-        description: 'Advanced frontend development',
-        inclusions: [
-          'Modern framework implementation',
-          'Interactive UI components',
-          'Performance optimization',
-          'Cross-browser compatibility'
-        ]
-      },
-      'backend': {
-        name: 'Backend Development',
-        price: 2000,
-        description: 'Server-side development',
-        inclusions: [
-          'API development',
-          'Database integration',
-          'Server setup',
-          'Security implementation'
-        ]
-      },
-      'ecommerce': {
-        name: 'E-commerce Solutions',
-        price: 2500,
-        description: 'Complete e-commerce functionality',
-        inclusions: [
-          'Product management',
-          'Shopping cart',
-          'Payment integration',
-          'Order management'
-        ]
-      },
-      'cms': {
-        name: 'Content Management Systems',
-        price: 1500,
-        description: 'Custom CMS development',
-        inclusions: [
-          'Content management interface',
-          'User roles and permissions',
-          'Media management',
-          'Content workflow'
-        ]
-      }
-    }
+    subServices: [
+      { name: "Backend Development", price: 50_000, description: "User Entry Forms, Database integration, Server setup, More Complex needs" },
+      { name: "E-commerce Solutions", price: 70_000, description: "Product management, Shopping cart, Payment integration, Order management" },
+      { name: "CMS Development", price: 40_000, description: "Content management interface, User roles and permissions, Media management, Content workflow" },
+    ],
   },
-  'ai-integration': {
-    name: 'AI Integration',
-    basePrice: 10000,
-    description: 'Artificial Intelligence and Machine Learning solutions',
-    baseInclusions: [
-      'AI strategy consultation',
-      'Basic model integration',
-      'Data pipeline setup',
-      'Initial testing'
+  aiIntegration: {
+    name: "AI Integration",
+    basePrice: 50_000,
+    baseInclusions: ["AI strategy consultation", "Basic model integration", "Simple AI Agent", "Initial testing"],
+    subServices: [
+      { name: "Custom AI Agent Deployment", price: 70_000, description: "End-to-end setup of a tailored AI agent for customer support, sales, or internal operations." },
+      { name: "Analyst Agents", price: 30_000, description: "Lightweight agents that analyze your business data and deliver easy-to-understand insights." },
+      { name: "Automation Agents", price: 25_000, description: "Smart agents that automate repetitive workflows and integrate with existing tools." },
+      { name: "Customer Experience Agents", price: 40_000, description: "AI chat agents that respond instantly, personalize customer interactions, and reduce response time." },
     ],
-    subServices: {
-      'ml-models': {
-        name: 'ML Model Development',
-        price: 5000,
-        description: 'Custom machine learning models',
-        inclusions: [
-          'Model architecture design',
-          'Training pipeline',
-          'Model optimization',
-          'Performance testing'
-        ]
-      },
-      'data-analysis': {
-        name: 'Data Analysis',
-        price: 3000,
-        description: 'Advanced data analysis',
-        inclusions: [
-          'Data processing',
-          'Statistical analysis',
-          'Visualization',
-          'Insights generation'
-        ]
-      },
-      'automation': {
-        name: 'Process Automation',
-        price: 2000,
-        description: 'AI-powered automation',
-        inclusions: [
-          'Workflow analysis',
-          'Automation implementation',
-          'Integration with existing systems',
-          'Monitoring setup'
-        ]
-      },
-      'chatbots': {
-        name: 'AI Chatbots',
-        price: 2500,
-        description: 'Intelligent chatbot development',
-        inclusions: [
-          'Conversation design',
-          'NLP integration',
-          'Multi-channel deployment',
-          'Analytics setup'
-        ]
-      }
-    }
   },
-  'digital-marketing': {
-    name: 'Digital Marketing',
-    basePrice: 5000,
-    description: 'Comprehensive digital marketing solutions',
+  digitalMarketing: {
+    name: "Digital Marketing",
+    basePrice: 120_000,
     baseInclusions: [
-      'Marketing strategy',
-      'Basic analytics setup',
-      'Initial campaign planning',
-      'Performance tracking'
+      "Tailored marketing strategy to grow your brand",
+      "Analytics setup to track performance",
+      "Initial campaign planning for quick wins",
+      "Regular performance updates and insights"
     ],
-    subServices: {
-      'seo': {
-        name: 'Search Engine Optimization',
-        price: 1500,
-        description: 'Complete SEO optimization',
-        inclusions: [
-          'Keyword research',
-          'On-page optimization',
-          'Technical SEO',
-          'Performance tracking'
-        ]
-      },
-      'sem': {
-        name: 'Search Engine Marketing',
-        price: 2000,
-        description: 'Paid search campaigns',
-        inclusions: [
-          'Campaign setup',
-          'Ad creation',
-          'Budget management',
-          'Performance optimization'
-        ]
-      },
-      'social-media': {
-        name: 'Social Media Marketing',
-        price: 1500,
-        description: 'Social media management',
-        inclusions: [
-          'Content strategy',
-          'Platform management',
-          'Community engagement',
-          'Analytics reporting'
-        ]
-      },
-      'content-marketing': {
-        name: 'Content Marketing',
-        price: 2000,
-        description: 'Content creation and strategy',
-        inclusions: [
-          'Content strategy',
-          'Content creation',
-          'Distribution planning',
-          'Performance analysis'
-        ]
-      }
-    }
+    subServices: [
+      { name: "SEO (Search Engine Optimization)", price: 60_000, description: "Boost website visibility, keyword research, on-page optimization, technical SEO fixes." },
+      { name: "SEM (Paid Ads & Campaigns)", price: 100_000, description: "Optimized ad campaigns, ad creation, budget management, and continuous performance improvement." },
+      { name: "Social Media Marketing", price: 70_000, description: "Grow social presence with content planning, platform management, audience engagement, and analytics." },
+      { name: "Content Marketing", price: 90_000, description: "Create valuable content that attracts, educates, and converts your audience." }
+    ]
   },
-  'ui-ux-design': {
-    name: 'UI/UX Design',
-    basePrice: 4000,
-    description: 'User interface and experience design',
+  uiuxDesign: {
+    name: "UI/UX Design",
+    basePrice: 80_000,
     baseInclusions: [
-      'Basic user research',
-      'Wireframe creation',
-      'Basic UI design',
-      'Initial usability testing'
+      "Understand your users with targeted research",
+      "Create clear and effective wireframes",
+      "Design intuitive user interfaces",
+      "Test usability to ensure smooth experiences"
     ],
-    subServices: {
-      'wireframing': {
-        name: 'Wireframing',
-        price: 1000,
-        description: 'Detailed wireframe creation',
-        inclusions: [
-          'User flow mapping',
-          'Interactive wireframes',
-          'User feedback integration',
-          'Iteration support'
-        ]
-      },
-      'prototyping': {
-        name: 'Prototyping',
-        price: 1500,
-        description: 'Interactive prototype development',
-        inclusions: [
-          'High-fidelity prototypes',
-          'User interaction design',
-          'Animation and transitions',
-          'User testing support'
-        ]
-      },
-      'user-research': {
-        name: 'User Research',
-        price: 2000,
-        description: 'Comprehensive user research',
-        inclusions: [
-          'User interviews',
-          'Usability testing',
-          'Data analysis',
-          'Recommendations'
-        ]
-      },
-      'usability-testing': {
-        name: 'Usability Testing',
-        price: 1500,
-        description: 'Detailed usability testing',
-        inclusions: [
-          'Test planning',
-          'User recruitment',
-          'Test execution',
-          'Analysis and reporting'
-        ]
-      }
-    }
+    subServices: [
+      { name: "Wireframing", price: 35_000, description: "Map user flows, build interactive wireframes, gather user feedback, refine designs iteratively." },
+      { name: "Prototyping", price: 50_000, description: "Create high-fidelity prototypes with animations and transitions for realistic testing." },
+      { name: "User Research", price: 60_000, description: "Conduct interviews, usability studies, and data analysis to uncover actionable insights." },
+      { name: "Usability Testing", price: 45_000, description: "Plan tests, recruit users, execute sessions, and provide detailed recommendations." }
+    ]
   },
-  'performance-optimization': {
-    name: 'Performance Optimization',
-    basePrice: 3000,
-    description: 'Application and website optimization',
+  performanceOptimization: {
+    name: "Performance Optimization",
+    basePrice: 70_000,
     baseInclusions: [
-      'Initial performance audit',
-      'Basic optimization',
-      'Performance monitoring setup',
-      'Initial recommendations'
+      "Comprehensive performance audit to identify bottlenecks",
+      "Basic optimizations for faster, more reliable site/app",
+      "Setup of monitoring to catch issues early",
+      "Practical recommendations to keep your platform running smoothly"
     ],
-    subServices: {
-      'speed-optimization': {
-        name: 'Speed Optimization',
-        price: 1500,
-        description: 'Comprehensive speed optimization',
-        inclusions: [
-          'Load time optimization',
-          'Resource optimization',
-          'Caching implementation',
-          'Performance testing'
-        ]
-      },
-      'seo-optimization': {
-        name: 'SEO Optimization',
-        price: 1000,
-        description: 'Technical SEO optimization',
-        inclusions: [
-          'Meta optimization',
-          'Schema markup',
-          'Technical improvements',
-          'Performance impact'
-        ]
-      },
-      'security-audit': {
-        name: 'Security Audit',
-        price: 2000,
-        description: 'Comprehensive security audit',
-        inclusions: [
-          'Vulnerability assessment',
-          'Security testing',
-          'Compliance checking',
-          'Recommendations'
-        ]
-      },
-      'performance-monitoring': {
-        name: 'Performance Monitoring',
-        price: 1000,
-        description: 'Ongoing performance monitoring',
-        inclusions: [
-          'Monitoring setup',
-          'Alert configuration',
-          'Performance reporting',
-          'Optimization support'
-        ]
-      }
-    }
+    subServices: [
+      { name: "Speed Optimization", price: 40_000, description: "Reduce load times, optimize resources, implement caching, ensure smooth experiences." },
+      { name: "Security Audit", price: 50_000, description: "Vulnerability assessments, security testing, compliance checks, actionable fixes." },
+      { name: "Performance Monitoring", price: 25_000, description: "Track performance, set alerts for critical issues, get detailed reports." }
+    ]
   }
 };
 
 export const PACKAGES = {
-  'Silver': {
-    price: 9999,
-    description: 'Perfect for small businesses and startups',
-    includedServices: ['web-development', 'ui-ux-design'],
-    timeline: '4-6 weeks',
+  silver: {
+    name: "Silver",
+    price: 130000,
+    description: "Essential digital solutions for startups and small businesses",
     features: [
-      'Basic website development',
-      'UI/UX design',
-      'Basic SEO optimization',
-      '1 month of support'
+      "Responsive website (up to 5 pages)",
+      "Basic SEO optimization",
+      "Social media profile setup",
+      "Basic UI/UX design",
+      "3 months of support"
     ],
-    valueBreakdown: {
-      'web-development': 6000,
-      'ui-ux-design': 4000,
-      'seo-optimization': 1000,
-      'support': 1000,
-      'discount': -2010
-    }
+    services: [
+      { name: "Web Development", price: 100000 },
+      { name: "UI/UX Design", price: 30000 },
+      { name: "SEO Optimization", price: 15000 },
+      { name: "1 month support", price: 10000 },
+    ],
+    discount: 25000,
+    timeline: "4 Days",
   },
-  'Gold': {
-    price: 19999,
-    description: 'Ideal for growing businesses',
-    includedServices: ['web-development', 'ui-ux-design', 'digital-marketing'],
-    timeline: '8-10 weeks',
+  gold: {
+    name: "Gold",
+    price: 200000,
+    description: "Comprehensive digital solutions for growing businesses",
     features: [
-      'Advanced website development',
-      'Premium UI/UX design',
-      'Digital marketing package',
-      '3 months of support',
-      'Performance optimization'
+      "Custom web application",
+      "Single platform mobile app",
+      "Complete digital marketing",
+      "Advanced UI/UX design",
+      "Performance optimization"
     ],
-    valueBreakdown: {
-      'web-development': 6000,
-      'ui-ux-design': 4000,
-      'digital-marketing': 5000,
-      'performance-optimization': 3000,
-      'support': 3000,
-      'discount': -2000
-    }
+    services: [
+      { name: "Web Development", price: 100000 },
+      { name: "UI/UX Design", price: 30000 },
+      { name: "Digital Marketing (Social Media)", price: 30000 },
+      { name: "Simple AI Agent", price: 50000 },
+      { name: "3 months support", price: 30000 },
+    ],
+    discount: 40000,
+    timeline: "6 Days",
   },
-  'Platinum': {
-    price: 39999,
-    description: 'Complete solution for established businesses',
-    includedServices: ['web-development', 'mobile-app-development', 'ui-ux-design', 'digital-marketing', 'ai-integration'],
-    timeline: '12-16 weeks',
+  platinum: {
+    name: "Platinum",
+    price: 300000,
+    description: "Enterprise-grade digital ecosystem for established businesses",
     features: [
-      'Full-stack development',
-      'Mobile app development',
-      'Premium UI/UX design',
-      'Comprehensive digital marketing',
-      'AI integration',
-      '6 months of support',
-      'Priority support'
+      "Enterprise web platform",
+      "Cross-platform mobile apps",
+      "Advanced marketing campaigns",
+      "Custom AI integration",
+      "Comprehensive optimization"
     ],
-    valueBreakdown: {
-      'web-development': 6000,
-      'mobile-app-development': 8000,
-      'ui-ux-design': 4000,
-      'digital-marketing': 5000,
-      'ai-integration': 10000,
-      'support': 6000,
-      'priority-support': 2000,
-      'discount': -6000
-    }
+    services: [
+      { name: "Web Development", price: 100000 },
+      { name: "Mobile App Development", price: 70000 },
+      { name: "UI/UX Design", price: 30000 },
+      { name: "Digital Marketing (Social Media)", price: 30000 },
+      { name: "Complex AI Agents", price: 70000 },
+      { name: "6 months support", price: 60000 },
+    ],
+    discount: 60000,
+    timeline: "10 Days",
   }
 };
-
-export const RECOMMENDATION_RULES = [
-  {
-    condition: (selectedServices) => selectedServices.includes('mobile-app-development') && !selectedServices.includes('ui-ux-design'),
-    recommendation: 'ui-ux-design',
-    reason: 'UI/UX design is recommended for mobile app development to ensure a great user experience'
-  },
-  {
-    condition: (selectedServices) => selectedServices.includes('web-development') && !selectedServices.includes('performance-optimization'),
-    recommendation: 'performance-optimization',
-    reason: 'Performance optimization is recommended for web development to ensure fast loading times'
-  },
-  {
-    condition: (selectedServices) => (selectedServices.includes('web-development') || selectedServices.includes('mobile-app-development')) && !selectedServices.includes('digital-marketing'),
-    recommendation: 'digital-marketing',
-    reason: 'Digital marketing is recommended to help promote your new digital presence'
-  }
-]; 

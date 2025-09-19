@@ -373,7 +373,7 @@ export default function UIUXDesignPage() {
               className="text-xl text-gray-700/80 max-w-3xl mx-auto"
               variants={fadeInUp}
             >
-              Our <span className="text-green-900">UI/UX Design</span> services start at ${SERVICES['ui-ux-design'].basePrice.toLocaleString()}.
+              Our <span className="text-green-900">UI/UX Design</span> services start at ${SERVICES['uiuxDesign'].basePrice.toLocaleString()}.
               For a detailed breakdown and custom solutions, use our plan builder.
             </motion.p>
             <motion.div className="mt-8" variants={fadeInUp}>

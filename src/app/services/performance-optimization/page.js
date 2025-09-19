@@ -345,7 +345,7 @@ export default function PerformanceOptimizationPage() {
               className="text-xl text-gray-700/80 max-w-3xl mx-auto"
               variants={fadeInUp}
             >
-              Our <span classname="!text-orange-900">Performance Optimization</span> services start at ${SERVICES['performance-optimization'].basePrice.toLocaleString()}.
+              Our <span classname="!text-orange-900">Performance Optimization</span> services start at ${SERVICES['performanceOptimization'].basePrice.toLocaleString()}.
               For a detailed breakdown and custom solutions, use our plan builder.
             </motion.p>
             <motion.div className="mt-8" variants={fadeInUp}>

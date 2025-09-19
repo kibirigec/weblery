@@ -1,328 +1,310 @@
 "use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import OnboardingLayout from '../components/onboarding/OnboardingLayout';
-import TrackSelection from '../components/onboarding/TrackSelection';
-import PackageSelection from '../components/onboarding/PackageSelection';
-import CustomPlanBuilder from '../components/onboarding/CustomPlanBuilder';
-import Summary from '../components/onboarding/Summary';
-import ContactInfo from '../components/onboarding/ContactInfo';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import OnboardingLayout from "../components/onboarding/OnboardingLayout";
+import TrackSelection from "../components/onboarding/TrackSelection";
+import PackageSelection from "../components/onboarding/PackageSelection";
+import CustomPlanBuilder from "../components/onboarding/CustomPlanBuilder";
+import Summary from "../components/onboarding/Summary";
+import ContactInfo from "../components/onboarding/ContactInfo";
 
 const PACKAGES = {
   silver: {
     name: "Silver Package",
-    price: 9999,
+    price: 130_000,
     services: [
-      { name: "Web Development", price: 6000 },
-      { name: "UI/UX Design", price: 4000 },
-      { name: "SEO Optimization", price: 1000 },
-      { name: "1 month support", price: 1000 }
+      { name: "Web Development", price: 100_000 },
+      { name: "UI/UX Design", price: 30_000 },
+      { name: "SEO Optimization", price: 15_000 },
+      { name: "1 month support", price: 10_000 },
     ],
-    discount: 2010,
-    timeline: "4-6 weeks"
+    discount: 25_000,
+    timeline: "4 Days",
   },
   gold: {
     name: "Gold Package",
-    price: 19999,
+    price: 200_000,
     services: [
-      { name: "Web Development", price: 6000 },
-      { name: "UI/UX Design", price: 4000 },
-      { name: "Digital Marketing", price: 5000 },
-      { name: "Performance Optimization", price: 3000 },
-      { name: "3 months support", price: 3000 }
+      { name: "Web Development", price: 100_000 },
+      { name: "UI/UX Design", price: 30_000 },
+      { name: "Digital Marketing (Social Media)", price: 30_000 },
+      { name: "Simple AI Agent", price: 50_000 },
+      { name: "3 months support", price: 30_000 },
     ],
-    discount: 2000,
-    timeline: "8-10 weeks"
+    discount: 40_000,
+    timeline: "6 Days",
   },
   platinum: {
     name: "Platinum Package",
-    price: 39999,
+    price: 300_000,
     services: [
-      { name: "Web Development", price: 6000 },
-      { name: "Mobile App Development", price: 8000 },
-      { name: "UI/UX Design", price: 4000 },
-      { name: "Digital Marketing", price: 5000 },
-      { name: "AI Integration", price: 10000 },
-      { name: "6 months support", price: 6000 },
-      { name: "Priority support", price: 2000 }
+      { name: "Web Development", price: 100_000 },
+      { name: "Mobile App Development", price: 70_000 },
+      { name: "UI/UX Design", price: 30_000 },
+      { name: "Digital Marketing (Social Media)", price: 30_000 },
+      { name: "Complex AI Agents", price: 70_000 },
+      { name: "6 months support", price: 60_000 },
     ],
-    discount: 6000,
-    timeline: "10-14 weeks"
-  }
+    discount: 60_000,
+    timeline: "10 Days",
+  },
 };
 
 const SERVICES = {
   mobileApp: {
     name: "Mobile App Development",
-    basePrice: 8000,
+    basePrice: 70_000,
     baseInclusions: [
       "Basic app structure and architecture",
       "Single platform development (iOS or Android)",
       "Basic UI/UX implementation",
       "Core functionality development",
-      "Basic testing and deployment"
+      "Basic testing and deployment",
     ],
     subServices: [
       {
-        name: "iOS Development",
-        price: 2000,
-        description: "Swift/SwiftUI development, iOS-specific features, App Store deployment, iOS device testing"
-      },
-      {
-        name: "Android Development",
-        price: 2000,
-        description: "Kotlin/Java development, Android-specific features, Play Store deployment, Android device testing"
-      },
-      {
         name: "Cross-Platform Development",
-        price: 3000,
-        description: "React Native or Flutter, Platform-specific optimizations, Unified codebase, Multi-platform testing"
+        price: 120_000,
+        description:
+          "React Native or Flutter, Platform-specific optimizations, Unified codebase, Multi-platform testing",
       },
       {
         name: "App Maintenance & Support",
-        price: 1000,
-        description: "Bug fixes and updates, Performance monitoring, Security patches, Technical support"
-      }
-    ]
+        price: 20_000,
+        description:
+          "Bug fixes and updates, Performance monitoring, Security patches, Technical support",
+      },
+    ],
   },
   webDev: {
     name: "Web Development",
-    basePrice: 6000,
+    basePrice: 100_000,
     baseInclusions: [
       "Basic website structure",
       "Responsive design",
       "Core functionality",
       "Basic SEO setup",
-      "Initial deployment"
+      "Only for display",
     ],
     subServices: [
       {
-        name: "Frontend Development",
-        price: 1500,
-        description: "Modern framework (React, Vue, etc.), Interactive UI components, Performance optimization, Cross-browser compatibility"
-      },
-      {
         name: "Backend Development",
-        price: 2000,
-        description: "API development, Database integration, Server setup, Security implementation"
+        price: 50_000,
+        description: "User Entry Forms, Database integration, Server setup, More Complex needs",
       },
       {
         name: "E-commerce Solutions",
-        price: 2500,
-        description: "Product management, Shopping cart, Payment integration, Order management"
+        price: 70_000,
+        description: "Product management, Shopping cart, Payment integration, Order management",
       },
       {
         name: "CMS Development",
-        price: 1500,
-        description: "Content management interface, User roles and permissions, Media management, Content workflow"
-      }
-    ]
+        price: 40_000,
+        description:
+          "Content management interface, User roles and permissions, Media management, Content workflow",
+      },
+    ],
   },
   aiIntegration: {
     name: "AI Integration",
-    basePrice: 10000,
-    baseInclusions: [
-      "AI strategy consultation",
-      "Basic model integration",
-      "Data pipeline setup",
-      "Initial testing"
-    ],
+    basePrice: 50_000,
+    baseInclusions: ["AI strategy consultation", "Basic model integration", "Simple AI Agent", "Initial testing"],
     subServices: [
       {
-        name: "ML Model Development",
-        price: 5000,
-        description: "Model architecture design, Training pipeline, Model optimization, Performance testing"
+        name: "Custom AI Agent Deployment",
+        price: 700_000,
+        description:
+          "End-to-end setup of a tailored AI agent for customer support, sales, or internal operations.",
       },
       {
-        name: "Data Analysis",
-        price: 3000,
-        description: "Data processing, Statistical analysis, Visualization, Insights generation"
+        name: "Analyst Agents",
+        price: 300_000,
+        description:
+          "Lightweight agents that analyze your business data and deliver easy-to-understand insights.",
       },
       {
-        name: "Process Automation",
-        price: 2000,
-        description: "Workflow analysis, Automation implementation, Integration with existing systems, Monitoring setup"
+        name: "Automation Agents",
+        price: 250_000,
+        description:
+          "Smart agents that automate repetitive workflows and integrate with existing tools.",
       },
       {
-        name: "AI Chatbots",
-        price: 2500,
-        description: "Conversation design, NLP integration, Multi-channel deployment, Analytics setup"
-      }
-    ]
+        name: "Customer Experience Agents",
+        price: 400_000,
+        description:
+          "AI chat agents that respond instantly, personalize customer interactions, and reduce response time.",
+      },
+    ],
   },
   digitalMarketing: {
     name: "Digital Marketing",
-    basePrice: 5000,
+    basePrice: 120_000, // Base package for small businesses
     baseInclusions: [
-      "Marketing strategy",
-      "Basic analytics setup",
-      "Initial campaign planning",
-      "Performance tracking"
+      "Tailored marketing strategy to grow your brand",
+      "Analytics setup to track performance",
+      "Initial campaign planning for quick wins",
+      "Regular performance updates and insights"
     ],
     subServices: [
       {
-        name: "SEO",
-        price: 1500,
-        description: "Keyword research, On-page optimization, Technical SEO, Performance tracking"
+        name: "SEO (Search Engine Optimization)",
+        price: 60_000,
+        description: "Boost your website visibility on Google with keyword research, on-page optimization, technical SEO fixes, and measurable performance tracking."
       },
       {
-        name: "SEM",
-        price: 2000,
-        description: "Campaign setup, Ad creation, Budget management, Performance optimization"
+        name: "SEM (Paid Ads & Campaigns)",
+        price: 100_000,
+        description: "Reach your ideal customers faster with optimized ad campaigns, ad creation, budget management, and continuous performance improvement."
       },
       {
         name: "Social Media Marketing",
-        price: 1500,
-        description: "Content strategy, Platform management, Community engagement, Analytics reporting"
+        price: 70_000,
+        description: "Grow your social presence with content planning, platform management, active audience engagement, and analytics to measure results."
       },
       {
         name: "Content Marketing",
-        price: 2000,
-        description: "Content strategy, Content creation, Distribution planning, Performance analysis"
+        price: 90_000,
+        description: "Create and share valuable content that attracts, educates, and converts your audience, with strategic distribution and performance monitoring."
       }
     ]
   },
+  
   uiuxDesign: {
     name: "UI/UX Design",
-    basePrice: 4000,
+    basePrice: 80_000, // Base package for small businesses
     baseInclusions: [
-      "Basic user research",
-      "Wireframe creation",
-      "Basic UI design",
-      "Initial usability testing"
+      "Understand your users with targeted research",
+      "Create clear and effective wireframes",
+      "Design intuitive user interfaces",
+      "Test usability to ensure smooth experiences"
     ],
     subServices: [
       {
         name: "Wireframing",
-        price: 1000,
-        description: "User flow mapping, Interactive wireframes, User feedback integration, Iteration support"
+        price: 35_000,
+        description: "Map user flows, build interactive wireframes, gather user feedback, and refine designs iteratively."
       },
       {
         name: "Prototyping",
-        price: 1500,
-        description: "High-fidelity prototypes, User interaction design, Animation and transitions, User testing support"
+        price: 50_000,
+        description: "Create high-fidelity prototypes with animations and transitions, allowing realistic user testing before development."
       },
       {
         name: "User Research",
-        price: 2000,
-        description: "User interviews, Usability testing, Data analysis, Recommendations"
+        price: 60_000,
+        description: "Conduct interviews, usability studies, and data analysis to uncover actionable insights that improve your product."
       },
       {
         name: "Usability Testing",
-        price: 1500,
-        description: "Test planning, User recruitment, Test execution, Analysis and reporting"
+        price: 45_000,
+        description: "Plan tests, recruit users, execute usability sessions, and provide detailed recommendations for improvement."
       }
     ]
-  },
+  },  
   performanceOptimization: {
     name: "Performance Optimization",
-    basePrice: 3000,
+    basePrice: 70_000, // Base package for startups
     baseInclusions: [
-      "Initial performance audit",
-      "Basic optimization",
-      "Monitoring setup",
-      "Initial recommendations"
+      "Comprehensive performance audit to identify bottlenecks",
+      "Basic optimizations to make your site/app faster and more reliable",
+      "Setup of monitoring to catch issues before they affect users",
+      "Practical recommendations to keep your platform running smoothly"
     ],
     subServices: [
       {
         name: "Speed Optimization",
-        price: 1500,
-        description: "Load time improvement, Resource optimization, Caching implementation, Performance testing"
+        price: 40_000,
+        description: "Reduce load times, optimize resources, implement caching, and ensure smooth, fast experiences for every user."
       },
       {
         name: "SEO Optimization",
-        price: 1000,
-        description: "Meta tag improvement, Schema markup, Technical enhancements, SEO performance validation"
+        price: 30_000,
+        description: "Enhance search engine visibility through meta tags, schema markup, technical fixes, and performance validation—so your audience can find you easily."
       },
       {
         name: "Security Audit",
-        price: 2000,
-        description: "Vulnerability assessment, Security testing, Compliance checks, Fix recommendations"
+        price: 50_000,
+        description: "Protect your business and users with vulnerability assessments, security testing, compliance checks, and actionable fixes."
       },
       {
         name: "Performance Monitoring",
-        price: 1000,
-        description: "Monitoring tool setup, Alert configuration, Performance reporting, Support for improvements"
+        price: 25_000,
+        description: "Proactively track your platform’s performance, set alerts for critical issues, and get detailed reports to prevent downtime and lost revenue."
       }
     ]
   }
+  
 };
 
 const STEPS = [
-  { id: 'track-selection', name: 'Choose Path' },
-  { id: 'package-selection', name: 'Select Package' },
-  { id: 'custom-plan', name: 'Custom Plan' },
-  { id: 'summary', name: 'Summary' },
-  { id: 'contact', name: 'Contact' }
+  { id: "track-selection", name: "Choose Path" },
+  { id: "package-selection", name: "Select Package" },
+  { id: "custom-plan", name: "Custom Plan" },
+  { id: "summary", name: "Summary" },
+  { id: "contact", name: "Contact" },
 ];
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState('track-selection');
+  const [currentStep, setCurrentStep] = useState("track-selection");
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [selectedServices, setSelectedServices] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
-  const [estimatedTimeline, setEstimatedTimeline] = useState('');
+  const [estimatedTimeline, setEstimatedTimeline] = useState("");
 
   const calculateTotalPrice = () => {
-    if (selectedPackage) {
-      return PACKAGES[selectedPackage].price;
-    }
+    if (selectedPackage) return PACKAGES[selectedPackage].price;
 
     let total = 0;
     Object.entries(selectedServices).forEach(([serviceId, service]) => {
       total += SERVICES[serviceId].basePrice;
-      service.selectedSubServices.forEach(subService => {
-        total += SERVICES[serviceId].subServices.find(s => s.name === subService).price;
+      service.selectedSubServices.forEach((subService) => {
+        total += SERVICES[serviceId].subServices.find((s) => s.name === subService).price;
       });
     });
     return total;
   };
 
   const calculateTimeline = () => {
-    if (selectedPackage) {
-      return PACKAGES[selectedPackage].timeline;
-    }
+    if (selectedPackage) return PACKAGES[selectedPackage].timeline;
 
     const serviceCount = Object.keys(selectedServices).length;
-    if (serviceCount <= 2) return "4-6 weeks";
-    if (serviceCount <= 4) return "8-10 weeks";
-    return "10-14 weeks";
+    if (serviceCount <= 2) return "4 days";
+    if (serviceCount <= 4) return "6 days";
+    return "10 days";
   };
 
   const handleTrackSelection = (track) => {
     setSelectedTrack(track);
-    setCurrentStep(track === 'package' ? 'package-selection' : 'custom-plan');
+    setCurrentStep(track === "package" ? "package-selection" : "custom-plan");
     window.scrollTo(0, 0);
   };
 
   const handlePackageSelection = (packageId) => {
-    if (packageId === 'custom') {
-      setSelectedTrack('custom');
+    if (packageId === "custom") {
+      setSelectedTrack("custom");
       setSelectedPackage(null);
       setTotalPrice(0);
-      setEstimatedTimeline('');
-      setCurrentStep('custom-plan');
+      setEstimatedTimeline("");
+      setCurrentStep("custom-plan");
       window.scrollTo(0, 0);
       return;
     }
     setSelectedPackage(packageId);
     setTotalPrice(PACKAGES[packageId].price);
     setEstimatedTimeline(PACKAGES[packageId].timeline);
-    setCurrentStep('summary');
+    setCurrentStep("summary");
     window.scrollTo(0, 0);
   };
 
   const handleServiceSelection = (serviceId, isSelected) => {
-    setSelectedServices(prev => {
+    setSelectedServices((prev) => {
       if (isSelected) {
         return {
           ...prev,
-          [serviceId]: {
-            selectedSubServices: []
-          }
+          [serviceId]: { selectedSubServices: [] },
         };
       } else {
         const newServices = { ...prev };
@@ -333,66 +315,67 @@ export default function OnboardingPage() {
   };
 
   const handleSubServiceSelection = (serviceId, subServiceName, isSelected) => {
-    setSelectedServices(prev => ({
+    setSelectedServices((prev) => ({
       ...prev,
       [serviceId]: {
         ...prev[serviceId],
         selectedSubServices: isSelected
           ? [...(prev[serviceId].selectedSubServices || []), subServiceName]
-          : (prev[serviceId].selectedSubServices || []).filter(s => s !== subServiceName)
-      }
+          : (prev[serviceId].selectedSubServices || []).filter((s) => s !== subServiceName),
+      },
     }));
   };
 
   const handleContinue = () => {
-    if (currentStep === 'track-selection') {
-      // Already handled by handleTrackSelection
-    } else if (currentStep === 'package-selection' || currentStep === 'custom-plan') {
+    if (currentStep === "track-selection") return;
+
+    if (currentStep === "package-selection" || currentStep === "custom-plan") {
       setTotalPrice(calculateTotalPrice());
       setEstimatedTimeline(calculateTimeline());
-      setCurrentStep('summary');
+      setCurrentStep("summary");
       window.scrollTo(0, 0);
-    } else if (currentStep === 'summary') {
-      setCurrentStep('contact');
+      return;
+    }
+
+    if (currentStep === "summary") {
+      setCurrentStep("contact");
       window.scrollTo(0, 0);
-    } else if (currentStep === 'contact') {
-      router.push('/onboarding/confirmation');
+      return;
+    }
+
+    if (currentStep === "contact") {
+      router.push("/onboarding/confirmation");
     }
   };
 
   const handleBack = () => {
-    if (currentStep === 'package-selection' || currentStep === 'custom-plan') {
-      setCurrentStep('track-selection');
-      window.scrollTo(0, 0);
-    } else if (currentStep === 'summary') {
-      setCurrentStep(selectedTrack === 'package' ? 'package-selection' : 'custom-plan');
-      window.scrollTo(0, 0);
-    } else if (currentStep === 'contact') {
-      setCurrentStep('summary');
-      window.scrollTo(0, 0);
+    if (currentStep === "package-selection" || currentStep === "custom-plan") {
+      setCurrentStep("track-selection");
+    } else if (currentStep === "summary") {
+      setCurrentStep(selectedTrack === "package" ? "package-selection" : "custom-plan");
+    } else if (currentStep === "contact") {
+      setCurrentStep("summary");
     }
+    window.scrollTo(0, 0);
   };
 
   const calculateProgress = () => {
-    const currentIndex = STEPS.findIndex(step => step.id === currentStep);
+    const currentIndex = STEPS.findIndex((step) => step.id === currentStep);
     return ((currentIndex + 1) / STEPS.length) * 100;
   };
 
   const handleStepClick = (stepId) => {
-    const currentIndex = STEPS.findIndex(step => step.id === currentStep);
-    const targetIndex = STEPS.findIndex(step => step.id === stepId);
-    
-    if (targetIndex < currentIndex) {
-      setCurrentStep(stepId);
-      window.scrollTo(0, 0);
-    }
+    const currentIndex = STEPS.findIndex((step) => step.id === currentStep);
+    const targetIndex = STEPS.findIndex((step) => step.id === stepId);
+    if (targetIndex < currentIndex) setCurrentStep(stepId);
+    window.scrollTo(0, 0);
   };
 
   const renderStep = () => {
     switch (currentStep) {
-      case 'track-selection':
+      case "track-selection":
         return <TrackSelection onSelect={handleTrackSelection} />;
-      case 'package-selection':
+      case "package-selection":
         return (
           <PackageSelection
             packages={PACKAGES}
@@ -401,7 +384,7 @@ export default function OnboardingPage() {
             onBack={handleBack}
           />
         );
-      case 'custom-plan':
+      case "custom-plan":
         return (
           <CustomPlanBuilder
             services={SERVICES}
@@ -412,9 +395,9 @@ export default function OnboardingPage() {
             onBack={handleBack}
           />
         );
-      case 'summary':
+      case "summary":
         return (
-          <Summary 
+          <Summary
             selectedTrack={selectedTrack}
             selectedPackage={selectedPackage}
             selectedServices={selectedServices}
@@ -426,9 +409,9 @@ export default function OnboardingPage() {
             onBack={handleBack}
           />
         );
-      case 'contact':
+      case "contact":
         return (
-          <ContactInfo 
+          <ContactInfo
             totalPrice={totalPrice}
             estimatedTimeline={estimatedTimeline}
             onContinue={handleContinue}
@@ -441,13 +424,8 @@ export default function OnboardingPage() {
   };
 
   return (
-    <OnboardingLayout 
-      currentStep={currentStep}
-      steps={STEPS}
-      progress={calculateProgress()}
-      onStepClick={handleStepClick}
-      >
-        {renderStep()}
+    <OnboardingLayout currentStep={currentStep} steps={STEPS} progress={calculateProgress()} onStepClick={handleStepClick}>
+      {renderStep()}
     </OnboardingLayout>
   );
-} 
+}

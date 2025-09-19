@@ -6,12 +6,12 @@ export const aiIntegrationService = {
   description: "Intelligent solutions that transform your business operations",
   media: { type: 'video', src: '/services/ai-background.mp4' },
   animatedText: [
+    "Deploy intelligent agents.",
     "Automate complex tasks.",
-    "Gain data-driven insights.",
-    "Enhance user experiences.",
-    "Build your intelligent future.",
+    "Turn data into decisions.",
+    "Delight customers at scale.",
   ],
-  subtitle: "Intelligent solutions that transform your business operations",
+  subtitle: "AI agents that work alongside your team, 24/7",
   icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
   hoverColor: "black",
   headerBg: "#374151",
@@ -35,36 +35,36 @@ export const aiIntegrationService = {
     </div>
   ),
   importance: {
-    overview: "Artificial Intelligence is reshaping the business landscape at an unprecedented pace. Companies that integrate AI strategically are seeing 15% revenue increases and 25% cost reductions. AI integration isn't just about automation—it's about unlocking human potential, making data-driven decisions at scale, and creating competitive advantages that compound over time. The question isn't whether to adopt AI, but how quickly you can implement it effectively.",
+    overview: "AI isn’t just about automation anymore—it’s about intelligent agents that act like digital teammates. They monitor your business around the clock, catch problems before they happen, and even trigger the right actions automatically. Imagine having a team that never sleeps, never misses a detail, and keeps getting smarter every day. That’s what agents bring to the table. The businesses adopting them now aren’t just staying efficient—they’re pulling ahead, building competitive advantages that others won’t be able to catch up to.",
     keyPoints: [
       {
-        title: "Operational Efficiency",
-        description: "AI automates repetitive tasks, reducing manual work by up to 80% and allowing teams to focus on high-value strategic activities that drive growth."
+        title: "AI Agents as Your Digital Teammates",
+        description: "Agents can handle customer support, schedule logistics, monitor your sales funnel, or even manage compliance checks automatically. Instead of replacing humans, they take over the grunt work so your people can focus on strategy, creativity, and growth."
       },
       {
         title: "Data-Driven Insights",
-        description: "AI processes vast amounts of data to reveal patterns humans miss, enabling better decision-making and predicting trends before competitors."
+        description: "Agents process massive datasets in real time—spotting patterns like drops in customer engagement, sudden inventory risks, or emerging trends. And they don’t just report them—they act on them instantly if you want."
       },
       {
         title: "Enhanced Customer Experience",
-        description: "AI-powered personalization and 24/7 intelligent support increase customer satisfaction by 35% while reducing response times dramatically."
+        description: "Imagine a customer landing on your site at midnight and getting personalized help from an agent that remembers their history, recommends products, and books a service—all without waiting for a human to wake up."
       },
       {
         title: "Scalable Innovation",
-        description: "AI systems learn and improve continuously, providing scalable solutions that grow more valuable over time without proportional cost increases."
+        description: "Because agents learn from every interaction, your system doesn’t just run smoothly—it continuously improves. That means the same agents that answer support tickets today could be optimizing marketing campaigns tomorrow."
       },
       {
         title: "Competitive Differentiation",
-        description: "Early AI adopters create moats that are difficult for competitors to overcome, establishing market leadership through technological advantage."
+        description: "Early adopters of agents build advantages that snowball. Once agents are embedded across operations, they create a level of speed, accuracy, and personalization that latecomers simply can’t match."
       }
     ],
     visualization: (
       <div className="space-y-4">
         <div className="bg-white rounded-lg p-4 shadow-sm">
-          <h4 className="font-semibold text-gray-900 mb-3">AI Implementation Impact</h4>
+          <h4 className="font-semibold text-gray-900 mb-3">AI Agent Impact</h4>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Process Automation</span>
+              <span className="text-sm text-gray-600">Tasks Automated</span>
               <div className="flex items-center space-x-2">
                 <div className="w-24 h-2 bg-gray-200 rounded-full">
                   <div className="w-20 h-2 bg-gray-600 rounded-full"></div>
@@ -104,17 +104,17 @@ export const aiIntegrationService = {
       {
         value: "15%",
         label: "Revenue Increase",
-        description: "AI-driven businesses see significant revenue growth through optimization"
+        description: "Companies with AI agents see measurable growth from efficiency and personalization."
       },
       {
         value: "25%",
         label: "Cost Reduction",
-        description: "Intelligent automation reduces operational costs substantially"
+        description: "Agents cut down on manual labor costs while improving accuracy and speed."
       },
       {
         value: "60%",
         label: "Faster Decisions",
-        description: "AI-powered insights accelerate critical business decisions"
+        description: "AI-powered agents help leaders act with confidence in real time."
       }
     ]
   },
@@ -122,23 +122,23 @@ export const aiIntegrationService = {
     phases: [
       {
         title: "AI Readiness Assessment",
-        description: "Evaluate your current infrastructure, data quality, and organizational readiness for AI implementation.",
-        deliverables: ["Infrastructure Audit", "Data Assessment", "ROI Analysis", "Implementation Roadmap"]
+        description: "We assess where agents can create the most value—whether in operations, customer support, or analytics.",
+        deliverables: ["Process Audit", "Data Quality Check", "ROI Projections", "Implementation Roadmap"]
       },
       {
         title: "Pilot Project Development",
-        description: "Identify high-impact use cases and develop proof-of-concept AI solutions to demonstrate value.",
-        deliverables: ["Use Case Identification", "Prototype Development", "Performance Testing", "Success Metrics"]
+        description: "We build and test a first agent in a high-impact area, like automating support tickets or generating real-time insights.",
+        deliverables: ["Use Case Selection", "Agent Prototype", "Performance Testing", "Success Metrics"]
       },
       {
         title: "Full-Scale Implementation",
-        description: "Deploy AI solutions across your organization with proper training, integration, and monitoring systems.",
-        deliverables: ["System Integration", "User Training", "Monitoring Setup", "Performance Optimization"]
+        description: "We roll out agents across the organization with smooth integrations, employee training, and monitoring systems.",
+        deliverables: ["Integration Setup", "Staff Training", "Monitoring Tools", "Optimization Processes"]
       },
       {
         title: "Optimization & Scaling",
-        description: "Continuously improve AI performance and expand implementation to additional use cases and departments.",
-        deliverables: ["Performance Tuning", "Model Updates", "Scaling Strategy", "Advanced Features"]
+        description: "Agents evolve over time—improving models, learning from interactions, and expanding into new areas of your business.",
+        deliverables: ["Performance Tuning", "Continuous Updates", "Scaling Playbook", "Advanced Features"]
       }
     ]
   },
@@ -154,6 +154,7 @@ export const aiIntegrationService = {
     "Computer Vision",
     "NLP",
     "MLOps",
-    "AutoML"
+    "AutoML",
+    "AI Agents"
   ]
-}; 
+};
