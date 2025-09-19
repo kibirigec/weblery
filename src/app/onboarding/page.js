@@ -12,41 +12,41 @@ import ContactInfo from "../components/onboarding/ContactInfo";
 const PACKAGES = {
   silver: {
     name: "Silver Package",
-    price: 130_000,
+    price: 250_000,
     services: [
-      { name: "Web Development", price: 100_000 },
-      { name: "UI/UX Design", price: 30_000 },
-      { name: "SEO Optimization", price: 15_000 },
-      { name: "1 month support", price: 10_000 },
+      { name: "Web Development", price: 150_000 },
+      { name: "UI/UX Design", price: 80_000 },
+      { name: "SEO Optimization", price: 60_000 },
+      { name: "1 month in-Person support", price: 10_000 },
     ],
-    discount: 25_000,
+    discount: 50_000,
     timeline: "4 Days",
   },
   gold: {
     name: "Gold Package",
-    price: 200_000,
+    price: 350_000,
     services: [
-      { name: "Web Development", price: 100_000 },
-      { name: "UI/UX Design", price: 30_000 },
-      { name: "Digital Marketing (Social Media)", price: 30_000 },
-      { name: "Simple AI Agent", price: 50_000 },
-      { name: "3 months support", price: 30_000 },
+      { name: "Web Development", price: 150000 },
+      { name: "UI/UX Design", price: 80000 },
+      { name: "Digital Marketing (Social Media)", price: 30000 },
+      { name: "Simple AI Agent", price: 150000 },
+      { name: "3 months in-Person support", price: 30000 },
     ],
-    discount: 40_000,
+    discount: 90_000,
     timeline: "6 Days",
   },
   platinum: {
     name: "Platinum Package",
-    price: 300_000,
+    price: 500_000,
     services: [
-      { name: "Web Development", price: 100_000 },
-      { name: "Mobile App Development", price: 70_000 },
-      { name: "UI/UX Design", price: 30_000 },
-      { name: "Digital Marketing (Social Media)", price: 30_000 },
-      { name: "Complex AI Agents", price: 70_000 },
-      { name: "6 months support", price: 60_000 },
+      { name: "Web Development", price: 150000 },
+      { name: "Mobile App Development", price: 70000 },
+      { name: "UI/UX Design", price: 80000 },
+      { name: "Digital Marketing (Social Media)", price: 30000 },
+      { name: "Complex AI Agents", price: 200000 },
+      { name: "6 months in-Person support", price: 60000 },
     ],
-    discount: 60_000,
+    discount: 90_000,
     timeline: "10 Days",
   },
 };
@@ -79,7 +79,7 @@ const SERVICES = {
   },
   webDev: {
     name: "Web Development",
-    basePrice: 100_000,
+    basePrice: 150_000,
     baseInclusions: [
       "Basic website structure",
       "Responsive design",
@@ -108,30 +108,30 @@ const SERVICES = {
   },
   aiIntegration: {
     name: "AI Integration",
-    basePrice: 50_000,
+    basePrice: 150_000,
     baseInclusions: ["AI strategy consultation", "Basic model integration", "Simple AI Agent", "Initial testing"],
     subServices: [
       {
         name: "Custom AI Agent Deployment",
-        price: 700_000,
+        price: 150_000,
         description:
-          "End-to-end setup of a tailored AI agent for customer support, sales, or internal operations.",
+          "End-to-end setup of a tailored AI agent for customer support, sales, or internal operations.It's all up to you",
       },
       {
         name: "Analyst Agents",
-        price: 300_000,
+        price: 120_000,
         description:
           "Lightweight agents that analyze your business data and deliver easy-to-understand insights.",
       },
       {
         name: "Automation Agents",
-        price: 250_000,
+        price: 100_000,
         description:
           "Smart agents that automate repetitive workflows and integrate with existing tools.",
       },
       {
         name: "Customer Experience Agents",
-        price: 400_000,
+        price: 100_000,
         description:
           "AI chat agents that respond instantly, personalize customer interactions, and reduce response time.",
       },
@@ -139,7 +139,7 @@ const SERVICES = {
   },
   digitalMarketing: {
     name: "Digital Marketing",
-    basePrice: 120_000, // Base package for small businesses
+    basePrice: 30_000, // Base package for small businesses
     baseInclusions: [
       "Tailored marketing strategy to grow your brand",
       "Analytics setup to track performance",
