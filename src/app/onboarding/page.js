@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import OnboardingLayout from "../components/onboarding/OnboardingLayout";
 import TrackSelection from "../components/onboarding/TrackSelection";
 import PackageSelection from "../components/onboarding/PackageSelection";
@@ -254,6 +254,33 @@ export default function OnboardingPage() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [estimatedTimeline, setEstimatedTimeline] = useState("");
 
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const track = searchParams.get('track');
+    const serviceSlug = searchParams.get('service');
+
+    if (track === 'custom') {
+      handleTrackSelection('custom');
+      if (serviceSlug) {
+        const slugToServiceId = {
+          "mobile-app-development": "mobileApp",
+          "ai-integration": "aiIntegration",
+          "web-development": "webDev",
+          "digital-marketing": "digitalMarketing",
+          "ui-ux-design": "uiuxDesign",
+          "performance-optimization": "performanceOptimization",
+        };
+        const serviceId = slugToServiceId[serviceSlug];
+        if (serviceId) {
+          setSelectedServices({
+            [serviceId]: { selectedSubServices: [] },
+          });
+        }
+      }
+    }
+  }, [searchParams]);
+
   const calculateTotalPrice = () => {
     if (selectedPackage) return PACKAGES[selectedPackage].price;
 
@@ -293,6 +320,7 @@ export default function OnboardingPage() {
       return;
     }
     setSelectedPackage(packageId);
+    setSelectedServices({}); // Clear selected services when a package is chosen
     setTotalPrice(PACKAGES[packageId].price);
     setEstimatedTimeline(PACKAGES[packageId].timeline);
     setCurrentStep("summary");
@@ -344,6 +372,14 @@ export default function OnboardingPage() {
     }
 
     if (currentStep === "contact") {
+      const onboardingProgress = {
+        selectedTrack,
+        selectedPackage,
+        selectedServices,
+        totalPrice,
+        estimatedTimeline,
+      };
+      localStorage.setItem('onboardingProgress', JSON.stringify(onboardingProgress));
       router.push("/onboarding/confirmation");
     }
   };

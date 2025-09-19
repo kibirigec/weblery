@@ -181,7 +181,7 @@ export default function ServiceHero({ service, onOpenModal }) {
               >
                 Why {service.title} Matters
               </motion.div>
-              <Link href={`/onboarding?service=${service.slug}`} passHref>
+              <Link href={`/onboarding?track=custom&service=${service.slug}`} passHref>
                 <motion.div
                   className="w-full sm:w-auto min-h-[44px] px-6 py-3 bg-white text-black rounded-md border border-gray-300 text-base sm:text-lg font-semibold shadow-lg hover:bg-gray-100 transition-colors cursor-pointer flex items-center justify-center"
                   whileHover={isMobile ? {} : { scale: 1.05 }}

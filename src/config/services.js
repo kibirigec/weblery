@@ -3,12 +3,13 @@ export const servicesList = [
     icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
     title: "Mobile App Development",
     description: "Connect more with your customers, with a personalized mobile application. Look even more professional and trustworthy, and ease customer-centric actions.",
-    hoverColor: "pink",
+    hoverColor: "pink-900",
     slug: "mobile-app-development",
     features: ["iOS & Android", "Maintenance & Support", "Push Notifications", "In-App Purchases"]
   },
   {
-    icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1",
+    icon: "M12 2a2 2 0 110 4 2 2 0 010-4zm6 6a2 2 0 110 4 2 2 0 010-4zm-12 0a2 2 0 110 4 2 2 0 010-4zm6 6a2 2 0 110 4 2 2 0 010-4zm-4-2h8m-4-4v8"
+,
     title: "Custom AI Integration",
     description: "Automate many repetitive tasks, save labor costs and have AI agents do most of the work, all day long, no complaints.",
     hoverColor: "black",
@@ -16,10 +17,11 @@ export const servicesList = [
     features: ["Voicebots", "Chatbots", "Data Analysis", "Automation"]
   },
   {
-    icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945",
+    icon: "M21 12C21 16.9706 16.9706 21 12 21M21 12C21 7.02944 16.9706 3 12 3M21 12C21 13.6569 16.9706 15 12 15C7.02944 15 3 13.6569 3 12M21 12C21 10.3431 16.9706 9 12 9C7.02944 9 3 10.3431 3 12M12 21C7.02944 21 3 16.9706 3 12M12 21C10.3431 21 9 16.9706 9 12C9 7.02944 10.3431 3 12 3M12 21C13.6569 21 15 16.9706 15 12C15 7.02944 13.6569 3 12 3M3 12C3 7.02944 7.02944 3 12 3",
+
     title: "Web Development",
     description: "Modern, responsive websites and web apps, a must have for your business to not miss out on the global online presence.",
-    hoverColor: "blue",
+    hoverColor: "blue-900",
     slug: "web-development",
     features: ["Landing Pages", "eCommerce Stores", "Hosting", "Custom CMS"]
   },
@@ -27,7 +29,7 @@ export const servicesList = [
     icon: "M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
     title: "Digital Marketing",
     description: "Grow your brand and drive sales with targeted online campaigns, all this with the power of Social Media platforms like TikTok, Facebook and others.",
-    hoverColor: "yellow",
+    hoverColor: "yellow-900",
     slug: "digital-marketing",
     features: ["SEO", "PPC Campaigns", "Social Media", "Content Marketing"]
   },
@@ -35,7 +37,7 @@ export const servicesList = [
     icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
     title: "UI/UX Design",
     description: "Beautiful and intuitive interfaces that delight users. Beautiful online stores, websites and applications are the beginning of better customer interaction and engagement",
-    hoverColor: "green",
+    hoverColor: "green-900",
     slug: "ui-ux-design",
     features: ["User Research", "Wireframing", "Prototyping", "User Testing"]
   },
@@ -43,7 +45,7 @@ export const servicesList = [
     icon: "M13 10V3L4 14h7v7l9-11h-7z",
     title: "Performance Optimization",
     description: "Boost website and app speed, security, and reliability. Your online presence needs to feel as smooth and intuitive as possible. No Lag time, more customers for you.",
-    hoverColor: "orange",
+    hoverColor: "orange-900",
     slug: "performance-optimization",
     features: ["Speed Optimization", "Code Refactoring", "Caching", "Load Balancing"]
   }

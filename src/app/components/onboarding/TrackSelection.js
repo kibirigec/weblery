@@ -26,15 +26,15 @@ export default function TrackSelection({ onSelect }) {
           </p>
           <ul className="space-y-3 text-gray-600">
             <li className="flex items-center">
-              <span className="mr-2">✓</span>
+              <span className="mr-2">•</span>
               Pre-optimized service combinations
             </li>
             <li className="flex items-center">
-              <span className="mr-2">✓</span>
+              <span className="mr-2">•</span>
               Special package discounts
             </li>
             <li className="flex items-center">
-              <span className="mr-2">✓</span>
+              <span className="mr-2">•</span>
               Clear timeline estimates
             </li>
           </ul>
@@ -52,15 +52,15 @@ export default function TrackSelection({ onSelect }) {
           </p>
           <ul className="space-y-3 text-gray-600">
             <li className="flex items-center">
-              <span className="mr-2">✓</span>
+              <span className="mr-2">•</span>
               Full service customization
             </li>
             <li className="flex items-center">
-              <span className="mr-2">✓</span>
+              <span className="mr-2">•</span>
               Detailed service breakdown
             </li>
             <li className="flex items-center">
-              <span className="mr-2">✓</span>
+              <span className="mr-2">•</span>
               Flexible timeline options
             </li>
           </ul>

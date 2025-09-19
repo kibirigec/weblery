@@ -26,15 +26,17 @@ export default function ServiceCard({
 
   const getActiveIconBgClass = () => {
     switch (hoverColor) {
-      case 'pink':
+      case 'red-500':
+        return 'bg-red-100';
+      case 'pink-900':
         return 'bg-pink-100';
-      case 'blue':
+      case 'blue-900':
         return 'bg-blue-100';
-      case 'yellow':
+      case 'yellow-900':
         return 'bg-yellow-100';
-      case 'green':
+      case 'green-900':
         return 'bg-green-100';
-      case 'orange':
+      case 'orange-900':
         return 'bg-orange-100';
       default:
         return 'bg-gray-100';
@@ -43,15 +45,17 @@ export default function ServiceCard({
 
   const getHoverIconBgClass = () => {
     switch (hoverColor) {
-      case 'pink':
+      case 'red-500':
+        return 'group-hover:bg-red-100';
+      case 'pink-900':
         return 'group-hover:bg-pink-100';
-      case 'blue':
+      case 'blue-900':
         return 'group-hover:bg-blue-100';
-      case 'yellow':
+      case 'yellow-900':
         return 'group-hover:bg-yellow-100';
-      case 'green':
+      case 'green-900':
         return 'group-hover:bg-green-100';
-      case 'orange':
+      case 'orange-900':
         return 'group-hover:bg-orange-100';
       default:
         return 'group-hover:bg-gray-100';
@@ -67,15 +71,17 @@ export default function ServiceCard({
 
   const getActiveIconTextClass = () => {
     switch (hoverColor) {
-      case 'pink':
+      case 'red-500':
+        return 'text-red-600';
+      case 'pink-900':
         return 'text-pink-600';
-      case 'blue':
+      case 'blue-900':
         return 'text-blue-600';
-      case 'yellow':
+      case 'yellow-900':
         return 'text-yellow-600';
-      case 'green':
+      case 'green-900':
         return 'text-green-600';
-      case 'orange':
+      case 'orange-900':
         return 'text-orange-600';
       default:
         return 'text-gray-600';
@@ -84,15 +90,17 @@ export default function ServiceCard({
 
   const getHoverIconTextClass = () => {
     switch (hoverColor) {
-      case 'pink':
+      case 'red-500':
+        return 'group-hover:text-red-600';
+      case 'pink-900':
         return 'group-hover:text-pink-600';
-      case 'blue':
+      case 'blue-900':
         return 'group-hover:text-blue-600';
-      case 'yellow':
+      case 'yellow-900':
         return 'group-hover:text-yellow-600';
-      case 'green':
+      case 'green-900':
         return 'group-hover:text-green-600';
-      case 'orange':
+      case 'orange-900':
         return 'group-hover:text-orange-600';
       default:
         return 'group-hover:text-gray-600';
@@ -108,15 +116,17 @@ export default function ServiceCard({
 
   const getActiveFeatureBgClass = () => {
     switch (hoverColor) {
-      case 'pink':
+      case 'red-500':
+        return 'bg-red-50 text-red-800';
+      case 'pink-900':
         return 'bg-pink-50 text-pink-800';
-      case 'blue':
+      case 'blue-900':
         return 'bg-blue-50 text-blue-800';
-      case 'yellow':
+      case 'yellow-900':
         return 'bg-yellow-50 text-yellow-800';
-      case 'green':
+      case 'green-900':
         return 'bg-green-50 text-green-800';
-      case 'orange':
+      case 'orange-900':
         return 'bg-orange-50 text-orange-800';
       default:
         return 'bg-gray-50 text-gray-800';
@@ -125,15 +135,17 @@ export default function ServiceCard({
 
   const getHoverFeatureBgClass = () => {
     switch (hoverColor) {
-      case 'pink':
+      case 'red-500':
+        return 'group-hover:bg-red-50 group-hover:text-red-800';
+      case 'pink-900':
         return 'group-hover:bg-pink-50 group-hover:text-pink-800';
-      case 'blue':
+      case 'blue-900':
         return 'group-hover:bg-blue-50 group-hover:text-blue-800';
-      case 'yellow':
+      case 'yellow-900':
         return 'group-hover:bg-yellow-50 group-hover:text-yellow-800';
-      case 'green':
+      case 'green-900':
         return 'group-hover:bg-green-50 group-hover:text-green-800';
-      case 'orange':
+      case 'orange-900':
         return 'group-hover:bg-orange-50 group-hover:text-orange-800';
       default:
         return 'group-hover:bg-gray-50 group-hover:text-gray-800';

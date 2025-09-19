@@ -41,6 +41,9 @@ export default function CustomPlanBuilder({
 
   const calculateServiceTotal = (serviceId) => {
     const service = services[serviceId];
+    if (!service) {
+      return 0;
+    }
     let total = service.basePrice;
     
     if (selectedServices[serviceId]) {

@@ -239,7 +239,7 @@ export default function AIIntegrationPage() {
               For a detailed breakdown and custom solutions, use our plan builder.
             </motion.p>
             <motion.div className="mt-8" variants={fadeInUp}>
-              <Link href="/onboarding?service=ai-integration">
+              <Link href="/onboarding?track=custom&service=ai-integration">
                 <div className="inline-flex items-center bg-black hover:bg-gray-900 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300">
                   Build Your AI Integration Plan
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

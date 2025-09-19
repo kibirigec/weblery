@@ -625,3 +625,7 @@ nav a:hover {
     @apply bg-background text-foreground;
   }
 }
+
+.active-mobile-app-border {
+  border-color: #881337 !important; /* pink-900 equivalent */
+}

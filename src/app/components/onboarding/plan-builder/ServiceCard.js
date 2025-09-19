@@ -88,11 +88,7 @@ export default function ServiceCard({
         <div className="flex justify-between items-start">
           <div>
             <h3 className="text-xl font-bold mb-2">
-              {serviceId === 'aiIntegration' ? (
-                <span style={shinyTextStyle}>{service.name}</span>
-              ) : (
-                service.name
-              )}
+              {service.name}
             </h3>
             <p className="text-gray-600 mb-4">
               Base Price: ${service.basePrice.toLocaleString()}
