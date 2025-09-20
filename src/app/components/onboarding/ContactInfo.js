@@ -95,7 +95,7 @@ export default function ContactInfo({ totalPrice, estimatedTimeline, onContinue,
       <div className="space-y-3">
         <div className="flex justify-between items-center text-slate-600">
           <span>Total Price</span>
-          <span className="font-medium text-slate-900">${totalPrice.toLocaleString()}</span>
+          <span className="font-medium text-slate-900">UGX{totalPrice.toLocaleString()}</span>
         </div>
         <div className="flex justify-between items-center text-slate-600">
           <span>Timeline</span>

@@ -3,6 +3,7 @@
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Linkedin,
   Twitter,
@@ -10,7 +11,11 @@ import {
   Mail,
   Phone,
   MapPin,
+  Instagram,
+  Globe,
 } from "lucide-react";
+
+import { servicesList } from '@/config/services';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -44,42 +49,37 @@ export default function Footer() {
     },
     {
       title: "Services",
-      links: [
-        { name: "Web Development", href: "/services/web-development" },
-        { name: "Mobile Apps", href: "/services/mobile-app-development" },
-        { name: "AI Solutions", href: "/services/ai-integration" },
-      ],
-    },
-    {
-      title: "Resources",
-      links: [
-        { name: "Blog", href: "/blog" },
-        { name: "Support", href: "/support" },
-        { name: "Privacy", href: "/privacy" },
-      ],
+      links: servicesList.map(service => ({
+        name: service.title,
+        href: `/services/${service.slug}`,
+      })),
     },
   ];
 
   const socials = [
-    { icon: Linkedin, href: "https://linkedin.com/company/modiqube" },
-    { icon: Twitter, href: "https://twitter.com/modiqube" },
-    { icon: Github, href: "https://github.com/modiqube" },
+    { icon: Instagram, href: "https://instagram.com/weblery" },
+    { icon: Globe, href: "https://tiktok.com/@weblery" },
   ];
 
   const contact = [
     {
       icon: Mail,
-      text: "hello@modiqube.com",
-      href: "mailto:hello@modiqube.com",
+      text: "hello@weblery.com",
+      href: "mailto:hello@weblery.com",
     },
     {
       icon: Phone,
-      text: "+1 (555) 123-4567",
-      href: "tel:+15551234567",
+      text: "+256 7759 10888",
+      href: "tel:+256775910888",
+    },
+    {
+      icon: Phone,
+      text: "+256 746 642 075",
+      href: "tel:+256746642075",
     },
     {
       icon: MapPin,
-      text: "San Francisco, CA",
+      text: "Kyanja, Kampala",
       href: "#",
     },
   ];
@@ -87,7 +87,7 @@ export default function Footer() {
   return (
     <motion.footer
       ref={ref}
-      className="bg-zinc-950 text-gray-400 pt-20 pb-10 px-4 sm:px-8 md:px-12 lg:px-20"
+      className="bg-zinc-950 text-[#86868b] pt-20 pb-10 px-4 sm:px-8 md:px-12 lg:px-20"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
@@ -95,8 +95,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         {/* Logo + About + Socials */}
         <motion.div className="lg:col-span-2 space-y-6" variants={itemVariants}>
-          <h3 className="text-white text-3xl font-bold">ModiQube</h3>
-          <p className="text-lg text-gray-400 leading-relaxed">
+          <Image src="/whitefull.svg" alt="Weblery Full Logo" width={150} height={50} className="text-white" />
+          <p className="text-lg text-[#86868b] leading-relaxed">
             Innovative digital solutions that elevate brands, empower people,
             and unlock growth.
           </p>
@@ -110,7 +110,7 @@ export default function Footer() {
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-white hover:bg-white/10 transition"
                 variants={itemVariants}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-5 h-5 text-[#86868b]" />
               </motion.a>
             ))}
           </div>
@@ -127,7 +127,7 @@ export default function Footer() {
                 <li key={j}>
                   <Link
                     href={link.href}
-                    className="hover:text-white transition-colors"
+                    className="text-[#86868b] footer-link-hover-white transition-colors "
                   >
                     {link.name}
                   </Link>
@@ -140,23 +140,23 @@ export default function Footer() {
 
       {/* Contact & Copyright */}
       <motion.div
-        className="max-w-7xl mx-auto mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6"
+        className="text-[#86868b] max-w-7xl mx-auto mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6"
         variants={itemVariants}
       >
-        <div className="space-y-2 text-sm text-center md:text-left">
+        <div className="text-[#86868b] space-y-2 text-sm text-center md:text-left">
           {contact.map(({ icon: Icon, text, href }, i) => (
             <a
               key={i}
               href={href}
               className="flex items-center gap-2 justify-center md:justify-start hover:text-white transition-colors"
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-4 h-4 text-[#86868b]" />
               {text}
             </a>
           ))}
         </div>
-        <p className="text-xs text-gray-500">
-          &copy; 2024 ModiQube. All rights reserved.
+        <p className="text-xs text-[#86868b]">
+          &copy; 2024 Weblery. All rights reserved.
         </p>
       </motion.div>
     </motion.footer>

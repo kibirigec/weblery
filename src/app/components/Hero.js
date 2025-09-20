@@ -112,8 +112,8 @@ export default function Hero() {
         <motion.div
           className="relative w-full bg-[#f2f0ef]"
           initial={{ 
-            paddingLeft: isMobile ? 16 : 30, 
-            paddingRight: isMobile ? 16 : 30, 
+            paddingLeft: 0, 
+            paddingRight: 0, 
             scale: isMobile ? 0.985 : 0.975 
           }}
           animate={containerControls}

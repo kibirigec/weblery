@@ -281,7 +281,7 @@ export default function WebDevelopmentPage() {
               className="text-xl text-gray-700/80 max-w-3xl mx-auto"
               variants={fadeInUp}
             >
-              Our Web Development services start at ${SERVICES['webDev'].basePrice.toLocaleString()}.
+              Our Web Development services start at UGX{SERVICES['webDev'].basePrice.toLocaleString()}.
               For a detailed breakdown and custom solutions, use our plan builder.
             </motion.p>
             <motion.div className="mt-8" variants={fadeInUp}>

@@ -161,7 +161,6 @@ p.small {
 /* ==================== LINK STYLES ==================== */
 
 a {
-  color: #1a1a1a;
   text-decoration: none;
   transition: all 0.2s ease;
 }
@@ -628,4 +627,8 @@ nav a:hover {
 
 .active-mobile-app-border {
   border-color: #881337 !important; /* pink-900 equivalent */
+}
+
+.footer-link-hover-white:hover {
+  color: #ffffff !important;
 }

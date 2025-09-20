@@ -83,7 +83,7 @@ export default function Services() {
                 transition: { duration: 0.2 }
               }}
             >
-              <span className="text-sm text-[#C0C0C0] font-medium">Our Expertise</span>
+              {/* <span className="text-sm text-[#C0C0C0] font-medium">Our Expertise</span> */}
             </motion.div>
             <motion.h2 
               className="text-3xl sm:text-4xl font-bold mb-4"

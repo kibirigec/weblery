@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Architecture
 
 ### Overview
-This is a Next.js 15 application for ModiQube, a digital media agency. It uses the App Router architecture and is built with React 19, Tailwind CSS 4, and Framer Motion for animations.
+This is a Next.js 15 application for Weblery, a digital media agency. It uses the App Router architecture and is built with React 19, Tailwind CSS 4, and Framer Motion for animations.
 
 ### Key Technologies
 - **Framework**: Next.js 15 with App Router

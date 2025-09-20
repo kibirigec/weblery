@@ -54,7 +54,7 @@ export default function ServiceAddons({
                     <p className={`text-sm ${isSelected ? 'text-gray-800' : 'text-gray-600'} mt-1`}>{subService.description}</p>
                   )}
                   <span className="text-sm font-semibold text-gray-800 md:block mt-2">
-                    +${subService.price.toLocaleString()}
+                    +UGX{subService.price.toLocaleString()}
                   </span>
                 </div>
 

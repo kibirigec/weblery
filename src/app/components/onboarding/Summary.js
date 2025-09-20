@@ -69,7 +69,7 @@ export default function Summary({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-800">Included Services</h3>
             {pkg.services.map((service, index) => (
-              <LineItem key={index} label={service.name} value={`$${service.price.toLocaleString()}`} labelSize="text-sm " labelColor='text-gray-900' />
+              <LineItem key={index} label={service.name} value={`UGX{service.price.toLocaleString()}`} labelSize="text-sm " labelColor='text-gray-900' />
             ))}
           </div>
         </div>
@@ -100,7 +100,7 @@ export default function Summary({
                   {/* Parent service: Larger, bolder, and darker text */}
                   <LineItem 
                     label={serviceData.name} 
-                    value={`$${serviceData.basePrice.toLocaleString()}`} 
+                    value={`UGX{serviceData.basePrice.toLocaleString()}`} 
                     labelSize="text-base"
                     labelWeight="font-semibold"
                     labelColor="text-gray-900"
@@ -116,7 +116,7 @@ export default function Summary({
                           <LineItem 
                             key={subServiceName} 
                             label={subService.name} 
-                            value={`+$${subService.price.toLocaleString()}`} 
+                            value={`+UGX{subService.price.toLocaleString()}`} 
                             labelSize="text-sm"
                             labelWeight="font-medium"
                             labelColor="text-gray-600"
@@ -147,7 +147,7 @@ export default function Summary({
               {selectedTrack === 'package' && (
                 <div className="flex justify-between items-center text-green-600">
                   <span>Package Savings</span>
-                  <span className="font-medium">-${packages[selectedPackage].discount.toLocaleString()}</span>
+                  <span className="font-medium">-UGX{packages[selectedPackage].discount.toLocaleString()}</span>
                 </div>
               )}
           </div>
@@ -155,7 +155,7 @@ export default function Summary({
             <div className="flex justify-between items-center text-xl font-bold text-gray-900">
               <span>Total Price</span>
                <motion.span key={totalPrice} {...totalVariants}>
-                ${totalPrice.toLocaleString()}
+                UGX{totalPrice.toLocaleString()}
               </motion.span>
             </div>
           </div>

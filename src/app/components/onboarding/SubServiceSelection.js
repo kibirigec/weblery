@@ -146,7 +146,7 @@ export default function SubServiceSelection({
                         <div>
                           <h4 className="font-medium">{subService.name}</h4>
                           <p className="text-sm text-gray-600 mt-1">
-                            + ${subService.price.toLocaleString()}
+                            + UGX{subService.price.toLocaleString()}
                           </p>
                         </div>
                         {isSelected && (

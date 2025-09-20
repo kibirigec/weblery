@@ -73,7 +73,7 @@ export default function ServiceSummary({ services, selectedServices, calculateSe
             >
               <div className="flex justify-between items-center">
                 <span className="font-medium">{services[serviceId].name}</span>
-                <span>${calculateServiceTotal(serviceId).toLocaleString()}</span>
+                <span>UGX{calculateServiceTotal(serviceId).toLocaleString()}</span>
               </div>
               {service.selectedSubServices.length > 0 && (
                 <div className="mt-1 pl-2 text-sm text-gray-600">
@@ -89,7 +89,7 @@ export default function ServiceSummary({ services, selectedServices, calculateSe
                       >
                         <span>{subService}</span>
                         <span>
-                          ${services[serviceId].subServices.find(s => s.name === subService).price.toLocaleString()}
+                          UGX{services[serviceId].subServices.find(s => s.name === subService).price.toLocaleString()}
                         </span>
                       </motion.div>
                     ))}
@@ -110,7 +110,7 @@ export default function ServiceSummary({ services, selectedServices, calculateSe
               animate="animate"
               transition={totalVariants.transition}
             >
-              ${total.toLocaleString()}
+              UGX{total.toLocaleString()}
             </motion.span>
           </div>
         </div>

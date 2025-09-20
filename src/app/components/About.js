@@ -35,7 +35,7 @@ export default function About() {
               <span className="text-sm text-[#C0C0C0] font-medium">About Us</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-              Why Choose ModiQube?
+              Why Choose Weblery?
             </h2>
             <p className="text-lg text-gray mb-8 lead">
               With years of experience in digital innovation, we combine technical expertise 

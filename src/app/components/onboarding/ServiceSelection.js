@@ -155,7 +155,7 @@ export default function ServiceSelection({ selectedServices, onSelectService, on
                   
                   <div className="mt-4 text-right">
                     <span className="text-sm font-medium text-gray-700">
-                      Starting at ${service.basePrice.toLocaleString()}
+                      Starting at UGX{service.basePrice.toLocaleString()}
                     </span>
                   </div>
                 </div>

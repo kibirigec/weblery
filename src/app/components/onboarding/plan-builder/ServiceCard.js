@@ -91,7 +91,7 @@ export default function ServiceCard({
               {service.name}
             </h3>
             <p className="text-gray-600 mb-4">
-              Base Price: ${service.basePrice.toLocaleString()}
+              Base Price: UGX{service.basePrice.toLocaleString()}
             </p>
           </div>
         </div>

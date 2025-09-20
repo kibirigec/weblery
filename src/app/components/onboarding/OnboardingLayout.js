@@ -10,7 +10,7 @@ export default function OnboardingLayout({ children, currentStep, steps, progres
       <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 py-4 z-50">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <Link href="/">
-            <div className="font-bold text-2xl">ModiQube</div>
+            <div className="font-bold text-2xl">Weblery</div>
           </Link>
           <Link href="/">
             <div className="text-gray-500 hover:text-black">

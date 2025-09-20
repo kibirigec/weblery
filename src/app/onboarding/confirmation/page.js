@@ -100,7 +100,7 @@ export default function ConfirmationPage() {
               <div className="mt-4">
                 <p className="text-sm text-gray-600">Timeline: <span className="font-medium">{estimatedTimeline}</span></p>
                 <p className="text-sm text-gray-600">
-                  Price: <span className="font-semibold">${summary.totalPrice?.toLocaleString()}</span>
+                  Price: <span className="font-semibold">UGX{summary.totalPrice?.toLocaleString()}</span>
                 </p>
               </div>
             </div>

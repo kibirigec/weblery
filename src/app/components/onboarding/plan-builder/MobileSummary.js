@@ -108,7 +108,7 @@ export default function MobileSummary({
           <div>
             <span className="font-medium">{selectedCount} Services Selected</span>
             <span className="text-gray-500 ml-2">•</span>
-            <span className="text-gray-500 ml-2">${total.toLocaleString()}</span>
+            <span className="text-gray-500 ml-2">UGX{total.toLocaleString()}</span>
           </div>
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
@@ -138,7 +138,7 @@ export default function MobileSummary({
                   >
                      <div className="flex justify-between items-center">
                       <span className="font-medium">{services[serviceId].name}</span>
-                      <span>${calculateServiceTotal(serviceId).toLocaleString()}</span>
+                      <span>UGX{calculateServiceTotal(serviceId).toLocaleString()}</span>
                     </div>
                     {service.selectedSubServices.length > 0 && (
                       <motion.div
@@ -153,7 +153,7 @@ export default function MobileSummary({
                           >
                             <span>{subService}</span>
                             <span>
-                              ${services[serviceId].subServices.find(s => s.name === subService).price.toLocaleString()}
+                              UGX{services[serviceId].subServices.find(s => s.name === subService).price.toLocaleString()}
                             </span>
                           </motion.div>
                         ))}

@@ -87,7 +87,7 @@ export default function PricingPreview() {
                 <h3 className="text-xl font-semibold mb-2">{tier.name}</h3>
                 <p className="text-sm text-gray-600 mb-4">{tier.description}</p>
                 <div className="mt-4 mb-6">
-                  <span className="text-3xl font-bold">${tier.price.toLocaleString()}</span>
+                  <span className="text-3xl font-bold">UGX{tier.price.toLocaleString()}</span>
                   <span className="ml-2 text-sm opacity-90">one-time</span>
                 </div>
                 <ul className="space-y-2 mb-6">

@@ -50,7 +50,7 @@ const PackageCard = ({ id, pkg, isSelected, isRecommended, isExpanded, onSelect,
           <p className="text-slate-500 text-sm mt-1">{pkg.description}</p>
           
           <div className="mt-6">
-            <span className="text-4xl font-extrabold text-slate-900">${pkg.price.toLocaleString()}</span>
+            <span className="text-4xl font-extrabold text-slate-900">UGX{pkg.price.toLocaleString()}</span>
             <span className="text-[#86868b]">/project</span>
           </div>
 

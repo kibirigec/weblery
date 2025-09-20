@@ -18,13 +18,13 @@ const itemVariants = {
 export default function NewHero() {
   return (
     <motion.section
-      className="text-center py-20"
-      style={{ height: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f2f0ef' }}
+      className="text-center py-20 md:py-32 lg:py-48 flex flex-col justify-center items-center"
+      style={{ backgroundColor: '#f2f0ef' }}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <motion.div variants={containerVariants}>
+      <motion.div variants={containerVariants} className="mt-16 md:mt-0">
         <motion.h2 className="text-lg font-medium text-gray-600" variants={itemVariants}>Weblery</motion.h2>
         <motion.h1 className="text-[clamp(2rem,8vw,6rem)] font-bold" variants={itemVariants}>Your Business.<br />Now Automated.</motion.h1>
       </motion.div>
