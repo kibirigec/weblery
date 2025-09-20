@@ -1,8 +1,0 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/onboarding/page": "app/onboarding/page.js",
-  "/onboarding/confirmation/page": "app/onboarding/confirmation/page.js",
-  "/page": "app/page.js",
-  "/services/mobile-app-development/page": "app/services/mobile-app-development/page.js",
-  "/services/ai-integration/page": "app/services/ai-integration/page.js"
-}
