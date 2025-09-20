@@ -207,7 +207,7 @@ export const getServiceBundles = () => {
       description: "Complete online presence with web, marketing and SEO",
       services: ["web-development", "digital-marketing"],
       discount: 0.15, // 15% discount
-      basePrice: 9350 // (6000 + 5000) - 15% discount
+      basePrice: 9350 // (6000 + 5000) - 15% discounts
     },
     {
       id: "mobile-ux",
