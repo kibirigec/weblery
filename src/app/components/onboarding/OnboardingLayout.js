@@ -2,30 +2,42 @@
 
 import { motion } from 'motion/react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function OnboardingLayout({ children, currentStep, steps, progress, onStepClick, navigationButtons }) {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 py-4 z-50">
-        <div className="container mx-auto px-4 flex items-center justify-between">
-          <Link href="/">
-            <div className="font-bold text-2xl">Weblery</div>
-          </Link>
-          <Link href="/">
-            <div className="text-gray-500 hover:text-black">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
-          </Link>
+      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 py-6 z-50">
+        <div className="container mx-auto px-4 flex items-center justify-center relative">
+          <div className="mx-4 absolute left-0 top-1/2 transform -translate-y-1/2">
+            <Link href="/">
+              {/* Desktop Logo */}
+              <Image src="/FullLogo.svg" alt="Weblery Full Logo" width={120} height={40} className="hidden md:block" />
+              {/* Mobile Logo */}
+              <Image src="/LetterLogo.svg" alt="Weblery Letter Logo" width={40} height={40} className="md:hidden" />
+            </Link>
+          </div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 text-sm sm:text-sm text-center w-full 
+                    bg-gradient-to-r from-yellow-50 via-yellow-600 to-yellow-700 bg-clip-text text-transparent font-semibold">
+      Try with our two week free trial!
+    </div>
+          <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+            <Link href="/">
+              <div className="text-gray-500 hover:text-black">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
+            </Link>
+          </div>
         </div>
       </header>
       
       {/* Progress bar */}
-      <div className="fixed top-[64px] left-0 right-0 bg-white border-b border-gray-100 py-2 z-40">
+      <div className="fixed top-[56px] lg:top-[48px] left-0 right-0 bg-white border-b border-gray-100 py-2 z-40">
         <div className="container mx-auto px-4">
-          <div className="relative h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div className="relative h-2 bg-[#86868b]/20 rounded-full overflow-hidden">
             <motion.div 
               className="absolute h-full bg-black"
               initial={{ width: 0 }}

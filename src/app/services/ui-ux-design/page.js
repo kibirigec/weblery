@@ -14,6 +14,7 @@ import {
 import { uiUxDesignService } from "./data";
 import { SERVICES } from '../../../config/services';
 import ServiceHero from "../../components/ServiceHero";
+import Footer from '../../components/Footer';
 
 export default function UIUXDesignPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -405,7 +406,7 @@ export default function UIUXDesignPage() {
           >
             <h2 className="text-3xl font-bold mb-4 text-[#e0e4db]">Ready to Create Amazing Experiences?</h2>
             <p className="text-xl !text-[#c2c9bd] mb-8 max-w-2xl mx-auto">
-              Let's design digital experiences that your users will love and your business will benefit from.
+              Let&apos;s design digital experiences that your users will love and your business will benefit from.
             </p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -452,8 +453,7 @@ export default function UIUXDesignPage() {
         onClose={() => setIsModalOpen(false)}
         service={uiUxDesignService}
       />
-
-      
+      <Footer />
     </main>
   );
 }

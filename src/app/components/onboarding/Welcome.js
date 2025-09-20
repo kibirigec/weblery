@@ -16,9 +16,9 @@ export default function Welcome({ onContinue }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
         </div>
-        <h1 className="text-4xl font-bold mb-4">Let's Create Something Amazing</h1>
+        <h1 className="text-4xl font-bold mb-4">Let&apos;s Create Something Amazing</h1>
         <p className="text-xl text-gray-600 mb-6">
-          Welcome to your project configuration. We'll guide you through selecting the perfect digital solutions for your business.
+          Welcome to your project configuration. We&apos;ll guide you through selecting the perfect digital solutions for your business.
         </p>
       </motion.div>
 
@@ -82,7 +82,7 @@ export default function Welcome({ onContinue }) {
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.98 }}
         >
-          Let's Get Started
+          Let&apos;s Get Started
         </motion.button>
         <p className="mt-4 text-sm text-gray-500">
           This will take about 2-3 minutes to complete

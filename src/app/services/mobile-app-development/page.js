@@ -14,6 +14,7 @@ import {
 import { mobileAppService } from "./data";
 import { SERVICES } from '../../../config/services';
 import ServiceHero from "../../components/ServiceHero";
+import Footer from '../../components/Footer';
 
 export default function MobileAppDevelopmentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -340,7 +341,7 @@ export default function MobileAppDevelopmentPage() {
           >
             <h2 className="text-3xl font-bold mb-4 text-[#efdfe1]">Ready to Build Your Mobile App?</h2>
             <p className="text-xl !text-[#d6c2c5] mb-8 max-w-2xl mx-auto">
-              Let's transform your idea into a successful mobile application that users will love.
+              Let&apos;s transform your idea into a successful mobile application that users will love.
             </p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -382,8 +383,7 @@ export default function MobileAppDevelopmentPage() {
         onClose={() => setIsModalOpen(false)}
         service={mobileAppService}
       />
-
-      
+      <Footer />
     </main>
   );
 }

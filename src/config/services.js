@@ -201,7 +201,7 @@ export const PACKAGES = {
       "Enterprise web platform",
       "Cross-platform mobile apps",
       "Advanced marketing campaigns",
-      "Custom AI integration",
+      "Custom AI Agents",
       "Comprehensive optimization"
     ],
     services: [

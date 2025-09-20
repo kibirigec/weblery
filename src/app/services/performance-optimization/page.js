@@ -14,6 +14,7 @@ import {
 import { performanceOptimizationService } from "./data";
 import { SERVICES } from '../../../config/services';
 import ServiceHero from "../../components/ServiceHero";
+import Footer from '../../components/Footer';
 
 export default function PerformanceOptimizationPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -82,7 +83,7 @@ export default function PerformanceOptimizationPage() {
                 Lightning-Fast Performance
               </h2>
               <p className="text-gray-600 mb-6">
-                In today's digital landscape, speed is everything. Users expect websites to load in under 3 seconds, 
+                In today&apos;s digital landscape, speed is everything. Users expect websites to load in under 3 seconds, 
                 and search engines prioritize fast-loading sites. Our performance optimization services ensure your 
                 website delivers exceptional speed and user experience.
               </p>
@@ -377,7 +378,7 @@ export default function PerformanceOptimizationPage() {
           >
             <h2 className="text-3xl font-bold mb-4 !text-[#f2e6e1]">Ready to Optimize Your Performance?</h2>
             <p className="text-xl !text-[#e2dcd8] mb-8 max-w-2xl mx-auto">
-              Let's boost your website's speed and deliver an exceptional user experience that drives growth.
+              Let&apos;s boost your website&apos;s speed and deliver an exceptional user experience that drives growth.
             </p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -424,8 +425,7 @@ export default function PerformanceOptimizationPage() {
         onClose={() => setIsModalOpen(false)}
         service={performanceOptimizationService}
       />
-
-      
+      <Footer />
     </main>
   );
 }

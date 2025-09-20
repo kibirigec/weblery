@@ -15,6 +15,7 @@ import {
 import { webDevelopmentService } from "./data";
 import { SERVICES } from '../../../config/services';
 import ServiceHero from '../../components/ServiceHero';
+import Footer from '../../components/Footer';
 
 export default function WebDevelopmentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -359,7 +360,7 @@ export default function WebDevelopmentPage() {
               className="text-xl !text-[#c3c5d9] mb-8 max-w-2xl mx-auto"
               variants={fadeInUp}
             >
-              Let's create a powerful web presence that drives your business forward and engages your audience.
+              Let&apos;s create a powerful web presence that drives your business forward and engages your audience.
             </motion.p>
             
             <motion.div 
@@ -414,8 +415,7 @@ export default function WebDevelopmentPage() {
         onClose={() => setIsModalOpen(false)}
         service={webDevelopmentService}
       />
-
-      
+      <Footer />
     </main>
   );
 }

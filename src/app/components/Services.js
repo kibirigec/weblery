@@ -100,7 +100,7 @@ export default function Services() {
           </motion.div>
           
           <motion.div variants={headerVariants}>
-            <Link href="/services">
+            {/* <Link href="/services">
               <motion.div 
                 className="inline-flex items-center text-sm font-medium cursor-pointer"
                 whileHover={{ 
@@ -122,7 +122,7 @@ export default function Services() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </motion.svg>
               </motion.div>
-            </Link>
+            </Link> */}
           </motion.div>
         </motion.div>
         

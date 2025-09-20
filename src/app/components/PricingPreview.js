@@ -51,7 +51,7 @@ export default function PricingPreview() {
             className="inline-flex items-center bg-black bg-opacity-5 rounded-full px-4 py-2 mb-3"
             variants={itemVariants}
           >
-            <span className="text-sm text-gray-600 font-medium">Service Packages</span>
+            <span className="text-sm text-white font-medium">Service Packages</span>
           </motion.div>
           <motion.h2 
             className="text-3xl sm:text-4xl font-bold mb-4"
@@ -93,14 +93,15 @@ export default function PricingPreview() {
                 <ul className="space-y-2 mb-6">
                   {tier.features.map((feature, featIndex) => (
                     <li key={featIndex} className="flex items-start text-sm">
-                      <svg 
+                      {/* <svg 
                         className="w-5 h-5 mr-2 mt-0.5 flex-shrink-0 text-gray-700" 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
+                      </svg> */}
+                      <span className='mr-3'>•</span>
                       <span className="text-gray-600">{feature}</span>
                     </li>
                   ))}
@@ -109,7 +110,7 @@ export default function PricingPreview() {
               
               {/* CTA */}
               <div className="px-6 pb-6 mt-auto">
-                <Link href="/pricing">
+                <Link href={`/onboarding?track=package&package=${tier.name.toLowerCase()}`}>
                   <div 
                     className="w-full py-2 px-4 rounded-lg font-medium text-center transition-all duration-300 text-white bg-gray-900"
                   >

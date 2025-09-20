@@ -156,7 +156,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="text-xs text-[#86868b]">
-          &copy; 2024 Weblery. All rights reserved.
+          &copy; 2025 Weblery. All rights reserved.
         </p>
       </motion.div>
     </motion.footer>

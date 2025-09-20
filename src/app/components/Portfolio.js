@@ -67,7 +67,7 @@ export default function Portfolio() {
             className="text-xl text-gray max-w-2xl mx-auto lead"
             variants={headerVariants}
           >
-            Here are some of the projects we're proud of.
+            Here are some of the projects we&apos;re proud of.
           </motion.p>
         </motion.div>
         

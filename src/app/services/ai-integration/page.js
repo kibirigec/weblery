@@ -15,6 +15,7 @@ import {
 import { aiIntegrationService } from "./data";
 import { SERVICES } from '../../../config/services';
 import ServiceHero from '../../components/ServiceHero';
+import Footer from '../../components/Footer';
 
 export default function AIIntegrationPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -128,7 +129,7 @@ export default function AIIntegrationPage() {
                 className="text-3xl font-bold mb-6 text-gray-900"
                 variants={itemVariants}
               >
-                AI Agents, They don't need salaries!
+                AI Agents, They don&apos;t need salaries!
               </motion.h2>
               
               <motion.p 
@@ -267,7 +268,7 @@ export default function AIIntegrationPage() {
           >
             <h2 className="text-3xl font-bold mb-4 !text-[#e1e2e9]">Ready to Integrate AI?</h2>
             <p className="text-xl !text-[#c4c6cf] mb-8 max-w-2xl mx-auto">
-              Let's explore how AI can revolutionize your business operations and customer experience.
+              Let&apos;s explore how AI can revolutionize your business operations and customer experience.
             </p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -315,8 +316,7 @@ export default function AIIntegrationPage() {
         onClose={() => setIsModalOpen(false)}
         service={aiIntegrationService}
       />
-
-      
+      <Footer />
     </main>
   );
 }

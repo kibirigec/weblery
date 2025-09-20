@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import OnboardingLayout from "../components/onboarding/OnboardingLayout";
 import TrackSelection from "../components/onboarding/TrackSelection";
@@ -245,7 +245,7 @@ const STEPS = [
   { id: "contact", name: "Contact" },
 ];
 
-export default function OnboardingPage() {
+function OnboardingContent() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState("track-selection");
   const [selectedTrack, setSelectedTrack] = useState(null);
@@ -259,6 +259,7 @@ export default function OnboardingPage() {
   useEffect(() => {
     const track = searchParams.get('track');
     const serviceSlug = searchParams.get('service');
+    const packageId = searchParams.get('package');
 
     if (track === 'custom') {
       handleTrackSelection('custom');
@@ -278,6 +279,10 @@ export default function OnboardingPage() {
           });
         }
       }
+    } else if (track === 'package' && packageId) {
+      handleTrackSelection('package');
+      setSelectedPackage(packageId);
+      setCurrentStep('package-selection');
     }
   }, [searchParams]);
 
@@ -463,5 +468,13 @@ export default function OnboardingPage() {
     <OnboardingLayout currentStep={currentStep} steps={STEPS} progress={calculateProgress()} onStepClick={handleStepClick}>
       {renderStep()}
     </OnboardingLayout>
+  );
+}
+
+export default function OnboardingPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OnboardingContent />
+    </Suspense>
   );
 }

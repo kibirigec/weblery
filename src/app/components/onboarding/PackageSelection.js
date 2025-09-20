@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NavigationFooter from './plan-builder/NavigationFooter';
 // For icons, you can use a library like lucide-react: `npm install lucide-react`
 import { Check, ArrowLeft, ChevronUp, ArrowRight } from 'lucide-react';
@@ -117,9 +117,14 @@ const PackageCard = ({ id, pkg, isSelected, isRecommended, isExpanded, onSelect,
 
 
 // --- Main Page Component (No changes needed here) ---
-export default function PackageSelection({ packages, onBack, onContinue }) {
-  const [selectedPackage, setSelectedPackage] = useState(null);
+export default function PackageSelection({ packages, onBack, onContinue, selectedPackage: propSelectedPackage }) {
+  const [selectedPackage, setSelectedPackage] = useState(propSelectedPackage);
   const [expandedPackage, setExpandedPackage] = useState(null);
+
+  useEffect(() => {
+    console.log("propSelectedPackage in useEffect:", propSelectedPackage);
+    setSelectedPackage(propSelectedPackage);
+  }, [propSelectedPackage]);
 
   const containerVariants = {
     hidden: { opacity: 1 },
@@ -160,7 +165,7 @@ export default function PackageSelection({ packages, onBack, onContinue }) {
               Choose Your Perfect Package
             </h1>
             <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-              We've crafted three distinct packages to get your project started on the right foot.
+              We&apos;ve crafted three distinct packages to get your project started on the right foot.
             </p>
           </motion.div>
 

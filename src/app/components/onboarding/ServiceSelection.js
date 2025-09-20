@@ -61,7 +61,7 @@ export default function ServiceSelection({ selectedServices, onSelectService, on
       >
         <h2 className="text-3xl font-bold mb-3">Select Your Services</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Choose the services you're interested in. You can select multiple options to create a comprehensive solution.
+          Choose the services you&apos;re interested in. You can select multiple options to create a comprehensive solution.
         </p>
       </motion.div>
 

@@ -16,6 +16,7 @@ import {
 import { digitalMarketingService } from "./data";
 import { SERVICES } from '../../../config/services';
 import ServiceHero from '../../components/ServiceHero';
+import Footer from '../../components/Footer';
 
 // Component for particles moving along connection lines
 function MovingParticles({ originPosition, destinations, color }) {
@@ -793,7 +794,7 @@ export default function DigitalMarketingPage() {
           >
             <h2 className="text-3xl font-bold mb-4 !text-[#d3c4b4]">Ready to Grow Your Business?</h2>
             <p className="text-xl !text-[#d7c3ae] mb-8 max-w-2xl mx-auto">
-              Let's create a digital marketing strategy that drives results and accelerates your growth.
+              Let&apos;s create a digital marketing strategy that drives results and accelerates your growth.
             </p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -840,8 +841,7 @@ export default function DigitalMarketingPage() {
         onClose={() => setIsModalOpen(false)}
         service={digitalMarketingService}
       />
-
-      
+      <Footer />
     </main>
   );
 }
