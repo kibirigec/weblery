@@ -13,7 +13,6 @@ import Link from 'next/link';
 export default function Hero() {
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
-  const [Hls, setHls] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,12 +26,6 @@ export default function Hero() {
     window.addEventListener('resize', checkMobile);
     
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    import('hls.js').then((module) => {
-      setHls(module.default);
-    });
   }, []);
 
   const targetRef = useRef(null);
@@ -108,16 +101,24 @@ export default function Hero() {
   const videoSrc = '/streams/vid1.m3u8';
 
   useEffect(() => {
-    if (Hls && videoRef.current) {
-      if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(videoSrc);
-        hls.attachMedia(videoRef.current);
-      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-        videoRef.current.src = videoSrc;
-      }
+    let hls;
+    if (videoRef.current) {
+      import('hls.js').then((module) => {
+        if (module.default.isSupported()) {
+          hls = new module.default();
+          hls.loadSource(videoSrc);
+          hls.attachMedia(videoRef.current);
+        } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+          videoRef.current.src = videoSrc;
+        }
+      });
     }
-  }, [Hls, videoSrc]);
+    return () => {
+      if (hls) {
+        hls.destroy();
+      }
+    };
+  }, [videoSrc]);
 
   return (
     <section ref={targetRef} className="relative h-[800vh]" style={{ backgroundColor: '#f2f0ef' }}>
@@ -126,7 +127,7 @@ export default function Hero() {
         style={{ top, y }}
       >
         <motion.div
-          className="relative w-full bg-[#f2f0ef]"
+          className="relative w-full bg-[#f20ef]"
           initial={{ 
             paddingLeft: 0, 
             paddingRight: 0, 

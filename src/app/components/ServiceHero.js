@@ -13,7 +13,6 @@ import Link from 'next/link';
 export default function ServiceHero({ service, onOpenModal }) {
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
-  const [Hls, setHls] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,12 +26,6 @@ export default function ServiceHero({ service, onOpenModal }) {
     window.addEventListener('resize', checkMobile);
     
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    import('hls.js').then((module) => {
-      setHls(module.default);
-    });
   }, []);
 
   const targetRef = useRef(null);
@@ -108,17 +101,24 @@ export default function ServiceHero({ service, onOpenModal }) {
   const mediaItem = service.media;
 
   useEffect(() => {
-    if (Hls && videoRef.current && mediaItem.type === 'video') {
-      const videoSrc = mediaItem.src;
-      if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(videoSrc);
-        hls.attachMedia(videoRef.current);
-      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-        videoRef.current.src = videoSrc;
-      }
+    let hls;
+    if (videoRef.current && mediaItem.type === 'video') {
+      import('hls.js').then((module) => {
+        if (module.default.isSupported()) {
+          hls = new module.default();
+          hls.loadSource(mediaItem.src);
+          hls.attachMedia(videoRef.current);
+        } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+          videoRef.current.src = mediaItem.src;
+        }
+      });
     }
-  }, [Hls, mediaItem]);
+    return () => {
+      if (hls) {
+        hls.destroy();
+      }
+    };
+  }, [mediaItem]);
 
   return (
     <section ref={targetRef} className="relative h-[300vh] bg-white">
@@ -147,7 +147,6 @@ export default function ServiceHero({ service, onOpenModal }) {
               <video
                 ref={videoRef}
                 className="w-full h-full object-cover"
-                src={mediaItem.src}
                 autoPlay
                 loop
                 muted
