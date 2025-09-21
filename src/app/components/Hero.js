@@ -7,11 +7,12 @@ import {
   useAnimation,
   useTransform,
 } from 'framer-motion';
-import { useRef, useMemo, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function Hero() {
   const [isMobile, setIsMobile] = useState(false);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -97,11 +98,19 @@ export default function Hero() {
     },
   ];
 
-  const videos = useMemo(() => ['/vid1.mp4', '/vid2.mp4', '/vid3.mp4'], []);
-  const video = useMemo(
-    () => videos[Math.floor(Math.random() * videos.length)],
-    [videos]
-  );
+  const videoSrc = '/streams/vid1.m3u8';
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(videoRef.current);
+      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+        videoRef.current.src = videoSrc;
+      }
+    }
+  }, [videoSrc]);
 
   return (
     <section ref={targetRef} className="relative h-[800vh]" style={{ backgroundColor: '#f2f0ef' }}>
@@ -127,8 +136,8 @@ export default function Hero() {
           >
             {/* Background Video */}
             <video
+              ref={videoRef}
               className="w-full h-full object-cover"
-              src={video}
               autoPlay
               loop
               muted

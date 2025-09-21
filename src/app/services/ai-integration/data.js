@@ -4,7 +4,7 @@ export const aiIntegrationService = {
   title: "AI Integration",
   slug: "ai-integration",
   description: "Intelligent solutions that transform your business operations",
-  media: { type: 'video', src: '/services/ai-background.mp4' },
+  media: { type: 'video', src: '/streams/ai-background.m3u8' },
   animatedText: [
     "Deploy intelligent agents.",
     "Automate complex tasks.",

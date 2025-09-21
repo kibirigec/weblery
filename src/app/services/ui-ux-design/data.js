@@ -4,7 +4,7 @@ export const uiUxDesignService = {
   title: "UI/UX Design",
   slug: "ui-ux-design",
   description: "Beautiful, intuitive designs that users love and businesses trust",
-  media: { type: 'video', src: '/services/ui-background.mp4' },
+  media: { type: 'video', src: '/streams/ui-background.m3u8' },
   animatedText: [
     "Craft intuitive interfaces.",
     "Create delightful experiences.",

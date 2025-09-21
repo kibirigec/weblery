@@ -7,11 +7,12 @@ import {
   useAnimation,
   useTransform,
 } from "motion/react";
-import { useRef, useMemo, useEffect, useState } from "react";
+import { useRef, useMemo, useEffect, useState } from  'react'
 import Link from 'next/link';
 
 export default function ServiceHero({ service, onOpenModal }) {
   const [isMobile, setIsMobile] = useState(false);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,11 +38,11 @@ export default function ServiceHero({ service, onOpenModal }) {
   const containerControls = useAnimation();
   const videoWrapperControls = useAnimation();
 
+  const mobilePadding = isMobile ? 4 : 8;
+  const mobileScale = isMobile ? 0.985 : 0.975;
+  const mobileBorderRadius = isMobile ? "0.75rem" : "1.5rem";
+
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const mobilePadding = isMobile ? 4 : 8;
-    const mobileScale = isMobile ? 0.985 : 0.975;
-    const mobileBorderRadius = isMobile ? "0.75rem" : "1.5rem";
-    
     if (v > 0) {
       containerControls.start({
         paddingLeft: 0,
@@ -99,6 +100,19 @@ export default function ServiceHero({ service, onOpenModal }) {
 
   const mediaItem = service.media;
 
+  useEffect(() => {
+    if (videoRef.current && mediaItem.type === 'video') {
+      const videoSrc = mediaItem.src;
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(videoRef.current);
+      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+        videoRef.current.src = videoSrc;
+      }
+    }
+  }, [mediaItem]);
+
   return (
     <section ref={targetRef} className="relative h-[300vh] bg-white">
       <motion.div
@@ -108,22 +122,23 @@ export default function ServiceHero({ service, onOpenModal }) {
         <motion.div
           className="relative w-full bg-white"
           initial={{ 
-            paddingLeft: isMobile ? 16 : 30, 
-            paddingRight: isMobile ? 16 : 30, 
-            scale: isMobile ? 0.985 : 0.975 
+            paddingLeft: mobilePadding,
+            paddingRight: mobilePadding,
+            scale: mobileScale
           }}
           animate={containerControls}
           style={{ transformOrigin: "top center", height }}
         >
           <motion.div
             className="w-full h-full overflow-hidden relative"
-            initial={{ borderRadius: isMobile ? "0.75rem" : "1.5rem" }}
+            initial={{ borderRadius: mobileBorderRadius }}
             animate={videoWrapperControls}
-            style={{ borderRadius: isMobile ? "0.75rem" : "1.5rem" }}
+            style={{ borderRadius: mobileBorderRadius }}
           >
             {/* Background Media */}
             {mediaItem.type === 'video' ? (
               <video
+                ref={videoRef}
                 className="w-full h-full object-cover"
                 src={mediaItem.src}
                 autoPlay
@@ -172,15 +187,6 @@ export default function ServiceHero({ service, onOpenModal }) {
             </div>
             {/* Sticky Buttons */}
             <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4 z-30 px-4 sm:px-0">
-              <motion.div
-                className="w-full sm:w-auto min-h-[44px] px-6 py-3 bg-white/20 text-white rounded-md border border-white/30 text-base sm:text-lg font-semibold shadow-lg hover:bg-white/30 transition-colors cursor-pointer flex items-center justify-center"
-                whileHover={isMobile ? {} : { scale: 1.05 }}
-                whileTap={{ scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                onClick={onOpenModal}
-              >
-                Why {service.title} Matters
-              </motion.div>
               <Link href={`/onboarding?track=custom&service=${service.slug}`} passHref>
                 <motion.div
                   className="w-full sm:w-auto min-h-[44px] px-6 py-3 bg-white text-black rounded-md border border-gray-300 text-base sm:text-lg font-semibold shadow-lg hover:bg-gray-100 transition-colors cursor-pointer flex items-center justify-center"
@@ -191,6 +197,15 @@ export default function ServiceHero({ service, onOpenModal }) {
                   Start Your Project
                 </motion.div>
               </Link>
+              <motion.div
+                className="w-full sm:w-auto min-h-[44px] px-6 py-3 bg-white/20 text-white rounded-md border border-white/30 text-base sm:text-lg font-semibold shadow-lg hover:bg-white/30 transition-colors cursor-pointer flex items-center justify-center"
+                whileHover={isMobile ? {} : { scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                onClick={onOpenModal}
+              >
+                Why {service.title} Matters
+              </motion.div>
             </div>
           </motion.div>
         </motion.div>

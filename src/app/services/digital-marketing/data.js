@@ -4,7 +4,7 @@ export const digitalMarketingService = {
   title: "Digital Marketing",
   slug: "digital-marketing",
   description: "Strategic campaigns that drive growth and maximize ROI",
-  media: { type: 'video', src: '/services/digital-marketing-background.mp4' },
+  media: { type: 'video', src: '/streams/digital-marketing-background.m3u8' },
   animatedText: [
     "Reach your target audience.",
     "Drive meaningful engagement.",
