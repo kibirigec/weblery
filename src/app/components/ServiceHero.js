@@ -13,6 +13,7 @@ import Link from 'next/link';
 export default function ServiceHero({ service, onOpenModal }) {
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
+  const [Hls, setHls] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,6 +27,12 @@ export default function ServiceHero({ service, onOpenModal }) {
     window.addEventListener('resize', checkMobile);
     
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    import('hls.js').then((module) => {
+      setHls(module.default);
+    });
   }, []);
 
   const targetRef = useRef(null);
@@ -101,7 +108,7 @@ export default function ServiceHero({ service, onOpenModal }) {
   const mediaItem = service.media;
 
   useEffect(() => {
-    if (videoRef.current && mediaItem.type === 'video') {
+    if (Hls && videoRef.current && mediaItem.type === 'video') {
       const videoSrc = mediaItem.src;
       if (Hls.isSupported()) {
         const hls = new Hls();
@@ -111,7 +118,7 @@ export default function ServiceHero({ service, onOpenModal }) {
         videoRef.current.src = videoSrc;
       }
     }
-  }, [mediaItem]);
+  }, [Hls, mediaItem]);
 
   return (
     <section ref={targetRef} className="relative h-[300vh] bg-white">

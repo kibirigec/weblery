@@ -13,6 +13,7 @@ import Link from 'next/link';
 export default function Hero() {
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
+  const [Hls, setHls] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,6 +27,12 @@ export default function Hero() {
     window.addEventListener('resize', checkMobile);
     
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    import('hls.js').then((module) => {
+      setHls(module.default);
+    });
   }, []);
 
   const targetRef = useRef(null);
@@ -101,7 +108,7 @@ export default function Hero() {
   const videoSrc = '/streams/vid1.m3u8';
 
   useEffect(() => {
-    if (videoRef.current) {
+    if (Hls && videoRef.current) {
       if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(videoSrc);
@@ -110,7 +117,7 @@ export default function Hero() {
         videoRef.current.src = videoSrc;
       }
     }
-  }, [videoSrc]);
+  }, [Hls, videoSrc]);
 
   return (
     <section ref={targetRef} className="relative h-[800vh]" style={{ backgroundColor: '#f2f0ef' }}>
