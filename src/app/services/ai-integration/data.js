@@ -35,27 +35,27 @@ export const aiIntegrationService = {
     </div>
   ),
   importance: {
-    overview: "AI isn’t just about automation anymore—it’s about intelligent agents that act like digital teammates. They monitor your business around the clock, catch problems before they happen, and even trigger the right actions automatically. Imagine having a team that never sleeps, never misses a detail, and keeps getting smarter every day. That’s what agents bring to the table. The businesses adopting them now aren’t just staying efficient—they’re pulling ahead, building competitive advantages that others won’t be able to catch up to.",
+    overview: "AI has moved beyond simple automation—it’s now about intelligent agents that act like digital teammates. These agents don’t just follow instructions, they think, adapt, and execute with precision. They monitor your operations 24/7, anticipate problems before they arise, and trigger the right solutions instantly. Imagine replacing hours of repetitive human labor with a system that never sleeps, never calls in sick, and gets sharper with every interaction. Businesses adopting agents today are not just cutting costs—they’re compounding efficiency, unlocking innovation, and building competitive advantages that late adopters won’t catch up to.",
     keyPoints: [
       {
-        title: "AI Agents as Your Digital Teammates",
-        description: "Agents can handle customer support, schedule logistics, monitor your sales funnel, or even manage compliance checks automatically. Instead of replacing humans, they take over the grunt work so your people can focus on strategy, creativity, and growth."
+        title: "AI Agents as Your Workforce Multipliers",
+        description: "Agents handle what normally takes entire teams: customer support, scheduling, logistics, compliance, funnel management—you name it. Instead of replacing people, they absorb the repetitive, labor-intensive tasks so your human team can focus on strategy, creativity, and high-value innovation. This translates into massive salary savings while scaling productivity."
       },
       {
-        title: "Data-Driven Insights",
-        description: "Agents process massive datasets in real time—spotting patterns like drops in customer engagement, sudden inventory risks, or emerging trends. And they don’t just report them—they act on them instantly if you want."
+        title: "Real-Time, Data-Driven Action",
+        description: "Agents analyze massive datasets on the fly—spotting hidden patterns, risks, or emerging opportunities. Unlike humans who just report, agents can instantly act, fixing an issue or capitalizing on a trend before your competition even notices."
       },
       {
-        title: "Enhanced Customer Experience",
-        description: "Imagine a customer landing on your site at midnight and getting personalized help from an agent that remembers their history, recommends products, and books a service—all without waiting for a human to wake up."
+        title: "Always-On Customer Experience",
+        description: "Picture a customer landing on your site at 2 a.m. and receiving tailored help from an agent that remembers their history, recommends the perfect product, and completes the booking—all without a single human awake. That’s seamless, scalable service at a fraction of the labor cost."
       },
       {
-        title: "Scalable Innovation",
-        description: "Because agents learn from every interaction, your system doesn’t just run smoothly—it continuously improves. That means the same agents that answer support tickets today could be optimizing marketing campaigns tomorrow."
+        title: "Self-Learning Systems",
+        description: "With every interaction, agents evolve. The same system answering support tickets today could be optimizing marketing campaigns, driving sales, or managing workflows tomorrow—without additional hires or overhead."
       },
       {
-        title: "Competitive Differentiation",
-        description: "Early adopters of agents build advantages that snowball. Once agents are embedded across operations, they create a level of speed, accuracy, and personalization that latecomers simply can’t match."
+        title: "Competitive Edge That Snowballs",
+        description: "The earlier agents are deployed, the more data they learn from and the bigger the advantage. Businesses embedding agents now are creating compounding effects in speed, accuracy, personalization, and cost-efficiency that late adopters simply won’t be able to close."
       }
     ],
     visualization: (
@@ -104,17 +104,17 @@ export const aiIntegrationService = {
       {
         value: "15%",
         label: "Revenue Increase",
-        description: "Companies with AI agents see measurable growth from efficiency and personalization."
+        description: "Companies with AI agents consistently see measurable growth fueled by efficiency, personalization, and proactive service."
       },
       {
         value: "25%",
-        label: "Cost Reduction",
-        description: "Agents cut down on manual labor costs while improving accuracy and speed."
+        label: "Labor Cost Reduction",
+        description: "By offloading repetitive work to agents, businesses slash salary overhead while improving output quality and speed."
       },
       {
         value: "60%",
         label: "Faster Decisions",
-        description: "AI-powered agents help leaders act with confidence in real time."
+        description: "AI-powered agents accelerate decision-making, empowering leaders to act with confidence in real time."
       }
     ]
   },
@@ -122,26 +122,27 @@ export const aiIntegrationService = {
     phases: [
       {
         title: "AI Readiness Assessment",
-        description: "We assess where agents can create the most value—whether in operations, customer support, or analytics.",
+        description: "We evaluate where agents can deliver maximum ROI—whether in customer support, operations, or analytics.",
         deliverables: ["Process Audit", "Data Quality Check", "ROI Projections", "Implementation Roadmap"]
       },
       {
         title: "Pilot Project Development",
-        description: "We build and test a first agent in a high-impact area, like automating support tickets or generating real-time insights.",
+        description: "We design and deploy a high-impact agent prototype—automating tasks like ticketing, insights, or scheduling.",
         deliverables: ["Use Case Selection", "Agent Prototype", "Performance Testing", "Success Metrics"]
       },
       {
         title: "Full-Scale Implementation",
-        description: "We roll out agents across the organization with smooth integrations, employee training, and monitoring systems.",
+        description: "We scale agents across the organization with seamless integrations, staff enablement, and continuous monitoring.",
         deliverables: ["Integration Setup", "Staff Training", "Monitoring Tools", "Optimization Processes"]
       },
       {
         title: "Optimization & Scaling",
-        description: "Agents evolve over time—improving models, learning from interactions, and expanding into new areas of your business.",
+        description: "Agents continuously learn, adapt, and expand into new functions—improving efficiency without new hires.",
         deliverables: ["Performance Tuning", "Continuous Updates", "Scaling Playbook", "Advanced Features"]
       }
     ]
   },
+   
   technologies: [
     "TensorFlow",
     "PyTorch",
