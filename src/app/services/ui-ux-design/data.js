@@ -4,7 +4,7 @@ export const uiUxDesignService = {
   title: "UI/UX Design",
   slug: "ui-ux-design",
   description: "Beautiful, intuitive designs that users love and businesses trust",
-  media: { type: 'video', src: '/streams/ui-background.m3u8' },
+  media: { type: 'video', src: 'https://res.cloudinary.com/dz2o14lnf/video/upload/v1758726612/18069232-uhd_3840_2160_24fps_cq0q5f.mp4' }, // Replace with your Cloudinary video URL,
   animatedText: [
     "Craft intuitive interfaces.",
     "Create delightful experiences.",

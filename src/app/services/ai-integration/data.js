@@ -4,7 +4,7 @@ export const aiIntegrationService = {
   title: "AI Integration",
   slug: "ai-integration",
   description: "Intelligent solutions that transform your business operations",
-  media: { type: 'video', src: '/streams/ai-background.m3u8' },
+  media: { type: 'video', src: 'https://res.cloudinary.com/dz2o14lnf/video/upload/v1758724352/2792370-hd_1920_1080_30fps_t6f9zn.mp4' }, // Replace with your Cloudinary video URL,
   animatedText: [
     "Deploy intelligent agents.",
     "Automate complex tasks.",

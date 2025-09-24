@@ -98,26 +98,12 @@ export default function Hero() {
     },
   ];
 
-  const videoSrc = '/streams/vid1.m3u8';
+  const videoSrc = 'https://res.cloudinary.com/dz2o14lnf/video/upload/v1758621360/854321-hd_1920_1080_24fps_w47dug.mp4';
 
   useEffect(() => {
-    let hls;
     if (videoRef.current) {
-      import('hls.js').then((module) => {
-        if (module.default.isSupported()) {
-          hls = new module.default();
-          hls.loadSource(videoSrc);
-          hls.attachMedia(videoRef.current);
-        } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-          videoRef.current.src = videoSrc;
-        }
-      });
+      videoRef.current.src = videoSrc;
     }
-    return () => {
-      if (hls) {
-        hls.destroy();
-      }
-    };
   }, [videoSrc]);
 
   return (

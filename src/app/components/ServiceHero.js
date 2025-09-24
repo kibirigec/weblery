@@ -101,23 +101,9 @@ export default function ServiceHero({ service, onOpenModal }) {
   const mediaItem = service.media;
 
   useEffect(() => {
-    let hls;
     if (videoRef.current && mediaItem.type === 'video') {
-      import('hls.js').then((module) => {
-        if (module.default.isSupported()) {
-          hls = new module.default();
-          hls.loadSource(mediaItem.src);
-          hls.attachMedia(videoRef.current);
-        } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-          videoRef.current.src = mediaItem.src;
-        }
-      });
+      videoRef.current.src = mediaItem.src;
     }
-    return () => {
-      if (hls) {
-        hls.destroy();
-      }
-    };
   }, [mediaItem]);
 
   return (

@@ -181,7 +181,7 @@ export const PACKAGES = {
       "Single platform mobile app",
       "Complete digital marketing",
       "Advanced UI/UX design",
-      "Performance optimization"
+      "Simple AI Agent"
     ],
     services: [
       { name: "Web Development", price: 150000 },

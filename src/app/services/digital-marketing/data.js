@@ -4,7 +4,7 @@ export const digitalMarketingService = {
   title: "Digital Marketing",
   slug: "digital-marketing",
   description: "Strategic campaigns that drive growth and maximize ROI",
-  media: { type: 'video', src: '/streams/digital-marketing-background.m3u8' },
+  media: { type: 'video', src: 'https://res.cloudinary.com/dz2o14lnf/video/upload/v1758725528/6558144-uhd_3840_2160_25fps_mv4nof.mp4' }, // Replace with your Cloudinary video URL,
   animatedText: [
     "Reach your target audience.",
     "Drive meaningful engagement.",

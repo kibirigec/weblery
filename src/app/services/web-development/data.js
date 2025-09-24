@@ -4,7 +4,7 @@ export const webDevelopmentService = {
   title: "Web Development",
   slug: "web-development",
   description: "Building the foundation of your digital presence",
-  media: { type: 'video', src: '/streams/website-background.m3u8' },
+  media: { type: 'video', src: 'https://res.cloudinary.com/dz2o14lnf/video/upload/v1758725615/6994619-uhd_3840_2160_30fps_ugwtmg.mp4' }, // Replace with your Cloudinary video URL,
   animatedText: [
     "Build responsive websites.",
     "Create powerful web apps.",
