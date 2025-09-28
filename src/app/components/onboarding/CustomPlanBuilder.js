@@ -88,7 +88,7 @@ export default function CustomPlanBuilder({
 
           {/* Main Content */}
           <div className="flex-1">
-            <div className="mb-8">
+            <div className="mb-4">
               <h2 className="text-2xl font-bold mb-2">Build Your Custom Plan</h2>
               <p className="text-gray-600">
                 Select the services you need and customize them with add-ons to create your perfect solution.

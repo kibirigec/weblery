@@ -8,7 +8,7 @@ export default function OnboardingLayout({ children, currentStep, steps, progres
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 py-6 z-50">
+      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 py-8 lg:py-6 z-50">
         <div className="container mx-auto px-4 flex items-center justify-center relative">
           <div className="mx-4 absolute left-0 top-1/2 transform -translate-y-1/2">
             <Link href="/">
@@ -83,7 +83,7 @@ export default function OnboardingLayout({ children, currentStep, steps, progres
       </div>
 
       {/* Main content */}
-      <div className="flex-grow flex items-start justify-center pt-[185px] pb-24">
+      <div className="flex-grow flex items-start justify-center pt-[100px] lg:pt-[185px] pb-24">
         <div className="container mx-auto px-4 max-w-4xl">
           {children}
         </div>

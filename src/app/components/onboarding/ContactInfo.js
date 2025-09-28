@@ -113,7 +113,7 @@ export default function ContactInfo({ totalPrice, estimatedTimeline, onContinue,
     >
       <div className="text-center mb-10">
         <h1 className="text-4xl font-extrabold tracking-tight text-grey-900">Contact Information</h1>
-        <p className="mt-2 text-lg text-[#86868b]">One final step. Please tell us about yourself and your project.</p>
+        <p className="mt-2 text-lg !text-[#86868b]">One final step. Please tell us about yourself and your project.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-12 items-start">
@@ -147,7 +147,7 @@ export default function ContactInfo({ totalPrice, estimatedTimeline, onContinue,
             <motion.button type="submit" onClick={handleSubmit} className="w-full px-6 py-3 rounded-lg bg-black text-white font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center">
               Submit Project Request <ArrowRight className="w-4 h-4 ml-2" />
             </motion.button>
-            <button onClick={onBack} className="w-full px-6 py-3 rounded-lg text-slate-700 font-medium hover:bg-slate-100 transition-colors">
+            <button onClick={onBack} className="w-full px-6 py-3 rounded-lg text-[#1d1d1f] font-medium hover:bg-[#86868b]/10 transition-colors">
               Back to Summary
             </button>
           </div>

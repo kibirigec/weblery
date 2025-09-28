@@ -12,7 +12,7 @@ const SERVICE_THEMES = {
 
 export default function ServiceCard({
   serviceId,
-  service,
+  service, 
   isSelected,
   expandedService,
   onServiceSelect,
