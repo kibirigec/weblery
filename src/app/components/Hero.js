@@ -39,8 +39,8 @@ export default function Hero() {
   const videoWrapperControls = useAnimation();
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    const mobilePadding = isMobile ? 4 : 8;
-    const mobileScale = isMobile ? 0.985 : 0.975;
+    const mobilePadding = isMobile ? 8 : 8;
+    const mobileScale = isMobile ? 0.95 : 0.975;
     const mobileBorderRadius = isMobile ? '0.75rem' : '1.5rem';
     
     if (v > 0) {
@@ -144,10 +144,10 @@ export default function Hero() {
             {/* Foreground Text */}
             <div className="absolute inset-0 flex items-center justify-center z-20 text-center text-white p-4 sm:p-6 lg:p-8">
               <motion.div style={{ opacity: textOpacity, y: textY }}>
-                <h1 className="text-5xl xs:text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-3 sm:mb-4 leading-tight">
+                <h1 className="text-5xl xs:text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-3 sm:mb-4 leading-none">
                   Automation is the future.
                 </h1>
-                <p className="text-white text-2xl xs:text-xl sm:text-2xl max-w-xs xs:max-w-sm sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
+                <p className="text-white text-2xl xs:text-xl sm:text-2xl max-w-xs xs:max-w-sm sm:max-w-2xl lg:max-w-3xl mx-auto leading-normal px-4 sm:px-0">
                   Everything, and anything can now be automated.
                   
                 </p>

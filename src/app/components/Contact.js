@@ -1,4 +1,16 @@
+"use client";
+
+import { useState } from 'react';
+
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    service: 'Mobile App Development',
+    message: '',
+  });
+  const [status, setStatus] = useState('');
+
   const contactInfo = [
     {
       icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />,
@@ -20,6 +32,39 @@ export default function Contact() {
     
     }
   ];
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('Sending...');
+    try {
+      const response = await fetch('/api/telegram', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formData, source: 'contactForm' }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setStatus('Message sent successfully!');
+        setFormData({
+          name: '',
+          email: '',
+          service: 'Mobile App Development',
+          message: '',
+        });
+      } else {
+        setStatus('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      setStatus('An error occurred. Please try again.');
+    }
+  };
 
   return (
     <section id="contact" className="section">
@@ -51,26 +96,34 @@ export default function Contact() {
           </div>
           
           <div className="bg-light p-8 rounded-xl border">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-sm font-medium mb-2">Name</label>
                 <input 
-                  type="text" 
+                  type="text"
+                  name="name"
                   placeholder="Your full name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                 />
               </div>
               
               <div>
                 <label className="block text-sm font-medium mb-2">Email</label>
                 <input 
-                  type="email" 
+                  type="email"
+                  name="email"
                   placeholder="your.email@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                 />
               </div>
               
               <div>
                 <label className="block text-sm font-medium mb-2">Service Interested In</label>
-                <select>
+                <select name="service" value={formData.service} onChange={handleChange}>
                   <option>Mobile App Development</option>
                   <option>Web Development</option>
                   <option>AI Integration</option>
@@ -83,8 +136,12 @@ export default function Contact() {
               <div>
                 <label className="block text-sm font-medium mb-2">Message</label>
                 <textarea 
-                  rows="4" 
+                  rows="4"
+                  name="message"
                   placeholder="Tell us about your project..."
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
                 ></textarea>
               </div>
               
@@ -94,6 +151,7 @@ export default function Contact() {
               >
                 Send Message
               </button>
+              {status && <p className="text-center mt-4">{status}</p>}
             </form>
           </div>
         </div>

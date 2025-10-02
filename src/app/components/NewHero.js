@@ -26,7 +26,7 @@ export default function NewHero() {
     >
       <motion.div variants={containerVariants} className="mt-16 md:mt-0">
         <motion.h2 className="text-lg font-medium text-gray-600" variants={itemVariants}>Weblery</motion.h2>
-        <motion.h1 className="text-[clamp(2rem,8vw,6rem)] font-bold" variants={itemVariants}>Your Business.<br />Now Automated.</motion.h1>
+        <motion.h1 className="text-[clamp(2rem,8vw,6rem)] font-bold leading-tight" variants={itemVariants}>Your Business.<br />Now Automated.</motion.h1>
       </motion.div>
     </motion.section>
   );

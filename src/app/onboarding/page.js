@@ -253,6 +253,11 @@ function OnboardingContent() {
   const [selectedServices, setSelectedServices] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
   const [estimatedTimeline, setEstimatedTimeline] = useState("");
+  const [contactInfo, setContactInfo] = useState({
+    name: '',
+    email: '',
+    company: '',
+  });
 
   const searchParams = useSearchParams();
 
@@ -359,7 +364,12 @@ function OnboardingContent() {
     }));
   };
 
-  const handleContinue = () => {
+  const updateContactInfo = (e) => {
+    const { name, value } = e.target;
+    setContactInfo(prev => ({...prev, [name]: value}));
+  }
+
+  const handleContinue = async () => {
     if (currentStep === "track-selection") return;
 
     if (currentStep === "package-selection" || currentStep === "custom-plan") {
@@ -385,6 +395,23 @@ function OnboardingContent() {
         estimatedTimeline,
       };
       localStorage.setItem('onboardingProgress', JSON.stringify(onboardingProgress));
+      
+      try {
+        await fetch('/api/telegram', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            source: 'onboarding',
+            onboardingProgress,
+            contactInfo,
+          }),
+        });
+      } catch (error) {
+        console.error("Failed to send onboarding data to Telegram", error);
+      }
+
       router.push("/onboarding/confirmation");
     }
   };
@@ -453,6 +480,8 @@ function OnboardingContent() {
       case "contact":
         return (
           <ContactInfo
+            formData={contactInfo}
+            updateFormData={updateContactInfo}
             totalPrice={totalPrice}
             estimatedTimeline={estimatedTimeline}
             onContinue={handleContinue}

@@ -59,25 +59,14 @@ const TextareaField = ({ label, name, value, onChange, placeholder, error, rows 
 );
 
 // --- Main ContactInfo Component ---
-export default function ContactInfo({ totalPrice, estimatedTimeline, onContinue, onBack }) {
-  const [formData, setFormData] = useState({
-    name: '', email: '', company: '', phone: '', projectDescription: '', timeline: '', budget: ''
-  });
+export default function ContactInfo({ formData, updateFormData, totalPrice, estimatedTimeline, onContinue, onBack }) {
   const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
 
   // --- Only Name and Phone are required ---
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -85,7 +74,7 @@ export default function ContactInfo({ totalPrice, estimatedTimeline, onContinue,
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onContinue(formData);
+      onContinue();
     }
   };
 
@@ -125,10 +114,10 @@ export default function ContactInfo({ totalPrice, estimatedTimeline, onContinue,
               About You
             </legend>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <InputField label="Full Name *" name="name" value={formData.name} onChange={handleChange} error={errors.name} placeholder="John Doe" />
-              <InputField label="Email Address" name="email" type="email" value={formData.email} onChange={handleChange} error={errors.email} placeholder="john@company.com" />
-              <InputField label="Phone Number *" name="phone" type="tel" value={formData.phone} onChange={handleChange} error={errors.phone} placeholder="0771234321" />
-              <InputField label="Company Name" name="company" value={formData.company} onChange={handleChange} error={errors.company} placeholder="Acme Inc." />
+              <InputField label="Full Name *" name="name" value={formData.name} onChange={updateFormData} error={errors.name} placeholder="John Doe" />
+              <InputField label="Email Address *" name="email" type="email" value={formData.email} onChange={updateFormData} error={errors.email} placeholder="john@company.com" />
+              <InputField label="Phone Number" name="phone" type="tel" value={formData.phone} onChange={updateFormData} error={errors.phone} placeholder="0771234321" />
+              <InputField label="Company Name" name="company" value={formData.company} onChange={updateFormData} error={errors.company} placeholder="Acme Inc." />
             </div>
           </fieldset>
           
@@ -136,7 +125,7 @@ export default function ContactInfo({ totalPrice, estimatedTimeline, onContinue,
             <legend className="text-xl font-semibold text-slate-800 mb-4 border-b border-slate-200 w-full pb-3">
               About Your Project
             </legend>
-            <TextareaField label="Project Description" name="projectDescription" value={formData.projectDescription} onChange={handleChange} error={errors.projectDescription} placeholder="Tell us about your project goals, key features, and target audience..." />
+            <TextareaField label="Project Description" name="projectDescription" value={formData.projectDescription} onChange={updateFormData} error={errors.projectDescription} placeholder="Tell us about your project goals, key features, and target audience..." />
           </fieldset>
         </form>
 
