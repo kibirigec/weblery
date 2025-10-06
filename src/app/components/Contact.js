@@ -6,6 +6,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     service: 'Mobile App Development',
     message: '',
   });
@@ -55,6 +56,7 @@ export default function Contact() {
         setFormData({
           name: '',
           email: '',
+          phone: '',
           service: 'Mobile App Development',
           message: '',
         });
@@ -110,14 +112,24 @@ export default function Contact() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-2">Email</label>
+                <label className="block text-sm font-medium mb-2">Email (optional)</label>
                 <input 
                   type="email"
                   name="email"
                   placeholder="your.email@example.com"
                   value={formData.email}
                   onChange={handleChange}
-                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2">Phone Number (optional)</label>
+                <input 
+                  type="tel"
+                  name="phone"
+                  placeholder="+256 775 910 888"
+                  value={formData.phone}
+                  onChange={handleChange}
                 />
               </div>
               

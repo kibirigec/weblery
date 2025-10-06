@@ -256,7 +256,9 @@ function OnboardingContent() {
   const [contactInfo, setContactInfo] = useState({
     name: '',
     email: '',
+    phone: '',
     company: '',
+    projectDescription: '',
   });
 
   const searchParams = useSearchParams();

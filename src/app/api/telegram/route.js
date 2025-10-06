@@ -1,6 +1,45 @@
 
 import { NextResponse } from 'next/server';
 
+// Service name mapping for better readability
+const SERVICE_NAMES = {
+  mobileApp: 'Mobile App Development',
+  webDev: 'Web Development',
+  aiIntegration: 'AI Integration',
+  digitalMarketing: 'Digital Marketing',
+  uiuxDesign: 'UI/UX Design',
+  performanceOptimization: 'Performance Optimization'
+};
+
+// Format selected services into readable text
+function formatSelectedServices(services) {
+  if (!services || Object.keys(services).length === 0) {
+    return 'No services selected';
+  }
+
+  let formatted = '';
+  let serviceCount = 1;
+
+  Object.entries(services).forEach(([serviceId, serviceData]) => {
+    const serviceName = SERVICE_NAMES[serviceId] || serviceId;
+    formatted += `\n${serviceCount}. ${serviceName}`;
+    
+    if (serviceData.selectedSubServices && serviceData.selectedSubServices.length > 0) {
+      formatted += '\n   Sub-services:';
+      serviceData.selectedSubServices.forEach(subService => {
+        formatted += `\n   • ${subService}`;
+      });
+    } else {
+      formatted += '\n   (Base service only)';
+    }
+    
+    formatted += '\n';
+    serviceCount++;
+  });
+
+  return formatted.trim();
+}
+
 export async function POST(request) {
   const data = await request.json();
 
@@ -15,27 +54,32 @@ export async function POST(request) {
     message = `
       New Contact Form Submission:
       Name: ${data.name}
-      Email: ${data.email}
-      Company: ${data.company}
+      Email: ${data.email || 'Not provided'}
+      Phone: ${data.phone || 'Not provided'}
+      Service: ${data.service}
       Message: ${data.message}
     `;
   } else if (data.source === 'onboarding') {
+    const formattedServices = formatSelectedServices(data.onboardingProgress.selectedServices);
+    
     message = `
       New Onboarding Submission:
 
       Contact Info:
       Name: ${data.contactInfo.name}
-      Email: ${data.contactInfo.email}
-      Company: ${data.contactInfo.company}
+      Email: ${data.contactInfo.email || 'Not provided'}
+      Phone: ${data.contactInfo.phone || 'Not provided'}
+      Company: ${data.contactInfo.company || 'Not provided'}
+      Project Description: ${data.contactInfo.projectDescription || 'Not provided'}
 
       Onboarding Details:
       Selected Track: ${data.onboardingProgress.selectedTrack}
-      Selected Package: ${data.onboardingProgress.selectedPackage}
-      Total Price: ${data.onboardingProgress.totalPrice}
+      Selected Package: ${data.onboardingProgress.selectedPackage || 'Custom'}
+      Total Price: UGX ${data.onboardingProgress.totalPrice.toLocaleString()}
       Estimated Timeline: ${data.onboardingProgress.estimatedTimeline}
 
       Selected Services:
-      ${JSON.stringify(data.onboardingProgress.selectedServices, null, 2)}
+      ${formattedServices}
     `;
   } else {
     message = `Unknown data source: ${JSON.stringify(data, null, 2)}`;

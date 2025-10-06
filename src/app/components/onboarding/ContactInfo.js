@@ -62,11 +62,11 @@ const TextareaField = ({ label, name, value, onChange, placeholder, error, rows 
 export default function ContactInfo({ formData, updateFormData, totalPrice, estimatedTimeline, onContinue, onBack }) {
   const [errors, setErrors] = useState({});
 
-  // --- Only Name and Phone are required ---
+  // --- Only Name is required ---
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    // Email and phone are optional - no validation needed
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -115,9 +115,9 @@ export default function ContactInfo({ formData, updateFormData, totalPrice, esti
             </legend>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <InputField label="Full Name *" name="name" value={formData.name} onChange={updateFormData} error={errors.name} placeholder="John Doe" />
-              <InputField label="Email Address *" name="email" type="email" value={formData.email} onChange={updateFormData} error={errors.email} placeholder="john@company.com" />
-              <InputField label="Phone Number" name="phone" type="tel" value={formData.phone} onChange={updateFormData} error={errors.phone} placeholder="0771234321" />
-              <InputField label="Company Name" name="company" value={formData.company} onChange={updateFormData} error={errors.company} placeholder="Acme Inc." />
+              <InputField label="Email Address (optional)" name="email" type="email" value={formData.email} onChange={updateFormData} error={errors.email} placeholder="john@company.com" />
+              <InputField label="Phone Number (optional)" name="phone" type="tel" value={formData.phone} onChange={updateFormData} error={errors.phone} placeholder="0771234321" />
+              <InputField label="Company Name (optional)" name="company" value={formData.company} onChange={updateFormData} error={errors.company} placeholder="Acme Inc." />
             </div>
           </fieldset>
           
