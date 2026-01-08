@@ -1,0 +1,74 @@
+'use client';
+
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const FAQS = [
+  {
+    question: "What separates Weblery from other branding and web design agencies?",
+    answer: "We don't just design; we build digital ecosystems. Our approach blends aesthetic perfection with technical robusticity, ensuring your brand not only looks good but works flawlessly at scale."
+  },
+  {
+    question: "Do you work with startups?",
+    answer: "Yes. We love partnering with ambitious founders. We have specific 'Growth' packages tailored for startups that need to move fast and make a big impact."
+  },
+  {
+    question: "How long does a typical project take?",
+    answer: "A standard branding and web project usually ranges from 4 to 8 weeks, depending on complexity. We work in agile sprints to ensure constant progress and transparency."
+  },
+  {
+    question: "What is your pricing model?",
+    answer: "We offer both project-based pricing and monthly retainers. Our base packages start at UGX 150,000 for specific services, scaling up based on your needs."
+  }
+];
+
+export default function ClayFAQ() {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
+  return (
+    <section className="bg-[#111111] py-32 text-white px-6">
+      <div className="container mx-auto max-w-[90%] md:max-w-[70%]">
+        <h2 className="text-4xl md:text-5xl font-semibold mb-20 text-white">FAQ</h2>
+        
+        <div className="flex flex-col">
+          {FAQS.map((faq, index) => (
+            <div 
+                key={index} 
+                className="border-b border-[#333] py-8 cursor-pointer"
+                onClick={() => toggleFAQ(index)}
+            >
+              <div className="flex justify-between items-center group">
+                <h3 className="text-xl md:text-2xl font-light text-[#E0E0E0] group-hover:text-white transition-colors pr-8">
+                  {faq.question}
+                </h3>
+                <span className={`text-2xl transition-transform duration-300 ${activeIndex === index ? 'rotate-45' : ''}`}>
+                    +
+                </span>
+              </div>
+
+              <AnimatePresence>
+                {activeIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <p className="pt-6 text-lg text-gray-400 leading-relaxed max-w-2xl">
+                        {faq.answer}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

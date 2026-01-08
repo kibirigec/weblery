@@ -55,9 +55,9 @@ export async function POST(request) {
       New Contact Form Submission:
       Name: ${data.name}
       Email: ${data.email || 'Not provided'}
-      Phone: ${data.phone || 'Not provided'}
+      Phone: ${data.phone}
       Service: ${data.service}
-      Message: ${data.message}
+      Message: ${data.message || 'Not provided'}
     `;
   } else if (data.source === 'onboarding') {
     const formattedServices = formatSelectedServices(data.onboardingProgress.selectedServices);

@@ -3,10 +3,19 @@
 import { motion } from 'motion/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import ScrollArrow from './ScrollArrow';
 
-export default function OnboardingLayout({ children, currentStep, steps, progress, onStepClick, navigationButtons }) {
+function OnboardingLayoutWithArrow({ children, currentStep, steps, progress, onStepClick, navigationButtons }) {
+  const searchParams = useSearchParams();
+  const from = searchParams.get('from');
+
+  const showArrow = from === 'digital-marketing' || from === 'ui-ux-design' || from === 'performance-optimization';
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      {showArrow && <ScrollArrow />}
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 py-8 lg:py-6 z-50">
         <div className="container mx-auto px-4 flex items-center justify-center relative">
@@ -106,4 +115,12 @@ export default function OnboardingLayout({ children, currentStep, steps, progres
       </footer> */}
     </div>
   );
-} 
+}
+
+export default function OnboardingLayout(props) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OnboardingLayoutWithArrow {...props} />
+    </Suspense>
+  );
+}

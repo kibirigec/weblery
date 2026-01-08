@@ -123,13 +123,14 @@ export default function Contact() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-2">Phone Number (optional)</label>
+                <label className="block text-sm font-medium mb-2">Phone Number</label>
                 <input 
                   type="tel"
                   name="phone"
                   placeholder="+256 775 910 888"
                   value={formData.phone}
                   onChange={handleChange}
+                  required
                 />
               </div>
               
@@ -146,14 +147,13 @@ export default function Contact() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-2">Message</label>
+                <label className="block text-sm font-medium mb-2">Message (optional)</label>
                 <textarea 
                   rows="4"
                   name="message"
                   placeholder="Tell us about your project..."
                   value={formData.message}
                   onChange={handleChange}
-                  required
                 ></textarea>
               </div>
               
