@@ -5,8 +5,7 @@ import ClayHero from './components/ClayHero';
 import ClayShowreel from './components/ClayShowreel';
 import ClayServices from './components/ClayServices';
 import ClayWork from './components/ClayWork';
-import ClayFAQ from './components/ClayFAQ';
-import Footer from './components/Footer'; 
+import ClayFAQ from './components/ClayFAQ'; 
 
 export default function Home() {
   return (
@@ -30,8 +29,6 @@ export default function Home() {
       {/* FAQ Section */}
       <ClayFAQ />
 
-      {/* Footer */}
-      <Footer />
     </main>
   );
 }

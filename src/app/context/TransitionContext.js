@@ -70,7 +70,7 @@ export function TransitionProvider({ children }) {
             {/* Flying Title - Persists across routes */}
             <motion.h1
                 key="phantom-title"
-                className="fixed z-50 font-medium tracking-tight leading-[0.85] pointer-events-none"
+                className="fixed z-50 font-bold tracking-tight leading-[1.1] pointer-events-none"
                 initial={{ 
                     top: transitionData.initialTop, 
                     left: transitionData.initialLeft, 
@@ -78,13 +78,13 @@ export function TransitionProvider({ children }) {
                     color: "#000000"
                 }}
                 animate={{ 
-                    top: "13.25rem", 
-                    left: "max(1.5rem, calc(50vw - 640px + 1.5rem))", 
-                    fontSize: "8rem", 
-                    color: "#000000"
+                    top: "10rem", 
+                    left: "calc(2.5vw + 1.5rem)", 
+                    fontSize: "96px", 
+                    color: "#243953"
                 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
             >
                 {transitionData.text}
             </motion.h1>

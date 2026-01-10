@@ -14,28 +14,53 @@ html {
   --foreground: oklch(0.15 0 0);
   /* Near black */
 
+  /* Clay System Variables */
+  --color-white: #fff;
+  --color-gray-5: #f3f4f6;
+  --color-gray-100: #e6e8eb;
+  --color-gray-200: #cbd0d6;
+  --color-gray-300: #b2b8c2;
+  --color-gray-400: #989fab;
+  --color-gray-500: #7f8694;
+  --color-gray-600: #666c7a;
+  --color-gray-700: #4e5361;
+  --color-gray-800: #353945;
+  --color-gray-850: #252833;
+  --color-gray-900: #171921;
+  --color-black: #06070a;
+  --color-red-600: #cf3723;
+  --color-blue-200: #bacdff;
+  --color-blue-600: #31356d;
+  --color-headerWhite: #ffffff80;
+  --color-headerDark: #17191f80;
+
+  /* Easings */
+  --ease: cubic-bezier(1, 0, 0, 1);
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  --default: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --easeOutExpo: cubic-bezier(0.16, 1, 0.3, 1);
+  --easeInExpo: cubic-bezier(0.7, 0, 0.84, 0);
+
+  /* Z-Index */
+  --z-card: 103;
+  --z-header: 102;
+  --z-popup: 101;
+  --menu-follow-delay: 0ms;
+
+  /* Legacy OKLCH mappings (keeping for compatibility) */
   --primary: oklch(0.10 0 0);
-  /* Jet black */
   --primary-foreground: oklch(1 0 0);
-  /* White */
-
   --secondary: oklch(0.96 0 0);
-  /* Light gray */
   --secondary-foreground: oklch(0.15 0 0);
-
   --muted: oklch(0.96 0 0);
   --muted-foreground: oklch(0.55 0 0);
-  /* Medium gray */
-
   --accent: oklch(0.15 0 0);
   --accent-foreground: oklch(1 0 0);
-
   --border: oklch(0.92 0 0);
   --input: oklch(0.92 0 0);
   --ring: oklch(0.15 0 0);
-
   --radius: 0rem;
-  /* Sharp edges for minimalist look */
 }
 
 @theme inline {
@@ -52,15 +77,23 @@ html {
   --color-muted-foreground: var(--muted-foreground);
   --color-accent-foreground: var(--accent-foreground);
 
+  /* Add Clay Colors to Tailwind Theme via Vars? */
+  --color-clay-black: var(--color-black);
+  --color-clay-white: var(--color-white);
+  --color-clay-gray5: var(--color-gray-5);
+
   --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-gray-5);
+  /* Matches snippet background-color: var(--color-white)/gray-5? Snippet said white but style attribute showed white. I'll stick to gray-5 (f3f4f6) or white. Let's use white as per snippet .Section_White */
+  background: var(--color-white);
+  color: var(--color-black);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
 /* Typography Overrides */
@@ -76,9 +109,10 @@ h2 {
 }
 
 p {
-  color: var(--muted-foreground);
+  color: var(--color-black);
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 /* Clay Utilities */

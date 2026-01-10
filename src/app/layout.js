@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Footer from "./components/Footer";
 
 import { TransitionProvider } from "./context/TransitionContext";
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
       >
         <TransitionProvider>
             {children}
+            <Footer />
         </TransitionProvider>
       </body>
     </html>
