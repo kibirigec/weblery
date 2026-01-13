@@ -1,511 +1,365 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import OnboardingLayout from "../components/onboarding/OnboardingLayout";
-import TrackSelection from "../components/onboarding/TrackSelection";
-import PackageSelection from "../components/onboarding/PackageSelection";
-import CustomPlanBuilder from "../components/onboarding/CustomPlanBuilder";
-import Summary from "../components/onboarding/Summary";
-import ContactInfo from "../components/onboarding/ContactInfo";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const PACKAGES = {
-  silver: {
-    name: "Silver Package",
-    price: 250_000,
-    services: [
-      { name: "Web Development", price: 150_000 },
-      { name: "UI/UX Design", price: 80_000 },
-      { name: "SEO Optimization", price: 60_000 },
-      { name: "1 month in-Person support", price: 10_000 },
-    ],
-    discount: 50_000,
-    timeline: "4 Days",
-  },
-  gold: {
-    name: "Gold Package",
-    price: 350_000,
-    services: [
-      { name: "Web Development", price: 150000 },
-      { name: "UI/UX Design", price: 80000 },
-      { name: "Digital Marketing (Social Media)", price: 30000 },
-      { name: "Simple AI Agent", price: 150000 },
-      { name: "3 months in-Person support", price: 30000 },
-    ],
-    discount: 90_000,
-    timeline: "6 Days",
-  },
-  platinum: {
-    name: "Platinum Package",
-    price: 500_000,
-    services: [
-      { name: "Web Development", price: 150000 },
-      { name: "Mobile App Development", price: 70000 },
-      { name: "UI/UX Design", price: 80000 },
-      { name: "Digital Marketing (Social Media)", price: 30000 },
-      { name: "Complex AI Agents", price: 200000 },
-      { name: "6 months in-Person support", price: 60000 },
-    ],
-    discount: 90_000,
-    timeline: "10 Days",
-  },
-};
+const WHATSAPP_NUMBER = "256700000000"; // change to your real number
 
-const SERVICES = {
-  mobileApp: {
-    name: "Mobile App Development",
-    basePrice: 70_000,
-    baseInclusions: [
-      "Basic app structure and architecture",
-      "Single platform development (iOS or Android)",
-      "Basic UI/UX implementation",
-      "Core functionality development",
-      "Basic testing and deployment",
-    ],
-    subServices: [
-      {
-        name: "Cross-Platform Development",
-        price: 120_000,
-        description:
-          "React Native or Flutter, Platform-specific optimizations, Unified codebase, Multi-platform testing",
-      },
-      {
-        name: "App Maintenance & Support",
-        price: 20_000,
-        description:
-          "Bug fixes and updates, Performance monitoring, Security patches, Technical support",
-      },
-    ],
+const items = [
+  // ---------------- Websites ----------------
+  {
+    id: "basic_site",
+    category: "Web & App Design",
+    label: "Business Website",
+    price: "700,000 - 1,200,000 UGX",
+    min: 700000,
+    max: 1200000,
+    desc: "5–8 pages, mobile friendly, contact form",
+    recurring: false,
   },
-  webDev: {
-    name: "Web Development",
-    basePrice: 150_000,
-    baseInclusions: [
-      "Basic website structure",
-      "Responsive design",
-      "Core functionality",
-      "Basic SEO setup",
-      "Only for display",
-    ],
-    subServices: [
-      {
-        name: "Backend Development",
-        price: 50_000,
-        description: "User Entry Forms, Database integration, Server setup, More Complex needs",
-      },
-      {
-        name: "E-commerce Solutions",
-        price: 70_000,
-        description: "Product management, Shopping cart, Payment integration, Order management",
-      },
-      {
-        name: "CMS Development",
-        price: 40_000,
-        description:
-          "Content management interface, User roles and permissions, Media management, Content workflow",
-      },
-    ],
+  {
+    id: "ecommerce",
+    category: "Web & App Design",
+    label: "Online Shop",
+    price: "1,500,000 - 3,000,000 UGX",
+    min: 1500000,
+    max: 3000000,
+    desc: "Products, payments, stock control",
+    recurring: false,
   },
-  aiIntegration: {
-    name: "AI Integration",
-    basePrice: 150_000,
-    baseInclusions: ["AI strategy consultation", "Basic model integration", "Simple AI Agent", "Initial testing"],
-    subServices: [
-      {
-        name: "Custom AI Agent Deployment",
-        price: 150_000,
-        description:
-          "End-to-end setup of a tailored AI agent for customer support, sales, or internal operations.It's all up to you",
-      },
-      {
-        name: "Analyst Agents",
-        price: 120_000,
-        description:
-          "Lightweight agents that analyze your business data and deliver easy-to-understand insights.",
-      },
-      {
-        name: "Automation Agents",
-        price: 100_000,
-        description:
-          "Smart agents that automate repetitive workflows and integrate with existing tools.",
-      },
-      {
-        name: "Customer Experience Agents",
-        price: 100_000,
-        description:
-          "AI chat agents that respond instantly, personalize customer interactions, and reduce response time.",
-      },
-    ],
+  {
+    id: "web_app",
+    category: "Web & App Design",
+    label: "Custom Web System / App",
+    price: "2,000,000 - 5,000,000 UGX",
+    min: 2000000,
+    max: 5000000,
+    desc: "Bookings, dashboards, logins, custom features",
+    recurring: false,
   },
-  digitalMarketing: {
-    name: "Digital Marketing",
-    basePrice: 30_000, // Base package for small businesses
-    baseInclusions: [
-      "Tailored marketing strategy to grow your brand",
-      "Analytics setup to track performance",
-      "Initial campaign planning for quick wins",
-      "Regular performance updates and insights"
-    ],
-    subServices: [
-      {
-        name: "SEO (Search Engine Optimization)",
-        price: 60_000,
-        description: "Boost your website visibility on Google with keyword research, on-page optimization, technical SEO fixes, and measurable performance tracking."
-      },
-      {
-        name: "SEM (Paid Ads & Campaigns)",
-        price: 100_000,
-        description: "Reach your ideal customers faster with optimized ad campaigns, ad creation, budget management, and continuous performance improvement."
-      },
-      {
-        name: "Social Media Marketing",
-        price: 70_000,
-        description: "Grow your social presence with content planning, platform management, active audience engagement, and analytics to measure results."
-      },
-      {
-        name: "Content Marketing",
-        price: 90_000,
-        description: "Create and share valuable content that attracts, educates, and converts your audience, with strategic distribution and performance monitoring."
-      }
-    ]
-  },
-  
-  uiuxDesign: {
-    name: "UI/UX Design",
-    basePrice: 80_000, // Base package for small businesses
-    baseInclusions: [
-      "Understand your users with targeted research",
-      "Create clear and effective wireframes",
-      "Design intuitive user interfaces",
-      "Test usability to ensure smooth experiences"
-    ],
-    subServices: [
-      {
-        name: "Wireframing",
-        price: 35_000,
-        description: "Map user flows, build interactive wireframes, gather user feedback, and refine designs iteratively."
-      },
-      {
-        name: "Prototyping",
-        price: 50_000,
-        description: "Create high-fidelity prototypes with animations and transitions, allowing realistic user testing before development."
-      },
-      {
-        name: "User Research",
-        price: 60_000,
-        description: "Conduct interviews, usability studies, and data analysis to uncover actionable insights that improve your product."
-      },
-      {
-        name: "Usability Testing",
-        price: 45_000,
-        description: "Plan tests, recruit users, execute usability sessions, and provide detailed recommendations for improvement."
-      }
-    ]
-  },  
-  performanceOptimization: {
-    name: "Performance Optimization",
-    basePrice: 70_000, // Base package for startups
-    baseInclusions: [
-      "Comprehensive performance audit to identify bottlenecks",
-      "Basic optimizations to make your site/app faster and more reliable",
-      "Setup of monitoring to catch issues before they affect users",
-      "Practical recommendations to keep your platform running smoothly"
-    ],
-    subServices: [
-      {
-        name: "Speed Optimization",
-        price: 40_000,
-        description: "Reduce load times, optimize resources, implement caching, and ensure smooth, fast experiences for every user."
-      },
-      {
-        name: "SEO Optimization",
-        price: 30_000,
-        description: "Enhance search engine visibility through meta tags, schema markup, technical fixes, and performance validation—so your audience can find you easily."
-      },
-      {
-        name: "Security Audit",
-        price: 50_000,
-        description: "Protect your business and users with vulnerability assessments, security testing, compliance checks, and actionable fixes."
-      },
-      {
-        name: "Performance Monitoring",
-        price: 25_000,
-        description: "Proactively track your platform’s performance, set alerts for critical issues, and get detailed reports to prevent downtime and lost revenue."
-      }
-    ]
-  }
-  
-};
 
-const STEPS = [
-  { id: "track-selection", name: "Choose Path" },
-  { id: "package-selection", name: "Select Package" },
-  { id: "custom-plan", name: "Custom Plan" },
-  { id: "summary", name: "Summary" },
-  { id: "contact", name: "Contact" },
+  // ---------------- Social Media ----------------
+  {
+    id: "social_basic",
+    category: "Social Media",
+    label: "Social Media Posting & Management",
+    price: "350,000 - 700,000 UGX/month",
+    min: 350000,
+    max: 700000,
+    desc: "We design posts, captions, and manage pages",
+    recurring: true,
+  },
+  {
+    id: "social_full",
+    category: "Social Media",
+    label: "Full Social Media Package",
+    price: "700,000 - 1,200,000 UGX/month",
+    min: 700000,
+    max: 1200000,
+    desc: "Content creation, page growth, inbox handling",
+    recurring: true,
+  },
+
+  // ---------------- Ads ----------------
+  {
+    id: "ads",
+    category: "Ads & Marketing",
+    label: "Ad Campaign Management",
+    price: "200,000 - 500,000 UGX/month + ad budget",
+    min: 200000,
+    max: 500000,
+    desc: "We run & optimize ads. You pay ad budget separately.",
+    recurring: true,
+  },
+
+  // ---------------- AI ----------------
+  {
+    id: "ai_chatbot",
+    category: "AI Integration",
+    label: "AI WhatsApp / Website Chatbot",
+    price: "700,000 - 2,000,000 UGX",
+    min: 700000,
+    max: 2000000,
+    desc: "Answers customer questions automatically",
+    recurring: false,
+  },
+  {
+    id: "ai_automation",
+    category: "AI Integration",
+    label: "AI Business Automation",
+    price: "1,000,000 - 3,000,000 UGX",
+    min: 1000000,
+    max: 3000000,
+    desc: "Reports, messages, workflows automated",
+    recurring: false,
+  },
 ];
 
-function OnboardingContent() {
+// Group items for display
+const GROUPS = {
+    "Web & App Design": items.filter(i => i.category === "Web & App Design"),
+    "Social Media": items.filter(i => i.category === "Social Media"),
+    "Ads & Marketing": items.filter(i => i.category === "Ads & Marketing"),
+    "AI Integration": items.filter(i => i.category === "AI Integration"),
+};
+
+export default function QuoteBuilder() {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState("track-selection");
-  const [selectedTrack, setSelectedTrack] = useState(null);
-  const [selectedPackage, setSelectedPackage] = useState(null);
-  const [selectedServices, setSelectedServices] = useState({});
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [estimatedTimeline, setEstimatedTimeline] = useState("");
-  const [contactInfo, setContactInfo] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    projectDescription: '',
-  });
+  const [selected, setSelected] = useState({});
+  const [contact, setContact] = useState({ name: "", phone: "" });
+  const [errors, setErrors] = useState({});
 
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const track = searchParams.get('track');
-    const serviceSlug = searchParams.get('service');
-    const packageId = searchParams.get('package');
-
-    if (track === 'custom') {
-      handleTrackSelection('custom');
-      if (serviceSlug) {
-        const slugToServiceId = {
-          "mobile-app-development": "mobileApp",
-          "ai-integration": "aiIntegration",
-          "web-development": "webDev",
-          "digital-marketing": "digitalMarketing",
-          "ui-ux-design": "uiuxDesign",
-          "performance-optimization": "performanceOptimization",
-        };
-        const serviceId = slugToServiceId[serviceSlug];
-        if (serviceId) {
-          setSelectedServices({
-            [serviceId]: { selectedSubServices: [] },
-          });
-        }
-      }
-    } else if (track === 'package' && packageId) {
-      handleTrackSelection('package');
-      setSelectedPackage(packageId);
-      setCurrentStep('package-selection');
-    }
-  }, [searchParams]);
-
-  const calculateTotalPrice = () => {
-    if (selectedPackage) return PACKAGES[selectedPackage].price;
-
-    let total = 0;
-    Object.entries(selectedServices).forEach(([serviceId, service]) => {
-      total += SERVICES[serviceId].basePrice;
-      service.selectedSubServices.forEach((subService) => {
-        total += SERVICES[serviceId].subServices.find((s) => s.name === subService).price;
-      });
-    });
-    return total;
-  };
-
-  const calculateTimeline = () => {
-    if (selectedPackage) return PACKAGES[selectedPackage].timeline;
-
-    const serviceCount = Object.keys(selectedServices).length;
-    if (serviceCount <= 2) return "4 days";
-    if (serviceCount <= 4) return "6 days";
-    return "10 days";
-  };
-
-  const handleTrackSelection = (track) => {
-    setSelectedTrack(track);
-    setCurrentStep(track === "package" ? "package-selection" : "custom-plan");
-    window.scrollTo(0, 0);
-  };
-
-  const handlePackageSelection = (packageId) => {
-    if (packageId === "custom") {
-      setSelectedTrack("custom");
-      setSelectedPackage(null);
-      setTotalPrice(0);
-      setEstimatedTimeline("");
-      setCurrentStep("custom-plan");
-      window.scrollTo(0, 0);
-      return;
-    }
-    setSelectedPackage(packageId);
-    setSelectedServices({}); // Clear selected services when a package is chosen
-    setTotalPrice(PACKAGES[packageId].price);
-    setEstimatedTimeline(PACKAGES[packageId].timeline);
-    setCurrentStep("summary");
-    window.scrollTo(0, 0);
-  };
-
-  const handleServiceSelection = (serviceId, isSelected) => {
-    setSelectedServices((prev) => {
-      if (isSelected) {
-        return {
-          ...prev,
-          [serviceId]: { selectedSubServices: [] },
-        };
-      } else {
-        const newServices = { ...prev };
-        delete newServices[serviceId];
-        return newServices;
-      }
+  const toggleItem = (id) => {
+    setSelected((prev) => {
+      const copy = { ...prev };
+      if (copy[id]) delete copy[id];
+      else copy[id] = true;
+      return copy;
     });
   };
 
-  const handleSubServiceSelection = (serviceId, subServiceName, isSelected) => {
-    setSelectedServices((prev) => ({
-      ...prev,
-      [serviceId]: {
-        ...prev[serviceId],
-        selectedSubServices: isSelected
-          ? [...(prev[serviceId].selectedSubServices || []), subServiceName]
-          : (prev[serviceId].selectedSubServices || []).filter((s) => s !== subServiceName),
-      },
-    }));
+  const validatePhone = (phone) => {
+    const cleaned = phone.replace(/\s/g, "");
+    return /^(\+?256|0)?[7][0-9]{8}$/.test(cleaned);
   };
 
-  const updateContactInfo = (e) => {
-    const { name, value } = e.target;
-    setContactInfo(prev => ({...prev, [name]: value}));
-  }
+  const calculateTotals = () => {
+    let oneTime = 0;
+    let monthly = 0;
 
-  const handleContinue = async () => {
-    if (currentStep === "track-selection") return;
-
-    if (currentStep === "package-selection" || currentStep === "custom-plan") {
-      setTotalPrice(calculateTotalPrice());
-      setEstimatedTimeline(calculateTimeline());
-      setCurrentStep("summary");
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    if (currentStep === "summary") {
-      setCurrentStep("contact");
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    if (currentStep === "contact") {
-      const onboardingProgress = {
-        selectedTrack,
-        selectedPackage,
-        selectedServices,
-        totalPrice,
-        estimatedTimeline,
-      };
-      localStorage.setItem('onboardingProgress', JSON.stringify(onboardingProgress));
-      
-      try {
-        await fetch('/api/telegram', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            source: 'onboarding',
-            onboardingProgress,
-            contactInfo,
-          }),
-        });
-      } catch (error) {
-        console.error("Failed to send onboarding data to Telegram", error);
+    items.forEach((i) => {
+      if (selected[i.id]) {
+        const mid = (i.min + i.max) / 2;
+        if (i.recurring) monthly += mid;
+        else oneTime += mid;
       }
+    });
 
-      router.push("/onboarding/confirmation");
+    return { oneTime, monthly };
+  };
+
+  const formatUGX = (n) =>
+    new Intl.NumberFormat("en-US").format(Math.round(n)) + " UGX";
+
+  const hasSelections = Object.keys(selected).length > 0;
+  // const hasValidContact = contact.name.trim().length > 1 && validatePhone(contact.phone);
+
+  const handleSubmit = () => {
+    const newErrors = {};
+    if (!contact.name.trim()) newErrors.name = "Please enter your name";
+    if (!validatePhone(contact.phone))
+      newErrors.phone = "Enter valid Uganda number (07XX XXX XXX)";
+    if (!hasSelections) newErrors.select = "Select at least one service";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      // alert("Please check errors");
+      return;
     }
+
+    const picked = items.filter((i) => selected[i.id]);
+    const { oneTime, monthly } = calculateTotals();
+
+    const servicesList = picked
+      .map(
+        (p) =>
+          `• ${p.label} ${p.recurring ? "(monthly)" : "(one-time)"}: ${
+            p.price
+          }`
+      )
+      .join("\n");
+
+    const totalText =
+      monthly > 0 && oneTime > 0
+        ? `One-time: ${formatUGX(oneTime)}\nMonthly: ${formatUGX(monthly)}\nFirst month estimate: ${formatUGX(
+            oneTime + monthly
+          )}`
+        : monthly > 0
+        ? `Monthly: ${formatUGX(monthly)}`
+        : `Total: ${formatUGX(oneTime)}`;
+
+    const message = encodeURIComponent(
+      `Hello, I'd like a quote.\n\n` +
+        `Name: ${contact.name}\n` +
+        `Phone: ${contact.phone}\n\n` +
+        `Services:\n${servicesList}\n\n` +
+        `Estimated costs:\n${totalText}`
+    );
+
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
   };
 
-  const handleBack = () => {
-    if (currentStep === "package-selection" || currentStep === "custom-plan") {
-      setCurrentStep("track-selection");
-    } else if (currentStep === "summary") {
-      setCurrentStep(selectedTrack === "package" ? "package-selection" : "custom-plan");
-    } else if (currentStep === "contact") {
-      setCurrentStep("summary");
-    }
-    window.scrollTo(0, 0);
-  };
-
-  const calculateProgress = () => {
-    const currentIndex = STEPS.findIndex((step) => step.id === currentStep);
-    return ((currentIndex + 1) / STEPS.length) * 100;
-  };
-
-  const handleStepClick = (stepId) => {
-    const currentIndex = STEPS.findIndex((step) => step.id === currentStep);
-    const targetIndex = STEPS.findIndex((step) => step.id === stepId);
-    if (targetIndex < currentIndex) setCurrentStep(stepId);
-    window.scrollTo(0, 0);
-  };
-
-  const renderStep = () => {
-    switch (currentStep) {
-      case "track-selection":
-        return <TrackSelection onSelect={handleTrackSelection} />;
-      case "package-selection":
-        return (
-          <PackageSelection
-            packages={PACKAGES}
-            selectedPackage={selectedPackage}
-            onContinue={handlePackageSelection}
-            onBack={handleBack}
-          />
-        );
-      case "custom-plan":
-        return (
-          <CustomPlanBuilder
-            services={SERVICES}
-            selectedServices={selectedServices}
-            onServiceSelect={handleServiceSelection}
-            onSubServiceSelect={handleSubServiceSelection}
-            onContinue={handleContinue}
-            onBack={handleBack}
-          />
-        );
-      case "summary":
-        return (
-          <Summary
-            selectedTrack={selectedTrack}
-            selectedPackage={selectedPackage}
-            selectedServices={selectedServices}
-            packages={PACKAGES}
-            services={SERVICES}
-            totalPrice={totalPrice}
-            estimatedTimeline={estimatedTimeline}
-            onContinue={handleContinue}
-            onBack={handleBack}
-          />
-        );
-      case "contact":
-        return (
-          <ContactInfo
-            formData={contactInfo}
-            updateFormData={updateContactInfo}
-            totalPrice={totalPrice}
-            estimatedTimeline={estimatedTimeline}
-            onContinue={handleContinue}
-            onBack={handleBack}
-          />
-        );
-      default:
-        return null;
-    }
-  };
+  const { oneTime, monthly } = calculateTotals();
 
   return (
-    <OnboardingLayout currentStep={currentStep} steps={STEPS} progress={calculateProgress()} onStepClick={handleStepClick}>
-      {renderStep()}
-    </OnboardingLayout>
-  );
-}
+    <div className="min-h-screen bg-white text-[#1D1D1F] font-sans selection:bg-blue-100 selection:text-blue-900">
+        
+        {/* Nav */}
+        <nav className="fixed top-0 left-0 right-0 z-50 py-6 px-6 md:px-12 bg-white/80 backdrop-blur-md border-b border-gray-100">
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
+                <Link href="/" className="text-xl font-bold tracking-tight">weblery</Link>
+                <button onClick={() => router.back()} className="text-sm font-medium text-gray-500 hover:text-black">Exit</button>
+            </div>
+        </nav>
 
-export default function OnboardingPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <OnboardingContent />
-    </Suspense>
+        <main className="pt-32 pb-40 max-w-7xl mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-12 relative">
+
+            {/* LEFT: Sticky Receipt */}
+            <div className="hidden lg:block w-1/3 relative">
+                <div className="sticky top-32">
+                    <motion.div layout className="bg-gray-50 rounded-[24px] p-8 overflow-hidden sticky top-32">
+                        <h2 className="text-2xl font-bold mb-6">Your Selection</h2>
+                        
+                        {!hasSelections ? (
+                            <p className="text-gray-400 italic">Select services to begin...</p>
+                        ) : (
+                            <div className="space-y-6">
+                                <div className="max-h-[50vh] overflow-y-auto pr-2 space-y-3 custom-scrollbar">
+                                    {items.filter(i => selected[i.id]).map(item => (
+                                        <div key={item.id} className="flex justify-between text-sm group">
+                                            <span className="text-gray-700">{item.label}</span>
+                                            <span className="text-gray-400 font-mono text-xs group-hover:text-black transition-colors">{item.price}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                
+                                <div className="pt-6 border-t border-gray-200">
+                                    {oneTime > 0 && (
+                                        <div className="flex justify-between items-end mb-1">
+                                            <span className="text-sm text-gray-500 font-medium">One-time</span>
+                                            <span className="text-xl font-bold tracking-tight">{formatUGX(oneTime)}</span>
+                                        </div>
+                                    )}
+                                    {monthly > 0 && (
+                                        <div className="flex justify-between items-end mb-1">
+                                            <span className="text-sm text-gray-500 font-medium">Monthly</span>
+                                            <span className="text-xl font-bold tracking-tight">{formatUGX(monthly)}</span>
+                                        </div>
+                                    )}
+                                    <p className="text-xs text-gray-400 text-right mt-2">*Final quote may vary based on scope.</p>
+                                </div>
+                            </div>
+                        )}
+                    </motion.div>
+                </div>
+            </div>
+
+            {/* RIGHT: Scrollable Steps */}
+            <div className="w-full lg:w-2/3 lg:pl-12 space-y-24">
+                
+                <section>
+                    <h3 className="text-[28px] md:text-[32px] leading-tight text-gray-900 mb-8">
+                        <span className="font-bold block text-black">What do you need?</span>
+                        <span className="text-gray-500 font-normal">Select the services for your project.</span>
+                    </h3>
+
+                    {errors.select && (
+                        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg mb-8">
+                            {errors.select}
+                        </div>
+                    )}
+
+                    <div className="space-y-16">
+                        {Object.entries(GROUPS).map(([groupName, groupItems]) => (
+                            <div key={groupName}>
+                                <h4 className="text-lg font-bold text-gray-400 uppercase tracking-wider mb-6">{groupName}</h4>
+                                
+                                {groupName === "Web & App Design" && (
+                                    <p className="text-sm text-gray-500 mb-6 -mt-4 flex items-center gap-2">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                        Hosting & domain available as add-ons
+                                    </p>
+                                )}
+
+                                <div className="grid grid-cols-1 gap-4">
+                                    {groupItems.map(item => (
+                                        <button
+                                            key={item.id}
+                                            onClick={() => toggleItem(item.id)}
+                                            className={`group relative flex flex-col md:flex-row md:items-stretch justify-between p-6 rounded-2xl border transition-all duration-200 text-left ${
+                                                selected[item.id]
+                                                ? "border-[#0071e3] ring-1 ring-[#0071e3] bg-white"
+                                                : "border-gray-200 bg-white hover:border-gray-400"
+                                            }`}
+                                        >
+                                            <div className="flex-1 pr-4 mb-4 md:mb-0 flex flex-col justify-center">
+                                                <div className="font-bold text-xl text-gray-900 mb-1 flex items-center gap-2">
+                                                    {item.label}
+                                                    {item.recurring ? (
+                                                        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-600 uppercase tracking-wide">Monthly</span>
+                                                    ) : (
+                                                        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-500 uppercase tracking-wide">One-time</span>
+                                                    )}
+                                                </div>
+                                                {item.desc && (
+                                                    <p className="text-[14px] text-gray-500 leading-relaxed max-w-sm font-medium">
+                                                        {item.desc}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <div className="md:text-right flex flex-col justify-center min-w-[140px]">
+                                                <div className="text-[15px] text-gray-900 font-medium">
+                                                    {item.price}
+                                                </div>
+                                            </div>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Final Step: Contact & Budget */}
+                <div className="pt-12 border-t border-gray-200">
+                    <h3 className="text-3xl font-bold mb-6 text-black">Final Details</h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div className="space-y-2">
+                            <label className="text-sm font-bold text-gray-700 ml-1">Your Name</label>
+                            <input 
+                                type="text" 
+                                placeholder=""
+                                className={`w-full p-4 rounded-xl border bg-white shadow-sm focus:ring-2 focus:ring-[#0071e3] focus:border-[#0071e3] transition-all font-medium ${errors.name ? 'border-red-500' : 'border-gray-200'}`}
+                                value={contact.name}
+                                onChange={(e) => {
+                                    setContact({ ...contact, name: e.target.value });
+                                    setErrors((p) => ({ ...p, name: null }));
+                                }}
+                            />
+                            {errors.name && <p className="text-red-500 text-sm ml-1">{errors.name}</p>}
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-bold text-gray-700 ml-1">Contact Phone (WhatsApp)</label>
+                            <input 
+                                type="tel" 
+                                placeholder="07XX XXX XXX"
+                                className={`w-full p-4 rounded-xl border bg-white shadow-sm focus:ring-2 focus:ring-[#0071e3] focus:border-[#0071e3] transition-all font-medium ${errors.phone ? 'border-red-500' : 'border-gray-200'}`}
+                                value={contact.phone}
+                                onChange={(e) => {
+                                    setContact({ ...contact, phone: e.target.value });
+                                    setErrors((p) => ({ ...p, phone: null }));
+                                }}
+                            />
+                            {errors.phone && <p className="text-red-500 text-sm ml-1">{errors.phone}</p>}
+                        </div>
+                    </div>
+
+                    <div className="flex justify-end">
+                        <button 
+                            onClick={handleSubmit}
+                            className={`inline-flex items-center gap-3 bg-[#0071e3] text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-xl`}
+                        >
+                            <span>Send to WhatsApp</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
   );
 }

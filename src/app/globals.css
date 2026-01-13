@@ -82,7 +82,7 @@ html {
   --color-clay-white: var(--color-white);
   --color-clay-gray5: var(--color-gray-5);
 
-  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif, var(--font-geist-sans);
   --font-mono: var(--font-geist-mono), monospace;
 }
 
@@ -142,4 +142,536 @@ p {
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* ---------------------------------------------------- */
+/* CLAY DESIGN ARCHITECTURE */
+/* ---------------------------------------------------- */
+
+/* 0. HOME PAGE (/) */
+#home-page {
+  /* Main Background */
+}
+
+/* Typography Scoped to Home Page */
+#home-page h1 {}
+
+#home-page h2 {}
+
+#home-page h3 {}
+
+#home-page p {}
+
+#home-page a {}
+
+#home-page span {}
+
+/* Hero */
+#home-hero {}
+
+#home-hero .hero-title {
+  /* color : red; */
+  font-size: 60px;
+}
+
+#home-hero .hero-subtitle {}
+
+#home-hero .hero-orb {}
+
+#home-hero .orb-accent-1 {}
+
+#home-hero .orb-accent-2 {}
+
+/* Showreel */
+#home-showreel {}
+
+#home-showreel .showreel-container {}
+
+#home-showreel .video-background {}
+
+#home-showreel .play-button {}
+
+#home-showreel .showreel-text {}
+
+/* Services */
+#home-services {}
+
+#home-services .services-statement {
+  color: #94d60a;
+}
+
+#home-services .services-accordion {}
+
+#home-services .accordion-item {}
+
+#home-services .service-name {}
+
+#home-services .service-description {
+  /* Description text */
+  color: #94d60a;
+  font-size: 22px;
+}
+
+#home-services .accordion-icon {}
+
+#home-services .accordion-content {}
+
+#home-services .services-marquee {}
+
+#home-services .marquee-item {}
+
+/* Work */
+#home-work {}
+
+#home-work .work-header {}
+
+#home-work .section-title {
+  color: #94d60a;
+  font-size: 64px;
+}
+
+#home-work .section-description {}
+
+#home-work .work-grid {}
+
+#home-work .work-card {}
+
+#home-work .image-container {}
+
+#home-work .project-image {}
+
+#home-work .hover-reveal {}
+
+#home-work .card-content {}
+
+#home-work .project-category {}
+
+#home-work .project-client {}
+
+#home-work .underline-anim {}
+
+#home-work .project-type {
+  /* color : red; */
+  margin-top: 4px;
+}
+
+/* FAQ */
+#home-faq {}
+
+#home-faq .faq-title {}
+
+#home-faq .faq-accordion {}
+
+#home-faq .faq-item {}
+
+#home-faq .faq-question {}
+
+#home-faq .faq-icon {}
+
+#home-faq .faq-answer {
+  color: #f5f5f7;
+  font-size: 20px;
+}
+
+
+/* 1. WORK PAGE (/work) */
+#work-page {
+  /* Main Background */
+}
+
+/* Typography Scoped to Work Page */
+#work-page h1 {}
+
+#work-page h2 {}
+
+#work-page h3 {}
+
+#work-page p {}
+
+#work-page a {}
+
+#work-page span {}
+
+#work-hero {
+  /* Hero Section */
+}
+
+#work-hero .hero-title {
+  /* "Selected Work" */
+  /* color: #94d60a; */
+  color: #f2f0ef;
+  font-size: 96px;
+}
+
+#work-hero .hero-highlight {
+  /* "We Redefine" text */
+  color: #e0e0e1;
+}
+
+#work-hero .hero-subtitle {
+  /* Subtitle text */
+  color: #e0e0e1;
+  font-size: 34px;
+}
+
+#industries-list {
+  /* Container for industry sections */
+  /* color: red; */
+}
+
+.industry-section {
+  /* Individual Industry Row */
+  /* color: green; */
+}
+
+.industry-section .hero-highlight {
+  /* Industry Name */
+  /* /* color: red; */
+  font-size: 64px;
+
+}
+
+.industry-section .industry-title {
+  font-size: 64px;
+}
+
+.industry-section .industry-description {
+  /* Description text */
+  margin-bottom: 24px;
+  font-size: 22px;
+  color: #f5f5f7;
+}
+
+.industry-section .industry-client-list {
+  /* Client List */
+  /* color: green; */
+}
+
+.industry-section .client-link {
+  /* Individual Client Links */
+  /* color: blue; */
+}
+
+.industry-section .industry-image-container {
+  /* Image Wrapper */
+}
+
+.industry-section .industry-image-wrapper {
+  /* Inner Wrapper */
+}
+
+#work-cta {
+  /* Bottom CTA */
+}
+
+
+/* 2. SERVICES PAGE (/services) */
+#services-page {
+  /* Main Background */
+}
+
+/* Typography Scoped to Services Page */
+#services-page h1 {}
+
+#services-page h2 {}
+
+#services-page h3 {}
+
+#services-page p {}
+
+#services-page a {}
+
+#services-page ul {}
+
+#services-page li {}
+
+#services-nav {
+  /* Navigation specific to Services */
+}
+
+#services-hero {
+  /* Hero Section */
+}
+
+#services-hero .hero-title {
+  /* "A full-service digital..." */
+}
+
+#services-hero .hero-subtitle {
+  /* Subtitle */
+}
+
+#services-list {
+  /* List of services */
+}
+
+.service-item {
+  /* Service Row */
+}
+
+.service-item .service-content {
+  /* Left Text Side */
+}
+
+.service-item .service-title {
+  /* Service Name */
+}
+
+.service-item .service-description {
+
+  /* Description */
+  font-size: 22px;
+}
+
+.service-features-list {
+  /* Features Bullet List */
+}
+
+.service-feature-item {
+  /* Individual Feature */
+}
+
+.service-feature-item .service-orb {
+  /* Bullet Point Orb */
+}
+
+.service-item .service-image-wrapper {
+  /* Right Image Side */
+}
+
+.service-item .service-bg-orb {
+  /* Animated Orb Background */
+}
+
+.service-item .service-card-mockup {
+  /* Floating Card Mockup */
+}
+
+#services-cta {
+  /* Bottom CTA Container */
+}
+
+#services-cta .cta-title {
+  /* "Ready to transform..." */
+}
+
+#services-cta .cta-button {
+  /* "Start a Project" Button */
+}
+
+
+/* 3. PRICING PAGE (/pricing) */
+#pricing-page {
+  /* Root */
+}
+
+/* Typography Scoped to Pricing Page */
+#pricing-page h1 {}
+
+#pricing-page h2 {}
+
+#pricing-page h3 {}
+
+#pricing-page p {}
+
+#pricing-page a {}
+
+#pricing-page ul {}
+
+#pricing-page li {}
+
+#pricing-nav {
+  /* Nav */
+}
+
+#pricing-orbs {
+  /* Background Orbs Container */
+}
+
+.orb-blue,
+.orb-purple,
+.orb-rose {
+  /* Individual Orbs */
+}
+
+#pricing-hero {
+  /* Hero Section */
+}
+
+#pricing-hero .hero-title {
+  /* "Transparent Pricing" */
+}
+
+#pricing-hero .hero-subtitle {
+  /* Subtitle */
+}
+
+#pricing-grid {
+  /* 3-Column Grid */
+}
+
+.pricing-card {
+  /* Individual Card */
+}
+
+.pricing-card .card-highlight-badge {
+  /* "Most Popular" Badge */
+}
+
+.pricing-card .package-name {
+  /* "Starter", "Business" */
+}
+
+.pricing-card .package-price {
+  /* Price Value */
+}
+
+.pricing-card .price-savings {
+  /* Savings Badge */
+}
+
+.pricing-card .package-description {
+  /* Description Text */
+}
+
+.pricing-card .package-features {
+  /* List Wrapper */
+}
+
+.pricing-card .feature-item {
+  /* List Item */
+}
+
+.pricing-card .feature-bullet {
+  /* Bullet Point */
+}
+
+.pricing-card .best-for-section {
+  /* Bottom Section */
+}
+
+.pricing-card .best-for-text {
+  /* Italics Text */
+}
+
+.pricing-card .package-cta {
+  /* Button */
+}
+
+
+/* 4. PROJECT DETAIL PAGE (/work/[slug]) */
+#project-detail-page {
+  /* Root */
+}
+
+/* Typography Scoped to Project Detail Page */
+#project-detail-page h1 {}
+
+#project-detail-page h2 {}
+
+#project-detail-page h3 {}
+
+#project-detail-page p {}
+
+#project-detail-page a {}
+
+#project-detail-page span {}
+
+#project-nav {
+  /* Nav */
+}
+
+#project-header {
+  /* Top Header */
+}
+
+.project-title {
+  /* Client Name (Big Text) */
+  /* color : red; */
+  font-size: 72px;
+}
+
+.project-subtitle {
+  /* Category / Year */
+  color: black;
+}
+
+#project-hero-image {
+  /* Full Width Hero Image */
+}
+
+#project-info-grid {
+  /* Description & Details Grid */
+}
+
+.project-description {
+  /* Left Column */
+}
+
+.project-description .description-text {
+  /* Main Lead Paragraph */
+}
+
+.project-description .description-subtext {
+  /* Secondary Paragraph */
+}
+
+.project-details {
+  /* Right Column (Services, Link) */
+}
+
+.detail-list {
+  /* List of Services */
+}
+
+.detail-item {
+  /* "Strategy", "UI/UX", etc. */
+}
+
+.project-link {
+  /* "Check it out here" */
+}
+
+#project-gallery {
+  /* Image Grid Section */
+}
+
+.project-gallery .gallery-title {
+  /* "See how it looks" */
+}
+
+.project-gallery .gallery-grid {
+  /* Grid Container */
+}
+
+.project-gallery .gallery-item {
+  /* Individual Image Containers */
+}
+
+#project-cta {
+  /* "Ready to improve..." */
+}
+
+#project-cta .cta-title {
+  /* Title */
+}
+
+#project-cta .cta-button {
+  /* Button */
+}
+
+#next-project-link {
+  /* Footer Link */
+}
+
+.next-project-label {
+  /* "Next Project" */
+}
+
+.next-project-name {
+  /* Project Name (Big Hover Text) */
+}
+
+.next-project-arrow {
+  /* Arrow Icon */
 }

@@ -87,7 +87,7 @@ export default function Footer() {
   return (
     <motion.footer
       ref={ref}
-      className="bg-zinc-950 text-[#86868b] pt-20 pb-10 px-4 sm:px-8 md:px-12 lg:px-20"
+      className="bg-[#111111] text-[#86868b] pt-20 pb-10 px-4 sm:px-8 md:px-12 lg:px-20"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}

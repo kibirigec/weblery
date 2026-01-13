@@ -74,14 +74,14 @@ export function TransitionProvider({ children }) {
                 initial={{ 
                     top: transitionData.initialTop, 
                     left: transitionData.initialLeft, 
-                    fontSize: "1.5rem", 
+                    fontSize: transitionData.initialFontSize || "1.5rem", 
                     color: "#000000"
                 }}
                 animate={{ 
                     top: "10rem", 
                     left: "calc(2.5vw + 1.5rem)", 
-                    fontSize: "96px", 
-                    color: "#243953"
+                    fontSize: transitionData.fontSize || "72px", 
+                    color: "#000"
                 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}

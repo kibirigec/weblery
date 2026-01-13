@@ -30,22 +30,22 @@ export default function ClayFAQ() {
   };
 
   return (
-    <section className="bg-[#111111] py-32 text-white px-6">
+    <section id="home-faq" className="bg-[#111111] py-32 text-white px-6">
       <div className="container mx-auto max-w-[90%] md:max-w-[70%]">
-        <h2 className="text-4xl md:text-5xl font-semibold mb-20 text-white">FAQ</h2>
+        <h2 className="faq-title text-4xl md:text-5xl font-semibold mb-20 text-white">FAQ</h2>
         
-        <div className="flex flex-col">
+        <div className="faq-accordion flex flex-col">
           {FAQS.map((faq, index) => (
             <div 
                 key={index} 
-                className="border-b border-[#333] py-8 cursor-pointer"
+                className="faq-item border-b border-[#333] py-8 cursor-pointer"
                 onClick={() => toggleFAQ(index)}
             >
               <div className="flex justify-between items-center group">
-                <h3 className="text-xl md:text-2xl font-light text-[#E0E0E0] group-hover:text-white transition-colors pr-8">
+                <h3 className="faq-question text-xl md:text-2xl font-light text-[#E0E0E0] group-hover:text-white transition-colors pr-8">
                   {faq.question}
                 </h3>
-                <span className={`text-2xl transition-transform duration-300 ${activeIndex === index ? 'rotate-45' : ''}`}>
+                <span className={`faq-icon text-2xl transition-transform duration-300 ${activeIndex === index ? 'rotate-45' : ''}`}>
                     +
                 </span>
               </div>
@@ -59,7 +59,7 @@ export default function ClayFAQ() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <p className="pt-6 text-lg text-gray-400 leading-relaxed max-w-2xl">
+                    <p className="faq-answer pt-6 text-lg text-gray-400 leading-relaxed max-w-2xl">
                         {faq.answer}
                     </p>
                   </motion.div>
