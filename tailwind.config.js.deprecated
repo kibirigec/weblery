@@ -1,0 +1,115 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      /* ---------------------------------
+       FONT FAMILY (Apple system stack)
+      ---------------------------------- */
+      fontFamily: {
+        system: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"SF Pro Text"',
+          '"SF Pro Display"',
+          'Inter',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+        ],
+      },
+
+      /* ---------------------------------
+       TYPOGRAPHY SCALE (Apple-inspired)
+       Mobile-first + Desktop
+      ---------------------------------- */
+      fontSize: {
+        /* ---------- Mobile ---------- */
+        'display-m': [
+          '32px',
+          { lineHeight: '40px', letterSpacing: '-0.02em' },
+        ],
+        'title-m': [
+          '24px',
+          { lineHeight: '32px', letterSpacing: '-0.01em' },
+        ],
+        'subtitle-m': [
+          '20px',
+          { lineHeight: '28px', letterSpacing: '-0.005em' },
+        ],
+        'body-m': [
+          '16px',
+          { lineHeight: '24px', letterSpacing: '0em' },
+        ],
+        small: [
+          '14px',
+          { lineHeight: '20px', letterSpacing: '0.01em' },
+        ],
+        caption: [
+          '12px',
+          { lineHeight: '16px', letterSpacing: '0.02em' },
+        ],
+
+        /* ---------- Desktop ---------- */
+        display: [
+          '48px',
+          { lineHeight: '56px', letterSpacing: '-0.025em' },
+        ],
+        title: [
+          '32px',
+          { lineHeight: '40px', letterSpacing: '-0.02em' },
+        ],
+        subtitle: [
+          '24px',
+          { lineHeight: '32px', letterSpacing: '-0.01em' },
+        ],
+        body: [
+          '17px',
+          { lineHeight: '26px', letterSpacing: '0em' },
+        ],
+      },
+
+      /* ---------------------------------
+       FONT WEIGHTS (Restrained, Apple-like)
+      ---------------------------------- */
+      fontWeight: {
+        regular: 400,
+        medium: 500,
+        semibold: 600,
+        bold: 700,
+      },
+    },
+  },
+  plugins: [],
+  safelist: [
+    'text-pink-900',
+    'border-pink-900',
+    'hover:text-pink-900',
+    'hover:border-pink-900',
+    'text-blue-900',
+    'border-blue-900',
+    'hover:text-blue-900',
+    'hover:border-blue-900',
+    'text-yellow-900',
+    'border-yellow-900',
+    'hover:text-yellow-900',
+    'hover:border-yellow-900',
+    'text-green-900',
+    'border-green-900',
+    'hover:text-green-900',
+    'hover:border-green-900',
+    'text-orange-900',
+    'border-orange-900',
+    'hover:text-orange-900',
+    'hover:border-orange-900',
+    'text-black',
+    'border-black',
+    'hover:text-black',
+    'hover:border-black',
+  ],
+};
