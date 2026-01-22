@@ -1,8 +1,7 @@
 "use client";
 
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -12,26 +11,16 @@ export default function Navigation() {
   const { scrollY } = useScroll();
   const pathname = usePathname();
 
-  // Determine Page Context
-  // Determine Page Context
-  // Work Index (/work) is DARK. 
-  // Work Details (/work/slug) are LIGHT. (Unless we want them dark later, but user said 'white on white' error)
+  // Work Index (/work) is DARK
   const isWorkIndex = pathname === "/work";
-  
-  // Define Styles based on Context
-  // Work Index Page: Dark Background -> White Text initially.
-  // Other Pages: Light Background -> Black Text initially.
-  
   const isDarkPage = isWorkIndex;
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
     
-    // Determine if scrolled for styling
     if (latest > 50 && !isScrolled) setIsScrolled(true);
     if (latest <= 50 && isScrolled) setIsScrolled(false);
 
-    // Determine direction for hiding
     if (latest > previous && latest > 150) {
         setIsHidden(true);
     } else {
@@ -39,19 +28,15 @@ export default function Navigation() {
     }
   });
 
-  // Dynamic Classes
   const navBackgroundClass = isScrolled 
     ? (isDarkPage ? "bg-[#06070b]/80 border-white/10" : "bg-white/80 border-gray-100")
     : "bg-transparent border-transparent";
     
-  // If scrolled, we always blur. If not, transparent.
   const blurClass = isScrolled ? "backdrop-blur-md border-b" : "";
   
   const textColorClass = isDarkPage 
-    ? (isScrolled ? "text-white" : "text-white") // Always white on dark work page? Or black if bg becomes white? 
-                                                // User previously had Work page as Dark. So Navbar should stay dark/white text.
-    : (isScrolled ? "text-black" : "text-black");
-
+    ? "text-white"
+    : "text-black";
 
   return (
     <motion.nav 
@@ -65,12 +50,10 @@ export default function Navigation() {
     >
       <div className="container mx-auto px-6 max-w-[95%] flex items-center justify-between">
         
-        {/* Logo */}
         <Link href="/" className="relative z-50">
            <span className={`text-2xl font-bold tracking-tight transition-colors ${textColorClass}`}>weblery</span>
         </Link>
         
-        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-12">
             <div className="flex items-center gap-8">
                 {[
@@ -90,15 +73,14 @@ export default function Navigation() {
                 ))}
             </div>
 
-            {/* Contact Button */}
             <Link href="/onboarding" className="hidden md:block">
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`px-8 py-3 rounded-full text-[15px] font-medium transition-colors ${
+                    className={`btn-primary px-8 py-3 text-[15px] font-medium transition-colors ${
                         isDarkPage 
-                        ? "bg-white text-black hover:bg-gray-200" 
-                        : "bg-black text-white hover:bg-gray-900"
+                        ? "bg-white text-[var(--brand-black)] hover:bg-gray-200" 
+                        : "bg-[var(--brand-black)] text-white hover:bg-gray-900"
                     }`}
                 >
                     Start Project
@@ -106,7 +88,6 @@ export default function Navigation() {
             </Link>
         </div>
 
-        {/* Mobile Menu Toggle */}
         <button className={`md:hidden z-50 ${textColorClass}`}>
             <span className="sr-only">Menu</span>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

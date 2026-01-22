@@ -21,7 +21,7 @@ const SERVICES = [
     ],
     bgGradient: "bg-blue-600",
     orbColor: "bg-blue-400",
-    alignment: "right" // Image on Right
+    alignment: "right"
   },
   {
     id: "02",
@@ -37,7 +37,7 @@ const SERVICES = [
     ],
     bgGradient: "bg-orange-500",
     orbColor: "bg-orange-400",
-    alignment: "left" // Image on Left
+    alignment: "left"
   },
   {
     id: "03",
@@ -53,7 +53,7 @@ const SERVICES = [
     ],
     bgGradient: "bg-emerald-600",
     orbColor: "bg-emerald-400",
-    alignment: "right" // Image on Right
+    alignment: "right"
   }
 ];
 
@@ -64,9 +64,7 @@ function ServiceItem({ service }) {
         offset: ["start end", "end start"]
     });
 
-    // Image moves up faster: starts at 0, goes negative
     const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
-    // Removed opacity transform as requested
 
     return (
         <div 
@@ -75,14 +73,11 @@ function ServiceItem({ service }) {
                 service.alignment === 'left' ? 'md:flex-row-reverse' : ''
             }`}
         >
-            {/* TEXT CONTENT */}
-            <motion.div 
-                className="service-content flex-1"
-            >
-                <h2 className="service-title text-[40px] md:text-[56px] font-bold leading-[1.1] mb-6 tracking-tight text-[#06070a]">
+            <motion.div className="service-content flex-1">
+                <h2 className="service-title text-title-m md:text-title mb-6 text-[var(--text-primary)]">
                     {service.title}
                 </h2>
-                <p className="service-description text-[16px] md:text-[18px] leading-[1.6] text-gray-600 mb-10 max-w-lg">
+                <p className="service-description text-body-m md:text-body text-[var(--text-secondary)] mb-10 max-w-lg">
                     {service.description}
                 </p>
                 
@@ -94,7 +89,7 @@ function ServiceItem({ service }) {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.1 * i }}
-                            className="service-feature-item text-[15px] font-bold text-[#06070a] tracking-tight flex items-center gap-3"
+                            className="service-feature-item text-body-m md:text-body text-[var(--text-primary)] flex items-center gap-3"
                         >
                             <span className={`service-orb w-1.5 h-1.5 rounded-full ${service.orbColor}`}></span>
                             {sub}
@@ -103,12 +98,10 @@ function ServiceItem({ service }) {
                 </ul>
             </motion.div>
 
-            {/* IMAGE / VISUAL PLACEHOLDER WITH PARALLAX */}
             <motion.div 
                 style={{ y }}
                 className="service-image-wrapper flex-1 w-full aspect-square md:aspect-[4/5] relative rounded-2xl overflow-hidden grid place-items-center bg-gray-50"
             >
-                    {/* 3D Orb Effect Mimic */}
                 <motion.div 
                     animate={{ 
                         scale: [1, 1.2, 1],
@@ -118,12 +111,10 @@ function ServiceItem({ service }) {
                     className={`service-bg-orb absolute w-[140%] h-[140%] -top-[20%] -left-[20%] rounded-full opacity-20 blur-[80px] ${service.orbColor}`}
                 />
                 
-                {/* Card Object Mimic */}
                 <div 
                     className={`service-card-mockup w-[65%] h-[75%] rounded-3xl shadow-2xl relative z-10 flex items-center justify-center overflow-hidden bg-white border border-white/50`}
                 >
                     <div className={`absolute inset-0 opacity-10 ${service.bgGradient} bg-gradient-to-br from-white to-transparent`}></div>
-                    {/* Simple shape to represent content */}
                     <div className={`w-28 h-28 rounded-full ${service.bgGradient} opacity-80 shadow-lg flex items-center justify-center`}>
                         <span className="text-white text-4xl font-bold opacity-50">{service.id}</span>
                     </div>
@@ -137,41 +128,35 @@ export default function ServicesPage() {
   const router = useRouter();
 
   return (
-    <div id="services-page" className="bg-[#FBFBFB] min-h-screen text-[var(--color-black)] selection:bg-[var(--color-blue-200)] selection:text-[var(--color-black)] overflow-x-hidden relative">
+    <div id="services-page" className="bg-[#FBFBFB] min-h-screen text-[var(--text-primary)] selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden relative">
         
-        {/* HEADER NAV */}
         <Navigation />
 
         <main className="pt-32 pb-20 px-6 container mx-auto max-w-7xl relative z-10">
             
-            {/* HERO SECTION */}
-            {/* Added pb-40 to raise center of visual mass higher */}
             <div id="services-hero" className="relative min-h-[calc(100vh-256px)] flex flex-col justify-center pb-40 mb-12">
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h1 className="hero-title text-[48px] md:text-[72px] lg:text-[80px] leading-[1] font-bold tracking-tight mb-6 text-[#06070a] max-w-4xl relative z-10">
-                        A full-service digital innovation partner
+                    <h1 className="hero-title text-display-m md:text-display mb-6 text-[var(--text-primary)] max-w-4xl relative z-10">
+                        A full-service digital <br className="hidden md:block" />innovation partner
                     </h1>
-                    <p className="hero-subtitle text-[18px] md:text-[22px] leading-[1.6] text-gray-600 max-w-2xl relative z-10">
+                    <p className="hero-subtitle text-subtitle-m md:text-subtitle text-[var(--text-secondary)] max-w-2xl relative z-10">
                         Our rich design and technology expertise delivers top brands and digital experiences.
                     </p>
                 </motion.div>
             </div>
 
-            {/* SERVICES LIST (ZIGZAG) */}
             <div id="services-list" className="flex flex-col gap-32 md:gap-40">
                 {SERVICES.map((service) => (
                     <ServiceItem key={service.id} service={service} />
                 ))}
             </div>
 
-             {/* SEPARATOR */}
              <div className="w-full h-px bg-gray-200 mt-32 mb-20 origin-left scale-x-100" />
 
-            {/* BOTTOM CTA */}
             <motion.div 
                 id="services-cta"
                 initial={{ opacity: 0, y: 50 }}
@@ -180,7 +165,7 @@ export default function ServicesPage() {
                 transition={{ duration: 0.8 }}
                 className="mb-10 text-center"
             >
-                <h2 className="cta-title text-[40px] md:text-[60px] font-bold tracking-tight mb-8 max-w-3xl mx-auto leading-[1.1]">
+                <h2 className="cta-title text-title-m md:text-display mb-8 max-w-3xl mx-auto">
                     Ready to transform your digital presence?
                 </h2>
                 <Link href="/pricing" className="cta-button group inline-flex items-center gap-3 bg-black text-white px-10 py-5 rounded-full text-xl font-medium transition-all duration-300">

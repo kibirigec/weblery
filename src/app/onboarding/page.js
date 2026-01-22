@@ -195,7 +195,7 @@ export default function QuoteBuilder() {
   const currentItems = items.filter(i => i.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-[#F6F4F5] text-[#1D1D1F] font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-main)] font-sans selection:bg-blue-100 selection:text-blue-900">
         
         {/* Nav */}
         <nav className="fixed top-0 left-0 right-0 z-50 py-6 px-6 md:px-12 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -259,8 +259,8 @@ export default function QuoteBuilder() {
                 
                 <section>
                     <div className="mb-10">
-                        <h3 className="text-2xl md:text-[32px] font-bold text-[#121212] mb-2 font-heading">Build your package</h3>
-                        <p className="text-sm md:text-base !text-[#636161]">Choose a category to view available services.</p>
+                        <h3 className="text-2xl md:text-[var(--font-size-title)] font-bold text-[var(--text-primary)] mb-2 font-heading">Build your package</h3>
+                        <p className="text-[var(--text-secondary)]">Choose a category to view available services.</p>
                     </div>
 
                     {/* CATEGORY TABS (The 4 Buttons) */}
@@ -269,10 +269,10 @@ export default function QuoteBuilder() {
                             <button
                                 key={cat}
                                 onClick={() => setActiveCategory(cat)}
-                                className={`px-4 py-6 md:py-8 rounded-xl text-sm md:text-base font-bold transition-all duration-200 border font-heading ${
+                                className={`btn-category px-4 py-6 md:py-8 text-sm md:text-base font-bold transition-all duration-200 font-heading ${
                                     activeCategory === cat
-                                    ? "bg-white border-[#0071e3] text-[#121212] ring-1 ring-[#0071e3] shadow-sm"
-                                    : "bg-white text-[#636161] border-[#dddbdb] hover:border-gray-300 "
+                                    ? "active"
+                                    : ""
                                 }`}
                             >
                                 {cat}
@@ -323,13 +323,13 @@ export default function QuoteBuilder() {
                                             )}
                                         </div>
                                         {item.desc && (
-                                            <p className={`text-sm md:text-[15px] leading-relaxed font-medium ${selected[item.id] ? "text-[#636161]" : "text-[#636161]"}`}>
+                                            <p className="text-sm md:text-[15px] leading-relaxed font-medium text-[var(--text-secondary)]">
                                                 {item.desc}
                                             </p>
                                         )}
                                     </div>
                                     <div className="md:text-right min-w-[120px]">
-                                        <div className={`text-base md:text-[18px] font-bold ${selected[item.id] ? "text-[#121212]" : "text-[#121212]"}`}>
+                                        <div className="text-base md:text-[18px] font-bold text-[var(--text-primary)]">
                                             {formatUGX(item.priceValue)}
                                         </div>
                                     </div>
@@ -412,7 +412,7 @@ export default function QuoteBuilder() {
                     <div className="flex justify-end">
                         <button 
                             onClick={handleSubmit}
-                            className={`group w-full md:w-auto inline-flex justify-center items-center gap-3 bg-transparent border-3 border-black text-black px-6 py-4 md:px-8 rounded-xl md:rounded-full text-base md:text-lg font-bold hover:bg-[#121212] hover:text-white transition-all shadow-xl`}
+                            className="btn-primary group w-full md:w-auto inline-flex justify-center items-center gap-3 px-6 py-4 md:px-8 text-base md:text-lg font-bold shadow-xl"
                         >
                             <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.997.551 2.051.841 3.23.841 3.183 0 5.768-2.586 5.768-5.766.001-3.182-2.585-5.768-5.766-5.766zm-7.971 5.766c0-4.407 3.584-7.99 7.994-7.99 4.41 0 7.996 3.585 7.996 7.99 0 4.406-3.584 7.99-7.996 7.99-1.928 0-3.69-.645-5.113-1.727l-4.941 1.296 1.319-4.814c-1.258-1.577-2.019-3.566-2.019-5.707zm3.848 11.233c.967.876 2.379 1.488 4.123 1.488 3.016 0 5.46-2.444 5.46-5.459 0-3.015-2.444-5.46-5.46-5.46-3.016 0-5.46 2.445-5.46 5.46 0 1.246.402 2.399 1.096 3.326l-.423 1.545 1.55-.406zM13.684 4.091c4.469 0 8.1 3.633 8.1 8.102 0 4.47-3.631 8.102-8.1 8.102-1.959 0-3.768-.696-5.203-1.859l-5.898 1.547 1.57-5.75C3.336 12.915 2.766 11.22 2.766 9.394c0-4.469 3.631-8.102 8.1-8.102" fillRule="evenodd" clipRule="evenodd" fill="transparent"/>

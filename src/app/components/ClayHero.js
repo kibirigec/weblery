@@ -8,7 +8,7 @@ export default function ClayHero() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-[100%]">
           <motion.h1 
-            className="hero-title text-black text-[3rem] md:text-[5rem] lg:text-[6rem] leading-[1.1] font-semibold tracking-tight text-left"
+            className="hero-title text-display-m md:text-display text-black text-left"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}

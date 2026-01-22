@@ -5,9 +5,6 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Linkedin,
-  Twitter,
-  Github,
   Mail,
   Phone,
   MapPin,
@@ -87,16 +84,15 @@ export default function Footer() {
   return (
     <motion.footer
       ref={ref}
-      className="bg-[#111111] text-[#86868b] pt-20 pb-10 px-4 sm:px-8 md:px-12 lg:px-20"
+      className="bg-[#111111] pt-20 pb-10 px-4 sm:px-8 md:px-12 lg:px-20"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-        {/* Logo + About + Socials */}
         <motion.div className="lg:col-span-2 space-y-6" variants={itemVariants}>
           <Image src="/whitefull.svg" alt="Weblery Full Logo" width={150} height={50} className="text-white" />
-          <p className="text-lg text-[#86868b] leading-relaxed">
+          <p className="text-[var(--text-muted)] leading-relaxed">
             Innovative digital solutions that elevate brands, empower people,
             and unlock growth.
           </p>
@@ -110,13 +106,12 @@ export default function Footer() {
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-white hover:bg-white/10 transition"
                 variants={itemVariants}
               >
-                <Icon className="w-5 h-5 text-[#86868b]" />
+                <Icon className="w-5 h-5 text-[var(--text-muted)]" />
               </motion.a>
             ))}
           </div>
         </motion.div>
 
-        {/* Sections */}
         {sections.map((section, i) => (
           <motion.div key={i} className="space-y-4" variants={itemVariants}>
             <h4 className="text-white text-lg font-semibold">
@@ -127,7 +122,7 @@ export default function Footer() {
                 <li key={j}>
                   <Link
                     href={link.href}
-                    className="text-[#86868b] footer-link-hover-white transition-colors "
+                    className="text-[var(--text-muted)] footer-link-hover-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -138,24 +133,23 @@ export default function Footer() {
         ))}
       </div>
 
-      {/* Contact & Copyright */}
       <motion.div
-        className="text-[#86868b] max-w-7xl mx-auto mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6"
+        className="max-w-7xl mx-auto mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6"
         variants={itemVariants}
       >
-        <div className="text-[#86868b] space-y-2 text-sm text-center md:text-left">
+        <div className="text-[var(--text-muted)] space-y-2 text-sm text-center md:text-left">
           {contact.map(({ icon: Icon, text, href }, i) => (
             <a
               key={i}
               href={href}
               className="flex items-center gap-2 justify-center md:justify-start hover:text-white transition-colors"
             >
-              <Icon className="w-4 h-4 text-[#86868b]" />
+              <Icon className="w-4 h-4 text-[var(--text-muted)]" />
               {text}
             </a>
           ))}
         </div>
-        <p className="text-xs text-[#86868b]">
+        <p className="text-xs text-[var(--text-muted)]">
           &copy; 2025 Weblery. All rights reserved.
         </p>
       </motion.div>

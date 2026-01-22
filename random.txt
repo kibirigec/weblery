@@ -98,3 +98,22 @@
           </motion.div>
         </div>
       </motion.section>
+
+
+
+
+
+
+      To change the desktop font size of an h1, you edit the CSS variable in 
+globals.css
+:
+
+Location: Lines 45-50 in your :root block
+
+css
+/* Currently */
+--font-size-display: 80px;
+/* Change to whatever you want, e.g. */
+--font-size-display: 96px;
+This one change will update all h1 elements site-wide that use var(--font-size-display).
+
