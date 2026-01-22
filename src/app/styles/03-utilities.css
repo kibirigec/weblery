@@ -1,0 +1,113 @@
+/* ==========================================================================
+   03-UTILITIES.CSS - Custom Utility Classes
+   ==========================================================================
+   Only atomic helpers. Wrapped in @layer utilities.
+   These are typography utilities that apply the token values.
+   
+   Note: Responsive variants (md:text-display etc.) are handled via @media queries
+   since Tailwind v4 doesn't auto-generate responsive variants for custom utilities.
+*/
+
+@layer utilities {
+
+    /* Display Scale */
+    .text-display-m {
+        font-size: var(--font-size-display-m);
+        line-height: var(--font-size-display-m--line-height);
+        letter-spacing: var(--font-size-display-m--letter-spacing);
+        font-weight: var(--font-weight-display);
+    }
+
+    .text-display {
+        font-size: var(--font-size-display);
+        line-height: var(--font-size-display--line-height);
+        letter-spacing: var(--font-size-display--letter-spacing);
+        font-weight: var(--font-weight-display);
+    }
+
+    /* Title Scale */
+    .text-title-m {
+        font-size: var(--font-size-title-m);
+        line-height: var(--font-size-title-m--line-height);
+        letter-spacing: var(--font-size-title-m--letter-spacing);
+        font-weight: var(--font-weight-title);
+    }
+
+    .text-title {
+        font-size: var(--font-size-title);
+        line-height: var(--font-size-title--line-height);
+        letter-spacing: var(--font-size-title--letter-spacing);
+        font-weight: var(--font-weight-title);
+    }
+
+    /* Subtitle Scale */
+    .text-subtitle-m {
+        font-size: var(--font-size-subtitle-m);
+        line-height: var(--font-size-subtitle-m--line-height);
+        letter-spacing: var(--font-size-subtitle-m--letter-spacing);
+        font-weight: var(--font-weight-subtitle);
+    }
+
+    .text-subtitle {
+        font-size: var(--font-size-subtitle);
+        line-height: var(--font-size-subtitle--line-height);
+        letter-spacing: var(--font-size-subtitle--letter-spacing);
+        font-weight: var(--font-weight-subtitle);
+    }
+
+    /* Body Scale */
+    .text-body-m {
+        font-size: var(--font-size-body-m);
+        line-height: var(--font-size-body-m--line-height);
+        letter-spacing: var(--font-size-body-m--letter-spacing);
+        font-weight: var(--font-weight-body);
+    }
+
+    .text-body {
+        font-size: var(--font-size-body);
+        line-height: var(--font-size-body--line-height);
+        letter-spacing: var(--font-size-body--letter-spacing);
+        font-weight: var(--font-weight-body);
+    }
+
+    /* Responsive variants (md: breakpoint = 768px) */
+    @media (min-width: 768px) {
+        .md\:text-display {
+            font-size: var(--font-size-display);
+            line-height: var(--font-size-display--line-height);
+            letter-spacing: var(--font-size-display--letter-spacing);
+            font-weight: var(--font-weight-display);
+        }
+
+        .md\:text-title {
+            font-size: var(--font-size-title);
+            line-height: var(--font-size-title--line-height);
+            letter-spacing: var(--font-size-title--letter-spacing);
+            font-weight: var(--font-weight-title);
+        }
+
+        .md\:text-subtitle {
+            font-size: var(--font-size-subtitle);
+            line-height: var(--font-size-subtitle--line-height);
+            letter-spacing: var(--font-size-subtitle--letter-spacing);
+            font-weight: var(--font-weight-subtitle);
+        }
+
+        .md\:text-body {
+            font-size: var(--font-size-body);
+            line-height: var(--font-size-body--line-height);
+            letter-spacing: var(--font-size-body--letter-spacing);
+            font-weight: var(--font-weight-body);
+        }
+    }
+
+    /* Misc Utilities */
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+}

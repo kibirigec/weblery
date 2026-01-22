@@ -1,0 +1,14 @@
+/* ==========================================================================
+   01-THEME.CSS - Tailwind Theme Registration
+   ==========================================================================
+   Only Tailwind @theme registration. Exposes CSS variables to Tailwind v4 engine.
+*/
+
+@theme {
+    --font-system: var(--font-system);
+
+    /* You can extend this to map colors too:
+  --color-brand: var(--brand-blue);
+  --color-accent: var(--accent-green);
+  */
+}

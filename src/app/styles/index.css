@@ -1,0 +1,14 @@
+/* ==========================================================================
+   INDEX.CSS - Main Entry Point
+   ==========================================================================
+   Imports everything in the correct order.
+   This is the file that gets imported by globals.css
+*/
+
+@import "./00-tokens.css";
+@import "./01-theme.css";
+@import "./02-base.css";
+@import "./03-utilities.css";
+@import "./04-components.css";
+@import "./05-layout.css";
+@import "./06-legacy.css";
