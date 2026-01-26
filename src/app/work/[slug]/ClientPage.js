@@ -30,7 +30,7 @@ export default function ClientPage({ slug }) {
     <div id="project-detail-page" className="bg-[var(--bg-page)] min-h-screen text-[var(--text-primary)] selection:bg-[var(--brand-blue)] selection:text-white">
       <Navigation id="project-nav" />
       
-      <main className="pt-40 pb-20 px-6 container mx-auto max-w-[95%]">
+      <main className="pb-20 px-6 container mx-auto max-w-[95%]" style={{ paddingTop: 'var(--project-title-top)' }}>
         
         {/* 1. HEADER: Title & Subtitle */}
         {/* Natural pt-40 (10rem) alignment matches TransitionContext target */}
