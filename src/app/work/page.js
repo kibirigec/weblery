@@ -49,7 +49,7 @@ function IndustryItem({ industry, projects, featuredImage }) {
     return (
         <div 
             ref={ref}
-            className="industry-section flex flex-col md:flex-row gap-12 md:gap-32 items-center"
+            className="industry-section flex flex-col md:flex-row gap-12 md:gap-32 items-start"
         >
             <motion.div 
                 className="industry-content flex-1 w-full"
@@ -58,14 +58,14 @@ function IndustryItem({ industry, projects, featuredImage }) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
             >
-                <h2 className="industry-title text-title-m md:text-title mb-6">{industry}</h2>
+                <h2 className="industry-title text-title-m md:text-subtitle mb-6">{industry}</h2>
                 <p className="industry-description text-body-m md:text-body mb-12 max-w-md leading-relaxed">
                     {INDUSTRY_DESCRIPTIONS[industry] || "Redefining this sector with cutting-edge digital solutions."}
                 </p>
 
                 <div className="industry-client-list grid grid-cols-2 gap-x-8 gap-y-3 mb-12">
                     {projects.map(p => (
-                        <Link key={p.slug} href={`/work/${p.slug}`} className="client-link text-sm font-medium text-gray-300 hover:text-white hover:underline transition-colors">
+                        <Link key={p.slug} href={`/work/${p.slug}`} className="client-link text-body-m font-medium text-gray-300 hover:text-white hover:underline transition-colors">
                             {p.client}
                         </Link>
                     ))}
@@ -126,7 +126,7 @@ export default function WorkPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }} 
-                className="hero-subtitle text-body-m md:text-body max-w-xl leading-relaxed md:ml-2"
+                className="text-body-m md:text-subtitle max-w-xl leading-relaxed md:ml-2"
             >
                 We design brands and digital experiences that set new standards across industries.
             </motion.p>
@@ -149,7 +149,7 @@ export default function WorkPage() {
         </div>
 
         <div id="work-cta" className="mt-40 border-t border-gray-800 pt-20 flex flex-col items-center text-center">
-             <h2 className="cta-title text-4xl md:text-6xl font-medium mb-8 tracking-tight">Got a project in mind?</h2>
+             <h2 className="cta-title text-display-m md:text-display font-medium mb-8 tracking-tight">Got a project in mind?</h2>
              <Link href="/pricing" className="cta-button bg-white text-black px-10 py-4 rounded-full text-lg font-medium hover:scale-105 transition-transform">
                 Start a Dialogue
              </Link>

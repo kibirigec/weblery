@@ -114,4 +114,15 @@
         color: var(--text-primary);
         margin-bottom: var(--space-xl);
     }
+
+    /* Hero Orb */
+    .hero-orb-gradient {
+        background: linear-gradient(135deg, #E0E0E0 0%, #FFFFFF 50%, #F0F0F0 100%);
+        box-shadow: inset -20px -20px 60px rgba(0, 0, 0, 0.05), inset 20px 20px 60px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Typography Helpers */
+    .font-geist-mono {
+        font-family: var(--font-mono);
+    }
 }

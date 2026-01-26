@@ -30,8 +30,8 @@ export default function ClayShowreel() {
             </div>
 
             <div className="showreel-text absolute bottom-10 left-10 text-white z-10">
-                <p className="uppercase tracking-widest text-sm font-medium mb-2">Showreel</p>
-                <h3 className="text-3xl font-light">Crafting Digital <br /> Experiences</h3>
+                <p className="tracking-widest text-body-m font-medium mb-2 uppercase">Showreel</p>
+                <h3 className="text-title-m md:text-display font-light leading-tight">Crafting Digital <br /> Experiences</h3>
             </div>
         </motion.div>
     </section>

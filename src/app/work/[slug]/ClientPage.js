@@ -27,14 +27,14 @@ export default function ClientPage({ slug }) {
   if (!project) return <div>Project not found</div>;
 
   return (
-    <div id="project-detail-page" className="bg-[var(--color-white)] min-h-screen text-[var(--color-black)] selection:bg-[var(--color-blue-200)] selection:text-[var(--color-black)]">
+    <div id="project-detail-page" className="bg-[var(--bg-page)] min-h-screen text-[var(--text-primary)] selection:bg-[var(--brand-blue)] selection:text-white">
       <Navigation id="project-nav" />
       
       <main className="pt-40 pb-20 px-6 container mx-auto max-w-[95%]">
         
         {/* 1. HEADER: Title & Subtitle */}
         {/* Natural pt-40 (10rem) alignment matches TransitionContext target */}
-        <div id="project-header" className="mb-24 relative z-10">
+        <div id="project-header" className="mb-24 relative z-10 md:px-10">
           <motion.div
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
@@ -42,16 +42,18 @@ export default function ClientPage({ slug }) {
              className="flex flex-col items-start text-left"
           >
               {/* Title */}
+              {/* Title */}
               <h1 
-                  className="project-title text-[35px] md:text-[72px] leading-[1.1] font-bold tracking-[-0.05em] mb-8 text-[#06070a]"
+                  className="project-title text-display-m md:text-display mb-8 text-[var(--text-primary)]"
                   style={{ opacity: transitionData ? 0 : 1 }}
               >
                   {project.client}
               </h1>
 
               {/* Subtitle */}
-               <span className="project-subtitle text-[28px] tracking-[-0.01em] font-normal text-gray-500 max-w-2xl">
-                {project.category} — {project.year || "2024"}. A transformative digital experience for luxury.
+              {/* Subtitle */}
+               <span className="project-subtitle text-subtitle-m md:text-subtitle text-[var(--text-secondary)] max-w-2xl">
+             {project.category}.<br className="block br:hidden"/>
               </span>
           </motion.div>
         </div>
@@ -77,18 +79,19 @@ export default function ClientPage({ slug }) {
         <div id="project-info-grid" className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 mb-32">
             
             {/* Description (Left - 5 cols to match visual weight) */}
+            {/* Description (Left - 5 cols to match visual weight) */}
              <motion.div 
                 className="project-description md:col-span-5"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
             >
-                {/* Body Text: 24px, Tight Leading */}
-                <p className="description-text text-[24px] leading-[1.1] tracking-[-0.02em] font-normal text-[var(--color-black)] mb-6">
+                {/* Body Text: Larger generic body size for case study readability */}
+                <p className="description-text text-subtitle-m md:text-subtitle text-[var(--text-secondary)] mb-6">
                      {project.description || "In one of the world's fastest-growing financial markets, we set out to redefine how people engage with their finances. Evolving from success, we faced a new challenge: Scaling rapidly without losing agility."}
                 </p>
                 <div className="space-y-4">
-                     <p className="description-subtext text-[24px] leading-[1.1] tracking-[-0.02em] font-normal text-[var(--color-black)]">
+                     <p className="description-subtext text-subtitle-m md:text-subtitle text-[var(--text-secondary)]">
                         We required a connected digital environment, not just a new interface, to reflect commitment to speed, trust, and client satisfaction. Our goal was to turn ambition into a human-centered experience.
                      </p>
                 </div>
@@ -104,10 +107,10 @@ export default function ClientPage({ slug }) {
                 <div className="flex flex-col space-y-3">
                     {/* Services List - Bold, No Label */}
                     <div className="detail-list flex flex-col gap-2">
-                        <span className="detail-item text-[18px] font-bold text-[#06070a]">Strategy</span>
-                        <span className="detail-item text-[18px] font-bold text-[#06070a]">UI/UX Design</span>
-                        <span className="detail-item text-[18px] font-bold text-[#06070a]">Web Design</span>
-                        <span className="detail-item text-[18px] font-bold text-[#06070a]">Development</span>
+                        <span className="detail-item text-body-m md:text-body font-bold text-[var(--text-primary)]">Strategy</span>
+                        <span className="detail-item text-body-m md:text-body font-bold text-[var(--text-primary)]">UI/UX Design</span>
+                        <span className="detail-item text-body-m md:text-body font-bold text-[var(--text-primary)]">Web Design</span>
+                        <span className="detail-item text-body-m md:text-body font-bold text-[var(--text-primary)]">Development</span>
                     </div>
                 </div>
 
@@ -115,7 +118,7 @@ export default function ClientPage({ slug }) {
                      <a 
                         href={project.link || "#"} 
                         target="_blank" 
-                        className="project-link text-[18px] font-medium underline decoration-1 underline-offset-4 hover:opacity-60 transition-opacity"
+                        className="project-link text-body-m md:text-body font-medium underline decoration-1 underline-offset-4 hover:opacity-60 transition-opacity"
                      >
                         Check it out here
                      </a>
@@ -131,7 +134,7 @@ export default function ClientPage({ slug }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="gallery-title text-[40px] leading-[1.1] font-bold tracking-[-0.03em] mb-12 text-[var(--color-black)]"
+                className="gallery-title text-display-m md:text-display mb-12 text-[var(--text-primary)]"
             >
 See how it looks            </motion.h2>
 
@@ -250,12 +253,12 @@ See how it looks            </motion.h2>
                 transition={{ delay: 0.2, duration: 0.8 }}
                 className="max-w-4xl mx-auto text-center mb-32"
             >
-                <h2 className="cta-title text-[40px] leading-[1.1] font-bold tracking-[-0.03em] mb-8 text-[var(--color-black)]">
-                    Ready to improve your digital presence?
+                <h2 className="cta-title text-display-m md:text-display mb-8 text-[var(--text-primary)]">
+                    Ready to increase your visibility?
                 </h2>
                 <Link href="/pricing">
-                    <button className="cta-button bg-[#06070a] text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-900 transition-colors">
-                        View Project Packages
+                    <button className="cta-button bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-900 transition-colors">
+                        View our Packages
                     </button>
                 </Link>
          </motion.div>
@@ -288,7 +291,7 @@ See how it looks            </motion.h2>
             >
                 <div className="flex flex-col items-center text-center">
                     <span className="next-project-label text-sm font-bold uppercase tracking-widest text-gray-400 mb-6 group-hover:text-black transition-colors">Next Project</span>
-                    <h2 className="next-project-name text-[64px] md:text-[120px] leading-[0.9] font-bold text-[#06070a] tracking-[-0.04em] transition-transform duration-500 group-hover:scale-105">
+                    <h2 className="next-project-name text-[64px] md:text-[120px] leading-[0.9] font-bold text-[var(--text-primary)] tracking-[-0.04em] transition-transform duration-500 group-hover:scale-105">
                         {nextProject.client}
                     </h2>
                     <span className="next-project-arrow mt-8 text-lg text-gray-400 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">

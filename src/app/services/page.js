@@ -9,7 +9,7 @@ import Navigation from "../components/Navigation";
 const SERVICES = [
   {
     id: "01",
-    title: "Web Design & WebApp",
+    title: "Website Design",
     description: "At weblery, we believe everyone deserves an exceptional user experience, whether using a product at work or in their free time. We create memorable enterprise and consumer products as well as provide comprehensive design systems for effortless product iteration.",
     subServices: [
       "Consumer & Enterprise Software",

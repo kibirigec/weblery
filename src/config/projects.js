@@ -1,6 +1,6 @@
 export const PROJECTS = [
   { slug: "the-clove-club", category: "Hospitality", client: "The Clove Club", type: "Restaurant Website", image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80&w=800" },
-  { slug: "lumiere-dental", category: "Healthcare", client: "Lumiere Dental", type: "Clinic Platform", image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800" },
+  { slug: "lumiere-dental", category: "Automatic booking system and Website", client: "Lumiere Dental", type: "Clinic Platform", image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800" },
   { slug: "onyx-bar", category: "Nightlife", client: "Onyx Bar", type: "Reservation System", image: "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&q=80&w=800" },
   { slug: "opus-properties", category: "Real Estate", client: "Opus Properties", type: "Property Portal", image: "https://images.unsplash.com/photo-1600596542815-225edc0ce486?auto=format&fit=crop&q=80&w=800" },
   { slug: "maison-noir", category: "Fashion", client: "Maison Noir", type: "Boutique E-commerce", image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800" },

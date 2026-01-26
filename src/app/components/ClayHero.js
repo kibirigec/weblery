@@ -22,11 +22,7 @@ export default function ClayHero() {
 
       {/* Abstract 3D-like Element (CSS Gradient Sphere) */}
       <motion.div 
-        className="hero-orb absolute right-[-10%] top-[20%] w-[30rem] h-[30rem] md:w-[45rem] md:h-[45rem] rounded-full blur-3xl opacity-80 pointer-events-none"
-        style={{
-          background: 'linear-gradient(135deg, #E0E0E0 0%, #FFFFFF 50%, #F0F0F0 100%)',
-          boxShadow: 'inset -20px -20px 60px rgba(0,0,0,0.05), inset 20px 20px 60px rgba(255,255,255,0.8)'
-        }}
+        className="hero-orb hero-orb-gradient absolute right-[-10%] top-[20%] w-[30rem] h-[30rem] md:w-[45rem] md:h-[45rem] rounded-full blur-3xl opacity-80 pointer-events-none"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}

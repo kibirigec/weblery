@@ -31,25 +31,25 @@ export default function ClayWork() {
 
   return (
     <section className="bg-white py-32" id="home-work">      
-      <div className="container mx-auto px-6 max-w-[1280px]">
+      <div className="container mx-auto px-6 max-w-[var(--container-max)]">
         
         {/* Section Header */}
-        <div className="work-header mb-24 border-b border-gray-100 pb-8 flex flex-col md:flex-row justify-between items-end gap-10">
+        <div className="work-header mb-24 border-b border-[var(--border-subtle)] pb-8 flex flex-col md:flex-row justify-between md:items-end gap-10">
             <motion.h2 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 2.0, ease: [0.16, 1, 0.3, 1] }}
-                className="section-title text-[4rem] md:text-[6rem] leading-[0.9] font-medium text-black tracking-tight"
+                className="section-title text-display-m md:text-display leading-[0.9] text-[var(--text-primary)] tracking-tight"
             >
-              See<br/>Our work
+              See<br className="hidden lg:block"/>Our work
             </motion.h2>
             <motion.p 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 2.0, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="section-description text-lg text-gray-500 max-w-sm text-right mb-2"
+                className="section-description text-body-m md:text-body text-[var(--text-secondary)] max-w-sm md:text-right mb-2"
             >
               Digital solutions crafted for diverse industries, from high-end hospitality to professional services.
             </motion.p>
@@ -69,7 +69,7 @@ export default function ClayWork() {
                     className="work-card group flex flex-col gap-4"
                 >
                   {/* Image Container */}
-                  <div className="image-container aspect-[4/5] w-full bg-gray-100 relative overflow-hidden">
+                  <div className="image-container aspect-[4/5] w-full bg-[var(--bg-highlight)] relative overflow-hidden">
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 z-10" />
                     <Image 
                         src={project.image} 
@@ -80,7 +80,7 @@ export default function ClayWork() {
                     
                     {/* Hover Reveal Button */}
                     <div className="hover-reveal absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
-                         <span className="bg-white text-black font-medium tracking-widest text-xs uppercase px-6 py-3 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                         <span className="bg-white text-[var(--text-primary)] font-medium tracking-widest text-xs uppercase px-6 py-3 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                             View Case
                          </span>
                     </div>
@@ -88,14 +88,14 @@ export default function ClayWork() {
 
                   {/* Text Content */}
                   <div className="card-content flex flex-col">
-                    <span className="project-category text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{project.category}</span>
+                    <span className="project-category font-bold text-body-m mb-2 text-[var(--text-muted)]">{project.category}</span>
                     <h3 
-                        className="project-client text-2xl font-medium text-black w-fit relative z-30"
+                        className="project-client text-title-m text-[var(--text-primary)] w-fit relative z-30"
                     >
                       {project.client}
                       <span className="underline-anim absolute bottom-0 left-0 w-full h-[1px] bg-black origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
                     </h3>
-                    <p className="project-type text-sm text-gray-500">{project.type}</p>
+                    <p className="project-type text-body-m text-[var(--text-secondary)] font-medium">{project.type}</p>
                   </div>
                 </div>
             </Link>

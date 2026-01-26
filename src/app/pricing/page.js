@@ -4,7 +4,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 import Navigation from "../components/Navigation";
-import { servicesList } from "../../config/services";
 
 const PLANS = [
   {
@@ -80,14 +79,14 @@ function PricingCard({ plan }) {
         </span>
       </div>
 
-      <p className={`plan-price font-bold mb-10 flex-none ${plan.highlight ? 'text-white' : 'text-[var(--text-primary)]'}`}>
+      <p className={`plan-price text-3xl md:text-4xl font-bold mb-10 flex-none font-geist-mono ${plan.highlight ? 'text-white' : 'text-[var(--text-primary)]'}`}>
         {plan.price}
       </p>
 
-      <ul className="feature-list space-y-4 mb-10 flex-grow">
+      <ul className="feature-list space-y-2 mb-10 flex-grow">
         {plan.features.map((feature) => (
-          <li key={feature} className={`feature-item flex items-start gap-3 ${plan.highlight ? 'text-gray-300' : 'text-[var(--text-secondary)]'}`}>
-            <span className={`feature-bullet mt-1 ${plan.highlight ? 'text-[var(--accent-green)]' : 'text-[var(--text-muted)]'}`}>✓</span>
+          <li key={feature} className={`feature-item flex items-start gap-2 ${plan.highlight ? 'text-gray-300' : 'text-[var(--text-secondary)]'}`}>
+            <span className={`feature-bullet ${plan.highlight ? 'text-[var(--accent-green)]' : 'text-[var(--text-muted)]'}`}>·</span>
             {feature}
           </li>
         ))}
@@ -95,10 +94,10 @@ function PricingCard({ plan }) {
 
       <Link
         href={plan.href}
-        className={`cta-link block text-center w-full py-4 rounded-full font-medium text-lg transition-transform hover:scale-105 ${
+        className={`cta-link block text-center w-full py-4 rounded-full font-medium text-lg transition-colors ${
           plan.highlight
-            ? "bg-white text-black"
-            : "bg-black text-white"
+            ? "bg-white text-black hover:bg-gray-100"
+            : "bg-black text-white hover:bg-gray-900"
         }`}
       >
         {plan.cta}
@@ -158,24 +157,17 @@ export default function PricingPage() {
               >
                   Or, Build Your Own
               </motion.h2>
-              <p className="hero-subtitle leading-relaxed text-center mb-16 max-w-lg mx-auto text-[var(--text-secondary)]">
+              <p className="hero-subtitle leading-relaxed text-center mb-12 max-w-lg mx-auto text-[var(--text-secondary)]">
                 Select individual services to create a custom solution tailored to your exact needs.
               </p>
               
-              <div className="services-list-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                  {servicesList.map((service, index) => (
-                      <motion.div
-                          key={service.slug}
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.5, delay: index * 0.05 }}
-                          className="service-item-card bg-white p-8 rounded-2xl border border-[var(--border-subtle)] hover:shadow-md transition-shadow"
-                      >
-                          <h4 className="service-item-title font-bold mb-1 text-[var(--text-primary)]">{service.title}</h4>
-                          <p className="service-item-price text-sm text-[var(--text-muted)]">from {service.price}</p>
-                      </motion.div>
-                  ))}
+              <div className="flex justify-center">
+                  <Link 
+                    href="/onboarding"
+                    className="bg-black text-white px-10 py-4 rounded-full font-medium text-lg hover:bg-gray-900 transition-colors"
+                  >
+                    Start Building
+                  </Link>
               </div>
           </div>
 

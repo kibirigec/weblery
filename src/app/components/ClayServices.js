@@ -42,7 +42,7 @@ export default function ClayServices() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
-          className="section-title text-4xl md:text-5xl font-semibold mb-16"
+          className="section-title text-display-m md:text-display font-semibold mb-16"
         >
           Services
         </motion.h2>
@@ -58,13 +58,13 @@ export default function ClayServices() {
               onMouseLeave={() => setHoveredIndex(null)}
               className="service-card bg-white p-10 rounded-3xl relative group cursor-pointer hover:shadow-lg transition-all duration-300 border border-[var(--border-subtle)]"
             >
-              <span className="service-number text-sm font-mono text-[var(--text-muted)] mb-4 block">
+              <span className="service-number text-body-m font-mono text-[var(--text-muted)] mb-4 block">
                 {service.number}
               </span>
-              <h3 className="service-name font-bold mb-4 text-[var(--text-primary)]">
+              <h3 className="service-name text-title-m font-bold mb-4 text-[var(--text-primary)]">
                 {service.title}
               </h3>
-              <p className="service-description text-[var(--text-muted)]">
+              <p className="service-description text-body-m text-[var(--text-muted)]">
                 {service.description}
               </p>
               
