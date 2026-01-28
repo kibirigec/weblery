@@ -15,14 +15,24 @@
         font-size: var(--font-size-display-m);
         line-height: var(--font-size-display-m--line-height);
         letter-spacing: var(--font-size-display-m--letter-spacing);
-        font-weight: var(--font-weight-display);
     }
 
     .text-display {
         font-size: var(--font-size-display);
         line-height: var(--font-size-display--line-height);
         letter-spacing: var(--font-size-display--letter-spacing);
-        font-weight: var(--font-weight-display);
+    }
+
+    .text-display-l {
+        font-size: var(--font-size-display-l-mobile);
+        line-height: var(--font-size-display-l-mobile--line-height);
+        letter-spacing: var(--font-size-display-l-mobile--letter-spacing);
+    }
+
+    .text-display-s {
+        font-size: var(--font-size-display-s-mobile);
+        line-height: var(--font-size-display-s-mobile--line-height);
+        letter-spacing: var(--font-size-display-s-mobile--letter-spacing);
     }
 
     /* Title Scale */
@@ -30,14 +40,12 @@
         font-size: var(--font-size-title-m);
         line-height: var(--font-size-title-m--line-height);
         letter-spacing: var(--font-size-title-m--letter-spacing);
-        font-weight: var(--font-weight-title);
     }
 
     .text-title {
         font-size: var(--font-size-title);
         line-height: var(--font-size-title--line-height);
         letter-spacing: var(--font-size-title--letter-spacing);
-        font-weight: var(--font-weight-title);
     }
 
     /* Subtitle Scale */
@@ -45,14 +53,12 @@
         font-size: var(--font-size-subtitle-m);
         line-height: var(--font-size-subtitle-m--line-height);
         letter-spacing: var(--font-size-subtitle-m--letter-spacing);
-        font-weight: var(--font-weight-subtitle);
     }
 
     .text-subtitle {
         font-size: var(--font-size-subtitle);
         line-height: var(--font-size-subtitle--line-height);
         letter-spacing: var(--font-size-subtitle--letter-spacing);
-        font-weight: var(--font-weight-subtitle);
     }
 
     /* Body Scale */
@@ -60,14 +66,12 @@
         font-size: var(--font-size-body-m);
         line-height: var(--font-size-body-m--line-height);
         letter-spacing: var(--font-size-body-m--letter-spacing);
-        font-weight: var(--font-weight-body);
     }
 
     .text-body {
         font-size: var(--font-size-body);
         line-height: var(--font-size-body--line-height);
         letter-spacing: var(--font-size-body--letter-spacing);
-        font-weight: var(--font-weight-body);
     }
 
     /* Responsive variants (md: breakpoint = 768px) */
@@ -76,28 +80,36 @@
             font-size: var(--font-size-display);
             line-height: var(--font-size-display--line-height);
             letter-spacing: var(--font-size-display--letter-spacing);
-            font-weight: var(--font-weight-display);
+        }
+
+        .md\:text-display-l {
+            font-size: var(--font-size-display-l);
+            line-height: var(--font-size-display-l--line-height);
+            letter-spacing: var(--font-size-display-l--letter-spacing);
+        }
+
+        .md\:text-display-s {
+            font-size: var(--font-size-display-s);
+            line-height: var(--font-size-display-s--line-height);
+            letter-spacing: var(--font-size-display-s--letter-spacing);
         }
 
         .md\:text-title {
             font-size: var(--font-size-title);
             line-height: var(--font-size-title--line-height);
             letter-spacing: var(--font-size-title--letter-spacing);
-            font-weight: var(--font-weight-title);
         }
 
         .md\:text-subtitle {
             font-size: var(--font-size-subtitle);
             line-height: var(--font-size-subtitle--line-height);
             letter-spacing: var(--font-size-subtitle--letter-spacing);
-            font-weight: var(--font-weight-subtitle);
         }
 
         .md\:text-body {
             font-size: var(--font-size-body);
             line-height: var(--font-size-body--line-height);
             letter-spacing: var(--font-size-body--letter-spacing);
-            font-weight: var(--font-weight-body);
         }
     }
 

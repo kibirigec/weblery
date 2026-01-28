@@ -40,7 +40,7 @@ export default function ClayWork() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 2.0, ease: [0.16, 1, 0.3, 1] }}
-                className="section-title text-display-m md:text-display leading-[0.9] text-[var(--text-primary)] tracking-tight"
+                className="section-title text-display-m md:text-display-s leading-[0.9] text-[var(--text-primary)] tracking-tight"
             >
               See<br className="hidden lg:block"/>Our work
             </motion.h2>
@@ -49,9 +49,9 @@ export default function ClayWork() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 2.0, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="section-description text-body-m md:text-body text-[var(--text-secondary)] max-w-sm md:text-right mb-2"
+                className="section-description text-body-m md:text-subtitle text-[var(--text-secondary)] max-w-sm md:text-right mb-2"
             >
-              Digital solutions crafted for diverse industries, from high-end hospitality to professional services.
+              Digital solutions<br className="hidden lg:block"/> crafted for diverse industries.
             </motion.p>
         </div>
 

@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 
 const SERVICES = [
@@ -64,12 +64,23 @@ function ServiceItem({ service }) {
         offset: ["start end", "end start"]
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
+    // Parallax only on Desktop
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
+        checkDesktop();
+        window.addEventListener('resize', checkDesktop);
+        return () => window.removeEventListener('resize', checkDesktop);
+    }, []);
+
+    const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+    const y = isDesktop ? parallaxY : 0;
 
     return (
         <div 
             ref={ref}
-            className={`service-item flex flex-col md:flex-row items-start gap-12 md:gap-24 ${
+            className={`service-item flex flex-col-reverse md:flex-row items-center md:items-start gap-12 md:gap-24 ${
                 service.alignment === 'left' ? 'md:flex-row-reverse' : ''
             }`}
         >
@@ -132,15 +143,15 @@ export default function ServicesPage() {
         
         <Navigation />
 
-        <main className="pt-32 pb-20 px-6 container mx-auto max-w-7xl relative z-10">
+        <main className="pt-24 md:pt-32 pb-20 px-6 container mx-auto max-w-7xl relative z-10">
             
-            <div id="services-hero" className="relative min-h-[calc(100vh-256px)] flex flex-col justify-center pb-40 mb-12">
+            <div id="services-hero" className="relative md:min-h-[calc(100vh-256px)] flex flex-col justify-center pb-20 md:pb-40 mb-12">
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h1 className="hero-title text-display-m md:text-display mb-6 text-[var(--text-primary)] max-w-4xl relative z-10">
+                    <h1 className="hero-title text-display-m md:text-display-m mb-6 text-[var(--text-primary)] max-w-4xl relative z-10">
                         A full-service digital <br className="hidden md:block" />innovation partner
                     </h1>
                     <p className="hero-subtitle text-subtitle-m md:text-subtitle text-[var(--text-secondary)] max-w-2xl relative z-10">
@@ -149,13 +160,15 @@ export default function ServicesPage() {
                 </motion.div>
             </div>
 
-            <div id="services-list" className="flex flex-col gap-32 md:gap-40">
+
+
+            <div id="services-list" className="flex flex-col gap-20 md:gap-40">
                 {SERVICES.map((service) => (
                     <ServiceItem key={service.id} service={service} />
                 ))}
             </div>
 
-             <div className="w-full h-px bg-gray-200 mt-32 mb-20 origin-left scale-x-100" />
+             <div className="w-full h-px bg-gray-200 mt-20 md:mt-32 mb-20 origin-left scale-x-100" />
 
             <motion.div 
                 id="services-cta"

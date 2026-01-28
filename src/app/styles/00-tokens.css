@@ -15,6 +15,14 @@
     --font-size-display-m--line-height: 40px;
     --font-size-display-m--letter-spacing: 0em;
 
+    --font-size-display-s-mobile: 36px;
+    --font-size-display-s-mobile--line-height: 44px;
+    --font-size-display-s-mobile--letter-spacing: -0.01em;
+
+    --font-size-display-l-mobile: 64px;
+    --font-size-display-l-mobile--line-height: 0.9;
+    --font-size-display-l-mobile--letter-spacing: -0.04em;
+
     --font-size-title-m: 24px;
     --font-size-title-m--line-height: 32px;
     --font-size-title-m--letter-spacing: -0.005em;
@@ -31,6 +39,14 @@
     --font-size-display: 84px;
     --font-size-display--line-height: 84px;
     --font-size-display--letter-spacing: 0em;
+
+    --font-size-display-s: 48px;
+    --font-size-display-s--line-height: 56px;
+    --font-size-display-s--letter-spacing: -0.01em;
+
+    --font-size-display-l: 120px;
+    --font-size-display-l--line-height: 0.9;
+    --font-size-display-l--letter-spacing: -0.04em;
 
     --font-size-title: 32px;
     --font-size-title--line-height: 40px;

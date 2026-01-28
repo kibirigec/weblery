@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { PROJECTS } from "../../config/projects";
 
@@ -39,6 +39,15 @@ const INDUSTRY_DESCRIPTIONS = {
 
 function IndustryItem({ industry, projects, featuredImage }) {
     const ref = useRef(null);
+    const [isMobile, setIsMobile] = useState(true); // Default to mobile to prevent hydration mismatch causing jump
+    
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ["start end", "end start"]
@@ -52,36 +61,36 @@ function IndustryItem({ industry, projects, featuredImage }) {
             className="industry-section flex flex-col md:flex-row gap-12 md:gap-32 items-start"
         >
             <motion.div 
-                className="industry-content flex-1 w-full"
+                className="industry-content flex-1 w-full order-2 md:order-1"
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
             >
-                <h2 className="industry-title text-title-m md:text-subtitle mb-6">{industry}</h2>
-                <p className="industry-description text-body-m md:text-body mb-12 max-w-md leading-relaxed">
+                <h2 className="industry-title text-title-m md:text-display-s mb-6 text-[var(--text-light)]">{industry}</h2>
+                <p className="industry-description text-body-m md:text-[24px]! mb-8 max-w-md text-[var(--text-light-secondary)]">
                     {INDUSTRY_DESCRIPTIONS[industry] || "Redefining this sector with cutting-edge digital solutions."}
                 </p>
 
                 <div className="industry-client-list grid grid-cols-2 gap-x-8 gap-y-3 mb-12">
                     {projects.map(p => (
-                        <Link key={p.slug} href={`/work/${p.slug}`} className="client-link text-body-m font-medium text-gray-300 hover:text-white hover:underline transition-colors">
+                        <Link key={p.slug} href={`/work/${p.slug}`} className="client-link text-body-m font-medium text-gray-400 hover:text-white hover:underline transition-colors block">
                             {p.client}
                         </Link>
                     ))}
                 </div>
 
-                <Link href={`/work/${projects[0].slug}`} className="industry-explore-link inline-flex items-center gap-2 text-white font-medium hover:gap-4 transition-all">
+                <Link href={`/work/${projects[0].slug}`} className="industry-explore-link inline-flex items-center gap-2 text-white font-medium hover:gap-4 transition-all group">
                     <span>Explore {industry.toLowerCase()}</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </Link>
             </motion.div>
 
             <motion.div 
-                style={{ y }}
-                className="industry-image-wrapper flex-1 w-full"
+                style={{ y: isMobile ? 0 : y }}
+                className="industry-image-wrapper flex-1 w-[calc(100%+3rem)] -mx-6 md:w-full md:mx-0 order-1 md:order-2"
             >
-                <div className="industry-image-container relative aspect-[4/5] md:aspect-square w-full bg-gray-900 rounded-lg overflow-hidden">
+                <div className="industry-image-container relative aspect-[4/3] md:aspect-square w-full bg-[#111] rounded-none overflow-hidden">
                     <Image
                         src={featuredImage}
                         alt={industry}
@@ -112,27 +121,27 @@ export default function WorkPage() {
 
       <main className="pt-32 pb-40 px-6 container mx-auto max-w-7xl relative z-10">
         
-        <div id="work-hero" className="mb-40 md:mb-60 mt-20">
+        <div id="work-hero" className="mb-30 md:mb-60 mt-10">
              <motion.h1 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 className="hero-title text-display-m md:text-display text-white mb-8"
             >
-                Industries <br/>
-                <span className="hero-highlight text-gray-500">We Redefine</span>
+                Industries <br className = 'hidden md:block'/>
+                <span className="hero-highlight text-[var(--text-light-secondary)]">We Redefine</span>
             </motion.h1>
              <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }} 
-                className="text-body-m md:text-subtitle max-w-xl leading-relaxed md:ml-2"
+                className="text-title-m md:text-title max-w-xl  md:ml-2"
             >
                 We design brands and digital experiences that set new standards across industries.
             </motion.p>
         </div>
 
-        <div id="industries-list" className="flex flex-col gap-40 md:gap-60">
+        <div id="industries-list" className="flex flex-col gap-20 md:gap-60">
              {industries.map((industry) => {
                 const projects = groupedProjects[industry];
                 const featuredImage = projects[0]?.image;

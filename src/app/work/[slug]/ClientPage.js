@@ -30,7 +30,7 @@ export default function ClientPage({ slug }) {
     <div id="project-detail-page" className="bg-[var(--bg-page)] min-h-screen text-[var(--text-primary)] selection:bg-[var(--brand-blue)] selection:text-white">
       <Navigation id="project-nav" />
       
-      <main className="pb-20 px-6 container mx-auto max-w-[95%]" style={{ paddingTop: 'var(--project-title-top)' }}>
+      <main className="pt-project-header pb-20 px-6 container mx-auto max-w-[95%]">
         
         {/* 1. HEADER: Title & Subtitle */}
         {/* Natural pt-40 (10rem) alignment matches TransitionContext target */}
@@ -134,7 +134,7 @@ export default function ClientPage({ slug }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="gallery-title text-display-m md:text-display mb-12 text-[var(--text-primary)]"
+                className="gallery-title text-display-m md:text-display-s mb-12 text-[var(--text-primary)]"
             >
 See how it looks            </motion.h2>
 
@@ -257,7 +257,7 @@ See how it looks            </motion.h2>
                     Ready to increase your visibility?
                 </h2>
                 <Link href="/pricing">
-                    <button className="cta-button bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-900 transition-colors">
+                    <button className="cta-button bg-black text-white px-8 py-4 rounded-full text-body font-medium hover:bg-gray-900 transition-colors">
                         View our Packages
                     </button>
                 </Link>
@@ -291,7 +291,7 @@ See how it looks            </motion.h2>
             >
                 <div className="flex flex-col items-center text-center">
                     <span className="next-project-label text-sm font-bold uppercase tracking-widest text-gray-400 mb-6 group-hover:text-black transition-colors">Next Project</span>
-                    <h2 className="next-project-name text-[64px] md:text-[120px] leading-[0.9] font-bold text-[var(--text-primary)] tracking-[-0.04em] transition-transform duration-500 group-hover:scale-105">
+                    <h2 className="next-project-name text-display-l md:text-display-l font-bold text-[var(--text-primary)] transition-transform duration-500 group-hover:scale-105">
                         {nextProject.client}
                     </h2>
                     <span className="next-project-arrow mt-8 text-lg text-gray-400 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">

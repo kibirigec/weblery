@@ -36,3 +36,8 @@
       --project-title-letter-spacing: var(--font-size-display--letter-spacing);
    }
 }
+
+/* Utility for Client Page Header alignment */
+.pt-project-header {
+   padding-top: var(--project-title-top);
+}
