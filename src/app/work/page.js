@@ -121,7 +121,7 @@ export default function WorkPage() {
 
       <main className="pt-32 pb-40 w-full global-padding relative z-10">
         
-        <div id="work-hero" className="mb-30 md:mb-60 mt-10">
+        <div id="work-hero" className="mb-30 md:mb-60 mt-10 flex flex-col items-center text-center">
              <motion.h1 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -135,7 +135,7 @@ export default function WorkPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }} 
-                className="text-title-m md:text-title max-w-xl  md:ml-2 text-[var(--text-light-secondary)]"
+                className="text-title-m md:text-title max-w-xl text-[var(--text-light-secondary)]"
             >
                 We design brands and digital experiences that set new standards across industries.
             </motion.p>

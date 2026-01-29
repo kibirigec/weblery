@@ -192,7 +192,7 @@ export default function ServicesPage() {
 
         <main className="pt-24 md:pt-32 pb-20 w-full global-padding relative z-10">
             
-            <div id="services-hero" className="relative md:min-h-[calc(100vh-256px)] flex flex-col justify-center pb-20 md:pb-40 mb-12">
+            <div id="services-hero" className="relative md:min-h-[calc(100vh-256px)] flex flex-col justify-center items-center text-center pb-20 md:pb-40 mb-12">
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
