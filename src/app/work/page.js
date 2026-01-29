@@ -58,7 +58,7 @@ function IndustryItem({ industry, projects, featuredImage }) {
     return (
         <div 
             ref={ref}
-            className="industry-section flex flex-col md:flex-row gap-12 md:gap-32 items-start"
+            className="industry-section flex flex-col md:flex-row gap-12 md:gap-32 items-start "
         >
             <motion.div 
                 className="industry-content flex-1 w-full order-2 md:order-1"
@@ -119,7 +119,7 @@ export default function WorkPage() {
     <div id="work-page" className="bg-[#171922] min-h-screen text-white overflow-x-hidden selection:bg-blue-500 selection:text-white relative">
       <Navigation />
 
-      <main className="pt-32 pb-40 px-6 container mx-auto max-w-7xl relative z-10">
+      <main className="pt-32 pb-40 w-full global-padding relative z-10">
         
         <div id="work-hero" className="mb-30 md:mb-60 mt-10">
              <motion.h1 
@@ -135,7 +135,7 @@ export default function WorkPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }} 
-                className="text-title-m md:text-title max-w-xl  md:ml-2"
+                className="text-title-m md:text-title max-w-xl  md:ml-2 text-[var(--text-light-secondary)]"
             >
                 We design brands and digital experiences that set new standards across industries.
             </motion.p>

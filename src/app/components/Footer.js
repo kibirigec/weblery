@@ -84,12 +84,12 @@ export default function Footer() {
   return (
     <motion.footer
       ref={ref}
-      className="bg-[#111111] pt-20 pb-10 px-4 sm:px-8 md:px-12 lg:px-20"
+      className="bg-[#111111] pt-20 pb-10 w-full global-padding"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 w-full">
         <motion.div className="lg:col-span-2 space-y-6" variants={itemVariants}>
           <Image src="/whitefull.svg" alt="Weblery Full Logo" width={150} height={50} className="text-white" />
           <p className="text-[var(--text-muted)] leading-relaxed">
@@ -134,7 +134,7 @@ export default function Footer() {
       </div>
 
       <motion.div
-        className="max-w-7xl mx-auto mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6"
+        className="w-full mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6"
         variants={itemVariants}
       >
         <div className="text-[var(--text-muted)] space-y-2 text-sm text-center md:text-left">

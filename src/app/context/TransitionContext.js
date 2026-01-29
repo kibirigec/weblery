@@ -11,7 +11,21 @@ export function TransitionProvider({ children }) {
   const router = useRouter();
 
   const startTransition = (data, slug) => {
-    setTransitionData(data);
+    // Calculate target left position synchronously based on specific breakpoints
+    // Mobile (<768px): 24px
+    // Tablet (>=768px): 40px
+    // Desktop (>=1024px): 192px
+    let finalLeft = "24px";
+    if (typeof window !== 'undefined') {
+        const width = window.innerWidth;
+        if (width >= 1024) { 
+            finalLeft = "192px"; 
+        } else if (width >= 768) { 
+            finalLeft = "40px"; 
+        }
+    }
+    
+    setTransitionData({ ...data, targetLeft: finalLeft });
     
     // Wait for the overlay (0.4s) + buffer before navigating. 
     // User requested "faster", reducing offset to 800ms.
@@ -84,7 +98,7 @@ export function TransitionProvider({ children }) {
                 }}
                 animate={{ 
                     top: "var(--project-title-top)", 
-                    left: "var(--project-title-left)", 
+                    left: transitionData.targetLeft, 
                     fontSize: "var(--project-title-size)", 
                     color: "var(--text-primary)"
                 }}

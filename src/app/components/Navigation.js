@@ -15,6 +15,13 @@ export default function Navigation() {
   const isWorkIndex = pathname === "/work";
   const isDarkPage = isWorkIndex;
 
+  // Mobile Menu State
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Toggle Menu
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  // Scroll Logic
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
     
@@ -26,6 +33,8 @@ export default function Navigation() {
     } else {
         setIsHidden(false);
     }
+
+    if (isOpen) setIsOpen(false); 
   });
 
   const navBackgroundClass = isScrolled 
@@ -39,6 +48,7 @@ export default function Navigation() {
     : "text-black";
 
   return (
+    <>
     <motion.nav 
         variants={{
             visible: { y: 0 },
@@ -48,12 +58,13 @@ export default function Navigation() {
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBackgroundClass} ${blurClass} ${isScrolled ? "py-4" : "py-8"}`}
     >
-      <div className="container mx-auto px-6 max-w-[95%] flex items-center justify-between">
+      <div className="w-full global-padding flex items-center justify-between">
         
-        <Link href="/" className="relative z-50">
-           <span className={`text-2xl font-bold tracking-tight transition-colors ${textColorClass}`}>weblery</span>
+        <Link href="/" className="relative z-50" onClick={() => setIsOpen(false)}>
+           <span className={`text-2xl font-bold tracking-tight transition-colors ${isOpen ? "text-black" : textColorClass}`}>weblery</span>
         </Link>
         
+        {/* DESKTOP NAV */}
         <div className="hidden md:flex items-center gap-12">
             <div className="flex items-center gap-8">
                 {[
@@ -61,16 +72,24 @@ export default function Navigation() {
                     { label: "Services", href: "/services" },
                     { label: "Pricing", href: "/pricing" },
                     { label: "About", href: "/about" }
-                ].map((item) => (
-                    <Link 
-                        key={item.label} 
-                        href={item.href}
-                        className={`group relative text-[17px] font-medium transition-colors ${textColorClass}`}
-                    >
-                        {item.label}
-                        <span className={`absolute -bottom-1 left-0 w-full h-[1.5px] origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100 ${isDarkPage ? "bg-white" : "bg-black"}`} />
-                    </Link>
-                ))}
+                ].map((item) => {
+                    const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+                    return (
+                        <Link 
+                            key={item.label} 
+                            href={item.href}
+                            className={`group relative text-[17px] font-medium transition-colors ${textColorClass}`}
+                        >
+                            {item.label}
+                            {/* Underline: Active = full, Hover = grow from left */}
+                            <span 
+                                className={`absolute -bottom-1 left-0 w-full h-[1.5px] origin-left transition-transform duration-300 ease-out 
+                                ${isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"} 
+                                ${isDarkPage ? "bg-white" : "bg-black"}`} 
+                            />
+                        </Link>
+                    )
+                })}
             </div>
 
             <Link href="/onboarding" className="hidden md:block">
@@ -88,14 +107,94 @@ export default function Navigation() {
             </Link>
         </div>
 
-        <button className={`md:hidden z-50 ${textColorClass}`}>
+        {/* MOBILE HAMBURGER */}
+        <button 
+            onClick={toggleMenu}
+            className={`md:hidden z-50 p-2 focus:outline-none ${isOpen ? "text-black" : textColorClass}`}
+        >
             <span className="sr-only">Menu</span>
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <motion.path 
+                    animate={isOpen ? { d: "M6 18L18 6" } : { d: "M4 6h16" }} 
+                    transition={{ duration: 0.3 }}
+                />
+                <motion.path 
+                    d="M4 12h16"
+                    animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                />
+                <motion.path 
+                    animate={isOpen ? { d: "M6 6l12 12" } : { d: "M4 18h16" }}
+                    transition={{ duration: 0.3 }}
+                />
             </svg>
         </button>
 
       </div>
     </motion.nav>
+
+    {/* MOBILE MENU OVERLAY */}
+    <motion.div
+        initial={false}
+        animate={isOpen ? "open" : "closed"}
+        variants={{
+            open: { 
+                clipPath: "inset(0% 0% 0% 0%)",
+                transition: { type: "tween", duration: 0.6, ease: [0.16, 1, 0.3, 1] } 
+            },
+            closed: { 
+                clipPath: "inset(0% 0% 100% 0%)",
+                transition: { type: "tween", duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 } 
+            }
+        }}
+        className="fixed inset-0 bg-white z-40 md:hidden flex flex-col justify-center px-8"
+        style={{ pointerEvents: isOpen ? "auto" : "none" }}
+    >
+        <motion.div 
+            className="flex flex-col gap-8"
+            variants={{
+                open: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
+                closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+            }}
+        >
+            {[
+                { label: "Work", href: "/work" },
+                { label: "Services", href: "/services" },
+                { label: "Pricing", href: "/pricing" },
+                { label: "About", href: "/about" },
+                { label: "Contact", href: "/contact" }
+            ].map((item) => (
+                <motion.div
+                    key={item.label}
+                    variants={{
+                        open: { y: 0, opacity: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+                        closed: { y: 40, opacity: 0 }
+                    }}
+                >
+                    <Link 
+                        href={item.href} 
+                        onClick={() => setIsOpen(false)}
+                        className={`text-[3rem] font-bold tracking-tight text-[#1d1d1f] transition-colors hover:text-gray-500
+                            ${pathname === item.href ? "underline decoration-2 underline-offset-8" : ""}`}
+                    >
+                        {item.label}
+                    </Link>
+                </motion.div>
+            ))}
+        </motion.div>
+        
+        {/* Mobile Footer Info */}
+         <motion.div 
+            variants={{
+                open: { opacity: 1, y: 0, transition: { delay: 0.6 } },
+                closed: { opacity: 0, y: 20 }
+            }}
+            className="absolute bottom-12 left-8 text-[#86868b] text-sm"
+        >
+             <p className="mb-2">Kampala, Uganda</p>
+             <p>hello@weblery.com</p>
+         </motion.div>
+    </motion.div>
+    </>
   );
 }

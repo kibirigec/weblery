@@ -30,11 +30,11 @@ export default function ClientPage({ slug }) {
     <div id="project-detail-page" className="bg-[var(--bg-page)] min-h-screen text-[var(--text-primary)] selection:bg-[var(--brand-blue)] selection:text-white">
       <Navigation id="project-nav" />
       
-      <main className="pt-project-header pb-20 px-6 container mx-auto max-w-[95%]">
+      <main className="pt-project-header pb-20 w-full global-padding">
         
         {/* 1. HEADER: Title & Subtitle */}
         {/* Natural pt-40 (10rem) alignment matches TransitionContext target */}
-        <div id="project-header" className="mb-24 relative z-10 md:px-10">
+        <div id="project-header" className="mb-24 relative z-10">
           <motion.div
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}

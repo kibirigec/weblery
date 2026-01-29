@@ -30,11 +30,11 @@ export default function ClayWork() {
   };
 
   return (
-    <section className="bg-white py-32" id="home-work">      
-      <div className="container mx-auto px-6 max-w-[var(--container-max)]">
+    <section className="py-20 md:py-32 bg-[var(--bg-page)] text-black" id="home-work">      
+      <div className="w-full global-padding">
         
         {/* Section Header */}
-        <div className="work-header mb-24 border-b border-[var(--border-subtle)] pb-8 flex flex-col md:flex-row justify-between md:items-end gap-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8 border-b border-[var(--border-subtle)] pb-8">
             <motion.h2 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}

@@ -16,7 +16,7 @@ export default function ClayShowreel() {
   const borderRadius = useTransform(scrollYProgress, [0, 1], ["2rem", "0rem"]);
   
   return (
-    <section id="home-showreel" ref={containerRef} className="h-screen flex items-center justify-center bg-[#FBFBFB] overflow-hidden">
+    <section id="home-showreel" ref={containerRef} className="h-screen flex items-center justify-center bg-[white] overflow-hidden">
         <motion.div 
             style={{ width, borderRadius }}
             className="showreel-container h-full relative overflow-hidden bg-black flex items-center justify-center group cursor-pointer"

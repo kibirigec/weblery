@@ -32,9 +32,9 @@ export default function ClayServices() {
     <section 
       id="home-services" 
       ref={ref}
-      className="py-32 px-6 bg-[#f5f5f7]"
+      className="py-32 bg-[var(--bg-page)]"
     >
-      <div className="container mx-auto max-w-[95%] md:max-w-[90%]">
+      <div className="w-full global-padding">
         
         <div className="flex flex-col md:flex-row gap-16 md:gap-32">
             
@@ -56,7 +56,7 @@ export default function ClayServices() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                         transition={{ duration: 0.8 }}
-                        className="text-title-m md:text-title font-light text-[var(--text-primary)] mb-6 md:mb-12 max-w-xl"
+                        className="text-title md:text-display-s font-light text-[var(--text-primary)] mb-6 md:mb-12 max-w-2xl"
                     >
                         We build transformative digital experiences for the world's leading brands by blending AI, design, and technology.
                     </motion.h2>
@@ -70,15 +70,15 @@ export default function ClayServices() {
                     className="grid grid-cols-3 gap-2 md:gap-8 border-t border-gray-200 pt-8"
                 >
                     <div>
-                        <span className="block text-title-m md:text-title font-normal text-[var(--text-primary)] mb-1">50+</span>
+                        <span className="block text-title md:text-display-s font-normal text-[var(--text-primary)] mb-1">50+</span>
                         <span className="text-body-m text-[var(--text-secondary)]">Clients</span>
                     </div>
                      <div>
-                        <span className="block text-title-m md:text-title font-normal text-[var(--text-primary)] mb-1">15</span>
+                        <span className="block text-title md:text-display-s font-normal text-[var(--text-primary)] mb-1">15</span>
                         <span className="text-body-m text-[var(--text-secondary)]">Awards</span>
                     </div>
                      <div>
-                        <span className="block text-title-m md:text-title font-normal text-[var(--text-primary)] mb-1">5yr</span>
+                        <span className="block text-title md:text-display-s font-normal text-[var(--text-primary)] mb-1">5yr</span>
                         <span className="text-body-m text-[var(--text-secondary)]">Experience</span>
                     </div>
                 </motion.div>
@@ -99,7 +99,7 @@ export default function ClayServices() {
                                 onClick={() => setActiveService(activeService === index ? null : index)}
                                 className={`group flex items-center justify-between cursor-pointer hover:pl-4 transition-all duration-300 ${index === 0 ? 'pb-6 md:pb-8' : 'py-6 md:py-8'}`}
                             >
-                                <h3 className="text-title-s md:text-title font-light text-[var(--text-primary)] group-hover:text-gray-600 transition-colors">
+                                <h3 className="text-subtitle-m md:text-title font-light text-[var(--text-primary)] group-hover:text-gray-600 transition-colors">
                                     {service.title}
                                 </h3>
                                 <div className={`relative w-6 h-6 transition-transform duration-300 ${activeService === index ? 'rotate-180' : ''}`}>

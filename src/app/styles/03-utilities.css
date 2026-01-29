@@ -122,4 +122,24 @@
     .hide-scrollbar::-webkit-scrollbar {
         display: none;
     }
+
+    /* Global Horizontal Padding */
+    .global-padding {
+        padding-left: var(--global-margin-mobile);
+        padding-right: var(--global-margin-mobile);
+    }
+
+    @media (min-width: 768px) {
+        .global-padding {
+            padding-left: var(--global-margin-tablet);
+            padding-right: var(--global-margin-tablet);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .global-padding {
+            padding-left: var(--global-margin-desktop);
+            padding-right: var(--global-margin-desktop);
+        }
+    }
 }

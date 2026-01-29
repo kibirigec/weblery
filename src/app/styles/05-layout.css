@@ -8,10 +8,10 @@
 :root {
    /* 
        Project Detail Page Layout Calculation 
-       Target: .container (max-w-[95%] -> mx is 2.5vw) + px-6 (1.5rem)
-       Font: text-display-m (32px)
+       Aligned with Global Margins
     */
-   --project-title-left: calc(2.5vw + 1.5rem);
+   --project-title-left: 24px;
+   --flying-title-left: 24px;
    --project-title-top: 10rem;
    --project-title-size: var(--font-size-display-m);
    --project-title-line-height: var(--font-size-display-m--line-height);
@@ -21,19 +21,18 @@
 
 @media (min-width: 768px) {
    :root {
-      /* 
-           Desktop Target: 
-           .container (max-w-[95%] -> mx is 2.5vw) 
-           + px-6 (1.5rem) 
-           + md:px-10 (2.5rem)
-           = 2.5vw + 4rem
-           
-           Font: text-display (84px)
-        */
-      --project-title-left: calc(2.5vw + 4rem);
+      --project-title-left: 40px;
+      --flying-title-left: 40px;
       --project-title-size: var(--font-size-display);
       --project-title-line-height: var(--font-size-display--line-height);
       --project-title-letter-spacing: var(--font-size-display--letter-spacing);
+   }
+}
+
+@media (min-width: 1024px) {
+   :root {
+      --project-title-left: 192px;
+      --flying-title-left: 192px;
    }
 }
 

@@ -1,211 +1,99 @@
 "use client";
 
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { useEffect } from "react";
 
-const ServiceModal = ({ isOpen, onClose, service }) => {
-  
-  // Prevent body scroll when modal is open
+export default function ServiceModal({ service, isOpen, onClose }) {
+  // Enhanced scroll locking
   useEffect(() => {
     if (isOpen) {
+      // Lock both html and body to prevent scrolling on all devices
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
+      
+      // Prevent touchmove to stop pull-to-refresh or momentum scrolling on mobile
+      const preventDefault = (e) => e.preventDefault();
+      document.body.addEventListener('touchmove', preventDefault, { passive: false });
+
+      return () => {
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        document.body.removeEventListener('touchmove', preventDefault);
+      };
     }
-    
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isOpen]);
 
-  // Close modal on escape key
+  // Handle escape key
   useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
+    const handleEsc = (e) => {
+      if (e.key === "Escape") onClose();
     };
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
+    if (isOpen) window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
-
-  if (!service) return null;
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          {/* Backdrop */}
+        <>
           <motion.div
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.6 }}
             onClick={onClose}
+            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[60] cursor-pointer"
+            style={{ overscrollBehavior: 'contain' }} // Prevent scroll chaining
           />
-
-          {/* Modal Content */}
           <motion.div
-            className="relative w-full h-full max-w-6xl mx-auto p-6 flex items-center justify-center"
-            initial={{ scale: 0.96, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.96, opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 100, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 100, scale: 0.95 }}
+            transition={{ type: "spring", damping: 30, stiffness: 200, duration: 0.8 }}
+            className="fixed inset-0 m-auto z-[70] w-full max-w-2xl h-fit px-6 pointer-events-none flex items-center justify-center"
           >
-            <div className="bg-white rounded-3xl shadow-lg w-full h-full max-h-[95vh] overflow-hidden">
-              {/* Header */}
-              <div className="p-6 sm:p-8 border-b border-gray-100">
-                <div className="flex flex-row items-center justify-between gap-4">
-                  <div className="flex items-center space-x-4 flex-1 min-w-0">
-                    <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center flex-shrink-0">
-                      <svg 
-                        className="w-7 h-7 text-gray-700" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={service.icon} />
-                      </svg>
-                    </div>
-                    <div className="min-w-0 flex-1 flex flex-col gap-1">
-                      <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-none">
-                        {service.title}
-                      </h2>
-                    </div>
+            <div 
+                className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl border border-gray-100 pointer-events-auto relative overflow-hidden"
+                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content
+            >
+               {/* Decorative background gradient */}
+               <div className={`absolute top-0 right-0 w-64 h-64 ${service.bgGradient} opacity-5 blur-[80px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2`}></div>
+               
+               <button onClick={onClose} className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors z-10">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+               </button>
+
+               <h3 className="text-title-m md:text-title font-bold text-[var(--text-primary)] mb-2">{service.details.tagline}</h3>
+               <div className={`h-1 w-12 ${service.bgGradient} mb-8 rounded-full`}></div>
+
+               <div className="space-y-8">
+                  <div>
+                    <h4 className="text-[13px] uppercase tracking-widest text-[var(--text-secondary)] font-semibold mb-3">The Need</h4>
+                    <p className="text-body-m md:text-body text-[var(--text-secondary)] leading-relaxed">{service.details.need}</p>
                   </div>
                   
-                  <button
-                    onClick={onClose}
-                    className="w-10 h-10 rounded-full bg-gray-100 transition-colors duration-200 flex items-center justify-center flex-shrink-0"
-                    aria-label="Close modal"
-                  >
-                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+                  <div>
+                    <h4 className="text-[13px] uppercase tracking-widest text-[var(--text-secondary)] font-semibold mb-3">The Benefit</h4>
+                    <p className="text-body-m md:text-body text-[var(--text-primary)] leading-relaxed">{service.details.benefit}</p>
+                  </div>
 
-              {/* Content */}
-              <div className="p-8 sm:p-12 h-[calc(100%-140px)] overflow-y-auto">
-                <div className="max-w-4xl mx-auto space-y-12">
-                  {/* Importance Section */}
-                  <section className="">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                      <div>
-                        <h3 className="text-2xl font-semibold mb-6 text-gray-900">Why {service.title} matters</h3>
-                        <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-                          {service.importance?.overview || `${service.title} is essential for modern businesses looking to stay competitive and efficient.`}
-                        </p>
-                        <div className="space-y-6">
-                          {(service.importance?.keyPoints || []).map((point, index) => (
-                            <div key={index} className="flex items-start space-x-4">
-                              <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <svg className="w-3 h-3 text-gray-800" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>
-                              </div>
-                              <div>
-                                <h4 className="font-medium mb-2 text-xl text-gray-900">{point.title}</h4>
-                                <p className="text-gray-700 leading-relaxed">{point.description}</p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="rounded-2xl overflow-hidden">
-                        <img src="/services/pexels-googledeepmind-17485710.jpg" alt="Service Visualization" className="w-full h-full object-cover rounded-2xl" />
-                      </div>
-                    </div>
-                  </section>
+                  <div>
+                     <h4 className="text-[13px] uppercase tracking-widest text-[var(--text-secondary)] font-semibold mb-3">The Result</h4>
+                     <p className="text-body-m md:text-body text-[var(--text-primary)] font-medium leading-relaxed">{service.details.result}</p>
+                  </div>
+               </div>
 
-                  {/* Business Impact */}
-                  <section>
-                    <h3 className="text-2xl font-semibold mb-8 text-gray-900">Business Impact</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {(service.businessImpact?.metrics || []).map((metric, index) => (
-                        <div key={index} className="bg-gray-50 rounded-2xl p-6 text-center">
-                          <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center mx-auto mb-4">
-                            <span className="text-lg font-semibold text-gray-900">
-                              {metric.value}
-                            </span>
-                          </div>
-                          <h4 className="font-medium mb-2 text-gray-900">{metric.label}</h4>
-                          <p className="text-base text-gray-700 leading-relaxed">{metric.description}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-
-                  {/* Implementation Strategy */}
-                  <section>
-                    <h3 className="text-2xl font-semibold mb-8 text-gray-900">How we implement</h3>
-                    <div className="space-y-8">
-                      {(service.implementation?.phases || []).map((phase, index) => (
-                        <div key={index} className="flex items-start space-x-4">
-                          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center flex-shrink-0">
-                            <span className="text-base font-semibold text-gray-900">
-                              {index + 1}
-                            </span>
-                          </div>
-                          <div className="flex-1">
-                            <h4 className="text-xl font-medium mb-3 text-gray-900">{phase.title}</h4>
-                            <p className="text-gray-700 mb-4 leading-relaxed">{phase.description}</p>
-                            <div className="flex flex-wrap gap-2">
-                              {(phase.deliverables || []).map((deliverable, delIndex) => (
-                                <span
-                                  key={delIndex}
-                                  className="px-3 py-1 text-base bg-white text-gray-900 rounded-full"
-                                >
-                                  {deliverable}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-
-                  {/* Technologies Used */}
-                  <section>
-                    <h3 className="text-2xl font-semibold mb-8 text-gray-900">Technologies we use</h3>
-                    <div className="bg-gray-50 rounded-2xl p-6">
-                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                        {(service.technologies || []).map((tech, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-center p-3 bg-white rounded-xl border border-gray-200"
-                          >
-                            <span className="text-base font-medium text-gray-700 text-center">
-                              {tech}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </section>
-                </div>
-              </div>
+               <div className="mt-10 pt-8 border-t border-gray-100">
+                  <Link href="/contact" className="inline-flex items-center gap-2 text-black font-medium hover:gap-4 transition-all group">
+                      <span>Discuss {service.title}</span>
+                      <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </Link>
+               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
-};
-
-export default ServiceModal; 
+}

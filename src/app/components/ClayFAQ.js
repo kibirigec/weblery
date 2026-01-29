@@ -30,7 +30,7 @@ export default function ClayFAQ() {
   };
 
   return (
-    <section id="home-faq" className="bg-[#111111] py-32 px-6">
+    <section id="home-faq" className="bg-[#111111] py-32 global-padding">
       <div className="container mx-auto max-w-[90%] md:max-w-[70%]">
         <h2 className="faq-title text-display-m md:text-display font-semibold mb-20 text-[var(--text-light)]">FAQ</h2>
         

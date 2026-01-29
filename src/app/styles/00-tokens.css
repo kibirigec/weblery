@@ -69,7 +69,8 @@
 
 
     /* --- Color Palette --- */
-    --bg-page: #F6F4F5;
+    /* --bg-page: #F6F4F5; */
+    --bg-page: #ffffff;
     --bg-surface: #FFFFFF;
     --bg-receipt: #EDEBEC;
     --bg-highlight: #F3F4F6;
@@ -133,6 +134,11 @@
     --duration-fast: 150ms;
     --duration-normal: 250ms;
     --duration-slow: 400ms;
+
+    /* --- Global Layout Margins --- */
+    --global-margin-mobile: 24px;
+    --global-margin-tablet: 40px;
+    --global-margin-desktop: 192px;
 
     /* --- Radius Tokens --- */
     --radius-sm: 0.5rem;

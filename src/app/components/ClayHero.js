@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 
 export default function ClayHero() {
   return (
-    <section id="home-hero" className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#FBFBFB] pt-20">
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="home-hero" className="relative min-h-[90vh] flex items-center overflow-hidden bg-[var(--bg-page)] pt-20">
+      <div className="w-full relative z-10 global-padding">
         <div className="max-w-[100%]">
           <motion.h1 
             className="hero-title text-display-m md:text-display text-black text-left"
