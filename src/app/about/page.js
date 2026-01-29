@@ -35,7 +35,7 @@ export default function AboutPage() {
       <main ref={containerRef} className="w-full global-padding pt-32 md:pt-48 pb-40">
         
         {/* HERO SECTION */}
-        <section className="mb-32 md:mb-48">
+        <section className="mb-32 md:mb-48 flex flex-col items-center text-center">
             <motion.h1 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -49,7 +49,7 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.0, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="text-title-m md:text-title leading-relaxed text-[var(--text-secondary)] max-w-3xl font-medium"
+                className="text-title-m md:text-title leading-relaxed text-[var(--text-secondary)] max-w-4xl font-medium"
             >
                 Weblery exists to bridge the gap between functional engineering and emotional design. We do not just build websites; we craft digital infrastructure.
             </motion.p>

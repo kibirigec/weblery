@@ -11,73 +11,89 @@ const SERVICES = [
   {
     id: "01",
     title: "Website Design",
-    description: "At weblery, we believe everyone deserves an exceptional user experience, whether using a product at work or in their free time. We create memorable enterprise and consumer products as well as provide comprehensive design systems for effortless product iteration.",
+    description:
+      "At Weblery, we design websites that feel effortless to use and impossible to forget. From clean interfaces to scalable design systems, we create web experiences that grow with your brand and convert with clarity.",
     subServices: [
-      "Consumer & Enterprise Software",
+      "Website & Web App Design",
       "User Research & Testing",
-      "CX, UX & Interaction Design",
+      "UX & Interaction Design",
       "UI Design",
-      "Motion Design",
+      "Motion & Micro-Interactions",
       "Design Systems"
     ],
     bgGradient: "bg-blue-600",
     orbColor: "bg-blue-400",
     alignment: "right",
-    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=2669&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=2669&auto=format&fit=crop",
     details: {
       tagline: "Your digital storefront never sleeps.",
-      need: "In an era where 75% of credibility comes from web design, a poor site loses customers instantly.",
-      benefit: "A custom-crafted, high-performance website builds trust and guides visitors effortlessly toward conversion.",
-      result: "Increased engagement, higher conversion rates, and a brand image that commands premium positioning."
+      need:
+        "In a world where first impressions happen in seconds, an outdated or confusing website instantly erodes trust.",
+      benefit:
+        "A high-performance, thoughtfully designed website guides users naturally toward action while reinforcing brand credibility.",
+      result:
+        "Higher engagement, stronger conversions, and a premium digital presence that stands out."
     }
   },
   {
     id: "02",
     title: "Social Media Marketing",
-    description: "Authentic content is essential in the digital world. We work with brands to identify their unique content needs and deliver custom-made assets at the highest quality, down to the last detail.",
+    description:
+      "We help brands stand out in crowded feeds with content that feels human, intentional, and on-brand. From strategy to execution, we create social experiences that spark conversation and drive real growth.",
     subServices: [
-        "Strategy & Direction",
-        "Content Creation",
-        "Community Management",
-        "Growth Hacking", 
-        "Campaign Management",
-        "Analytics & Reporting"
+      "Strategy & Direction",
+      "Content Creation",
+      "Community Management",
+      "Growth Hacking",
+      "Campaign Management",
+      "Analytics & Reporting"
     ],
     bgGradient: "bg-orange-500",
     orbColor: "bg-orange-400",
     alignment: "left",
-    image: "https://images.unsplash.com/photo-1557838923-2985c318be48?q=80&w=2669&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1557838923-2985c318be48?q=80&w=2669&auto=format&fit=crop",
     details: {
       tagline: "Conversations that convert.",
-      need: "Audiences are bombarded with noise. Without a strategic voice, your brand gets lost in the feed.",
-      benefit: "Data-driven content strategies that resonate with your target demographic and foster genuine community.",
-      result: "Explosive organic growth, loyal brand advocates, and measurable ROI on every campaign."
+      need:
+        "Audiences scroll fast and ignore faster. Without a clear voice and strategy, brands disappear into the noise.",
+      benefit:
+        "Data-driven content and campaigns designed to resonate, engage, and build genuine community.",
+      result:
+        "Consistent organic growth, stronger brand loyalty, and measurable results across every channel."
     }
   },
   {
     id: "03",
     title: "AI Integration",
-    description: "We help brands build their own digital future. From automation to custom AI solutions, we provide the technical expertise to bring your vision to life and stay ahead of the curve.",
+    description:
+      "We integrate intelligent systems that help businesses work smarter, not harder. From automation to custom AI solutions, we turn complex processes into streamlined, future-ready workflows.",
     subServices: [
       "Workflow Automation",
       "Custom AI Solutions",
       "Chatbot Integration",
       "Data Analysis",
       "Process Optimization",
-      "Future-Proofing"
+      "Scalable Architecture"
     ],
     bgGradient: "bg-emerald-600",
     orbColor: "bg-emerald-400",
     alignment: "right",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2669&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2669&auto=format&fit=crop",
     details: {
-      tagline: "Future-proof your efficiency.",
-      need: "Manual processes scale linearly with cost. To grow exponentially, you need intelligent automation.",
-      benefit: "Bespoke AI solutions that automate repetitive tasks and provide predictive insights for smarter decisions.",
-      result: "Operational costs slashed by up to 40%, freed-up human creativity, and a scalable tech infrastructure."
+      tagline: "Build smarter systems.",
+      need:
+        "Manual workflows slow growth and increase costs. Scaling requires intelligence built into your operations.",
+      benefit:
+        "Custom AI solutions that automate repetitive tasks and surface insights for faster, better decisions.",
+      result:
+        "Reduced operational overhead, increased efficiency, and a technology stack built for long-term scale."
     }
   }
 ];
+
 
 function ServiceItem({ service }) {
     const ref = useRef(null);
