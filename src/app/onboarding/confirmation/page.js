@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { SERVICES, PACKAGES } from "../../../../config/services";
+import { SERVICES, PACKAGES } from "../../../config/services";
 
 export default function ConfirmationPage() {
   const [summary, setSummary] = useState(null);
@@ -30,8 +30,8 @@ export default function ConfirmationPage() {
 
           // Next steps
           setNextSteps([
-            { title: "Project Review", description: "We’ll review your requirements",  },
-            { title: "Consultation", description: "Call to discuss your project",  },
+            { title: "Project Review", description: "We’ll review your requirements", },
+            { title: "Consultation", description: "Call to discuss your project", },
             { title: "Proposal", description: "Detailed proposal with milestones", },
             { title: "Kickoff", description: "Begin development after approval" }
           ]);
