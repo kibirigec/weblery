@@ -1,6 +1,8 @@
 import { PROJECTS } from "../../../config/projects";
 import ClientPage from "./ClientPage";
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   return PROJECTS.map((project) => ({
     slug: project.slug,

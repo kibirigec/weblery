@@ -2,8 +2,8 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { servicesList } from '@/config/services';
-import { tailwindColors } from '@/lib/colors';
+import { servicesList } from '../../config/services';
+import { tailwindColors } from '../../lib/colors';
 
 const ServiceNavBar = () => {
   const pathname = usePathname();

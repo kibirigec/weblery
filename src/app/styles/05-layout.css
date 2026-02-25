@@ -13,19 +13,19 @@
    --project-title-left: 24px;
    --flying-title-left: 24px;
    --project-title-top: 10rem;
-   --project-title-size: var(--font-size-display-m);
-   --project-title-line-height: var(--font-size-display-m--line-height);
-   --project-title-letter-spacing: var(--font-size-display-m--letter-spacing);
-   --project-title-weight: var(--font-weight-display);
+   --project-title-size: 36px;
+   --project-title-line-height: 1.05;
+   --project-title-letter-spacing: -0.05em;
+   --project-title-weight: 600;
 }
 
 @media (min-width: 768px) {
    :root {
       --project-title-left: 40px;
       --flying-title-left: 40px;
-      --project-title-size: var(--font-size-display);
-      --project-title-line-height: var(--font-size-display--line-height);
-      --project-title-letter-spacing: var(--font-size-display--letter-spacing);
+      --project-title-size: 72px;
+      --project-title-line-height: 1.05;
+      --project-title-letter-spacing: -0.05em;
    }
 }
 
@@ -33,6 +33,9 @@
    :root {
       --project-title-left: 192px;
       --flying-title-left: 192px;
+      --project-title-size: 64px;
+      --project-title-line-height: 1.05;
+      --project-title-letter-spacing: -0.05em;
    }
 }
 

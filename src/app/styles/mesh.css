@@ -1,0 +1,148 @@
+/* ========= MESHY GRADIENT (Reference Implementation - Optimized) ========= */
+
+.mesh {
+    position: relative;
+    background: rgb(var(--bg));
+    overflow: hidden;
+    isolation: isolate;
+    /* Default variables if not set by inline style or preset */
+    --bg: 15 20 40;
+    --c1: 56 90 200;
+    --c2: 80 60 180;
+    --c3: 30 140 130;
+    --c4: 120 70 180;
+    --c5: 200 120 160;
+
+    --field-blur: 90px;
+    --field-sat: 135%;
+    --field-con: 115%;
+    --field-bright: 5;
+
+    --field-speed: 20s;
+    --cloud-speed: 28s;
+
+    --cloud-opacity: 0.28;
+    --cloud-blur: 7px;
+    --cloud-contrast: 22;
+    --cloud-bias: -10;
+
+    --sheen: 0.7;
+}
+
+/* Hide the SVG defs but keep them in DOM */
+.mesh svg.mesh-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* Layered Radials - CONSOLIDATED & OPTIMIZED */
+.mesh::before {
+    content: "";
+    position: absolute;
+    inset: -15%;
+    pointer-events: none;
+    z-index: 1;
+
+    background:
+        radial-gradient(45% 40% at 20% 32%, rgb(var(--c1) / 0.55) 0%, transparent 60%),
+        radial-gradient(48% 44% at 72% 30%, rgb(var(--c2) / 0.45) 0%, transparent 62%),
+        radial-gradient(52% 48% at 46% 72%, rgb(var(--c3) / 0.38) 0%, transparent 60%),
+        radial-gradient(42% 40% at 86% 78%, rgb(var(--c4) / 0.33) 0%, transparent 58%),
+        radial-gradient(55% 55% at 12% 82%, rgb(var(--c5) / 0.20) 0%, transparent 58%);
+
+    filter:
+        url(#meshWarp) blur(70px) saturate(125%) contrast(112%) brightness(var(--field-bright));
+    transform: translate3d(0, 0, 0) scale(1.12);
+    will-change: transform;
+
+    /* transform-only animation */
+    animation: mesh-pan var(--field-speed) ease-in-out infinite alternate;
+}
+
+@keyframes mesh-pan {
+    0% {
+        transform: translate3d(-2%, -1%, 0) scale(1.10);
+    }
+
+    100% {
+        transform: translate3d(2%, 1%, 0) scale(1.18);
+    }
+}
+
+/* Cloud Layer - REMOVED */
+/* .mesh .cloud-layer { ... } */
+
+/* Sheen Layer */
+.mesh .sheen-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    opacity: var(--sheen);
+    mix-blend-mode: soft-light;
+    background:
+        radial-gradient(60% 55% at 50% 10%, rgb(255 255 255 / 0.38), transparent 60%),
+        linear-gradient(to bottom, rgb(255 255 255 / 0.12), transparent 35%);
+}
+
+/* Noise Layer - OPTIMIZED */
+.mesh .noise-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    mix-blend-mode: soft-light;
+    opacity: 0.08;
+    filter: blur(0.3px);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAGFBMVEUAAAA5OTkAAABMTExERERmZmYzMzMyMjJ4D30DAAAAB3RSTlM0AabeUFCN0IsAAABXSURBVDjLxZFBCgAgDET5/0c6F7QeKnoIqQSxO4i5bC8jIq655pcZ/R/Me6wR2fM+R+Q+8x2B99lvCJ73fUfgfes7gu953xH43vYdge993xH4P/Ydge993xH4B86dI68s49P5AAAAAElFTkSuQmCC");
+    background-repeat: repeat;
+}
+
+/* Presets */
+.mesh--preset-openai-ice {
+    --bg: 15 20 40;
+    --c1: 56 90 200;
+    --c2: 80 60 180;
+    --c3: 30 140 130;
+    --c4: 120 70 180;
+    --c5: 200 120 160;
+}
+
+.mesh--preset-mint-sky {
+    --bg: 10 30 35;
+    --c1: 30 180 140;
+    --c2: 40 100 200;
+    --c3: 80 160 60;
+    --c4: 60 90 180;
+    --c5: 180 220 200;
+}
+
+.mesh--preset-violet-dusk {
+    --bg: 15 10 35;
+    --c1: 100 60 200;
+    --c2: 60 120 220;
+    --c3: 180 60 140;
+    --c4: 30 160 100;
+    --c5: 220 180 220;
+    --field-blur: 95px;
+    --field-sat: 145%;
+    --field-con: 120%;
+    --cloud-opacity: 0.22;
+    --sheen: 0.45;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .mesh::before,
+    .mesh .cloud-layer {
+        animation: none;
+    }
+}
+
+.mesh-static::before,
+.mesh-static .cloud-layer {
+    animation: none;
+}

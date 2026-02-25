@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloudy Mesh Gradient (CSS + SVG turbulence)</title>
+    <style>
+      /* =========
+         CLOUDY MESH GRADIENT (Option 1)
+         - Color field: layered CSS radial-gradients
+         - Cloud texture: SVG filter (feTurbulence + feColorMatrix + blur)
+         - Fully controllable via CSS variables
+         ========= */
+
+      :root {
+        /* Base palette (OpenAI-ish) */
+        --bg: 246 248 255;
+
+        --c1: 143 182 255;
+        --c2: 122 134 255;
+        --c3: 68 226 215;
+        --c4: 199 167 255;
+        --c5: 255 200 240;
+
+        /* Color field tuning */
+        --field-blur: 90px;
+        --field-sat: 135%;
+        --field-con: 115%;
+        --field-bright: 1;
+
+        /* Motion */
+        --field-speed: 20s;
+        --cloud-speed: 28s;
+
+        /* Cloud overlay tuning */
+        --cloud-opacity: 0.28;     /* 0.15–0.45 */
+        --cloud-blur: 7px;         /* 4–14px */
+        --cloud-contrast: 22;      /* 12–30 (bigger = more “solid patches”) */
+        --cloud-bias: -10;         /* -6 to -14 (more negative = fewer dense patches) */
+
+        /* Turbulence “scale” (lower = larger blobs) */
+        --cloud-freq: 0.012;       /* 0.008–0.02 */
+        --cloud-octaves: 3;        /* 2–5 */
+        --cloud-seed: 8;
+
+        /* Optional sheen overlay */
+        --sheen: 0.7;
+      }
+
+      /* Page demo wrapper */
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: #0b1020;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .demo {
+        width: min(1100px, 100%);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0,0,0,.35);
+        background: rgb(var(--bg));
+      }
+
+      /* ========= MESH CONTAINER ========= */
+      .mesh {
+        position: relative;
+        min-height: 520px;
+        background: rgb(var(--bg));
+        overflow: hidden;
+        isolation: isolate; /* ensures blend modes stay inside */
+      }
+
+      /* Keep the SVG filter defs available, but invisible */
+      .mesh svg.mesh-defs {
+        position: absolute;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+      }
+
+      /* ========= COLOR FIELD (layered radials) ========= */
+      .mesh::before {
+        content: "";
+        position: absolute;
+        inset: -35%;
+        pointer-events: none;
+
+        background:
+          radial-gradient(45% 40% at var(--x1, 20%) var(--y1, 32%),
+            rgb(var(--c1) / 0.55) 0%,
+            transparent 60%),
+          radial-gradient(48% 44% at var(--x2, 72%) var(--y2, 30%),
+            rgb(var(--c2) / 0.45) 0%,
+            transparent 62%),
+          radial-gradient(52% 48% at var(--x3, 46%) var(--y3, 72%),
+            rgb(var(--c3) / 0.38) 0%,
+            transparent 60%),
+          radial-gradient(42% 40% at var(--x4, 86%) var(--y4, 78%),
+            rgb(var(--c4) / 0.33) 0%,
+            transparent 58%),
+          radial-gradient(55% 55% at var(--x5, 12%) var(--y5, 82%),
+            rgb(var(--c5) / 0.20) 0%,
+            transparent 58%);
+
+        filter:
+          blur(var(--field-blur))
+          saturate(var(--field-sat))
+          contrast(var(--field-con))
+          brightness(var(--field-bright));
+
+        transform: translateZ(0);
+        animation:
+          mesh-drift var(--field-speed) ease-in-out infinite alternate,
+          mesh-wobble calc(var(--field-speed) * 0.85) ease-in-out infinite alternate;
+      }
+
+      @keyframes mesh-drift {
+        0% {
+          --x1: 18%; --y1: 36%;
+          --x2: 74%; --y2: 26%;
+          --x3: 46%; --y3: 74%;
+          --x4: 88%; --y4: 76%;
+          --x5: 14%; --y5: 82%;
+        }
+        100% {
+          --x1: 30%; --y1: 20%;
+          --x2: 60%; --y2: 42%;
+          --x3: 36%; --y3: 62%;
+          --x4: 72%; --y4: 70%;
+          --x5: 20%; --y5: 74%;
+        }
+      }
+
+      @keyframes mesh-wobble {
+        0%   { transform: scale(1.08) rotate(-2deg); }
+        100% { transform: scale(1.14) rotate(2deg); }
+      }
+
+      /* ========= CLOUD TEXTURE OVERLAY (SVG filter) =========
+         We draw a neutral overlay that becomes “clouds” via filter url(#cloudFilter).
+         Blend mode shapes how it “bites into” the gradient.
+      */
+      .mesh .cloud-layer {
+        position: absolute;
+        inset: -10%;
+        pointer-events: none;
+
+        /* Neutral base: the filter creates the variation */
+        background: rgb(255 255 255 / 0.60);
+
+        /* Apply SVG filter defined below */
+        filter: url(#cloudFilter);
+
+        /* Blend into the color field */
+        mix-blend-mode: soft-light; /* try: overlay | soft-light | screen */
+        opacity: var(--cloud-opacity);
+
+        transform: translateZ(0);
+        animation: cloud-move var(--cloud-speed) ease-in-out infinite alternate;
+      }
+
+      @keyframes cloud-move {
+        0%   { transform: translate3d(-1.2%, -0.4%, 0) scale(1.02); }
+        100% { transform: translate3d( 1.1%,  0.8%, 0) scale(1.06); }
+      }
+
+      /* ========= OPTIONAL SHEEN / HAZE ========= */
+      .mesh .sheen-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: var(--sheen);
+        mix-blend-mode: soft-light;
+
+        background:
+          radial-gradient(60% 55% at 50% 10%, rgb(255 255 255 / 0.38), transparent 60%),
+          linear-gradient(to bottom, rgb(255 255 255 / 0.12), transparent 35%);
+      }
+
+      /* ========= CONTENT (demo UI) ========= */
+      .content {
+        position: relative;
+        z-index: 2;
+        padding: 56px 44px;
+        display: grid;
+        gap: 18px;
+        max-width: 720px;
+      }
+
+      .badge {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgb(255 255 255 / 0.55);
+        border: 1px solid rgb(255 255 255 / 0.65);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
+        font-weight: 600;
+        font-size: 13px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(38px, 5vw, 56px);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: rgb(12 14 20);
+      }
+
+      p {
+        margin: 0;
+        color: rgb(24 28 40 / 0.78);
+        font-size: 16px;
+        line-height: 1.55;
+        max-width: 60ch;
+      }
+
+      .controls {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      button {
+        appearance: none;
+        border: 1px solid rgb(0 0 0 / 0.10);
+        background: rgb(255 255 255 / 0.55);
+        backdrop-filter: blur(10px);
+        color: rgb(10 12 18);
+        font-weight: 650;
+        border-radius: 12px;
+        padding: 10px 12px;
+        cursor: pointer;
+        transition: transform .15s ease, background .15s ease;
+      }
+      button:hover { transform: translateY(-1px); background: rgb(255 255 255 / 0.70); }
+      button:active { transform: translateY(0px) scale(0.99); }
+
+      /* Presets (swap these class names) */
+      .preset-openai-ice {
+        --bg: 246 248 255;
+        --c1: 143 182 255;
+        --c2: 122 134 255;
+        --c3: 68 226 215;
+        --c4: 199 167 255;
+        --c5: 255 200 240;
+        --cloud-freq: 0.012;
+        --cloud-opacity: 0.28;
+        --cloud-contrast: 22;
+        --cloud-bias: -10;
+      }
+      .preset-mint-sky {
+        --bg: 244 255 253;
+        --c1: 124 247 212;
+        --c2: 109 183 255;
+        --c3: 167 255 122;
+        --c4: 167 195 255;
+        --c5: 255 255 255;
+        --cloud-freq: 0.010;
+        --cloud-opacity: 0.26;
+        --cloud-contrast: 20;
+        --cloud-bias: -10;
+      }
+      .preset-violet-dusk {
+        --bg: 11 16 32;
+        --c1: 167 139 250;
+        --c2: 96 165 250;
+        --c3: 244 114 182;
+        --c4: 52 211 153;
+        --c5: 255 255 255;
+
+        --field-blur: 95px;
+        --field-sat: 145%;
+        --field-con: 120%;
+        --cloud-opacity: 0.22;
+        --cloud-freq: 0.013;
+        --sheen: 0.45;
+      }
+      .preset-violet-dusk h1 { color: rgb(245 247 255); }
+      .preset-violet-dusk p { color: rgb(235 240 255 / 0.75); }
+      .preset-violet-dusk .badge,
+      .preset-violet-dusk button {
+        color: rgb(245 247 255);
+        background: rgb(255 255 255 / 0.08);
+        border-color: rgb(255 255 255 / 0.16);
+      }
+
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .mesh::before,
+        .mesh .cloud-layer {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="demo">
+      <!-- Swap preset class here -->
+      <section id="mesh" class="mesh preset-openai-ice">
+        <!-- SVG filters (the “cloud” magic) -->
+        <svg class="mesh-defs" aria-hidden="true" focusable="false">
+          <filter id="cloudFilter" x="-20%" y="-20%" width="140%" height="140%">
+            <!-- Procedural noise -->
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.012"
+              numOctaves="3"
+              seed="8"
+              stitchTiles="stitch"
+              result="noise"
+            />
+            <!-- Make noise “patchy / solid” by pushing alpha -->
+            <!-- The last row controls alpha:  a' = alpha * contrast + bias  -->
+            <feColorMatrix
+              in="noise"
+              type="matrix"
+              values="
+                1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 22 -10"
+              result="cloudMask"
+            />
+            <!-- Soften cloud edges -->
+            <feGaussianBlur in="cloudMask" stdDeviation="7" result="softCloud" />
+          </filter>
+        </svg>
+
+        <!-- Cloud overlay element (uses filter url(#cloudFilter) in CSS) -->
+        <div class="cloud-layer"></div>
+        <!-- Optional sheen -->
+        <div class="sheen-layer"></div>
+
+        <div class="content">
+          <div class="badge">☁️ Cloudy Mesh Gradient</div>
+          <h1>Animated “not-plain” gradients.</h1>
+          <p>
+            This background is a layered radial gradient field + an SVG turbulence mask to create those
+            solid cloudy patches. Swap palettes by changing CSS variables or preset classes.
+          </p>
+
+          <div class="controls">
+            <button data-preset="preset-openai-ice">OpenAI Ice</button>
+            <button data-preset="preset-mint-sky">Mint Sky</button>
+            <button data-preset="preset-violet-dusk">Violet Dusk</button>
+            <button id="randomize">Randomize</button>
+            <button id="moreCloud">More Cloud</button>
+            <button id="lessCloud">Less Cloud</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const mesh = document.getElementById("mesh");
+      const svg = mesh.querySelector("svg.mesh-defs");
+      const turb = svg.querySelector("feTurbulence");
+      const matrix = svg.querySelector("feColorMatrix");
+      const blur = svg.querySelector("feGaussianBlur");
+
+      // Keep SVG filter params in sync with CSS vars
+      function syncFilterFromCSS() {
+        const cs = getComputedStyle(mesh);
+        const freq = cs.getPropertyValue("--cloud-freq").trim() || "0.012";
+        const oct = cs.getPropertyValue("--cloud-octaves").trim() || "3";
+        const seed = cs.getPropertyValue("--cloud-seed").trim() || "8";
+        const std = cs.getPropertyValue("--cloud-blur").trim() || "7px";
+        const contrast = cs.getPropertyValue("--cloud-contrast").trim() || "22";
+        const bias = cs.getPropertyValue("--cloud-bias").trim() || "-10";
+
+        turb.setAttribute("baseFrequency", freq);
+        turb.setAttribute("numOctaves", oct);
+        turb.setAttribute("seed", seed);
+
+        // blur expects number (px removed)
+        blur.setAttribute("stdDeviation", String(parseFloat(std)));
+
+        // Update alpha row of matrix
+        // values: ... last row is "0 0 0 contrast bias"
+        const values =
+`1 0 0 0 0
+ 0 1 0 0 0
+ 0 0 1 0 0
+ 0 0 0 ${contrast} ${bias}`;
+        matrix.setAttribute("values", values);
+      }
+
+      syncFilterFromCSS();
+
+      // Preset switching
+      document.querySelectorAll("button[data-preset]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const preset = btn.getAttribute("data-preset");
+          mesh.classList.remove("preset-openai-ice", "preset-mint-sky", "preset-violet-dusk");
+          mesh.classList.add(preset);
+          // After class swap, sync SVG filter params again
+          requestAnimationFrame(syncFilterFromCSS);
+        });
+      });
+
+      // Cloud intensity controls (adjust alpha contrast/bias + opacity)
+      function setCSSVar(name, value) {
+        mesh.style.setProperty(name, value);
+      }
+      function getNumVar(name, fallback) {
+        const v = getComputedStyle(mesh).getPropertyValue(name).trim();
+        const n = parseFloat(v);
+        return Number.isFinite(n) ? n : fallback;
+      }
+
+      document.getElementById("moreCloud").addEventListener("click", () => {
+        const op = getNumVar("--cloud-opacity", 0.28);
+        const con = getNumVar("--cloud-contrast", 22);
+        const bias = getNumVar("--cloud-bias", -10);
+        setCSSVar("--cloud-opacity", Math.min(op + 0.05, 0.5).toFixed(2));
+        setCSSVar("--cloud-contrast", Math.min(con + 3, 35).toFixed(0));
+        setCSSVar("--cloud-bias", Math.max(bias - 1, -16).toFixed(0));
+        syncFilterFromCSS();
+      });
+
+      document.getElementById("lessCloud").addEventListener("click", () => {
+        const op = getNumVar("--cloud-opacity", 0.28);
+        const con = getNumVar("--cloud-contrast", 22);
+        const bias = getNumVar("--cloud-bias", -10);
+        setCSSVar("--cloud-opacity", Math.max(op - 0.05, 0.10).toFixed(2));
+        setCSSVar("--cloud-contrast", Math.max(con - 3, 10).toFixed(0));
+        setCSSVar("--cloud-bias", Math.min(bias + 1, -4).toFixed(0));
+        syncFilterFromCSS();
+      });
+
+      // Randomize palette (HSL harmony)
+      function hslToRgb(h, s, l) {
+        // h: 0..360, s/l: 0..100
+        h /= 360; s /= 100; l /= 100;
+        const hue2rgb = (p, q, t) => {
+          if (t < 0) t += 1;
+          if (t > 1) t -= 1;
+          if (t < 1/6) return p + (q - p) * 6 * t;
+          if (t < 1/2) return q;
+          if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+          return p;
+        };
+        let r, g, b;
+        if (s === 0) {
+          r = g = b = l;
+        } else {
+          const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+          const p = 2 * l - q;
+          r = hue2rgb(p, q, h + 1/3);
+          g = hue2rgb(p, q, h);
+          b = hue2rgb(p, q, h - 1/3);
+        }
+        return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+      }
+
+      function rand(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function randomPalette() {
+        const baseHue = rand(180, 260);          // cool by default
+        const offsets = [0, 28, 70, 120].map(o => o + rand(-10, 10));
+        const sat = rand(55, 78);
+        const light = rand(66, 80);
+
+        const cols = offsets.map((off, i) => {
+          const h = (baseHue + off) % 360;
+          const s = sat + rand(-6, 6);
+          const l = light + (i === 2 ? rand(-10, -2) : rand(-4, 4));
+          return hslToRgb(h, s, l);
+        });
+
+        // Background: very light tint near base hue
+        const bg = hslToRgb(baseHue, rand(15, 25), rand(95, 98));
+
+        return { cols, bg, baseHue };
+      }
+
+      document.getElementById("randomize").addEventListener("click", () => {
+        const { cols, bg } = randomPalette();
+        // Apply as CSS vars (rgb channels)
+        mesh.style.setProperty("--c1", cols[0].join(" "));
+        mesh.style.setProperty("--c2", cols[1].join(" "));
+        mesh.style.setProperty("--c3", cols[2].join(" "));
+        mesh.style.setProperty("--c4", cols[3].join(" "));
+        mesh.style.setProperty("--c5", "255 255 255");
+        mesh.style.setProperty("--bg", bg.join(" "));
+
+        // Slightly vary cloud seed so the texture changes too
+        const seed = Math.floor(rand(1, 9999));
+        mesh.style.setProperty("--cloud-seed", String(seed));
+        syncFilterFromCSS();
+      });
+
+      // If you manually change CSS vars in devtools, keep filter synced:
+      window.addEventListener("resize", syncFilterFromCSS);
+    </script>
+  </body>
+</html>

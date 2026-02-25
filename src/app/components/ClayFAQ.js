@@ -14,11 +14,11 @@ const FAQS = [
   },
   {
     question: "How long does a typical project take?",
-    answer: "A standard branding and web project usually ranges from 4 to 8 weeks, depending on complexity. We work in agile sprints to ensure constant progress and transparency."
+    answer: "A standard branding and web project usually ranges from 1 to 3 weeks, depending on complexity. We work in agile sprints to ensure constant progress and transparency."
   },
   {
     question: "What is your pricing model?",
-    answer: "We offer both project-based pricing and monthly retainers. Our base packages start at UGX 150,000 for specific services, scaling up based on your needs."
+    answer: "We offer both project-based pricing and monthly retainers. Our services however depend on how the complexity of your project."
   }
 ];
 
@@ -30,7 +30,7 @@ export default function ClayFAQ() {
   };
 
   return (
-    <section id="home-faq" className="bg-[#111111] py-32 global-padding">
+    <section id="home-faq" className="bg-[#020f24] py-32 global-padding">
       <div className="container mx-auto max-w-[90%] md:max-w-[70%]">
         <h2 className="faq-title text-display-m md:text-display font-semibold mb-20 text-[var(--text-light)]">FAQ</h2>
         

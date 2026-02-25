@@ -1,158 +1,126 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Instagram,
-  Globe,
-} from "lucide-react";
 
-import { servicesList } from '@/config/services';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
-};
+const FooterLink = ({
+  href,
+  children,
+  external,
+}) => (
+  <Link
+    href={href}
+    {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+    className="text-[13px] leading-5 text-white/70 hover:text-white transition-colors"
+  >
+    {children}
+  </Link>
+);
 
 export default function Footer() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-
   const sections = [
     {
       title: "Company",
       links: [
         { name: "About", href: "/about" },
-        { name: "Portfolio", href: "/portfolio" },
-        { name: "Careers", href: "/careers" },
+        { name: "Work", href: "/work" },
       ],
     },
     {
       title: "Services",
-      links: servicesList.map(service => ({
-        name: service.title,
-        href: `/services/${service.slug}`,
-      })),
+      links: [
+        { name: "Website Design", href: "/services/website-design" },
+        { name: "3D Modelling", href: "/services/3d-modelling" },
+        { name: "AI Integration", href: "/services/ai-integration" },
+        { name: "Social Media Marketing", href: "/services/social-media-marketing" },
+      ],
+    },
+    {
+      title: "Social",
+      links: [
+        { name: "Instagram", href: "https://instagram.com/weblery", external: true },
+        { name: "TikTok", href: "https://tiktok.com/@weblery", external: true },
+      ],
+    },
+    {
+      title: "Contact",
+      links: [
+        { name: "hello@weblery.com", href: "mailto:hello@weblery.com" },
+        { name: "+256 746 642 075", href: "tel:+256746642075" },
+      ],
     },
   ];
 
-  const socials = [
-    { icon: Instagram, href: "https://instagram.com/weblery" },
-    { icon: Globe, href: "https://tiktok.com/@weblery" },
-  ];
-
-  const contact = [
-    {
-      icon: Mail,
-      text: "hello@weblery.com",
-      href: "mailto:hello@weblery.com",
-    },
-    {
-      icon: Phone,
-      text: "+256 7759 10888",
-      href: "tel:+256775910888",
-    },
-    {
-      icon: Phone,
-      text: "+256 746 642 075",
-      href: "tel:+256746642075",
-    },
-    {
-      icon: MapPin,
-      text: "Kyanja, Kampala",
-      href: "#",
-    },
-  ];
+  const year = new Date().getFullYear();
 
   return (
-    <motion.footer
-      ref={ref}
-      className="bg-[#111111] pt-20 pb-10 w-full global-padding"
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={containerVariants}
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 w-full">
-        <motion.div className="lg:col-span-2 space-y-6" variants={itemVariants}>
-          <Image src="/whitefull.svg" alt="Weblery Full Logo" width={150} height={50} className="text-white" />
-          <p className="text-[var(--text-muted)] leading-relaxed">
-            Innovative digital solutions that elevate brands, empower people,
-            and unlock growth.
-          </p>
-          <div className="flex gap-4">
-            {socials.map(({ icon: Icon, href }, i) => (
-              <motion.a
-                key={i}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-white hover:bg-white/10 transition"
-                variants={itemVariants}
-              >
-                <Icon className="w-5 h-5 text-[var(--text-muted)]" />
-              </motion.a>
-            ))}
-          </div>
-        </motion.div>
+    <footer className="w-full bg-[#000] text-white">
+      <div className="global-padding mx-auto max-w-6xl py-12 md:py-16">
+        {/* Top: Brand Logo */}
+        <div className="mb-4">
+          <Image
+            src="/FINAL_LOGO_BLACK_BG.png"
+            alt="Weblery Logo"
+            width={120}
+            height={120}
+            className="h-auto w-32 object-contain rounded-md"
+            priority
+          />
+        </div>
 
-        {sections.map((section, i) => (
-          <motion.div key={i} className="space-y-4" variants={itemVariants}>
-            <h4 className="text-white text-lg font-semibold">
-              {section.title}
-            </h4>
-            <ul className="space-y-2">
-              {section.links.map((link, j) => (
-                <li key={j}>
-                  <Link
-                    href={link.href}
-                    className="text-[var(--text-muted)] footer-link-hover-white transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        ))}
-      </div>
+        {/* Divider */}
+        <div className="mt-8 h-px w-full bg-white/10" />
 
-      <motion.div
-        className="w-full mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6"
-        variants={itemVariants}
-      >
-        <div className="text-[var(--text-muted)] space-y-2 text-sm text-center md:text-left">
-          {contact.map(({ icon: Icon, text, href }, i) => (
-            <a
-              key={i}
-              href={href}
-              className="flex items-center gap-2 justify-center md:justify-start hover:text-white transition-colors"
-            >
-              <Icon className="w-4 h-4 text-[var(--text-muted)]" />
-              {text}
-            </a>
+        {/* Link grid */}
+        <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
+          {sections.map((section) => (
+            <div key={section.title} className="min-w-0">
+              <h4 className="text-[12px] font-medium tracking-tight text-white/90">
+                {section.title}
+              </h4>
+              <ul className="mt-4 space-y-2">
+                {section.links.map((link) => (
+                  <li key={link.name} className="min-w-0">
+                    <FooterLink href={link.href} external={link.external}>
+                      {link.name}
+                    </FooterLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
-        <p className="text-xs text-[var(--text-muted)]">
-          &copy; 2025 Weblery. All rights reserved.
-        </p>
-      </motion.div>
-    </motion.footer>
+
+        {/* Divider */}
+        <div className="mt-10 h-px w-full bg-white/10" />
+
+        {/* Bottom: legal row (Apple-like) */}
+        <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-3 text-[12px] text-white/60">
+            <span>Copyright © {year} Weblery. All rights reserved.</span>
+            <span className="hidden md:inline text-white/25">|</span>
+            <span>Kyanja, Kampala — Uganda</span>
+          </div>
+
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-[12px]">
+            <FooterLink href="/privacy">Privacy Policy</FooterLink>
+            <span className="text-white/25">|</span>
+            <FooterLink href="/terms">Terms of Service</FooterLink>
+          </div>
+        </div>
+
+        {/* Tiny brand mark (optional) */}
+        {/* <div className="mt-8 flex items-center gap-3 text-[12px] text-white/50">
+          <Image
+            src="/FINAL_LOGO_BLACK_BG.png"
+            alt="Weblery"
+            width={18}
+            height={18}
+            className="h-[18px] w-[18px] rounded-sm opacity-80"
+          />
+          <span>Designed in Kampala.</span>
+        </div> */}
+      </div>
+    </footer>
   );
 }

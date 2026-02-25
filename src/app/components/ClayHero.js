@@ -4,24 +4,24 @@ import { motion } from 'framer-motion';
 
 export default function ClayHero() {
   return (
-    <section id="home-hero" className="relative min-h-[90vh] flex items-center overflow-hidden bg-[var(--bg-page)] pt-20">
+    <section id="home-hero" className="relative min-h-[40vh] md:min-h-[90vh] flex flex-col justify-center overflow-hidden bg-[var(--bg-page)] pt-32 pb-12 md:pt-20 md:pb-0">
       <div className="w-full relative z-10 global-padding">
         <div className="max-w-[100%]">
-          <motion.h1 
-            className="hero-title text-display-m md:text-display text-black text-left"
+          <motion.h1
+            className="hero-title text-display-m md:text-7xl! text-black text-left leading-tight! tracking-tighter! md:leading-[1.1]!"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Weblery is a global <br className="hidden md:block" />
-            branding and 
+            Weblery is a branding <br className="hidden md:block" />
+            <br className="block md:hidden" />and
             UX design agency
           </motion.h1>
         </div>
       </div>
 
       {/* Abstract 3D-like Element (CSS Gradient Sphere) */}
-      <motion.div 
+      <motion.div
         className="hero-orb hero-orb-gradient absolute right-[-10%] top-[20%] w-[30rem] h-[30rem] md:w-[45rem] md:h-[45rem] rounded-full blur-3xl opacity-80 pointer-events-none"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

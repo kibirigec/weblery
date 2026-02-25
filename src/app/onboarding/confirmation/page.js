@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { SERVICES, PACKAGES } from "@/config/services";
+import { SERVICES, PACKAGES } from "../../../../config/services";
 
 export default function ConfirmationPage() {
   const [summary, setSummary] = useState(null);

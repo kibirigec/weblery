@@ -125,4 +125,38 @@
     .font-geist-mono {
         font-family: var(--font-mono);
     }
+
+    /* Global Button Animation & Overrides */
+
+    /* Helper class for text-only underline animation */
+    /* Usage: Wrap button text in <span className="btn-text">Content</span> */
+    .btn-text {
+        position: relative;
+        display: inline-block;
+    }
+
+    .btn-text::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background-color: currentColor;
+        transform: scaleX(0);
+        transform-origin: bottom left;
+        transition: transform 0.3s cubic-bezier(0.2, 0.0, 0.2, 1);
+        pointer-events: none;
+    }
+
+    /* Trigger animation when parent (button/link) is hovered */
+    button:hover .btn-text::after,
+    .btn:hover .btn-text::after,
+    .btn-primary:hover .btn-text::after,
+    .cta-button:hover .btn-text::after,
+    .btn-service:hover .btn-text::after,
+    a:hover .btn-text::after,
+    .group:hover .btn-text::after {
+        transform: scaleX(1);
+    }
 }
