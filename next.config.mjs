@@ -10,6 +10,11 @@ const nextConfig = {
             },
         ],
     },
+    experimental: {
+        turbopack: {
+            root: '/Users/Calvin/Desktop/PROJECTS/modiqube',
+        },
+    },
 };
 
 export default nextConfig;
