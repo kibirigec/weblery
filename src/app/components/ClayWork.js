@@ -49,7 +49,7 @@ export default function ClayWork() {
             className="section-title text-display-m md:text-display-s leading-[0.9]! text-[var(--text-primary)] tracking-tight"
           >
             {"See "}
-            <br className="hidden lg:block" />Our work
+            <br className="hidden lg:block" /><span className="md:hidden">our</span><span className="hidden md:inline">Our</span> work
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
