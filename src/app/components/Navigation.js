@@ -236,6 +236,7 @@ export default function Navigation() {
                     }}
                 >
                     {[
+                        { label: "Home", href: "/" },
                         { label: "Work", href: "/work" },
                         { label: "Services", href: "/services", hasDropdown: true },
                         { label: "Pricing", href: "/pricing" },
