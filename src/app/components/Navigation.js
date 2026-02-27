@@ -12,8 +12,8 @@ export default function Navigation() {
     const { scrollY } = useScroll();
     const pathname = usePathname();
 
-    // Dark Pages (e.g. /work, /about)
-    const isWorkIndex = pathname === "/work";
+    // Dark Pages (e.g. /our-work, /about)
+    const isWorkIndex = pathname === "/our-work";
     const isAboutPage = pathname === "/about";
     const isContactPage = pathname === "/contact";
     const isDarkPage = isWorkIndex || isAboutPage;
@@ -79,7 +79,7 @@ export default function Navigation() {
                     <div className="hidden md:flex items-center gap-12">
                         <div className="flex items-center gap-8">
                             {[
-                                { label: "Work", href: "/work" },
+                                { label: "Work", href: "/our-work" },
                                 { label: "Services", href: "/services", hasDropdown: true },
                                 { label: "Pricing", href: "/pricing" },
                                 { label: "About", href: "/about" }
@@ -164,7 +164,7 @@ export default function Navigation() {
                                     : "bg-[var(--brand-black)] text-white"
                                     }`}
                             >
-                                <span className="btn-text">Start Project</span>
+                                <span className="btn-text">Contact </span>
                             </motion.button>
                         </Link>
                     </div>
@@ -237,7 +237,7 @@ export default function Navigation() {
                 >
                     {[
                         { label: "Home", href: "/" },
-                        { label: "Work", href: "/work" },
+                        { label: "Work", href: "/our-work" },
                         { label: "Services", href: "/services", hasDropdown: true },
                         { label: "Pricing", href: "/pricing" },
                         { label: "About", href: "/about" },

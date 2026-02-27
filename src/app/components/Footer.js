@@ -22,7 +22,7 @@ export default function Footer() {
     {
       title: "Company",
       links: [
-        { name: "Work", href: "/work" },
+        { name: "Work", href: "/our-work" },
         { name: "About", href: "/about" },
       ],
     },
@@ -38,8 +38,8 @@ export default function Footer() {
     {
       title: "Social",
       links: [
-        { name: "Instagram", href: "https://instagram.com/weblery", external: true },
         { name: "TikTok", href: "https://tiktok.com/@weblery", external: true },
+        { name: "Instagram", href: "https://instagram.com/weblery", external: true },
       ],
     },
     {

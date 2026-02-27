@@ -13,14 +13,14 @@ const SERVICES = [
     title: "Website Design",
     slug: "website-design",
     description:
-      "At Weblery, we design websites that feel effortless to use and impossible to forget. From clean interfaces to scalable design systems, we create web experiences that grow with your brand and convert with clarity.",
+      "At Weblery, we design websites that feel effortless to use and impossible to forget. From clean interfaces to scalable design systems, we create web experiences that grow with your brand and bring more customers to your business.",
     subServices: [
-      "Website & Web App Design",
-      "User Research & Testing",
-      "UX & Interaction Design",
       "UI Design",
+      "Design Systems",
+      "UX & Interaction Design",
+      "User Research & Testing",
+      "Website & Web App Design",
       "Motion & Micro-Interactions",
-      "Design Systems"
     ],
     bgGradient: "bg-blue-600",
     orbColor: "bg-blue-400",
@@ -42,14 +42,14 @@ const SERVICES = [
     title: "Social Media Marketing",
     slug: "social-media-marketing",
     description:
-      "We help brands stand out in crowded feeds with content that feels human, intentional, and on-brand. From strategy to execution, we create social experiences that spark conversation and drive real growth.",
+      "We help brands stand out in crowded feeds with content that feels human, intentional, and on-brand. From strategy to execution, we create, and manage your social media accounts to spark conversations and drive real growth.",
     subServices: [
-      "Strategy & Direction",
-      "Content Creation",
-      "Community Management",
       "Growth Hacking",
+      "Content Creation",
+      "Strategy & Direction",
+      "Analytics & Reporting",
       "Campaign Management",
-      "Analytics & Reporting"
+      "Community Management",
     ],
     bgGradient: "bg-orange-500",
     orbColor: "bg-orange-400",
@@ -71,12 +71,12 @@ const SERVICES = [
     title: "AI Integration",
     slug: "ai-integration",
     description:
-      "We integrate intelligent systems that help businesses work smarter, not harder. From automation to custom AI solutions, we turn complex processes into streamlined, future-ready workflows.",
+      "We integrate intelligent systems that help businesses work smarter, not harder. From automation to custom AI solutions, we turn complex and repetitive processes into streamlined workflows to reduce costs and increase efficiency.",
     subServices: [
-      "Workflow Automation",
-      "Custom AI Solutions",
-      "Chatbot Integration",
       "Data Analysis",
+      "Chatbot Integration",
+      "Custom AI Solutions",
+      "Workflow Automation",
       "Process Optimization",
       "Scalable Architecture"
     ],
@@ -102,12 +102,12 @@ const SERVICES = [
     description:
       "We create immersive 3D assets and environments that blur the line between digital and physical. From product visualization to architectural walkthroughs, we bring depth to your brand.",
     subServices: [
-      "Product Visualization",
+      "Asset Creation",
       "Architectural Viz",
-      "Interactive WebGL",
       "Motion Graphics",
+      "Interactive WebGL",
       "Virtual Prototyping",
-      "Asset Creation"
+      "Product Visualization",
     ],
     bgGradient: "bg-purple-600",
     orbColor: "bg-green-400",
@@ -262,11 +262,11 @@ export default function ServicesPage() {
           className="mb-10 text-center"
         >
           <h2 className="cta-title text-title-m md:text-display-s mb-8 max-w-3xl mx-auto">
-            Ready to transform your digital presence?
+            Reach out to us
           </h2>
           <Link href="/pricing" className="cta-button group inline-flex items-center gap-3 bg-black text-white px-10 py-5 rounded-full text-xl font-medium transition-all duration-300">
             <span className="relative">
-              Start a Project
+              Start your Project
               <span className="absolute -bottom-1 left-0 w-full h-[1px] bg-white transform scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100"></span>
             </span>
             <svg className="transition-transform duration-300 group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

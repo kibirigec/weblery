@@ -345,7 +345,7 @@ export default function QuoteBuilder() {
                                             key={cat}
                                             onClick={() => setActiveCategory(cat)}
                                             className={`btn-category relative px-3 py-4 md:px-4 md:py-6 text-[13px] md:text-base font-bold transition-all duration-200 font-heading leading-tight flex items-center justify-center text-center ${activeCategory === cat
-                                                ? "active ring-2 ring-black bg-white shadow-sm"
+                                                ? "active ring-2 bg-white shadow-sm"
                                                 : "bg-[#f5f5f5] hover:bg-gray-200 text-gray-600"
                                                 }`}
                                         >
@@ -436,7 +436,7 @@ export default function QuoteBuilder() {
                                 <label className="text-sm font-bold text-gray-700 ml-1">Your Name</label>
                                 <input
                                     type="text"
-                                    className={`w-full p-4 rounded-sm border bg-white focus:ring-2 focus:ring-black focus:border-black transition-all font-medium ${errors.name ? 'border-red-500' : 'border-gray-200'}`}
+                                    className={`w-full p-4 rounded-sm border bg-white focus:ring-2 focus:border-black transition-all font-medium ${errors.name ? 'border-red-500' : 'border-gray-200'}`}
                                     value={contact.name}
                                     onChange={(e) => {
                                         setContact({ ...contact, name: e.target.value });
@@ -450,7 +450,7 @@ export default function QuoteBuilder() {
                                 <input
                                     type="tel"
                                     placeholder="07XX XXX XXX"
-                                    className={`w-full p-4 rounded-sm border bg-white focus:ring-2 focus:ring-black focus:border-black transition-all font-medium ${errors.phone ? 'border-red-500' : 'border-gray-200'}`}
+                                    className={`w-full p-4 rounded-sm border bg-white focus:ring-2 focus:border-black transition-all font-medium ${errors.phone ? 'border-red-500' : 'border-gray-200'}`}
                                     value={contact.phone}
                                     onChange={(e) => {
                                         setContact({ ...contact, phone: e.target.value });

@@ -172,7 +172,7 @@ export default function WorkPage() {
                         We shape the future of industries with cutting-edge digital solutions.                    </motion.p>
                 </section>
 
-                <div className="w-full global-padding pt-24 md:pt-40">
+                <div className="w-full global-padding pt-0 md:pt-40">
                     <div id="industries-list" className="flex flex-col gap-24 md:gap-40">
                         {industries.map((industry) => {
                             const projects = groupedProjects[industry];

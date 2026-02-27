@@ -370,7 +370,7 @@ export default function ContactPage() {
                 <header className="hidden md:flex justify-center items-center w-full mb-8 relative z-50">
                     <div className="flex gap-12 font-medium text-sm">
                         <a href="/" className="hover:text-gray-500 transition-colors">Home</a>
-                        <a href="/work" className="hover:text-gray-500 transition-colors">Work</a>
+                        <a href="/our-work" className="hover:text-gray-500 transition-colors">Work</a>
                         <a href="/about" className="hover:text-gray-500 transition-colors">About</a>
                     </div>
                 </header>
