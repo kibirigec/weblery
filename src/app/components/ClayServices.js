@@ -12,7 +12,7 @@ const SERVICES_LIST = [
     },
     {
         title: "Social Media Management",
-        description: "Stop shouting into the void. We build authoritative brand voices and engaged communities through strategic, data-driven content that turns passive followers into active advocates for your business.",
+        description: "Stop shouting into the void. \n We build authoritative brand voices and engaged communities through strategic, data-driven content that turns passive followers into active advocates for your business.",
         href: "/services/social-media-marketing"
     },
     {
@@ -62,7 +62,7 @@ export default function ClayServices() {
                                 transition={{ duration: 0.8 }}
                                 className="text-title md:text-[38px]! font-medium text-neutral-900! mb-6 md:mb-2 max-w-2xl"
                             >
-                                We craft transformative digital experiences at the intersection of AI, design, and technology.                    </motion.h2>
+                                We build transformative digital experiences at the intersection of AI, design, and technology.                    </motion.h2>
                         </div>
 
                         {/* "Something Nice" -> Key Metrics / Trust Indicators */}

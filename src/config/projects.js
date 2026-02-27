@@ -7,6 +7,7 @@ export const PROJECTS = [
     serviceDescription: "A serene digital booking experience for a premium getaway.",
     fullDescription: "Fort Haven required a digital presence that mirrored the tranquility and exclusivity of their physical location. We built an immersive platform that highlights property amenities and streamlines the reservation process.",
     deliverables: ["Digital Strategy", "Booking Website", "Property Showcase", "Reservation Integration"],
+    link: "https://forthavenug.com",
     image: "/portfolio/forthaven/forthavenmainimage.jpg",
     gallery: [
       { type: "desktop", src: "/portfolio/forthaven/full-capture-fort-haven.png" },
@@ -21,6 +22,7 @@ export const PROJECTS = [
     serviceDescription: "High-energy visual identity and portfolio for a premier events team.",
     fullDescription: "To capture the scale and excitement of Flex Impressions' events, we crafted a media-rich portfolio showcasing their past successes. The platform serves as a powerful sales tool to attract high-tier corporate and private clients.",
     deliverables: ["Event Galleries", "Lead Generation", "Portfolio Website", "Video Integration"],
+    link: "https://flexeventsug.com",
     image: "/portfolio/flexevents/weddingmain.jpeg",
     gallery: [
       { type: "desktop", src: "/portfolio/flexevents/flex_desktop.png" },
@@ -35,6 +37,7 @@ export const PROJECTS = [
     serviceDescription: "Digital transformation for a trusted automotive repair center.",
     fullDescription: "H&G Garage needed to modernize their customer touchpoints. We delivered a clean, functional web application that allows customers to schedule maintenance, request quotes, and learn about specialized repair services.",
     deliverables: ["SEO", "Service Catalog", "Service Website", "Appointment Booking"],
+    link: "https://hg-garage.com",
     image: "/portfolio/hg-garage/main.jpeg",
     gallery: [
       { type: "desktop", src: "/portfolio/hg-garage/hg-garage-desktop.png" },
@@ -79,6 +82,7 @@ export const PROJECTS = [
     serviceDescription: "A streamlined storefront for discovering and purchasing digital products.",
     fullDescription: "Mjkprints requires instant, secure delivery of digital assets. We engineered a robust e-commerce platform with automated email delivery and secure payment gateways, completely removing manual overhead.",
     deliverables: ["Brand Identity", "Payment Gateway", "Digital E-commerce", "Automated Fulfillment"],
+    link: "https://mjkprints.store",
     image: "/portfolio/mjkprints/main.jpg",
     gallery: [
       { type: "desktop", src: "/portfolio/mjkprints/desktop.jpg" },

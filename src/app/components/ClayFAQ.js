@@ -18,7 +18,7 @@ const FAQS = [
   },
   {
     question: "What is your pricing model?",
-    answer: "We offer both project-based pricing and monthly retainers. Our services however depend on how the complexity of your project."
+    answer: "We offer both project-based pricing and monthly retainers. Our services however depend on the complexity of your project."
   }
 ];
 

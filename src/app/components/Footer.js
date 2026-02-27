@@ -22,16 +22,16 @@ export default function Footer() {
     {
       title: "Company",
       links: [
-        { name: "About", href: "/about" },
         { name: "Work", href: "/work" },
+        { name: "About", href: "/about" },
       ],
     },
     {
       title: "Services",
       links: [
-        { name: "Website Design", href: "/services/website-design" },
         { name: "3D Modelling", href: "/services/3d-modelling" },
         { name: "AI Integration", href: "/services/ai-integration" },
+        { name: "Website Design", href: "/services/website-design" },
         { name: "Social Media Marketing", href: "/services/social-media-marketing" },
       ],
     },

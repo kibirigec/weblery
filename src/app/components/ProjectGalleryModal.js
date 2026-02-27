@@ -115,10 +115,10 @@ export default function ProjectGalleryModal({
                 onClick={() => mobileImages.length > 0 && handleViewChange('mobile')}
                 disabled={mobileImages.length === 0}
                 className={`relative flex-1 h-full rounded-full text-[13px] font-semibold flex items-center justify-center transition-colors z-10 ${mobileImages.length === 0
-                        ? 'text-gray-300 cursor-not-allowed opacity-50'
-                        : activeView === 'mobile'
-                            ? 'text-[#0f0f0f]'
-                            : 'text-gray-500 hover:text-gray-900'
+                    ? 'text-gray-300 cursor-not-allowed opacity-50'
+                    : activeView === 'mobile'
+                        ? 'text-[#0f0f0f]'
+                        : 'text-gray-500 hover:text-gray-900'
                     }`}
             >
                 Mobile
@@ -194,11 +194,11 @@ export default function ProjectGalleryModal({
                             >
                                 {/* Desktop Images */}
                                 <div className={`h-full overflow-y-auto overflow-x-hidden relative ${isLegacy ? 'w-full' : 'w-1/2'}`}>
-                                    <div className="flex flex-col gap-12 md:gap-24 px-6 md:px-48 pb-16 pt-6">
+                                    <div className={`flex flex-col gap-12 md:gap-24 pb-16 pt-6 h-full ${desktopImages.some(img => img.mediaType === 'video') ? 'px-0 items-center justify-center' : 'px-6 md:px-48'}`}>
                                         {desktopImages.map((img, index) => (
                                             <div
                                                 key={`desktop-${index}`}
-                                                className="relative w-full"
+                                                className={`relative w-full ${img.mediaType === 'video' ? 'flex justify-center w-full max-w-[1400px] px-4 md:px-12' : ''}`}
                                             >
                                                 {img.mediaType === 'video' ? (
                                                     <video
@@ -207,7 +207,7 @@ export default function ProjectGalleryModal({
                                                         loop
                                                         muted
                                                         playsInline
-                                                        className="w-full h-auto object-contain block rounded-lg border border-neutral-200/60 shadow-sm"
+                                                        className="w-full h-auto object-contain block rounded-none shadow-2xl bg-[#0f0f0f]"
                                                     />
                                                 ) : (
                                                     <Image
@@ -230,11 +230,11 @@ export default function ProjectGalleryModal({
                                 {/* Mobile Images */}
                                 {!isLegacy && (
                                     <div className="h-full w-1/2 overflow-y-auto overflow-x-hidden relative">
-                                        <div className="flex flex-col gap-12 md:gap-24 px-6 md:px-48 pb-16 pt-6">
+                                        <div className={`flex flex-col gap-12 md:gap-24 pb-16 pt-6 h-full ${mobileImages.some(img => img.mediaType === 'video') ? 'px-0 items-center justify-center' : 'px-6 md:px-48'}`}>
                                             {mobileImages.map((img, index) => (
                                                 <div
                                                     key={`mobile-${index}`}
-                                                    className="relative w-full md:px-[20%] lg:px-[30%]"
+                                                    className={`relative w-full ${img.mediaType === 'video' ? 'flex justify-center px-0! md:px-0 lg:px-0' : 'md:px-[20%] lg:px-[30%]'}`}
                                                 >
                                                     {img.mediaType === 'video' ? (
                                                         <video
@@ -243,7 +243,7 @@ export default function ProjectGalleryModal({
                                                             loop
                                                             muted
                                                             playsInline
-                                                            className="w-full h-auto object-contain block rounded-lg border border-neutral-200/60 shadow-sm"
+                                                            className="w-full h-auto object-contain block rounded-none shadow-2xl bg-[#0f0f0f]"
                                                         />
                                                     ) : (
                                                         <Image
