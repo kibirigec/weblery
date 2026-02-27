@@ -330,28 +330,28 @@ export default function QuoteBuilder() {
 
                     <section>
                         {/* STICKY HEADER AREA */}
-                        <div className="sticky top-20 z-40 bg-[var(--bg-page)] pt-4 pb-4">
+                        <div className="sticky top-[72px] lg:top-20 z-40 bg-[var(--bg-page)]/90 backdrop-blur-xl pt-6 pb-6 -mx-6 px-6 md:-mx-12 md:px-12 lg:mx-0 lg:px-0 border-b border-gray-200/50 lg:border-none shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] lg:shadow-none transition-all duration-300">
                             <div className="mb-6">
                                 <h3 className="text-2xl md:text-[var(--font-size-title)] font-bold text-[var(--text-primary)] mb-2 font-heading">Build your package</h3>
                                 <p className="text-[var(--text-secondary)]">Choose a category to view available services.</p>
                             </div>
 
                             {/* CATEGORY TABS (The 4 Buttons) */}
-                            <div className="grid grid-cols-2 lg:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 md:gap-4">
                                 {CATEGORIES.map(cat => {
                                     const count = items.filter(i => i.category === cat && selected[i.id]).length;
                                     return (
                                         <button
                                             key={cat}
                                             onClick={() => setActiveCategory(cat)}
-                                            className={`btn-category relative px-4 py-4 md:py-6 text-sm md:text-base font-bold transition-all duration-200 font-heading ${activeCategory === cat
-                                                ? "active"
-                                                : ""
+                                            className={`btn-category relative px-3 py-4 md:px-4 md:py-6 text-[13px] md:text-base font-bold transition-all duration-200 font-heading leading-tight flex items-center justify-center text-center ${activeCategory === cat
+                                                ? "active ring-2 ring-black bg-white shadow-sm"
+                                                : "bg-[#f5f5f5] hover:bg-gray-200 text-gray-600"
                                                 }`}
                                         >
                                             {cat}
                                             {count > 0 && (
-                                                <span className="absolute top-2 right-2 md:top-3 md:right-3 bg-black text-white text-[10px] font-bold px-2 py-0.5 rounded-sm shadow-sm z-10">
+                                                <span className="absolute -top-2 -right-2 md:top-3 md:right-3 bg-blue-600 text-white text-[10px] md:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm z-10 w-5 h-5 md:w-auto md:h-auto flex items-center justify-center">
                                                     {count}
                                                 </span>
                                             )}
@@ -360,9 +360,8 @@ export default function QuoteBuilder() {
                                 })}
                             </div>
 
-
                             {/* Gradient Fade to obscure scrolling items underneath */}
-                            <div className="absolute -bottom-4 left-0 right-0 h-4 bg-gradient-to-b from-[var(--bg-page)] to-transparent pointer-events-none"></div>
+                            <div className="absolute -bottom-4 left-0 right-0 h-4 bg-gradient-to-b from-[var(--bg-page)] to-transparent pointer-events-none hidden lg:block"></div>
                         </div>
 
                         {errors.select && (
