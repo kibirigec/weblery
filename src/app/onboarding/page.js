@@ -256,10 +256,29 @@ export default function QuoteBuilder() {
         <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-main)] font-sans selection:bg-blue-100 selection:text-blue-900">
 
             {/* Nav */}
-            <nav className="fixed top-0 left-0 right-0 z-50 py-6 px-6 md:px-12 bg-white/80 backdrop-blur-md border-b border-gray-100">
-                <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <Link href="/" className="text-xl font-bold tracking-tight">weblery</Link>
-                    <button onClick={() => router.back()} className="text-md font-medium text-gray-500 hover:text-black">Go Back</button>
+            <nav className="fixed top-0 left-0 right-0 z-50 py-4 px-4 md:px-12 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center h-[72px] md:h-auto">
+                <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-2">
+                    <Link href="/" className="text-xl md:text-xl font-bold tracking-tight shrink-0">weblery</Link>
+
+                    {/* Mobile Total summary inside Nav */}
+                    {hasSelections && (
+                        <div className="lg:hidden flex flex-col items-center justify-center flex-1 text-center font-heading px-2">
+                            {oneTime > 0 && (
+                                <div className="text-[10px] md:text-xs whitespace-nowrap">
+                                    <span className="text-gray-500 uppercase tracking-wider mr-1 hidden sm:inline">One-time:</span>
+                                    <span className="text-black font-bold tracking-tight leading-none">{formatUGX(oneTime)}</span>
+                                </div>
+                            )}
+                            {monthly > 0 && (
+                                <div className="text-[10px] md:text-xs whitespace-nowrap">
+                                    <span className="text-gray-500 uppercase tracking-wider mr-1 hidden sm:inline">Monthly:</span>
+                                    <span className="text-black font-bold tracking-tight leading-none">{formatUGX(monthly)} <span className="text-[9px] text-gray-400">/mo</span></span>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    <button onClick={() => router.back()} className="text-sm md:text-md font-medium text-gray-500 hover:text-black shrink-0">Go Back</button>
                 </div>
             </nav>
 
@@ -326,8 +345,8 @@ export default function QuoteBuilder() {
                                             key={cat}
                                             onClick={() => setActiveCategory(cat)}
                                             className={`btn-category relative px-4 py-4 md:py-6 text-sm md:text-base font-bold transition-all duration-200 font-heading ${activeCategory === cat
-                                                    ? "active"
-                                                    : ""
+                                                ? "active"
+                                                : ""
                                                 }`}
                                         >
                                             {cat}
@@ -341,24 +360,6 @@ export default function QuoteBuilder() {
                                 })}
                             </div>
 
-                            {/* MOBILE PRICING SUMMARY (Only visible on small screens when items are selected) */}
-                            {hasSelections && (
-                                <div className="lg:hidden mt-4 bg-[#f5f5f5] p-4 rounded-sm border border-gray-200 shadow-sm flex flex-col gap-2">
-                                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Current Total</h4>
-                                    {oneTime > 0 && (
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm font-medium">One-time:</span>
-                                            <span className="text-base font-bold">{formatUGX(oneTime)}</span>
-                                        </div>
-                                    )}
-                                    {monthly > 0 && (
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm font-medium">Monthly:</span>
-                                            <span className="text-base font-bold">{formatUGX(monthly)}</span>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
 
                             {/* Gradient Fade to obscure scrolling items underneath */}
                             <div className="absolute -bottom-4 left-0 right-0 h-4 bg-gradient-to-b from-[var(--bg-page)] to-transparent pointer-events-none"></div>
@@ -392,8 +393,8 @@ export default function QuoteBuilder() {
                                         key={item.id}
                                         onClick={() => toggleItem(item.id)}
                                         className={`group relative flex flex-col md:flex-row md:items-start justify-between p-6 md:py-8 rounded-sm border transition-all duration-200 text-left ${selected[item.id]
-                                                ? "border-[#0071e3] ring-1 ring-[#0071e3] bg-white text-[#121212]"
-                                                : "border-[#dddbdb] bg-white hover:border-gray-300 hover:shadow-sm text-[#636161]"
+                                            ? "border-[#0071e3] ring-1 ring-[#0071e3] bg-white text-[#121212]"
+                                            : "border-[#dddbdb] bg-white hover:border-gray-300 hover:shadow-sm text-[#636161]"
                                             }`}
                                     >
                                         <div className="flex-1 pr-4 mb-4 md:mb-0 w-full">
