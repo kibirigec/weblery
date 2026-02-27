@@ -198,7 +198,7 @@ export default function ProjectGalleryModal({
                                         {desktopImages.map((img, index) => (
                                             <div
                                                 key={`desktop-${index}`}
-                                                className={`relative w-full ${img.mediaType === 'video' ? 'flex justify-center w-full max-w-[1400px] px-4 md:px-12' : ''}`}
+                                                className={`relative w-full ${img.mediaType === 'video' ? 'flex justify-center w-full max-w-[1000px] px-4 md:px-12' : ''}`}
                                             >
                                                 {img.mediaType === 'video' ? (
                                                     <video
