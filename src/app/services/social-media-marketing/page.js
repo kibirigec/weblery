@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Navigation from "../../components/Navigation";
 import StickySection from "../../components/StickySection";
+import AnimatedLogo from "../../components/AnimatedLogo";
 import Link from "next/link";
 import { useRef } from "react";
 
@@ -19,50 +20,42 @@ export default function SocialMediaPage() {
                 <section className="global-padding mb-24 md:mb-32 flex flex-col items-center text-center">
                     <h1 className="text-5xl md:text-display-l leading-[0.95] tracking-tight font-semibold text-[var(--text-main)] mb-12 max-w-5xl relative">
                         {/* Animated Icons Container */}
-                        <div className="flex justify-center items-center w-full mb-2 md:mb-2 h-12 md:h-12 relative">
+                        <div className="flex justify-center items-center w-full mb-2 md:mb-4 h-14 md:h-16 relative">
                             {(() => {
                                 const icons = [
-                                    // Instagram
                                     <svg key="ig" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 text-orange-500"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>,
-                                    // Facebook
                                     <svg key="fb" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 text-orange-500"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>,
-                                    // X (Twitter)
                                     <svg key="x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 text-orange-500"><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg>,
-                                    // LinkedIn
                                     <svg key="li" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 text-orange-500"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>,
-                                    // TikTok
                                     <svg key="tiktok" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 text-orange-500"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>,
-                                    // Pinterest
                                     <svg key="pin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 text-orange-500"><line x1="12" x2="12" y1="5" y2="19" /><line x1="5" x2="19" y1="12" y2="12" /></svg>,
-                                    // YouTube
                                     <svg key="yt" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 text-orange-500"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2.85 2.85 0 0 1 2.85-2.85C10.24 3.5 12 3.5 12 3.5s1.76 0 6.65.65a2.85 2.85 0 0 1 2.85 2.85 24.12 24.12 0 0 1 0 10 2.85 2.85 0 0 1-2.85 2.85C13.76 20.5 12 20.5 12 20.5s-1.76 0-6.65-.65A2.85 2.85 0 0 1 2.5 17" /><path d="m10 15 5-3-5-3z" /></svg>,
-                                    // Threads
-                                    // <svg key="threads" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 text-orange-500"><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94" /></svg>,
-                                    // Smiley
-                                    <svg key="smile" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 text-orange-500"><circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" x2="9.01" y1="9" y2="9" /><line x1="15" x2="15.01" y1="9" y2="9" /></svg>
+                                    <AnimatedLogo key="logo" theme="orange" startDelay={7 * 1.5} className="w-24 md:w-32 h-auto text-orange-500" />
                                 ];
 
-                                return icons.map((icon, i) => (
-                                    <motion.div
-                                        key={i}
-                                        initial={{ opacity: 0, scale: 0.5, y: 50 }}
-                                        animate={{
-                                            opacity: [0, 1, 1, 0],
-                                            scale: [0.5, 1, 1, 0.5],
-                                            y: [50, 0, 0, -50]
-                                        }}
-                                        transition={{
-                                            duration: 2,
-                                            times: [0, 0.2, 0.8, 1],
-                                            delay: i * 1.5, // Sequential delay
-                                            repeat: Infinity,
-                                            repeatDelay: (icons.length * 1.5) - 2 // Wait for all others to finish loop
-                                        }}
-                                        className="absolute"
-                                    >
-                                        {icon}
-                                    </motion.div>
-                                ));
+                                return icons.map((icon, i) => {
+                                    const isLogo = i === icons.length - 1;
+                                    return (
+                                        <motion.div
+                                            key={i}
+                                            initial={{ opacity: 0, scale: 0.5, y: 50 }}
+                                            animate={{
+                                                opacity: isLogo ? [0, 1] : [0, 1, 1, 0],
+                                                scale: isLogo ? [0.5, 1] : [0.5, 1, 1, 0.5],
+                                                y: isLogo ? [50, 0] : [50, 0, 0, -50]
+                                            }}
+                                            transition={{
+                                                duration: isLogo ? 0.8 : 2,
+                                                times: isLogo ? undefined : [0, 0.2, 0.8, 1],
+                                                delay: i * 1.5,
+                                                ease: isLogo ? "easeOut" : undefined
+                                            }}
+                                            className="absolute"
+                                        >
+                                            {icon}
+                                        </motion.div>
+                                    );
+                                });
                             })()}
                         </div>
 
