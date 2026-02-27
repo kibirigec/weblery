@@ -15,7 +15,11 @@ function ContactFormContent() {
         "Website Design": "Hi! I'm interested in a new website design. I'd love to discuss my project with your team.",
         "Social Media Marketing": "Hi! I'd like to elevate my brand's social media presence. Can we discuss your strategies?",
         "Automation Systems": "Hi! I want to automate my workflows and integrate AI into my business. Could we chat?",
-        "3D Modelling": "Hi! I need high-quality 3D modelling services. Could we chat?."
+        "3D Modelling": "Hi! I need high-quality 3D modelling services. Could we chat?",
+        "Starter Package": "Hi! I'm interested in the Starter package. Could we discuss the next steps?",
+        "Professional Package": "Hi! I'm interested in the Professional package. I'd love to chat further.",
+        "Custom Package": "Hi! I'm interested in a Custom package for my project. Could we discuss my requirements?",
+        "Custom service": "Hi! I have a unique request and would love to discuss a custom service with you."
     };
 
     // Dropdown State
@@ -24,7 +28,11 @@ function ContactFormContent() {
         "Website Design",
         "Social Media Marketing",
         "Automation Systems",
-        "3D Modelling"
+        "3D Modelling",
+        "Starter Package",
+        "Professional Package",
+        "Custom Package",
+        "Custom service"
     ];
 
     // Form State
@@ -42,10 +50,12 @@ function ContactFormContent() {
         if (interest) {
             let srv = "Website Design";
             // Map exact values from services pages
-            if (interest === "starter" || interest === "professional" || interest === "website") srv = "Website Design";
-            if (interest === "custom") srv = "Automation Systems";
+            if (interest === "starter") srv = "Starter Package";
+            if (interest === "professional") srv = "Professional Package";
+            if (interest === "custom") srv = "Custom Package";
+            if (interest === "website") srv = "Website Design";
             if (interest === "social-media") srv = "Social Media Marketing";
-            if (interest === "automation") srv = "Automation Systems"; // Close match
+            if (interest === "automation") srv = "Automation Systems";
             if (interest === "3d") srv = "3D Modelling";
 
             setFormData(prev => ({
