@@ -46,7 +46,7 @@ export default function ClayWork() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 2.0, ease: [0.16, 1, 0.3, 1] }}
-            className="section-title text-display-m md:text-display-s leading-[0.9]! text-[var(--text-primary)] tracking-tight"
+            className="section-title text-display-m md:text-display-s leading-[0.9]! text-[var(--text-primary)] tracking-tighter"
           >
             {"See "}
             <br className="hidden lg:block" /><span className="md:hidden">our</span><span className="hidden md:inline">Our</span> work

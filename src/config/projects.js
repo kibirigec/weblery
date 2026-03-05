@@ -65,13 +65,18 @@ export const PROJECTS = [
     client: "Blushé",
     type: "Online Boutique",
     serviceDescription: "A minimalist, conversion-focused e-commerce experience.",
-    fullDescription: "For Blushé, the focus was entirely on the product. We built a lightning-fast Online headless storefront that prioritizes high-resolution imagery and a frictionless checkout process to maximize sales.",
+    fullDescription: "For Blushé, the focus was entirely on the product. We built a lightning-fast Online headless storefront that prioritizes high-resolution imagery and a frictionless checkout process to maximize sales. On top of that, we created hyper-realistic 3D characters to display how their products look on a real person. ",
     deliverables: ["3D Models", "Online Store", "UI/UX Design", "Conversion Optimization", "E-commerce Development",],
     underMaintenance: true,
     image: "/portfolio/blushe/main.jpg",
     previewImage: "/portfolio/blushe/previewimage.png",
     gallery: [
-      { type: "desktop", src: "/portfolio/blushe/desktop.mov", mediaType: "video" }
+      {
+        type: "desktop",
+        src: "https://res.cloudinary.com/dz2o14lnf/video/upload/desktop_hwxzvn.mp4",
+        mediaType: "video",
+        poster: "/portfolio/blushe/previewimage.png"
+      }
     ]
   },
   {

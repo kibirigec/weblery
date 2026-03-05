@@ -5,6 +5,186 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
+function EmbedFrame({ src, title, poster, priority = false }) {
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    return (
+        <div className="relative w-full aspect-video rounded-none shadow-2xl bg-[#0f0f0f] overflow-hidden">
+            {!isLoaded && poster && (
+                <img
+                    src={poster}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+            )}
+            <iframe
+                src={src}
+                title={title}
+                allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                allowFullScreen
+                loading={priority ? 'eager' : 'lazy'}
+                onLoad={() => setIsLoaded(true)}
+                className={`absolute inset-0 w-full h-full border-0 transition-opacity duration-200 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            />
+        </div>
+    );
+}
+
+function SubtleVideo({ src, title, poster, priority = false }) {
+    const videoRef = useRef(null);
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [isReady, setIsReady] = useState(false);
+    const [duration, setDuration] = useState(0);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [isScrubbing, setIsScrubbing] = useState(false);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const syncState = () => {
+            setIsPlaying(!video.paused);
+            setCurrentTime(video.currentTime || 0);
+        };
+
+        syncState();
+
+        video.addEventListener('play', syncState);
+        video.addEventListener('pause', syncState);
+        video.addEventListener('loadedmetadata', syncState);
+
+        const attemptAutoplay = async () => {
+            try {
+                await video.play();
+            } catch {
+                setIsPlaying(false);
+            }
+        };
+
+        attemptAutoplay();
+
+        return () => {
+            video.removeEventListener('play', syncState);
+            video.removeEventListener('pause', syncState);
+            video.removeEventListener('loadedmetadata', syncState);
+        };
+    }, [src]);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        let rafId;
+
+        const updateFromVideo = () => {
+            if (!isScrubbing) {
+                setCurrentTime(video.currentTime || 0);
+            }
+            rafId = requestAnimationFrame(updateFromVideo);
+        };
+
+        if (isPlaying) {
+            rafId = requestAnimationFrame(updateFromVideo);
+        }
+
+        return () => {
+            if (rafId) cancelAnimationFrame(rafId);
+        };
+    }, [isPlaying, isScrubbing]);
+
+    const togglePlay = () => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (video.paused) {
+            video.play().catch(() => {});
+        } else {
+            video.pause();
+        }
+    };
+
+    const handleSeek = (event) => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const nextTime = Number(event.target.value);
+        video.currentTime = nextTime;
+        setCurrentTime(nextTime);
+    };
+
+    const formatTime = (value) => {
+        if (!Number.isFinite(value) || value < 0) return '0:00';
+        const totalSeconds = Math.floor(value);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes}:${String(seconds).padStart(2, '0')}`;
+    };
+
+    return (
+        <div className="group relative w-full">
+            <video
+                ref={videoRef}
+                src={src}
+                poster={poster}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload={priority ? 'auto' : 'metadata'}
+                onLoadedData={() => setIsReady(true)}
+                onLoadedMetadata={(event) => setDuration(event.currentTarget.duration || 0)}
+                className="w-full h-auto object-contain block rounded-none shadow-2xl bg-[#0f0f0f]"
+                aria-label={title}
+            />
+
+            <div className={`absolute bottom-3 left-3 right-3 flex items-center gap-3 px-3 py-2 rounded-full bg-black/45 backdrop-blur-md transition-all duration-200 ${isReady ? 'opacity-100 md:opacity-0 md:group-hover:opacity-100' : 'opacity-0'}`}>
+                <button
+                    type="button"
+                    onClick={togglePlay}
+                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                    aria-label={isPlaying ? 'Pause video' : 'Play video'}
+                >
+                    {isPlaying ? (
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <rect x="6" y="5" width="4" height="14" rx="1" />
+                            <rect x="14" y="5" width="4" height="14" rx="1" />
+                        </svg>
+                    ) : (
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                    )}
+                </button>
+
+                <div className="flex items-center gap-2 flex-1">
+                    <span className="text-white/85 text-xs tabular-nums min-w-10">
+                        {formatTime(currentTime)}
+                    </span>
+                    <input
+                        type="range"
+                        min={0}
+                        max={Math.max(duration, 0)}
+                        step={0.1}
+                        value={Math.min(currentTime, duration || 0)}
+                        onChange={handleSeek}
+                        onInput={handleSeek}
+                        onMouseDown={() => setIsScrubbing(true)}
+                        onMouseUp={() => setIsScrubbing(false)}
+                        onTouchStart={() => setIsScrubbing(true)}
+                        onTouchEnd={() => setIsScrubbing(false)}
+                        className="flex-1 h-1.5 accent-white cursor-pointer"
+                        aria-label="Seek video timeline"
+                    />
+                    <span className="text-white/85 text-xs tabular-nums min-w-10 text-right">
+                        {formatTime(duration)}
+                    </span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function ProjectGalleryModal({
     isOpen,
     onClose,
@@ -194,20 +374,25 @@ export default function ProjectGalleryModal({
                             >
                                 {/* Desktop Images */}
                                 <div className={`h-full overflow-y-auto overflow-x-hidden relative ${isLegacy ? 'w-full' : 'w-1/2'}`}>
-                                    <div className={`flex flex-col gap-12 md:gap-24 pb-16 pt-6 h-full ${desktopImages.some(img => img.mediaType === 'video') ? 'px-0 items-center justify-center' : 'px-6 md:px-48'}`}>
+                                    <div className={`flex flex-col gap-12 md:gap-24 pb-16 pt-6 h-full ${desktopImages.some(img => ['video', 'embed'].includes(img.mediaType)) ? 'px-0 items-center justify-center' : 'px-6 md:px-48'}`}>
                                         {desktopImages.map((img, index) => (
                                             <div
                                                 key={`desktop-${index}`}
-                                                className={`relative w-full ${img.mediaType === 'video' ? 'flex justify-center w-full max-w-[1000px] px-4 md:px-12' : ''}`}
+                                                className={`relative w-full ${['video', 'embed'].includes(img.mediaType) ? 'flex justify-center w-full max-w-[1000px] px-4 md:px-12' : ''}`}
                                             >
                                                 {img.mediaType === 'video' ? (
-                                                    <video
+                                                    <SubtleVideo
                                                         src={img.src}
-                                                        autoPlay
-                                                        loop
-                                                        muted
-                                                        playsInline
-                                                        className="w-full h-auto object-contain block rounded-none shadow-2xl bg-[#0f0f0f]"
+                                                        title={`${clientName} desktop video ${index + 1}`}
+                                                        poster={img.poster}
+                                                        priority={index === 0}
+                                                    />
+                                                ) : img.mediaType === 'embed' ? (
+                                                    <EmbedFrame
+                                                        src={img.src}
+                                                        title={`${clientName} desktop embed ${index + 1}`}
+                                                        poster={img.poster}
+                                                        priority={index === 0}
                                                     />
                                                 ) : (
                                                     <Image
@@ -230,20 +415,25 @@ export default function ProjectGalleryModal({
                                 {/* Mobile Images */}
                                 {!isLegacy && (
                                     <div className="h-full w-1/2 overflow-y-auto overflow-x-hidden relative">
-                                        <div className={`flex flex-col gap-12 md:gap-24 pb-16 pt-6 h-full ${mobileImages.some(img => img.mediaType === 'video') ? 'px-0 items-center justify-center' : 'px-6 md:px-48'}`}>
+                                        <div className={`flex flex-col gap-12 md:gap-24 pb-16 pt-6 h-full ${mobileImages.some(img => ['video', 'embed'].includes(img.mediaType)) ? 'px-0 items-center justify-center' : 'px-6 md:px-48'}`}>
                                             {mobileImages.map((img, index) => (
                                                 <div
                                                     key={`mobile-${index}`}
-                                                    className={`relative w-full ${img.mediaType === 'video' ? 'flex justify-center px-0! md:px-0 lg:px-0' : 'md:px-[20%] lg:px-[30%]'}`}
+                                                    className={`relative w-full ${['video', 'embed'].includes(img.mediaType) ? 'flex justify-center px-0! md:px-0 lg:px-0' : 'md:px-[20%] lg:px-[30%]'}`}
                                                 >
                                                     {img.mediaType === 'video' ? (
-                                                        <video
+                                                        <SubtleVideo
                                                             src={img.src}
-                                                            autoPlay
-                                                            loop
-                                                            muted
-                                                            playsInline
-                                                            className="w-full h-auto object-contain block rounded-none shadow-2xl bg-[#0f0f0f]"
+                                                            title={`${clientName} mobile video ${index + 1}`}
+                                                            poster={img.poster}
+                                                            priority={index === 0}
+                                                        />
+                                                    ) : img.mediaType === 'embed' ? (
+                                                        <EmbedFrame
+                                                            src={img.src}
+                                                            title={`${clientName} mobile embed ${index + 1}`}
+                                                            poster={img.poster}
+                                                            priority={index === 0}
                                                         />
                                                     ) : (
                                                         <Image
