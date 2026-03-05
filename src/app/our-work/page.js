@@ -99,7 +99,7 @@ function IndustryItem({ industry, projects, featuredImage }) {
                             return <span key={p.slug} className="client-text text-body-m font-medium text-neutral-400 block">{p.client}</span>;
                         }
                         return (
-                            <Link key={p.slug} href={`/work/${p.slug}`} className="client-link text-body-m font-medium text-neutral-500 hover:text-neutral-900 hover:underline transition-colors block">
+                            <Link key={p.slug} href={`/our-work/${p.slug}`} className="client-link text-body-m font-medium text-neutral-500 hover:text-neutral-900 hover:underline transition-colors block">
                                 {p.client}
                             </Link>
                         )
@@ -111,7 +111,7 @@ function IndustryItem({ industry, projects, featuredImage }) {
                         <span>Projects incoming</span>
                     </div>
                 ) : (
-                    <Link href={`/work/${projects[0].slug}`} className="industry-explore-link inline-flex items-center gap-2 text-[#020f24] font-medium hover:gap-4 transition-all group">
+                    <Link href={`/our-work/${projects[0].slug}`} className="industry-explore-link inline-flex items-center gap-2 text-[#020f24] font-medium hover:gap-4 transition-all group">
                         <span className="border-b-[1.5px] border-dotted border-neutral-400/70 pb-0.5 group-hover:border-[#020f24] transition-colors">Explore {industry.toLowerCase()}</span>
                         <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                     </Link>

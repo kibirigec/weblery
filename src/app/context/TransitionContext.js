@@ -30,7 +30,7 @@ export function TransitionProvider({ children }) {
     // Wait for the overlay (0.4s) + buffer before navigating. 
     // User requested "faster", reducing offset to 800ms.
     setTimeout(() => {
-      router.push(`/work/${slug}`);
+      router.push(`/our-work/${slug}`);
     }, 100);
   };
 

@@ -69,7 +69,7 @@ export default function ClayWork() {
             const linkProps = isComingSoon
               ? { as: "div", className: "cursor-default" }
               : {
-                href: `/work/${project.slug}`,
+                href: `/our-work/${project.slug}`,
                 passHref: true,
                 scroll: false,
                 onClick: (e) => handleProjectClick(e, project, i)
