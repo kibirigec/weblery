@@ -79,7 +79,7 @@ export default function Navigation() {
                     <div className="hidden md:flex items-center gap-12">
                         <div className="flex items-center gap-8">
                             {[
-                                { label: "Work", href: "/our-work" },
+                                { label: "Our work", href: "/our-work" },
                                 { label: "Services", href: "/services", hasDropdown: true },
                                 { label: "Pricing", href: "/pricing" },
                                 { label: "About", href: "/about" }
@@ -237,7 +237,7 @@ export default function Navigation() {
                 >
                     {[
                         { label: "Home", href: "/" },
-                        { label: "Work", href: "/our-work" },
+                        { label: "Our work", href: "/our-work" },
                         { label: "Services", href: "/services", hasDropdown: true },
                         { label: "Pricing", href: "/pricing" },
                         { label: "About", href: "/about" },
