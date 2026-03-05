@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -33,11 +33,29 @@ function EmbedFrame({ src, title, poster, priority = false }) {
 
 function SubtleVideo({ src, title, poster, priority = false }) {
     const videoRef = useRef(null);
+    const hideTimerRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(true);
     const [isReady, setIsReady] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [isScrubbing, setIsScrubbing] = useState(false);
+    const [showControls, setShowControls] = useState(false);
+
+    const clearHideTimer = useCallback(() => {
+        if (hideTimerRef.current) {
+            clearTimeout(hideTimerRef.current);
+            hideTimerRef.current = null;
+        }
+    }, []);
+
+    const revealControls = useCallback((timeoutMs = 1600) => {
+        clearHideTimer();
+        setShowControls(true);
+        hideTimerRef.current = setTimeout(() => {
+            setShowControls(false);
+            hideTimerRef.current = null;
+        }, timeoutMs);
+    }, [clearHideTimer]);
 
     useEffect(() => {
         const video = videoRef.current;
@@ -71,6 +89,8 @@ function SubtleVideo({ src, title, poster, priority = false }) {
         };
     }, [src]);
 
+    useEffect(() => () => clearHideTimer(), [clearHideTimer]);
+
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
@@ -97,6 +117,8 @@ function SubtleVideo({ src, title, poster, priority = false }) {
         const video = videoRef.current;
         if (!video) return;
 
+        revealControls();
+
         if (video.paused) {
             video.play().catch(() => {});
         } else {
@@ -108,6 +130,7 @@ function SubtleVideo({ src, title, poster, priority = false }) {
         const video = videoRef.current;
         if (!video) return;
 
+        revealControls();
         const nextTime = Number(event.target.value);
         video.currentTime = nextTime;
         setCurrentTime(nextTime);
@@ -122,7 +145,11 @@ function SubtleVideo({ src, title, poster, priority = false }) {
     };
 
     return (
-        <div className="group relative w-full">
+        <div
+            className="relative w-full"
+            onMouseMove={() => revealControls()}
+            onTouchStart={() => revealControls()}
+        >
             <video
                 ref={videoRef}
                 src={src}
@@ -132,33 +159,40 @@ function SubtleVideo({ src, title, poster, priority = false }) {
                 muted
                 playsInline
                 preload={priority ? 'auto' : 'metadata'}
-                onLoadedData={() => setIsReady(true)}
+                onLoadedData={() => {
+                    setIsReady(true);
+                    revealControls(1400);
+                }}
                 onLoadedMetadata={(event) => setDuration(event.currentTarget.duration || 0)}
                 className="w-full h-auto object-contain block rounded-none shadow-2xl bg-[#0f0f0f]"
                 aria-label={title}
+                onClick={togglePlay}
             />
 
-            <div className={`absolute bottom-3 left-3 right-3 flex items-center gap-3 px-3 py-2 rounded-full bg-black/45 backdrop-blur-md transition-all duration-200 ${isReady ? 'opacity-100 md:opacity-0 md:group-hover:opacity-100' : 'opacity-0'}`}>
+            <div className={`absolute bottom-2 left-2 right-2 md:bottom-3 md:left-3 md:right-3 flex items-center gap-2 md:gap-3 px-2 py-1.5 md:px-3 md:py-2 rounded-xl md:rounded-full bg-black/45 backdrop-blur-md transition-all duration-300 ${isReady && showControls ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-1 pointer-events-none'}`}>
                 <button
                     type="button"
-                    onClick={togglePlay}
-                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        togglePlay();
+                    }}
+                    className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
                     aria-label={isPlaying ? 'Pause video' : 'Play video'}
                 >
                     {isPlaying ? (
-                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <svg className="w-3 md:w-3.5 h-3 md:h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <rect x="6" y="5" width="4" height="14" rx="1" />
                             <rect x="14" y="5" width="4" height="14" rx="1" />
                         </svg>
                     ) : (
-                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <svg className="w-3 md:w-3.5 h-3 md:h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M8 5v14l11-7z" />
                         </svg>
                     )}
                 </button>
 
                 <div className="flex items-center gap-2 flex-1">
-                    <span className="text-white/85 text-xs tabular-nums min-w-10">
+                    <span className="text-white/85 text-[10px] md:text-xs tabular-nums min-w-8 md:min-w-10">
                         {formatTime(currentTime)}
                     </span>
                     <input
@@ -169,14 +203,29 @@ function SubtleVideo({ src, title, poster, priority = false }) {
                         value={Math.min(currentTime, duration || 0)}
                         onChange={handleSeek}
                         onInput={handleSeek}
-                        onMouseDown={() => setIsScrubbing(true)}
-                        onMouseUp={() => setIsScrubbing(false)}
-                        onTouchStart={() => setIsScrubbing(true)}
-                        onTouchEnd={() => setIsScrubbing(false)}
-                        className="flex-1 h-1.5 accent-white cursor-pointer"
+                        onMouseDown={() => {
+                            setIsScrubbing(true);
+                            clearHideTimer();
+                            setShowControls(true);
+                        }}
+                        onMouseUp={() => {
+                            setIsScrubbing(false);
+                            revealControls();
+                        }}
+                        onTouchStart={() => {
+                            setIsScrubbing(true);
+                            clearHideTimer();
+                            setShowControls(true);
+                        }}
+                        onTouchEnd={() => {
+                            setIsScrubbing(false);
+                            revealControls();
+                        }}
+                        onClick={(event) => event.stopPropagation()}
+                        className="flex-1 h-1 md:h-1.5 accent-white cursor-pointer"
                         aria-label="Seek video timeline"
                     />
-                    <span className="text-white/85 text-xs tabular-nums min-w-10 text-right">
+                    <span className="text-white/85 text-[10px] md:text-xs tabular-nums min-w-8 md:min-w-10 text-right">
                         {formatTime(duration)}
                     </span>
                 </div>
