@@ -5,8 +5,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AnimatedLogo from "./AnimatedLogo";
+import { useIsUSMarket } from "../../lib/market";
 
 export default function Navigation() {
+    const isUS = useIsUSMarket();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
     const { scrollY } = useScroll();
@@ -81,7 +83,7 @@ export default function Navigation() {
                             {[
                                 { label: "Our work", href: "/our-work" },
                                 { label: "Services", href: "/services", hasDropdown: true },
-                                { label: "Pricing", href: "/pricing" },
+                                ...(!isUS ? [{ label: "Pricing", href: "/pricing" }] : []),
                                 { label: "About", href: "/about" }
                             ].map((item) => {
                                 const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
@@ -239,7 +241,7 @@ export default function Navigation() {
                         { label: "Home", href: "/" },
                         { label: "Our work", href: "/our-work" },
                         { label: "Services", href: "/services", hasDropdown: true },
-                        { label: "Pricing", href: "/pricing" },
+                        ...(!isUS ? [{ label: "Pricing", href: "/pricing" }] : []),
                         { label: "About", href: "/about" },
                         { label: "Contact", href: "/contact" }
                     ].map((item) => (
@@ -349,7 +351,7 @@ export default function Navigation() {
                     }}
                     className="absolute bottom-12 left-8 text-[#86868b] text-sm"
                 >
-                    <p className="mb-2">Kampala, Uganda</p>
+                    <p className="mb-2">{isUS ? "Distributed & Remote" : "Kampala, Uganda"}</p>
                     <p>hello@weblery.com</p>
                 </motion.div>
             </motion.div>

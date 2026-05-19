@@ -9,8 +9,10 @@ import {
 } from "motion/react";
 import { useRef, useMemo, useEffect, useState } from  'react'
 import Link from 'next/link';
+import { useIsUSMarket } from "../../lib/market";
 
 export default function ServiceHero({ service, onOpenModal }) {
+  const isUS = useIsUSMarket();
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
 
@@ -179,7 +181,7 @@ export default function ServiceHero({ service, onOpenModal }) {
             </div>
             {/* Sticky Buttons */}
             <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4 z-30 px-4 sm:px-0">
-              <Link href={`/onboarding?track=custom&service=${service.slug}`} passHref>
+              <Link href={isUS ? `/contact?interest=${service.slug}` : `/onboarding?track=custom&service=${service.slug}`} passHref>
                 <motion.div
                   className="w-full sm:w-auto min-h-[44px] px-6 py-3 bg-white text-black rounded-md border border-gray-300 text-base sm:text-lg font-semibold shadow-lg hover:bg-gray-100 transition-colors cursor-pointer flex items-center justify-center"
                   whileHover={isMobile ? {} : { scale: 1.05 }}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
+import { useIsUSMarket } from "../../lib/market";
 
 
 const SERVICES = [
@@ -210,6 +211,7 @@ function ServiceItem({ service }) {
 }
 
 export default function ServicesPage() {
+  const isUS = useIsUSMarket();
   const router = useRouter();
 
   return (
@@ -229,7 +231,9 @@ export default function ServicesPage() {
               From idea to <br className="hidden md:block" />impact, digitally
             </h1>
             <p className="hero-subtitle text-subtitle-m md:text-subtitle text-[var(--text-secondary)] max-w-2xl relative z-10">
-              Our rich design and technology expertise delivers top brands and digital experiences.
+              {isUS 
+                ? "Our elite distributed network of design and technology experts delivers world-class digital experiences." 
+                : "Our rich design and technology expertise delivers top brands and digital experiences."}
             </p>
 
             <div className="mt-10 flex justify-center relative z-10">
@@ -264,7 +268,7 @@ export default function ServicesPage() {
           <h2 className="cta-title text-title-m md:text-display-s mb-8 max-w-3xl mx-auto">
             Reach out to us
           </h2>
-          <Link href="/pricing" className="cta-button group inline-flex items-center gap-3 bg-black text-white px-10 py-5 rounded-full text-xl font-medium transition-all duration-300">
+          <Link href={isUS ? "/contact" : "/pricing"} className="cta-button group inline-flex items-center gap-3 bg-black text-white px-10 py-5 rounded-full text-xl font-medium transition-all duration-300">
             <span className="relative">
               Start your Project
               <span className="absolute -bottom-1 left-0 w-full h-[1px] bg-white transform scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100"></span>

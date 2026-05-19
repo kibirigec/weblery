@@ -1,8 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useIsUSMarket } from '../../lib/market';
 
 export default function ClayHero() {
+  const isUS = useIsUSMarket();
+
   return (
     <section id="home-hero" className="relative min-h-[40vh] md:min-h-[90vh] flex flex-col justify-center overflow-hidden bg-[var(--bg-page)] pt-32 pb-12 md:pt-20 md:pb-0">
       <div className="w-full relative z-10 global-padding">
@@ -13,9 +16,10 @@ export default function ClayHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Weblery is a branding <br className="hidden md:block" />
-            <br className="block md:hidden" />and
-            UX design agency
+            Weblery is a {isUS ? "remote-first" : "branding"}{" "}
+            <br className="hidden md:block" />
+            <br className="block md:hidden" />
+            {isUS ? "branding & UX design agency" : "and UX design agency"}
           </motion.h1>
         </div>
       </div>

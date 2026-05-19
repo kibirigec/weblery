@@ -6,8 +6,10 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import AnimatedLogo from "../components/AnimatedLogo";
 import { Menu, X } from "lucide-react";
+import { useIsUSMarket } from "../../lib/market";
 
 function ContactFormContent() {
+    const isUS = useIsUSMarket();
     const searchParams = useSearchParams();
     const interest = searchParams.get("interest");
 
@@ -24,7 +26,13 @@ function ContactFormContent() {
 
     // Dropdown State
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const servicesList = [
+    const servicesList = isUS ? [
+        "Website Design",
+        "Social Media Marketing",
+        "Automation Systems",
+        "3D Modelling",
+        "Custom service"
+    ] : [
         "Website Design",
         "Social Media Marketing",
         "Automation Systems",
@@ -53,10 +61,10 @@ function ContactFormContent() {
             if (interest === "starter") srv = "Starter Package";
             if (interest === "professional") srv = "Professional Package";
             if (interest === "custom") srv = "Custom Package";
-            if (interest === "website") srv = "Website Design";
-            if (interest === "social-media") srv = "Social Media Marketing";
-            if (interest === "automation") srv = "Automation Systems";
-            if (interest === "3d") srv = "3D Modelling";
+            if (interest === "website" || interest === "website-design") srv = "Website Design";
+            if (interest === "social-media" || interest === "social-media-marketing") srv = "Social Media Marketing";
+            if (interest === "automation" || interest === "ai-integration") srv = "Automation Systems";
+            if (interest === "3d" || interest === "3d-modelling") srv = "3D Modelling";
 
             setFormData(prev => ({
                 ...prev,
@@ -64,7 +72,7 @@ function ContactFormContent() {
                 message: prev.message === serviceMessages[prev.service] || prev.message.trim() === "" ? serviceMessages[srv] : prev.message
             }));
         }
-    }, [interest]);
+    }, [interest, isUS]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -82,7 +90,8 @@ function ContactFormContent() {
         const text = encodeURIComponent(
             `Name: ${formData.firstName}\nPhone: ${formData.phone}\nService: ${formData.service}\nEmail: ${formData.email}\n\nProject Description:\n${formData.message}`
         );
-        window.open(`https://wa.me/256746642075?text=${text}`, "_blank");
+        const targetNumber = isUS ? "16502507193" : "256746642075";
+        window.open(`https://wa.me/${targetNumber}?text=${text}`, "_blank");
     };
 
     return (
@@ -107,7 +116,7 @@ function ContactFormContent() {
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="0772456789"
+                        placeholder={isUS ? "(650) 250-7193" : "0772456789"}
                         className="w-full bg-transparent border border-gray-400 rounded-md px-4 py-3 outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all text-sm sm:text-base placeholder:text-gray-400 font-medium text-black"
                     />
                 </div>
@@ -236,6 +245,7 @@ function ContactFormContent() {
 }
 
 export default function ContactPage() {
+    const isUS = useIsUSMarket();
 
     return (
         <div className="bg-[#EAEAEA] h-screen w-full text-black flex flex-col md:flex-row font-sans overflow-hidden">
@@ -333,8 +343,8 @@ export default function ContactPage() {
                     >
                         <div className="flex flex-col text-left">
                             <p className="text-white mb-1 uppercase tracking-widest text-[10px]">Call : </p>
-                            <a href="tel:0746642075" className="text-[#1E4ED8] hover:text-blue-500 transition-colors">
-                                <span className="border-b border-dotted border-[#1E4ED8] text-[16px]">0746642075</span>
+                            <a href={isUS ? "tel:+16502507193" : "tel:0746642075"} className="text-[#1E4ED8] hover:text-blue-500 transition-colors">
+                                <span className="border-b border-dotted border-[#1E4ED8] text-[16px]">{isUS ? "1 650 250 7193" : "0746642075"}</span>
                             </a>
                         </div>
                         <div className="flex flex-col text-right">
@@ -350,8 +360,8 @@ export default function ContactPage() {
                 <div className="z-10 hidden md:flex flex-row gap-32 text-sm font-medium tracking-wide text-gray-400 mt-auto pt-12 w-full justify-center text-start ">
                     <div className="flex flex-col text-left">
                         <p className="text-white mb-1 uppercase tracking-widest text-[10px]">Call : </p>
-                        <a href="tel:0746642075" className="text-[#1E4ED8] hover:text-blue-500 transition-colors">
-                            <span className="border-b border-dotted border-[#1E4ED8] text-[20px]">0746642075</span>
+                        <a href={isUS ? "tel:+16502507193" : "tel:0746642075"} className="text-[#1E4ED8] hover:text-blue-500 transition-colors">
+                            <span className="border-b border-dotted border-[#1E4ED8] text-[20px]">{isUS ? "1 650 250 7193" : "0746642075"}</span>
                         </a>
                     </div>
                     <div className="flex flex-col text-left">

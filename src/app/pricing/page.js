@@ -2,8 +2,10 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Navigation from "../components/Navigation";
+import { isUSMarket } from "../../lib/market";
 
 
 const PLANS = [
@@ -63,8 +65,24 @@ const PLANS = [
 ];
 
 export default function PricingPage() {
+  const router = useRouter();
+  const [isUS, setIsUS] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (isUSMarket()) {
+      setIsUS(true);
+      router.replace("/contact");
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
+
+  if (isUS || loading) {
+    return <div className="min-h-screen bg-white" />;
+  }
+
   return (
-    // ... existing code ...
     <div className="bg-white min-h-screen text-[var(--text-main)] selection:bg-purple-600 selection:text-white">
       <Navigation />
 

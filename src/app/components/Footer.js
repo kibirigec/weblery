@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useIsUSMarket } from "../../lib/market";
 
 const FooterLink = ({
   href,
@@ -18,6 +19,7 @@ const FooterLink = ({
 );
 
 export default function Footer() {
+  const isUS = useIsUSMarket();
   const sections = [
     {
       title: "Company",
@@ -46,7 +48,10 @@ export default function Footer() {
       title: "Contact",
       links: [
         { name: "hello@weblery.com", href: "mailto:hello@weblery.com" },
-        { name: "+256 746 642 075", href: "tel:+256746642075" },
+        { 
+          name: isUS ? "1 650 250 7193" : "+256 746 642 075", 
+          href: isUS ? "tel:+16502507193" : "tel:+256746642075" 
+        },
       ],
     },
   ];
@@ -99,7 +104,7 @@ export default function Footer() {
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-3 text-[12px] text-white/60">
             <span>Copyright © {year} Weblery. All rights reserved.</span>
             <span className="hidden md:inline text-white/25">|</span>
-            <span>Kyanja, Kampala — Uganda</span>
+            <span>{isUS ? "Distributed & Remote — United States" : "Kyanja, Kampala — Uganda"}</span>
           </div>
 
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-[12px]">

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { isUSMarket } from "../../lib/market";
 
 const WHATSAPP_NUMBER = "256700000000"; // change to your real number
 
@@ -151,12 +152,28 @@ const items = [
 
 export default function QuoteBuilder() {
     const router = useRouter();
+    const [isUS, setIsUS] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (isUSMarket()) {
+            setIsUS(true);
+            router.replace("/contact");
+        } else {
+            setLoading(false);
+        }
+    }, [router]);
+
     const [selected, setSelected] = useState({});
     const [contact, setContact] = useState({ name: "", phone: "" });
     const [errors, setErrors] = useState({});
     const [activeCategory, setActiveCategory] = useState("Website Design");
     const [adBudget, setAdBudget] = useState("");
     const [showAdInfo, setShowAdInfo] = useState(false);
+
+    if (isUS || loading) {
+        return <div className="min-h-screen bg-white" />;
+    }
 
     const CATEGORIES = ["Website Design", "Social Media Services", "3D Modelling", "Automated Services"];
 

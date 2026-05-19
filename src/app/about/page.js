@@ -4,10 +4,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Navigation from "../components/Navigation";
 import Link from "next/link";
 import { useRef } from "react";
+import { useIsUSMarket } from "../../lib/market";
 
 import StickySection from "../components/StickySection";
 
 export default function AboutPage() {
+    const isUS = useIsUSMarket();
     const containerRef = useRef(null);
 
     return (
@@ -76,7 +78,15 @@ export default function AboutPage() {
                             transition={{ duration: 0.8 }}
                             className="text-6xl md:text-[8rem] tracking-tighter font-medium leading-[0.8] text-[#020f24]! mb-12 md:mb-20"
                         >
-                            <span className="text-blue-900 text-[] md:text-display"> Kampala,</span> <br />Uganda
+                            {isUS ? (
+                                <>
+                                    <span className="text-blue-900 text-[] md:text-display"> Distributed &</span> <br />Remote
+                                </>
+                            ) : (
+                                <>
+                                    <span className="text-blue-900 text-[] md:text-display"> Kampala,</span> <br />Uganda
+                                </>
+                            )}
                         </motion.h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
@@ -93,10 +103,18 @@ export default function AboutPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-1 gap-12  mt-24">
                             <p className="text-body-m md:text-title leading-tight! md:leading-[0.95]! md:mt-12 font-medium text-neutral-900 md:max-w-5xl">
-                                Our office serves <br className="hidden md:hidden" />as a creative <br className="block md:block" /> sanctuary<br className="hidden md:hidden" /> where engineering meets<br className="hidden md:hidden" /> artistry.<br className="block md:hidden" /> <br className="hidden md:block" />We are a collective of designers, developers, <br className="block md:hidden" />and  <br className="hidden md:block" />strategists obsessed <br className="hidden md:hidden" /> with the small details <br className="block md:hidden" />that define<br className="hidden md:block" /> your  world-class digital experiences.
+                                {isUS ? (
+                                    <>
+                                        Our remote-first culture serves <br className="hidden md:hidden" />as a creative <br className="block md:block" /> playground<br className="hidden md:hidden" /> where engineering meets<br className="hidden md:hidden" /> artistry.<br className="block md:hidden" /> <br className="hidden md:block" />We are a distributed collective of elite designers, developers, <br className="block md:hidden" />and <br className="hidden md:block" />strategists obsessed <br className="hidden md:hidden" /> with the small details <br className="block md:hidden" />that define<br className="hidden md:block" /> your world-class digital experiences.
+                                    </>
+                                ) : (
+                                    <>
+                                        Our office serves <br className="hidden md:hidden" />as a creative <br className="block md:block" /> sanctuary<br className="hidden md:hidden" /> where engineering meets<br className="hidden md:hidden" /> artistry.<br className="block md:hidden" /> <br className="hidden md:block" />We are a collective of designers, developers, <br className="block md:hidden" />and <br className="hidden md:block" />strategists obsessed <br className="hidden md:hidden" /> with the small details <br className="block md:hidden" />that define<br className="hidden md:block" /> your world-class digital experiences.
+                                    </>
+                                )}
                             </p>
                             <p className="text-body-m md:text-title leading-tight! md:leading-[0.95]! md:mt-4 font-medium text-neutral-900 md:max-w-5xl">
-                                We believe that in a digital world cluttered with noise, clarity is the <br className="hidden md:block" />ultimate differentiator. Our process is rooted in reduction,stripping <br className="hidden md:block" />away <br className="block md:hidden" />the unnecessary to reveal interfaces that feel inevitable. <br className="hidden md:block" />All while delivering expectations.
+                                We believe that in a digital world cluttered with noise, clarity is the <br className="hidden md:block" />ultimate differentiator. Our process is rooted in reduction, stripping <br className="hidden md:block" />away <br className="block md:hidden" />the unnecessary to reveal interfaces that feel inevitable. <br className="hidden md:block" />All while exceeding expectations.
                             </p>
                         </div>
                     </div>

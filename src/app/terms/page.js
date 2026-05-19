@@ -2,8 +2,10 @@
 
 import Navigation from "../components/Navigation";
 import { motion } from "framer-motion";
+import { useIsUSMarket } from "../../lib/market";
 
 export default function TermsOfService() {
+    const isUS = useIsUSMarket();
     return (
         <div className="bg-white min-h-screen text-[var(--text-main)] selection:bg-black selection:text-white">
             <Navigation />
@@ -80,7 +82,7 @@ export default function TermsOfService() {
                             <section>
                                 <h2 className="text-2xl font-semibold mb-4 text-[#020f24]">8. Governing Law</h2>
                                 <p>
-                                    These Terms of Service are governed by and construed in accordance with the laws of Uganda. Any disputes arising out of or related to these terms shall be subject to the exclusive jurisdiction of the courts located in Kampala, Uganda.
+                                    These Terms of Service are governed by and construed in accordance with the laws of {isUS ? "the State of Delaware, United States" : "Uganda"}. Any disputes arising out of or related to these terms shall be subject to the exclusive jurisdiction of the courts located in {isUS ? "Delaware, United States" : "Kampala, Uganda"}.
                                 </p>
                             </section>
 
@@ -91,9 +93,9 @@ export default function TermsOfService() {
                                 </p>
                                 <div className="mt-4 p-6 bg-neutral-100 rounded-none">
                                     <p className="font-semibold text-[#020f24] mb-2">Weblery</p>
-                                    <p>Kyanja, Kampala — Uganda</p>
+                                    <p>{isUS ? "Distributed & Remote — United States" : "Kyanja, Kampala — Uganda"}</p>
                                     <p className="mt-2">Email: <a href="mailto:hello@weblery.com" className="text-blue-600 hover:text-blue-800 transition-colors">hello@weblery.com</a></p>
-                                    <p>Phone: <a href="tel:+256746642075" className="text-blue-600 hover:text-blue-800 transition-colors">+256 746 642 075</a></p>
+                                    <p>Phone: <a href={isUS ? "tel:+16502507193" : "tel:+256746642075"} className="text-blue-600 hover:text-blue-800 transition-colors">{isUS ? "1 650 250 7193" : "+256 746 642 075"}</a></p>
                                 </div>
                             </section>
                         </div>
