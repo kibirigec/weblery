@@ -432,8 +432,8 @@ export default function QuoteBuilder() {
 
                 {/* LEFT: Sticky Receipt */}
                 <div className="hidden lg:block w-1/3 relative">
-                    <div className="sticky top-32">
-                        <motion.div layout className="bg-[#f5f5f5] rounded-sm p-8 overflow-hidden sticky top-32">
+                    <div className="sticky top-20">
+                        <motion.div layout className="bg-[#f5f5f5] rounded-sm p-8 overflow-hidden sticky top-0">
                             <h2 className="text-2xl font-bold mb-6 font-heading">Your Selection</h2>
 
                             {!hasSelections ? (
@@ -476,7 +476,7 @@ export default function QuoteBuilder() {
 
                     <section>
                         {/* STICKY HEADER AREA */}
-                        <div className="sticky top-[72px] lg:top-20 z-40 bg-[var(--bg-page)]/90 backdrop-blur-xl pt-6 pb-6 -mx-6 px-6 md:-mx-12 md:px-12 lg:mx-0 lg:px-0 border-b border-gray-200/50 lg:border-none shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] lg:shadow-none transition-all duration-300">
+                        <div className="sticky top-[72px] lg:top-14 z-40 bg-[var(--bg-page)]/90 backdrop-blur-xl pt-6 pb-6 -mx-6 px-6 md:-mx-12 md:px-12 lg:mx-0 lg:px-0 border-b border-gray-200/50 lg:border-none shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] lg:shadow-none transition-all duration-300">
                             <div className="mb-6">
                                 <h3 className="text-2xl md:text-[var(--font-size-title)] font-bold text-[var(--text-primary)] mb-2 font-heading">Build your package</h3>
                                 <p className="text-[var(--text-secondary)]">Choose a category to view available services.</p>
@@ -595,7 +595,7 @@ export default function QuoteBuilder() {
                                 <label className="text-sm font-bold text-gray-700 ml-1">Contact Phone (WhatsApp)</label>
                                 <input
                                     type="tel"
-                                    placeholder="07XX XXX XXX"
+                                    placeholder="+971XX XXX XXXX"
                                     className={`w-full p-4 rounded-sm border bg-white focus:ring-2 focus:border-black transition-all font-medium ${errors.phone ? 'border-red-500' : 'border-gray-200'}`}
                                     value={contact.phone}
                                     onChange={(e) => {
