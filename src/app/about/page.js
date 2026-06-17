@@ -4,12 +4,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Navigation from "../components/Navigation";
 import Link from "next/link";
 import { useRef } from "react";
-import { useIsUSMarket } from "../../lib/market";
+import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 import StickySection from "../components/StickySection";
 
 export default function AboutPage() {
-    const isUS = useIsUSMarket();
+    const isUS = useIsUSMarket() || useIsAEMarket();
     const containerRef = useRef(null);
 
     return (

@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { servicesData } from './data';
+import { servicesData, servicesDataAE } from './data';
+import { useIsAEMarket } from '../../../lib/market';
 
 export default function ServiceSelection({ selectedServices, onSelectService, onContinue, onBack }) {
   const [hoveredService, setHoveredService] = useState(null);
@@ -79,7 +80,7 @@ export default function ServiceSelection({ selectedServices, onSelectService, on
         initial="hidden"
         animate="show"
       >
-        {servicesData.map((service, index) => {
+        {activeServicesData.map((service, index) => {
           const isSelected = selectedServices.includes(service.slug);
           
           return (

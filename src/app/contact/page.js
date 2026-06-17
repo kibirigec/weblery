@@ -6,10 +6,10 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import AnimatedLogo from "../components/AnimatedLogo";
 import { Menu, X } from "lucide-react";
-import { useIsUSMarket } from "../../lib/market";
+import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 function ContactFormContent() {
-    const isUS = useIsUSMarket();
+    const isUS = useIsUSMarket() || useIsAEMarket();
     const searchParams = useSearchParams();
     const interest = searchParams.get("interest");
 
@@ -245,7 +245,7 @@ function ContactFormContent() {
 }
 
 export default function ContactPage() {
-    const isUS = useIsUSMarket();
+    const isUS = useIsUSMarket() || useIsAEMarket();
 
     return (
         <div className="bg-[#EAEAEA] h-screen w-full text-black flex flex-col md:flex-row font-sans overflow-hidden">

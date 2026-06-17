@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
-import { useIsUSMarket } from "../../lib/market";
+import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 
 const SERVICES = [
@@ -211,7 +211,7 @@ function ServiceItem({ service }) {
 }
 
 export default function ServicesPage() {
-  const isUS = useIsUSMarket();
+  const isUS = useIsUSMarket() || useIsAEMarket();
   const router = useRouter();
 
   return (

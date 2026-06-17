@@ -2,10 +2,10 @@
 
 import Navigation from "../components/Navigation";
 import { motion } from "framer-motion";
-import { useIsUSMarket } from "../../lib/market";
+import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 export default function TermsOfService() {
-    const isUS = useIsUSMarket();
+    const isUS = useIsUSMarket() || useIsAEMarket();
     return (
         <div className="bg-white min-h-screen text-[var(--text-main)] selection:bg-black selection:text-white">
             <Navigation />

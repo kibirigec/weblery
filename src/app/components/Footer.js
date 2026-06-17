@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useIsUSMarket } from "../../lib/market";
+import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 const FooterLink = ({
   href,
@@ -19,7 +19,7 @@ const FooterLink = ({
 );
 
 export default function Footer() {
-  const isUS = useIsUSMarket();
+  const isUS = useIsUSMarket() || useIsAEMarket();
   const sections = [
     {
       title: "Company",

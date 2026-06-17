@@ -4,9 +4,126 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { isUSMarket } from "../../lib/market";
+import { isUSMarket, isAEMarket } from "../../lib/market";
 
 const WHATSAPP_NUMBER = "256700000000"; // change to your real number
+
+
+const AE_ITEMS = [
+    // ---------------- Website & WebApp Design ----------------
+    {
+        id: "ae_web_base",
+        category: "Website & WebApp Design",
+        label: "Base Setup",
+        priceValue: 1500,
+        min: 1500, max: 1500,
+        desc: "High-fidelity UI/UX, responsive layouts, micro-interactions, SEO readiness.",
+        recurring: false,
+    },
+    {
+        id: "ae_web_corp",
+        category: "Website & WebApp Design",
+        label: "Corporate Websites",
+        priceValue: 1500,
+        min: 1500, max: 1500,
+        desc: "High-end corporate branding profiles for regional trading hubs.",
+        recurring: false,
+    },
+    {
+        id: "ae_web_ecom",
+        category: "Website & WebApp Design",
+        label: "E-Commerce Portals",
+        priceValue: 2500,
+        min: 2500, max: 2500,
+        desc: "Online stores featuring local shipping integrations and payment gateways.",
+        recurring: false,
+    },
+    {
+        id: "ae_web_custom",
+        category: "Website & WebApp Design",
+        label: "Custom Web Apps",
+        priceValue: 4500,
+        min: 4500, max: 4500,
+        desc: "Functional software and customer management hubs built using modern frameworks.",
+        recurring: false,
+    },
+
+    // ---------------- Digital Marketing & Conversions ----------------
+    {
+        id: "ae_mkt_base",
+        category: "Digital Marketing & Conversions",
+        label: "Base Setup",
+        priceValue: 850,
+        min: 850, max: 850,
+        desc: "Mobile content scaling architecture, target audience profiling, tracking event setups.",
+        recurring: false,
+    },
+    {
+        id: "ae_mkt_visual",
+        category: "Digital Marketing & Conversions",
+        label: "Visual Content Creation",
+        priceValue: 600,
+        min: 600, max: 600,
+        desc: "Premium high-converting ad creative formats designed specifically for mobile viewers.",
+        recurring: true,
+    },
+    {
+        id: "ae_mkt_strategy",
+        category: "Digital Marketing & Conversions",
+        label: "Go-To-Market Brand Strategy",
+        priceValue: 800,
+        min: 800, max: 800,
+        desc: "Market positioning to stand out in highly saturated UAE industries.",
+        recurring: false,
+    },
+    {
+        id: "ae_mkt_ads",
+        category: "Digital Marketing & Conversions",
+        label: "Paid Ad Infrastructure Setup",
+        priceValue: 1200,
+        min: 1200, max: 1200,
+        desc: "Technical tracking setups for Meta, Google, and TikTok ad optimization.",
+        recurring: false,
+    },
+
+    // ---------------- Conversational AI & Automation ----------------
+    {
+        id: "ae_ai_base",
+        category: "Conversational AI & Automation",
+        label: "Base Setup",
+        priceValue: 1200,
+        min: 1200, max: 1200,
+        desc: "API middleware integration, automated background notifications, clean data structural analysis.",
+        recurring: false,
+    },
+    {
+        id: "ae_ai_consult",
+        category: "Conversational AI & Automation",
+        label: "Automation Workflow Consultation",
+        priceValue: 500,
+        min: 500, max: 500,
+        desc: "Operational audits detailing where automated triggers can remove human friction.",
+        recurring: false,
+    },
+    {
+        id: "ae_ai_whatsapp",
+        category: "Conversational AI & Automation",
+        label: "WhatsApp API & Zapier Workflows",
+        priceValue: 1000,
+        min: 1000, max: 1000,
+        desc: "Syncing instant website submissions directly into business phones or sales team pipelines.",
+        recurring: false,
+    },
+    {
+        id: "ae_ai_agents",
+        category: "Conversational AI & Automation",
+        label: "Bespoke AI Customer Support Agents",
+        priceValue: 1500,
+        min: 1500, max: 1500,
+        desc: "Multi-lingual (English/Arabic) automated chat workflows that qualify leads autonomously.",
+        recurring: false,
+    }
+];
 
 const items = [
     // ---------------- Website Design (Direct Build) ----------------
@@ -153,13 +270,16 @@ const items = [
 export default function QuoteBuilder() {
     const router = useRouter();
     const [isUS, setIsUS] = useState(false);
+    const [isAE, setIsAE] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (isUSMarket()) {
+        const aeMarket = isAEMarket();
+        if (isUSMarket() && !aeMarket) {
             setIsUS(true);
             router.replace("/contact");
         } else {
+            setIsAE(aeMarket);
             setLoading(false);
         }
     }, [router]);
@@ -167,7 +287,11 @@ export default function QuoteBuilder() {
     const [selected, setSelected] = useState({});
     const [contact, setContact] = useState({ name: "", phone: "" });
     const [errors, setErrors] = useState({});
-    const [activeCategory, setActiveCategory] = useState("Website Design");
+    const [activeCategory, setActiveCategory] = useState(isAE ? "Website & WebApp Design" : "Website Design");
+    // keep them in sync if isAE loads slightly later
+    useEffect(() => {
+        if (isAE && activeCategory === "Website Design") setActiveCategory("Website & WebApp Design");
+    }, [isAE]);
     const [adBudget, setAdBudget] = useState("");
     const [showAdInfo, setShowAdInfo] = useState(false);
 
@@ -175,7 +299,10 @@ export default function QuoteBuilder() {
         return <div className="min-h-screen bg-white" />;
     }
 
-    const CATEGORIES = ["Website Design", "Social Media Services", "3D Modelling", "Automated Services"];
+    const activeItems = isAE ? AE_ITEMS : items;
+    const CATEGORIES = isAE 
+        ? ["Website & WebApp Design", "Digital Marketing & Conversions", "Conversational AI & Automation"]
+        : ["Website Design", "Social Media Services", "3D Modelling", "Automated Services"];
 
     const toggleItem = (id) => {
         setSelected((prev) => {
@@ -198,7 +325,7 @@ export default function QuoteBuilder() {
         let oneTime = 0;
         let monthly = 0;
 
-        items.forEach((i) => {
+        activeItems.forEach((i) => {
             if (selected[i.id]) {
                 if (i.recurring) monthly += i.priceValue;
                 else oneTime += i.priceValue;
@@ -209,7 +336,9 @@ export default function QuoteBuilder() {
     };
 
     const formatUGX = (n) =>
-        new Intl.NumberFormat("en-US").format(Math.round(n)) + " UGX";
+        isAE 
+            ? "AED " + new Intl.NumberFormat("en-US").format(Math.round(n))
+            : new Intl.NumberFormat("en-US").format(Math.round(n)) + " UGX";
 
     const hasSelections = Object.keys(selected).length > 0;
 
@@ -225,7 +354,7 @@ export default function QuoteBuilder() {
             return;
         }
 
-        const picked = items.filter((i) => selected[i.id]);
+        const picked = activeItems.filter((i) => selected[i.id]);
         const { oneTime, monthly } = calculateTotals();
 
         const servicesList = picked
@@ -267,7 +396,7 @@ export default function QuoteBuilder() {
     const { oneTime, monthly } = calculateTotals();
 
     // Filter items for current view
-    const currentItems = items.filter(i => i.category === activeCategory);
+    const currentItems = activeItems.filter(i => i.category === activeCategory);
 
     return (
         <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-main)] font-sans selection:bg-blue-100 selection:text-blue-900">
@@ -312,7 +441,7 @@ export default function QuoteBuilder() {
                             ) : (
                                 <div className="space-y-6">
                                     <div className="max-h-[50vh] overflow-y-auto pr-2 space-y-3 custom-scrollbar">
-                                        {items.filter(i => selected[i.id]).map(item => (
+                                        {activeItems.filter(i => selected[i.id]).map(item => (
                                             <div key={item.id} className="flex justify-between items-start gap-3 text-sm group">
                                                 <span className="text-black font-medium">{item.label}</span>
                                                 <span className="text-black font-mono text-xs group-hover:text-black transition-colors whitespace-nowrap shrink-0 mt-0.5">{formatUGX(item.priceValue)}</span>
@@ -356,7 +485,7 @@ export default function QuoteBuilder() {
                             {/* CATEGORY TABS (The 4 Buttons) */}
                             <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 md:gap-4">
                                 {CATEGORIES.map(cat => {
-                                    const count = items.filter(i => i.category === cat && selected[i.id]).length;
+                                    const count = activeItems.filter(i => i.category === cat && selected[i.id]).length;
                                     return (
                                         <button
                                             key={cat}

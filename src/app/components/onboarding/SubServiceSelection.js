@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { servicesData, getServiceBySlug } from './data';
+import {  servicesData, getServiceBySlug , servicesDataAE } from './data';
+import { useIsAEMarket } from '../../../lib/market';
 
 export default function SubServiceSelection({ 
   selectedServices, 
@@ -14,7 +15,7 @@ export default function SubServiceSelection({
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   
   // Filter to only include selected services
-  const filteredServices = selectedServices.map(slug => getServiceBySlug(slug));
+  const filteredServices = selectedServices.map(slug => getServiceBySlug(slug, isAE));
   
   const activeService = filteredServices[activeServiceIndex];
   

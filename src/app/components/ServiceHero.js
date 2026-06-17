@@ -9,10 +9,10 @@ import {
 } from "motion/react";
 import { useRef, useMemo, useEffect, useState } from  'react'
 import Link from 'next/link';
-import { useIsUSMarket } from "../../lib/market";
+import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 export default function ServiceHero({ service, onOpenModal }) {
-  const isUS = useIsUSMarket();
+  const isUS = useIsUSMarket() || useIsAEMarket();
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
 

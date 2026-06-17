@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useIsUSMarket } from '../../lib/market';
+import { useIsUSMarket , useIsAEMarket } from '../../lib/market';
 
 export default function ClayHero() {
-  const isUS = useIsUSMarket();
+  const isUS = useIsUSMarket() || useIsAEMarket();
 
   return (
     <section id="home-hero" className="relative min-h-[40vh] md:min-h-[90vh] flex flex-col justify-center overflow-hidden bg-[var(--bg-page)] pt-32 pb-12 md:pt-20 md:pb-0">

@@ -5,10 +5,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AnimatedLogo from "./AnimatedLogo";
-import { useIsUSMarket } from "../../lib/market";
+import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 export default function Navigation() {
-    const isUS = useIsUSMarket();
+    const isUS = useIsUSMarket() || useIsAEMarket();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
     const { scrollY } = useScroll();
