@@ -595,7 +595,7 @@ export default function QuoteBuilder() {
                                 <label className="text-sm font-bold text-gray-700 ml-1">Contact Phone (WhatsApp)</label>
                                 <input
                                     type="tel"
-                                    placeholder="+971XX XXX XXXX"
+                                    placeholder="+971 XXX XXX XXXX"
                                     className={`w-full p-4 rounded-sm border bg-white focus:ring-2 focus:border-black transition-all font-medium ${errors.phone ? 'border-red-500' : 'border-gray-200'}`}
                                     value={contact.phone}
                                     onChange={(e) => {
