@@ -19,8 +19,8 @@ export async function proxy(request) {
 
   console.log('[Proxy] Evaluating request URL:', url.href);
 
-  // 1. Bypass logic: if already on US subdomain or market query is explicitly set
-  if (url.hostname.startsWith('us.') || url.searchParams.has('market')) {
+  // 1. Bypass logic: if already on US/AE subdomain or market query is explicitly set
+  if (url.hostname.startsWith('us.') || url.hostname.startsWith('ae.') || url.searchParams.has('market')) {
     console.log('[Proxy] Bypassing proxy for:', url.href);
     return NextResponse.next();
   }
@@ -29,6 +29,8 @@ export async function proxy(request) {
   const marketCookie = request.cookies.get('market_country')?.value;
   if (marketCookie) {
     console.log('[Proxy] Found existing market_country cookie:', marketCookie);
+    const aeCountries = ['AE', 'SA', 'QA', 'BH', 'KW', 'OM'];
+    
     if (marketCookie === 'US' && !url.hostname.startsWith('us.')) {
       if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') {
         url.searchParams.set('market', 'us');
@@ -38,6 +40,16 @@ export async function proxy(request) {
         const usUrl = new URL(`https://us.weblery.com${url.pathname}${url.search}`);
         console.log('[Proxy] Production redirecting to US URL:', usUrl.href);
         return NextResponse.redirect(usUrl);
+      }
+    } else if (aeCountries.includes(marketCookie) && !url.hostname.startsWith('ae.')) {
+      if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') {
+        url.searchParams.set('market', 'ae');
+        console.log('[Proxy] Local redirecting to AE version:', url.href);
+        return NextResponse.redirect(url);
+      } else {
+        const aeUrl = new URL(`https://ae.weblery.com${url.pathname}${url.search}`);
+        console.log('[Proxy] Production redirecting to AE URL:', aeUrl.href);
+        return NextResponse.redirect(aeUrl);
       }
     }
     return NextResponse.next();
@@ -95,6 +107,8 @@ export async function proxy(request) {
 
   // 4. Create the appropriate response based on country
   let response;
+  const aeCountries = ['AE', 'SA', 'QA', 'BH', 'KW', 'OM'];
+
   if (country === 'US') {
     if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') {
       url.searchParams.set('market', 'us');
@@ -102,6 +116,14 @@ export async function proxy(request) {
     } else {
       const usUrl = new URL(`https://us.weblery.com${url.pathname}${url.search}`);
       response = NextResponse.redirect(usUrl);
+    }
+  } else if (aeCountries.includes(country)) {
+    if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') {
+      url.searchParams.set('market', 'ae');
+      response = NextResponse.redirect(url);
+    } else {
+      const aeUrl = new URL(`https://ae.weblery.com${url.pathname}${url.search}`);
+      response = NextResponse.redirect(aeUrl);
     }
   } else {
     response = NextResponse.next();
