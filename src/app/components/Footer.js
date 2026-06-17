@@ -19,7 +19,9 @@ const FooterLink = ({
 );
 
 export default function Footer() {
-  const isUS = useIsUSMarket() || useIsAEMarket();
+  const isUSMarketOnly = useIsUSMarket();
+  const isAEMarketOnly = useIsAEMarket();
+  const isUS = isUSMarketOnly || isAEMarketOnly;
   const sections = [
     {
       title: "Company",
@@ -49,8 +51,8 @@ export default function Footer() {
       links: [
         { name: "hello@weblery.com", href: "mailto:hello@weblery.com" },
         { 
-          name: isUS ? "1 650 250 7193" : "+256 746 642 075", 
-          href: isUS ? "tel:+16502507193" : "tel:+256746642075" 
+          name: isAEMarketOnly ? "+971 50 123 4567" : (isUSMarketOnly ? "1 650 250 7193" : "+256 746 642 075"), 
+          href: isAEMarketOnly ? "tel:+971501234567" : (isUSMarketOnly ? "tel:+16502507193" : "tel:+256746642075") 
         },
       ],
     },

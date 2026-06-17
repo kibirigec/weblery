@@ -9,7 +9,9 @@ import { Menu, X } from "lucide-react";
 import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 function ContactFormContent() {
-    const isUS = useIsUSMarket() || useIsAEMarket();
+    const isUSMarketOnly = useIsUSMarket();
+    const isAEMarketOnly = useIsAEMarket();
+    const isUS = isUSMarketOnly || isAEMarketOnly;
     const searchParams = useSearchParams();
     const interest = searchParams.get("interest");
 
@@ -60,7 +62,7 @@ function ContactFormContent() {
             // Map exact values from services pages
             if (interest === "starter") srv = "Starter Package";
             if (interest === "professional") srv = "Professional Package";
-            if (interest === "custom") srv = "Custom Package";
+            if (interest === "custom") srv = isUS ? "Custom service" : "Custom Package";
             if (interest === "website" || interest === "website-design") srv = "Website Design";
             if (interest === "social-media" || interest === "social-media-marketing") srv = "Social Media Marketing";
             if (interest === "automation" || interest === "ai-integration") srv = "Automation Systems";
@@ -116,7 +118,7 @@ function ContactFormContent() {
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder={isUS ? "(650) 250-7193" : "0772456789"}
+                        placeholder={isAEMarketOnly ? "+971 50 123 4567" : (isUSMarketOnly ? "(650) 250-7193" : "0772456789")}
                         className="w-full bg-transparent border border-gray-400 rounded-md px-4 py-3 outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all text-sm sm:text-base placeholder:text-gray-400 font-medium text-black"
                     />
                 </div>

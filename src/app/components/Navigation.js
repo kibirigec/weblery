@@ -8,7 +8,8 @@ import AnimatedLogo from "./AnimatedLogo";
 import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 export default function Navigation() {
-    const isUS = useIsUSMarket() || useIsAEMarket();
+    const isUSMarketOnly = useIsUSMarket();
+    const isUS = isUSMarketOnly || useIsAEMarket();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
     const { scrollY } = useScroll();
@@ -83,7 +84,7 @@ export default function Navigation() {
                             {[
                                 { label: "Our work", href: "/our-work" },
                                 { label: "Services", href: "/services", hasDropdown: true },
-                                ...(!isUS ? [{ label: "Pricing", href: "/pricing" }] : []),
+                                ...(!isUSMarketOnly ? [{ label: "Pricing", href: "/pricing" }] : []),
                                 { label: "About", href: "/about" }
                             ].map((item) => {
                                 const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
@@ -241,7 +242,7 @@ export default function Navigation() {
                         { label: "Home", href: "/" },
                         { label: "Our work", href: "/our-work" },
                         { label: "Services", href: "/services", hasDropdown: true },
-                        ...(!isUS ? [{ label: "Pricing", href: "/pricing" }] : []),
+                        ...(!isUSMarketOnly ? [{ label: "Pricing", href: "/pricing" }] : []),
                         { label: "About", href: "/about" },
                         { label: "Contact", href: "/contact" }
                     ].map((item) => (

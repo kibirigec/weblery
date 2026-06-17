@@ -57,8 +57,8 @@ const AE_PLANS = [
       "Specialized API & Webhook Implementations",
       "Dedicated Priority Support retainer options"
     ],
-    cta: "Build Custom",
-    href: "/onboarding",
+    cta: "Contact Us",
+    href: "/contact?interest=custom",
     popular: false
   }
 ];
@@ -113,7 +113,7 @@ const PLANS = [
       "API Development",
       "Priority Support"
     ],
-    cta: "Build Custom",
+    cta: "Contact Us",
     href: "/contact?interest=custom",
     popular: false
   }
