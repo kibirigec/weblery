@@ -4,3 +4,20 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# ---------------------------------------------------------------------------
+# shop.weblery.com subdomain routing
+# ---------------------------------------------------------------------------
+# When shop.weblery.com is pointed to this Netlify site (add it as a domain
+# alias in Netlify → Domain management), the rule below rewrites incoming
+# requests so shop.weblery.com/foo internally serves /shop/foo.
+#
+# The rewrite is host-conditional, so weblery.com/shop/* keeps working too.
+# Uncomment once DNS + Netlify domain alias are configured.
+#
+# [[redirects]]
+#   from = "/*"
+#   to = "/shop/:splat"
+#   status = 200
+#   force = false
+#   conditions = { Host = ["shop.weblery.com"] }

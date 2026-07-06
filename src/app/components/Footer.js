@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 const FooterLink = ({
@@ -19,6 +20,10 @@ const FooterLink = ({
 );
 
 export default function Footer() {
+  const pathname = usePathname();
+  // Shop has its own footer — hide the agency footer under /shop.
+  if (pathname && pathname.startsWith("/shop")) return null;
+
   const isUSMarketOnly = useIsUSMarket();
   const isAEMarketOnly = useIsAEMarket();
   const isUS = isUSMarketOnly || isAEMarketOnly;

@@ -1,18 +1,22 @@
 'use client';
 
 import Navigation from './components/Navigation';
+import ShopBanner from './components/ShopBanner';
 import ClayHero from './components/ClayHero';
 import ClayShowreel from './components/ClayShowreel';
 import ClayServices from './components/ClayServices';
 import ClayWork from './components/ClayWork';
-import ClayFAQ from './components/ClayFAQ'; 
+import ClayFAQ from './components/ClayFAQ';
 
 export default function Home() {
   return (
     <div id="home-page">
       <main className="bg-[#FBFBFB] min-h-screen">
         <Navigation id="home-nav" />
-        
+
+        {/* Shop announcement — UG market only */}
+        <ShopBanner />
+
         {/* Hero Section */}
         <ClayHero />
 
