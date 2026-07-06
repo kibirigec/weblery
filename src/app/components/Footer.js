@@ -20,12 +20,14 @@ const FooterLink = ({
 );
 
 export default function Footer() {
+  // All hooks must run in the same order on every render.
   const pathname = usePathname();
+  const isUSMarketOnly = useIsUSMarket();
+  const isAEMarketOnly = useIsAEMarket();
+
   // Shop has its own footer — hide the agency footer under /shop.
   if (pathname && pathname.startsWith("/shop")) return null;
 
-  const isUSMarketOnly = useIsUSMarket();
-  const isAEMarketOnly = useIsAEMarket();
   const isUS = isUSMarketOnly || isAEMarketOnly;
   const sections = [
     {
