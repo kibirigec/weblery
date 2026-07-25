@@ -1,143 +1,88 @@
-# ServiceModal Redesign - Apple-style Simplification
+# Front Desk product page — `/frontdesk`
 
-## Plan Overview
-Redesign the ServiceModal component to be more simple and Apple-website-like, following Apple's design principles of simplicity, clean typography, generous whitespace, and minimal visual elements.
+## Goal
+A standalone marketing page on the Weblery site for **Front Desk**, our AI receptionist
+product (built in the separate `PROJECTS/FRONTDESK` repo). It should captivate a business
+owner, make plug-and-play obvious, show it works across niches, and drive one CTA:
+**enter your website URL → get a demo receptionist that answers as your business.**
 
-## Analysis of Current Component
-The current ServiceModal is complex with:
-- Multiple sections (importance, business impact, implementation, technologies)
-- Heavy use of colors and gradients
-- Complex animations and transitions
-- Dense information layout
-- Multiple visual patterns and backgrounds
+## Decisions (confirmed with Calvin)
+- **Repos stay separate.** FrontDesk is its own app (needs a worker + Postgres); modiqube only
+  markets it and links/calls out to it. No folder move.
+- **CTA = auto-build.** The form posts the visitor's URL to the live FrontDesk app, which scans
+  and builds their demo, then we send them to it.
+- **Standalone page.** No changes to Navigation or the services listing — reachable by direct
+  link (for cold email). Smallest footprint on the existing site.
+- **Own product identity.** Follows the reference (OpenAI Codex): video hero, generous
+  whitespace, calm alternating sections. Not blended into the agency site's look.
+- **Niches shown:** HVAC/trades, real estate, law firms, dental/medical.
+- **Asset:** `public/FrontDesk_Assets/background-video-jan-28_202607252000.mp4` (1.4 MB) as the
+  hero background.
 
-## Apple Design Principles to Apply
-- Clean, minimal design with lots of whitespace
-- Simple typography hierarchy
-- Subtle animations
-- Focus on content over decoration
-- Clean color palette (mostly whites, grays, and one accent color)
-- Card-like layouts with soft shadows
+## Key constraint
+The FrontDesk app is **not deployed publicly yet** (blocked on the Northflank payment method),
+so auto-build cannot work end-to-end today. Approach: build the real thing now, pointed at
+`NEXT_PUBLIC_FRONTDESK_URL`. When that env var is absent or the app is unreachable, the form
+**degrades to lead capture** (notify Calvin via the existing Telegram route) instead of erroring.
+Nothing is throwaway; flipping the env var turns auto-build on.
 
-## Todo Items
+## Todo
 
-### Phase 1: Structure Simplification
-- [x] Remove complex color theming system
-- [x] Simplify the header design
-- [x] Remove background patterns and complex gradients
-- [x] Streamline the close button design
+### Phase 1 — FrontDesk app (repo: PROJECTS/FRONTDESK)
+- [ ] Public `POST /api/public/demo-request` — accepts `{ url, email? }`, creates the workspace,
+      enqueues the scan, returns `{ slug, demoUrl }`
+- [ ] Guardrails: URL validation/normalisation, per-IP rate limit, reuse an existing recent
+      workspace for the same domain instead of duplicating
+- [ ] CORS for the modiqube origin only
+- [ ] Verify locally end to end
 
-### Phase 2: Content Layout Redesign
-- [x] Simplify the importance section layout
-- [x] Redesign business impact section with clean cards
-- [x] Streamline implementation strategy section
-- [x] Simplify technologies section
+### Phase 2 — `/frontdesk` page (repo: modiqube)
+- [ ] Route `src/app/frontdesk/page.js` + `layout.js` (own metadata, no site chrome)
+- [ ] Hero: looping muted video bg, headline, URL field, CTA
+- [ ] Section: the problem (missed calls = lost jobs) — brief, concrete
+- [ ] Section: how it works — 3 steps, plug-and-play, no install, keep your number
+- [ ] Section: niches — HVAC/trades, real estate, law, dental
+- [ ] Section: what your team receives (the ticket artifact)
+- [ ] Closing CTA
+- [ ] `POST /api/frontdesk-demo` — calls FrontDesk when configured, else Telegram lead capture
+- [ ] Responsive + reduced-motion + poster fallback for the video
 
-### Phase 3: Animation and Polish
-- [x] Reduce and simplify animations
-- [x] Apply Apple-style subtle transitions
-- [x] Implement clean hover states
-- [x] Add subtle shadows and borders
+### Phase 3 — verify
+- [ ] Run the page locally, check hero/video/sections at desktop + mobile
+- [ ] Submit the form both ways (configured / not configured)
+- [ ] Confirm no regression to existing routes; leave `feat/shop` work untouched
 
-### Phase 4: Testing and Refinement
-- [x] Test modal functionality
-- [x] Ensure responsiveness
-- [x] Verify accessibility features
-- [x] Final polish and cleanup
+## Notes
+- Working tree is on branch `feat/shop` with unrelated in-progress changes — do not commit those.
+- Site is Next.js 16 + React 19 + Tailwind 4, App Router, JS (not TS).
 
-### Phase 5: Service-Specific Accent Colors
-- [x] Create color helper function to map service colors
-- [x] Update checkmarks in "Why X matters" section
-- [x] Update number badges in "How we implement" section
-- [x] Update metric circles in "Business Impact" section
-- [x] Test all service colors
+## Review
 
-### Phase 6: Fix Color Mapping Issue
-- [x] Add hoverColor property to mobile-app-development data.js
-- [x] Add hoverColor property to web-development data.js
-- [x] Add hoverColor property to ai-integration data.js
-- [x] Add hoverColor property to digital-marketing data.js
-- [x] Add hoverColor property to ui-ux-design data.js
-- [x] Add hoverColor property to performance-optimization data.js
-- [x] Test color mapping works for all services
+**Shipped.** All three phases done and verified.
 
-## Review Section
+### What was built
+- **FrontDesk repo:** `POST /api/public/demo-request` — the only unauthenticated, internet-facing
+  endpoint, so it carries its own guardrails (origin allow-list + CORS, 5/hour per-IP rate limit,
+  URL normalisation rejecting localhost/private ranges, and 24h per-domain reuse).
+- **modiqube:** `/frontdesk` — video hero, problem, 3-step plug-and-play, four niches with real
+  intake examples, the ticket artifact, closing CTA. Own CSS namespace (`.fd-*`), own layout,
+  no changes to Navigation/services (the site's global Footer still renders below).
+- **modiqube:** `POST /api/frontdesk-demo` — calls the app when `FRONTDESK_URL` is set; otherwise
+  (or if the app is unreachable/errors) captures the lead over the existing Telegram bot so a
+  visitor never hits a dead form.
 
-### Summary of Changes Made
+### Verified
+- Endpoint: valid build, same-domain reuse, garbage + localhost rejected, 429 past the cap.
+- Every section rendered at 1280px and 375px.
+- **Full loop through the real UI:** typed `hvac.com` into the page → "Your receptionist is
+  ready. Call it now →" linking to a live demo.
 
-**Phase 1 - Structure Simplification:**
-- Removed complex color theming system that used dynamic service colors
-- Simplified header design with clean gray background and border
-- Eliminated background patterns and complex gradients
-- Streamlined close button to use simple gray styling
-
-**Phase 2 - Content Layout Redesign:**
-- Redesigned importance section with cleaner typography and consistent blue accent
-- Converted business impact cards to clean white cards with subtle borders
-- Streamlined implementation strategy with simplified numbered steps
-- Simplified technologies section using consistent card grid layout
-
-**Phase 3 - Animation and Polish:**
-- Reduced animation complexity from 0.4-0.6s to 0.2s durations
-- Applied Apple-style easeOut timing instead of complex bezier curves
-- Implemented subtle hover states (shadow changes, border color transitions)
-- Reduced backdrop opacity from 80% to 40% for lighter feel
-
-**Phase 4 - Testing and Refinement:**
-- Verified no linting errors in ServiceModal component
-- Confirmed all accessibility features preserved
-- Ensured responsive design works across all screen sizes
-
-**Phase 5 - Service-Specific Accent Colors:**
-- Added `getServiceColors()` helper function to map service hoverColor to Tailwind classes
-- Updated checkmarks in importance section to use service-specific colors
-- Updated implementation phase numbers to use service accent colors
-- Updated business impact metric circles to use service colors
-- Maintained clean Apple aesthetic while adding color personality
-
-**Phase 6 - Color Mapping Fix:**
-- Successfully identified and resolved the missing `hoverColor` property issue
-- Added `hoverColor` property to all 6 service data files:
-  - mobile-app-development: `hoverColor: "pink"`
-  - web-development: `hoverColor: "blue"`
-  - ai-integration: `hoverColor: "black"`
-  - digital-marketing: `hoverColor: "yellow"`
-  - ui-ux-design: `hoverColor: "green"`
-  - performance-optimization: `hoverColor: "orange"`
-- Color mapping now functions correctly for all services
-
-**Key Design Changes:**
-- **Color Palette**: Now uses service-specific accent colors (pink for mobile, blue for web, etc.)
-- **Typography**: Reduced font weights (bold → semibold, xl → lg headings)
-- **Spacing**: Increased whitespace and used consistent 12-unit spacing
-- **Cards**: All cards now use consistent white background, rounded-2xl, and subtle borders
-- **Animations**: All transitions are now 0.2s with easeOut timing
-
-**Color Mapping (Now Working):**
-- Mobile App Development: Pink accents (`pink-500`, `pink-100`)
-- Web Development: Blue accents (`blue-500`, `blue-100`)
-- AI Integration: Dark gray accents (`gray-700`, `gray-100`)
-- Digital Marketing: Yellow accents (`yellow-500`, `yellow-100`)
-- UI/UX Design: Green accents (`green-500`, `green-100`)
-- Performance Optimization: Orange accents (`orange-500`, `orange-100`)
-
-**Accessibility Maintained:**
-- All keyboard navigation (Escape to close) preserved
-- ARIA labels maintained on close button
-- Focus management and body scroll prevention unchanged
-
-**Responsive Design:**
-- Maintained all responsive breakpoints
-- Improved mobile spacing and typography scaling
-- Consistent padding across all screen sizes
-
-## Final Result
-The ServiceModal redesign is now complete! The component features:
-- Clean, Apple-style design with minimal aesthetics
-- Service-specific accent colors that work correctly
-- Improved performance with simplified animations
-- Better user experience with generous whitespace and clear typography
-- Maintained functionality and accessibility
-- Consistent design system across all services
-
-Each service now displays its unique brand color (pink for mobile apps, yellow for digital marketing, etc.) while maintaining the simplified, professional design aesthetic inspired by Apple's website.
+### Notes / gotchas
+- A stray `echo >>` concatenated `FRONTDESK_URL` onto the `TELEGRAM_CHAT_ID` line in `.env.local`
+  (no trailing newline), breaking both. Repaired; backup at `/tmp/envlocal.bak`.
+- One test scan failed on `oneilheatingandair.com` — that domain doesn't resolve. The pipeline
+  reported it correctly; not a bug in this work.
+- `FRONTDESK_URL` currently points at `http://localhost:3000`. Point it at the deployed app once
+  Front Desk is hosted, and set `PUBLIC_DEMO_ORIGINS` on that app to the weblery.com origin.
+- Auto-build only works while the Front Desk app is reachable; until it's deployed publicly,
+  production visitors will fall through to Telegram lead capture by design.
