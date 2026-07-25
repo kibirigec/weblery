@@ -3,14 +3,16 @@
    feature rows where each visual sits on a soft gradient panel. */
 
 .fd {
-  --fd-ink: #0d1512;
-  --fd-body: #4a5952;
-  --fd-faint: #8b9a93;
-  --fd-line: #e4eae7;
+  --fd-ink: #0d1420;
+  --fd-body: #4a5568;
+  --fd-faint: #8b95a8;
+  --fd-line: #e3e8f1;
   --fd-bg: #ffffff;
-  --fd-bg-soft: #f5f8f6;
-  --fd-accent: #0f9d6b;
-  --fd-accent-deep: #0a6f4c;
+  --fd-bg-soft: #f4f7fc;
+  /* Blue, pulled from the panel gradient so accents and panels agree.
+     Status colours below are deliberately not blue — see --fd-urgent etc. */
+  --fd-accent: #2f7ef5;
+  --fd-accent-deep: #1b5fd0;
 
   background: var(--fd-bg);
   color: var(--fd-ink);
@@ -68,7 +70,7 @@
   height: 74px;
   border-radius: 21px;
   background: #fff;
-  box-shadow: 0 10px 30px -12px rgba(13, 21, 18, 0.45);
+  box-shadow: 0 10px 30px -12px rgba(13, 20, 32, 0.45);
 }
 
 .fd-hero__brand img {
@@ -89,7 +91,7 @@
    has to hold up against the darkest frames too. */
 .fd-hero__sub {
   font-size: clamp(1.02rem, 1.5vw, 1.14rem);
-  color: #101a16;
+  color: #0f1622;
   max-width: 44ch;
   margin: 1.35rem auto 0;
   line-height: 1.5;
@@ -184,7 +186,7 @@
   border: 1px solid var(--fd-line);
   border-radius: 14px;
   padding: 0.45rem;
-  box-shadow: 0 14px 40px -20px rgba(13, 21, 18, 0.28);
+  box-shadow: 0 14px 40px -20px rgba(13, 20, 32, 0.28);
 }
 
 .fd-form__row input {
@@ -236,7 +238,7 @@
    grey disappears. Elsewhere (the closing CTA) it sits on a flat background
    and the default is right. */
 .fd-hero .fd-form__hint {
-  color: #101a16;
+  color: #0f1622;
 }
 
 .fd-form__msg {
@@ -506,7 +508,7 @@
   flex: none;
   width: 3px;
   border-radius: 999px;
-  background: linear-gradient(to bottom, var(--fd-accent), rgba(15, 157, 107, 0.45));
+  background: linear-gradient(to bottom, var(--fd-accent), rgba(47, 126, 245, 0.45));
   min-height: 3px;
   transform-origin: center;
   /* Collapsed between turns; the line settles when nobody is talking. */
@@ -752,8 +754,8 @@
 }
 
 .fd-forward__row--on {
-  border-color: rgba(15, 157, 107, 0.5);
-  background: rgba(15, 157, 107, 0.12);
+  border-color: rgba(47, 126, 245, 0.5);
+  background: rgba(47, 126, 245, 0.12);
 }
 
 .fd-forward__num {

@@ -75,7 +75,7 @@ export default function FrontDeskHero() {
         <span className="fd-home-hero__ctaWrap">
         <Link
           href="/frontdesk"
-          className="group mt-8 inline-flex items-center gap-2 rounded-full bg-black px-7 py-3.5 text-[15px] font-medium text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0A6F4C] focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+          className="group mt-8 inline-flex items-center gap-2 rounded-full bg-black px-7 py-3.5 text-[15px] font-medium text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1B5FD0] focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
         >
           Hear it answer
           <svg
