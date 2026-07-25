@@ -84,6 +84,7 @@ export default function Navigation() {
                             {[
                                 { label: "Our work", href: "/our-work" },
                                 { label: "Services", href: "/services", hasDropdown: true },
+                                { label: "Front Desk", href: "/frontdesk" },
                                 ...(!isUSMarketOnly ? [{ label: "Pricing", href: "/pricing" }] : []),
                                 { label: "About", href: "/about" }
                             ].map((item) => {
@@ -242,6 +243,7 @@ export default function Navigation() {
                         { label: "Home", href: "/" },
                         { label: "Our work", href: "/our-work" },
                         { label: "Services", href: "/services", hasDropdown: true },
+                        { label: "Front Desk", href: "/frontdesk" },
                         ...(!isUSMarketOnly ? [{ label: "Pricing", href: "/pricing" }] : []),
                         { label: "About", href: "/about" },
                         { label: "Contact", href: "/contact" }
