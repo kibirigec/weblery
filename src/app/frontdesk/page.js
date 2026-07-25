@@ -1,6 +1,7 @@
 import Link from "next/link";
 import DemoForm from "./DemoForm";
 import LiveCall from "./LiveCall";
+import HeroVideo from "./HeroVideo";
 
 const NICHES = [
   { title: "Home services", tag: "HVAC · plumbing · electrical · roofing", quote: "No cooling, 88° inside, two kids at home. Wants a visit tomorrow 8–10am." },
@@ -133,15 +134,7 @@ export default function FrontDeskPage() {
     <>
       {/* Hero */}
       <header className="fd-hero">
-        <video
-          className="fd-hero__video"
-          src="/FrontDesk_Assets/background-video-jan-28_202607252000.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden="true"
-        />
+        <HeroVideo />
 
         <span className="fd-hero__brand">
           <img src="/LetterLogo.svg" alt="Weblery" />

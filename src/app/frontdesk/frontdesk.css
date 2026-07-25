@@ -234,9 +234,8 @@
   order: 2;
 }
 
-.fd-feature__copy {
-  padding-bottom: clamp(1rem, 4vw, 3.5rem);
-}
+/* No bottom padding: with align-items:end the copy's last line then sits on
+   the same line as the panel's bottom edge. */
 
 .fd-feature__copy h3 {
   color: var(--fd-ink);
@@ -266,7 +265,7 @@
 .fd-panel {
   position: relative;
   min-height: 560px;
-  border-radius: 22px;
+  border-radius: 12px;
   padding: clamp(1.5rem, 3vw, 2.75rem);
   display: grid;
   place-items: center;
@@ -828,10 +827,6 @@
 
   .fd-feature__media {
     grid-column: auto;
-  }
-
-  .fd-feature__copy {
-    padding-bottom: 0;
   }
 
   .fd-panel {

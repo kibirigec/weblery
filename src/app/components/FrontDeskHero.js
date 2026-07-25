@@ -21,16 +21,28 @@ export default function FrontDeskHero() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const events = ["pointerdown", "keydown", "touchstart", "scroll"];
-    const stop = () => events.forEach((e) => window.removeEventListener(e, tryPlay));
 
     function tryPlay() {
-      if (!video.paused) return stop();
-      video.play().then(stop, () => {});
+      if (!video.paused) return;
+      video.play().catch(() => {});
     }
 
+    // Browsers refuse to start (and will suspend) playback while the document
+    // is hidden, so a hero opened in a background tab comes back to a frozen
+    // frame unless it retries on return. Don't unsubscribe after the first
+    // success — it can be paused again the next time the tab is backgrounded.
+    const onVisible = () => {
+      if (document.visibilityState === "visible") tryPlay();
+    };
+
     tryPlay();
+    document.addEventListener("visibilitychange", onVisible);
     events.forEach((e) => window.addEventListener(e, tryPlay, { passive: true }));
-    return stop;
+
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      events.forEach((e) => window.removeEventListener(e, tryPlay));
+    };
   }, []);
 
   return (
@@ -38,7 +50,7 @@ export default function FrontDeskHero() {
       <video
         ref={videoRef}
         className="fd-home-hero__video"
-        src="/FrontDesk_Assets/background-video-jan-28_202607252000.mp4"
+        src="/FrontDesk_Assets/hero-loop.mp4"
         autoPlay
         muted
         loop
