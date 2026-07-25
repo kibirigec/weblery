@@ -357,56 +357,152 @@
   background: rgba(255, 255, 255, 0.55);
 }
 
-/* Call */
+/* Call — an in-call screen, not a message thread. */
 
-.fd-call__bar {
+.fd-call__head {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--fd-faint);
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(30, 41, 92, 0.1);
-  margin-bottom: 1.1rem;
+  gap: 0.7rem;
 }
 
-.fd-call__live {
+.fd-call__avatar {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: var(--fd-accent);
+  color: #fff;
+  flex: none;
+}
+
+.fd-call__id {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.fd-call__id strong {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--fd-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.fd-call__id span {
+  font-size: 0.76rem;
+  color: var(--fd-faint);
+}
+
+.fd-call__timer {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--fd-ink);
+}
+
+.fd-call__timer i {
   width: 7px;
   height: 7px;
   border-radius: 999px;
   background: #e5484d;
 }
 
-.fd-call__thread {
+/* Audio, so the panel reads as sound rather than typing. */
+.fd-wave {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+  height: 34px;
+  margin: 1.1rem 0;
+}
+
+.fd-wave span {
+  flex: 1;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, var(--fd-accent), rgba(15, 157, 107, 0.45));
+  min-height: 4px;
+}
+
+.fd-call__label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fd-faint);
+  margin: 0 0 0.75rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(30, 41, 92, 0.1);
+}
+
+.fd-call__log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.7rem;
 }
 
-.fd-turn {
-  margin: 0;
-  font-size: 0.93rem;
-  line-height: 1.5;
-  border-radius: 14px;
-  padding: 0.65rem 0.9rem;
-  max-width: 86%;
+/* Timestamp gutter, then speaker, then what was said — a transcript. */
+.fd-call__log li {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  column-gap: 0.65rem;
+  font-size: 0.89rem;
+  line-height: 1.45;
 }
 
-.fd-turn--them {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(30, 41, 92, 0.1);
+.fd-call__at {
+  grid-row: span 2;
+  font-size: 0.74rem;
+  color: var(--fd-faint);
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.1rem;
+}
+
+.fd-call__spk {
+  font-size: 0.71rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fd-faint);
+}
+
+.fd-call__spk--agent {
+  color: var(--fd-accent-deep);
+}
+
+.fd-call__said {
   color: var(--fd-ink);
-  align-self: flex-start;
-  border-bottom-left-radius: 5px;
 }
 
-.fd-turn--caller {
-  background: var(--fd-ink);
+.fd-call__actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.3rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(30, 41, 92, 0.1);
+}
+
+.fd-call__end {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: #e5484d;
   color: #fff;
-  align-self: flex-end;
-  border-bottom-right-radius: 5px;
+  box-shadow: 0 8px 20px -8px rgba(229, 72, 77, 0.8);
+}
+
+/* Rotate the handset, not the button — rotating the button turns its shadow
+   with it. Pointing down is the universal hang-up affordance. */
+.fd-call__end svg {
+  transform: rotate(135deg);
 }
 
 /* Ticket */
@@ -685,5 +781,34 @@
   .fd-ticket__grid,
   .fd-card--wide {
     grid-template-columns: 1fr;
+  }
+
+  /* Reclaim room so the phone number doesn't break mid-number. */
+  .fd-card {
+    padding: 1.15rem 1.15rem 1.3rem;
+  }
+
+  .fd-call__head {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+
+  .fd-call__id {
+    flex: 1 1 auto;
+  }
+
+  .fd-call__id strong,
+  .fd-call__id span {
+    white-space: nowrap;
+  }
+
+  /* Wraps to its own line rather than squeezing the caller ID. */
+  .fd-call__timer {
+    flex: 0 0 auto;
+  }
+
+  .fd-call__log li {
+    grid-template-columns: 2.1rem minmax(0, 1fr);
+    column-gap: 0.5rem;
   }
 }

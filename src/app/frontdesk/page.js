@@ -36,25 +36,61 @@ function ScanPanel() {
   );
 }
 
+/* Deliberately not chat bubbles: this is a spoken call, so the panel carries
+   caller ID, a running timer, audio, and a timestamped transcript. */
 function CallPanel() {
   const turns = [
-    { who: "them", text: "Summit Heating and Air, this is Riley — how can I help?" },
-    { who: "caller", text: "Hey, my AC just quit and it's really hot in here." },
-    { who: "them", text: "Sorry to hear that. Is anyone home who's sensitive to the heat — kids, older folks?" },
-    { who: "caller", text: "Yeah, two little ones." },
-    { who: "them", text: "Understood, I'll flag this as urgent. What's the best number to reach you?" },
+    { at: "0:02", who: "Front Desk", agent: true, text: "Summit Heating and Air, this is Riley — how can I help?" },
+    { at: "0:06", who: "Caller", agent: false, text: "Hey, my AC just quit and it's really hot in here." },
+    { at: "0:11", who: "Front Desk", agent: true, text: "Sorry to hear that — is anyone home who's sensitive to the heat?" },
+    { at: "0:17", who: "Caller", agent: false, text: "Yeah, two little ones." },
+    { at: "0:21", who: "Front Desk", agent: true, text: "Understood, I'll flag this as urgent. Best number to reach you?" },
   ];
+  // Fixed, not random — a server component must render the same bars twice.
+  const bars = [5, 9, 16, 11, 22, 14, 7, 18, 27, 19, 12, 24, 9, 15, 6, 20, 13, 8, 17, 10, 23, 14, 6, 11, 19, 9, 15, 7];
+
   return (
     <div className="fd-panel">
-      <div className="fd-card">
-        <div className="fd-call__bar">
-          <span className="fd-call__live" />
-          Incoming call · 9:41 PM
+      <div className="fd-card fd-call">
+        <div className="fd-call__head">
+          <span className="fd-call__avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor">
+              <path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.6a1 1 0 0 1-.25 1l-2.22 2.2Z" />
+            </svg>
+          </span>
+          <span className="fd-call__id">
+            <strong>(702) 555-0148</strong>
+            <span>Incoming · after hours</span>
+          </span>
+          <span className="fd-call__timer">
+            <i aria-hidden="true" />
+            00:24
+          </span>
         </div>
-        <div className="fd-call__thread">
-          {turns.map((t, i) => (
-            <p key={i} className={`fd-turn fd-turn--${t.who}`}>{t.text}</p>
+
+        <div className="fd-wave" aria-hidden="true">
+          {bars.map((h, i) => (
+            <span key={i} style={{ height: `${h}px` }} />
           ))}
+        </div>
+
+        <p className="fd-call__label">Live transcript</p>
+        <ol className="fd-call__log">
+          {turns.map((t) => (
+            <li key={t.at}>
+              <span className="fd-call__at">{t.at}</span>
+              <span className={`fd-call__spk${t.agent ? " fd-call__spk--agent" : ""}`}>{t.who}</span>
+              <span className="fd-call__said">{t.text}</span>
+            </li>
+          ))}
+        </ol>
+
+        <div className="fd-call__actions" aria-hidden="true">
+          <span className="fd-call__end">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor">
+              <path d="M12 9c-1.6 0-3.15.25-4.6.7v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85a.98.98 0 0 1-.7.29c-.28 0-.53-.11-.71-.29L.29 13.08a.98.98 0 0 1-.29-.7c0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.47a.98.98 0 0 1-.71.29c-.27 0-.52-.11-.7-.28a11.27 11.27 0 0 0-2.67-1.86.998.998 0 0 1-.56-.9v-3.1C15.15 9.25 13.6 9 12 9Z" />
+            </svg>
+          </span>
         </div>
       </div>
     </div>
