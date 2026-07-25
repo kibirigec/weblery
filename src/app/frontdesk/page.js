@@ -1,5 +1,6 @@
 import Link from "next/link";
 import DemoForm from "./DemoForm";
+import LiveCall from "./LiveCall";
 
 const NICHES = [
   { title: "Home services", tag: "HVAC · plumbing · electrical · roofing", quote: "No cooling, 88° inside, two kids at home. Wants a visit tomorrow 8–10am." },
@@ -30,70 +31,6 @@ function ScanPanel() {
           {["AC repair", "Furnace install", "Duct cleaning", "Maintenance plans", "Emergency callout"].map((c) => (
             <span key={c} className="fd-chip">{c}</span>
           ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* Deliberately not chat bubbles: this is a spoken call, so the panel carries
-   caller ID, a running timer, audio, and a timestamped transcript. */
-function CallPanel() {
-  const turns = [
-    { at: "0:02", who: "Front Desk", agent: true, text: "Summit Heating and Air, this is Riley — how can I help?" },
-    { at: "0:06", who: "Caller", agent: false, text: "Hey, my AC just quit and it's really hot in here." },
-    { at: "0:11", who: "Front Desk", agent: true, text: "Sorry to hear that — is anyone home who's sensitive to the heat?" },
-    { at: "0:17", who: "Caller", agent: false, text: "Yeah, two little ones." },
-    { at: "0:21", who: "Front Desk", agent: true, text: "Understood, I'll flag this as urgent. Best number to reach you?" },
-  ];
-  // Fixed, not random — a server component must render the same bars twice.
-  const bars = [
-    4, 7, 11, 6, 14, 9, 18, 12, 22, 15, 9, 20, 25, 17, 10, 6, 13, 21, 16, 8, 12, 24, 18,
-    11, 7, 15, 19, 9, 23, 14, 6, 10, 17, 26, 13, 8, 20, 12, 5, 16, 22, 10, 7, 14, 9, 4,
-  ];
-
-  return (
-    <div className="fd-panel">
-      <div className="fd-card fd-call">
-        <div className="fd-call__head">
-          <span className="fd-call__avatar" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor">
-              <path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.6a1 1 0 0 1-.25 1l-2.22 2.2Z" />
-            </svg>
-          </span>
-          <span className="fd-call__id">
-            <strong>(702) 555-0148</strong>
-            <span>Incoming · after hours</span>
-          </span>
-          <span className="fd-call__timer">
-            <i aria-hidden="true" />
-            00:24
-          </span>
-        </div>
-
-        <div className="fd-wave" aria-hidden="true">
-          {bars.map((h, i) => (
-            <span key={i} style={{ height: `${h}px` }} />
-          ))}
-        </div>
-
-        <p className="fd-call__label">Live transcript</p>
-        <ol className="fd-call__log">
-          {turns.map((t) => (
-            <li key={t.at}>
-              <span className="fd-call__at">{t.at}</span>
-              <span className={`fd-call__spk${t.agent ? " fd-call__spk--agent" : ""}`}>{t.who}</span>
-              <span className="fd-call__said">{t.text}</span>
-            </li>
-          ))}
-        </ol>
-
-        <div className="fd-call__actions" aria-hidden="true">
-          <span className="fd-call__end">
-            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor">
-              <path d="M12 9c-1.6 0-3.15.25-4.6.7v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85a.98.98 0 0 1-.7.29c-.28 0-.53-.11-.71-.29L.29 13.08a.98.98 0 0 1-.29-.7c0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.47a.98.98 0 0 1-.71.29c-.27 0-.52-.11-.7-.28a11.27 11.27 0 0 0-2.67-1.86.998.998 0 0 1-.56-.9v-3.1C15.15 9.25 13.6 9 12 9Z" />
-            </svg>
-          </span>
         </div>
       </div>
     </div>
@@ -172,7 +109,7 @@ const FEATURES = [
   {
     title: "Answers as your business",
     body: "Not a menu and not a voicemail. It picks up in your business's name, asks the questions that qualify the job, and knows when something is an emergency.",
-    panel: <CallPanel />,
+    panel: <LiveCall />,
   },
   {
     title: "Your team gets the job, not a recording",

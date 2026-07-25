@@ -430,6 +430,23 @@
   border-radius: 999px;
   background: linear-gradient(to bottom, var(--fd-accent), rgba(15, 157, 107, 0.45));
   min-height: 3px;
+  transform-origin: center;
+  /* Collapsed between turns; the line settles when nobody is talking. */
+  transform: scaleY(0.16);
+  transition: transform 0.35s ease;
+}
+
+.fd-wave.is-live span {
+  animation: fd-wave-pulse 0.85s ease-in-out infinite alternate;
+}
+
+@keyframes fd-wave-pulse {
+  from {
+    transform: scaleY(0.22);
+  }
+  to {
+    transform: scaleY(1);
+  }
 }
 
 .fd-call__label {
@@ -442,6 +459,8 @@
   border-top: 1px solid rgba(30, 41, 92, 0.1);
 }
 
+/* Fixed height so the card doesn't grow as lines arrive. Scrollable rather
+   than clipped, so the whole transcript stays reachable without motion. */
 .fd-call__log {
   list-style: none;
   margin: 0;
@@ -449,6 +468,22 @@
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  height: 200px;
+  /* Must be the offset parent: the auto-scroll measures each line's offsetTop
+     against it. Without this the nearest positioned ancestor is .fd-panel and
+     every line reports a much larger offset, scrolling past the transcript. */
+  position: relative;
+  overflow-y: auto;
+  /* Not `smooth`: the playback tick re-checks position every 100ms, which
+     cancels and restarts a smooth scroll before it can travel, leaving the
+     log pinned at the top. Line-at-a-time jumps are what a live transcript
+     does anyway. */
+  scroll-behavior: auto;
+  scrollbar-width: none;
+}
+
+.fd-call__log::-webkit-scrollbar {
+  display: none;
 }
 
 /* Timestamp gutter, then speaker, then what was said — a transcript. */
@@ -458,6 +493,23 @@
   column-gap: 0.65rem;
   font-size: 0.89rem;
   line-height: 1.45;
+  flex: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.fd-call__log li.is-open {
+  opacity: 1;
+}
+
+/* Words hold their space while hidden, so nothing reflows as they land. */
+.fd-w {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.fd-w.is-in {
+  opacity: 1;
 }
 
 .fd-call__at {
@@ -734,6 +786,23 @@
 @media (prefers-reduced-motion: reduce) {
   .fd-hero__video {
     display: none;
+  }
+
+  /* Playback never starts, so show the call at rest: full transcript, and a
+     waveform at its authored heights rather than collapsed flat. */
+  .fd-wave span {
+    transform: none;
+    transition: none;
+  }
+
+  .fd-wave.is-live span {
+    animation: none;
+  }
+
+  .fd-call__log li,
+  .fd-w {
+    opacity: 1;
+    transition: none;
   }
 }
 
