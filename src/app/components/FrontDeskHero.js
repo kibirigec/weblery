@@ -98,7 +98,10 @@ export default function FrontDeskHero() {
           isolation: isolate;
         }
 
-        /* No scrim: the footage carries the hero, as in the reference. */
+        /* No scrim: the footage carries the hero, as in the reference, with a
+           soft blur so it stays background rather than competing with the
+           type. Scaled up because blur samples past the edges and would
+           otherwise leave a faded border inside the hero. */
         .fd-home-hero__video {
           position: absolute;
           inset: 0;
@@ -106,6 +109,8 @@ export default function FrontDeskHero() {
           height: 100%;
           object-fit: cover;
           z-index: -1;
+          filter: blur(5px);
+          transform: scale(1.06);
         }
 
         .fd-home-hero__inner {

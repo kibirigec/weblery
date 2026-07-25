@@ -45,7 +45,10 @@
   isolation: isolate;
 }
 
-/* No scrim: the footage runs at full saturation and carries the hero. */
+/* No scrim: the footage runs at full saturation and carries the hero, with a
+   soft blur so it stays background rather than competing with the type.
+   Scaled up because blur samples past the edges and would otherwise leave a
+   faded border inside the hero. */
 .fd-hero__video {
   position: absolute;
   inset: 0;
@@ -53,6 +56,8 @@
   height: 100%;
   object-fit: cover;
   z-index: -1;
+  filter: blur(5px);
+  transform: scale(1.06);
 }
 
 /* App-icon tile, as in the reference — not a text pill. */
