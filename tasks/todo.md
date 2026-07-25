@@ -77,6 +77,21 @@ Nothing is throwaway; flipping the env var turns auto-build on.
 - **Full loop through the real UI:** typed `hvac.com` into the page → "Your receptionist is
   ready. Call it now →" linking to a live demo.
 
+### Follow-up — discoverability (done)
+The page was deliberately unlinked at first (cold-email traffic only). Calvin then asked to
+surface it, so:
+- **Navigation:** "Front Desk" added to the desktop and mobile menus.
+- **Homepage:** a banner first, then — per Calvin — a **full-screen hero takeover**
+  (`components/FrontDeskHero.js`) above `ClayHero`. `ShopBanner`/`FrontDeskBanner` no longer
+  render; `FrontDeskBanner.js` was deleted, `ShopBanner.js` left in place but unused.
+
+Two non-obvious things that bit during this work:
+- **styled-jsx doesn't reach a child component's DOM.** Styling the CTA `<Link>` via the
+  scoped block produced a completely unstyled anchor. The CTA uses Tailwind instead.
+- **Autoplay doesn't reliably fire on the homepage** (the pre-existing showreel video is
+  affected too, so it isn't specific to this hero). The hero nudges `play()` on mount and
+  retries on first interaction, or it sits on a frozen frame.
+
 ### Notes / gotchas
 - A stray `echo >>` concatenated `FRONTDESK_URL` onto the `TELEGRAM_CHAT_ID` line in `.env.local`
   (no trailing newline), breaking both. Repaired; backup at `/tmp/envlocal.bak`.

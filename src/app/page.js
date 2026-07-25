@@ -1,7 +1,7 @@
 'use client';
 
 import Navigation from './components/Navigation';
-import FrontDeskBanner from './components/FrontDeskBanner';
+import FrontDeskHero from './components/FrontDeskHero';
 import ClayHero from './components/ClayHero';
 import ClayShowreel from './components/ClayShowreel';
 import ClayServices from './components/ClayServices';
@@ -14,8 +14,8 @@ export default function Home() {
       <main className="bg-[#FBFBFB] min-h-screen">
         <Navigation id="home-nav" />
 
-        {/* Front Desk announcement */}
-        <FrontDeskBanner />
+        {/* Front Desk takeover — full-screen, hands off to the agency site below */}
+        <FrontDeskHero />
 
         {/* Hero Section */}
         <ClayHero />
