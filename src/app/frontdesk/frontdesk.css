@@ -267,10 +267,10 @@
   place-items: center;
   overflow: hidden;
   background:
-    radial-gradient(58% 68% at 18% 28%, #8ea2f5 0%, rgba(142, 162, 245, 0) 62%),
-    radial-gradient(52% 62% at 86% 16%, #7b8ef4 0%, rgba(123, 142, 244, 0) 58%),
-    radial-gradient(55% 65% at 74% 92%, #b3a4f2 0%, rgba(179, 164, 242, 0) 62%),
-    linear-gradient(135deg, #eef1fe 0%, #e7ebfd 55%, #f2effe 100%);
+    radial-gradient(58% 68% at 18% 28%, #6f9ef7 0%, rgba(111, 158, 247, 0) 62%),
+    radial-gradient(52% 62% at 86% 16%, #3f86f4 0%, rgba(63, 134, 244, 0) 58%),
+    radial-gradient(55% 65% at 74% 92%, #8ecbfb 0%, rgba(142, 203, 251, 0) 62%),
+    linear-gradient(135deg, #edf4fe 0%, #e1edfc 55%, #eff7ff 100%);
 }
 
 /* The artifact card that floats on the gradient. */
