@@ -5,8 +5,10 @@ import { useEffect, useRef } from "react";
 
 /**
  * Full-screen homepage takeover announcing Front Desk, our AI receptionist.
- * Uses the product's own video and voice, then hands off to the agency site
- * below. Kept on a light scrim so the site's fixed dark navigation stays legible.
+ *
+ * Follows the OpenAI Codex hero: footage at full saturation with no wash over
+ * it, an app-icon tile, the product name as the headline in a medium weight,
+ * a single line of copy, and one pill CTA. Hands off to the agency site below.
  */
 export default function FrontDeskHero() {
   const videoRef = useRef(null);
@@ -43,33 +45,28 @@ export default function FrontDeskHero() {
         playsInline
         aria-hidden="true"
       />
-      <div className="fd-home-hero__scrim" aria-hidden="true" />
 
       <div className="fd-home-hero__inner">
-        <span className="fd-home-hero__badge">
-          <span className="fd-home-hero__dot" />
-          New from Weblery · Front Desk
+        <span className="fd-home-hero__tile">
+          <img src="/LetterLogo.svg" alt="" aria-hidden="true" />
         </span>
 
-        <h1 className="fd-home-hero__title">
-          Never lose another customer to a missed call.
-        </h1>
+        <h1 className="fd-home-hero__title">Front Desk</h1>
 
         <p className="fd-home-hero__sub">
-          An AI receptionist that answers as your business, captures the job, and texts your team.
-          Nothing to install — keep your number.
+          An AI receptionist that answers your calls—and never misses one.
         </p>
 
         {/* Tailwind rather than styled-jsx: scoped styles don't reach the
             element a child component renders. */}
         <Link
           href="/frontdesk"
-          className="group mt-10 inline-flex items-center gap-2 rounded-full bg-[#0D1512] px-8 py-4 text-[16px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0A6F4C] hover:shadow-[0_14px_34px_-14px_rgba(10,111,76,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A6F4C] focus-visible:ring-offset-2"
+          className="group mt-8 inline-flex items-center gap-2 rounded-full bg-black px-7 py-3.5 text-[15px] font-medium text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0A6F4C] focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
         >
           Hear it answer
           <svg
-            width="15"
-            height="15"
+            width="14"
+            height="14"
             viewBox="0 0 14 14"
             fill="none"
             aria-hidden="true"
@@ -86,20 +83,6 @@ export default function FrontDeskHero() {
         </Link>
       </div>
 
-      {/* Deliberately not the agency line — ClayHero says it verbatim one scroll down. */}
-      <span className="fd-home-hero__scroll" aria-hidden="true">
-        More from Weblery
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path
-            d="M7 2V12M7 12L2.5 7.5M7 12L11.5 7.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-
       <style jsx>{`
         .fd-home-hero {
           position: relative;
@@ -110,127 +93,79 @@ export default function FrontDeskHero() {
           justify-content: center;
           text-align: center;
           /* Clears the fixed navigation (~114px). */
-          padding: 9rem 1.5rem 5rem;
+          padding: 9rem 1.5rem 6rem;
           overflow: hidden;
           isolation: isolate;
         }
 
+        /* No scrim: the footage carries the hero, as in the reference. */
         .fd-home-hero__video {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
-          z-index: -2;
-        }
-
-        /* Light wash: enough to keep the type — and the site's dark fixed nav —
-           readable, light enough that the footage still reads. The bottom stop
-           goes near-opaque so the hero dissolves into the page below. */
-        .fd-home-hero__scrim {
-          position: absolute;
-          inset: 0;
           z-index: -1;
-          background:
-            radial-gradient(
-              120% 80% at 50% 42%,
-              rgba(255, 255, 255, 0.72) 0%,
-              rgba(255, 255, 255, 0.55) 45%,
-              rgba(255, 255, 255, 0.78) 100%
-            ),
-            linear-gradient(
-              to bottom,
-              rgba(251, 251, 251, 0.3) 0%,
-              rgba(251, 251, 251, 0.55) 70%,
-              rgba(251, 251, 251, 0.97) 100%
-            );
         }
 
-        .fd-home-hero__badge {
-          display: inline-flex;
+        .fd-home-hero__inner {
+          display: flex;
+          flex-direction: column;
           align-items: center;
-          gap: 0.55rem;
-          font-size: 0.78rem;
-          font-weight: 500;
-          letter-spacing: 0.02em;
-          color: #0a5c42;
-          background: rgba(255, 255, 255, 0.72);
-          border: 1px solid rgba(10, 92, 66, 0.16);
-          border-radius: 999px;
-          padding: 0.45rem 1rem;
-          backdrop-filter: blur(8px);
         }
 
-        .fd-home-hero__dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 999px;
-          background: #12876a;
-          box-shadow: 0 0 8px #34d399;
+        .fd-home-hero__tile {
+          display: grid;
+          place-items: center;
+          width: 74px;
+          height: 74px;
+          border-radius: 21px;
+          background: #fff;
+          box-shadow: 0 10px 30px -12px rgba(13, 21, 18, 0.45);
+        }
+
+        .fd-home-hero__tile :global(img) {
+          width: 38px;
+          height: auto;
         }
 
         .fd-home-hero__title {
-          font-size: clamp(2.5rem, 6.6vw, 4.7rem);
-          line-height: 1.03;
-          letter-spacing: -0.035em;
-          font-weight: 700;
-          color: #0d1512;
-          margin: 1.7rem 0 0;
-          max-width: 17ch;
-          text-wrap: balance;
+          font-size: clamp(3rem, 6vw, 4.15rem);
+          line-height: 1.04;
+          letter-spacing: -0.03em;
+          font-weight: 500;
+          color: #000;
+          margin: 2.1rem 0 0;
         }
 
         .fd-home-hero__sub {
-          font-size: clamp(1rem, 2vw, 1.2rem);
-          line-height: 1.55;
-          color: #4a5952;
-          max-width: 48ch;
-          margin: 1.3rem auto 0;
+          font-size: clamp(1.02rem, 1.5vw, 1.14rem);
+          line-height: 1.5;
+          /* Near-black, not the muted body grey: with no wash over the video
+             the copy has to hold up against the darkest frames too. */
+          color: #101a16;
+          max-width: 44ch;
+          margin: 1.35rem auto 0;
           text-wrap: balance;
-        }
-
-        .fd-home-hero__scroll {
-          position: absolute;
-          bottom: 2.2rem;
-          left: 50%;
-          transform: translateX(-50%);
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-size: 0.8rem;
-          color: #8b9a93;
-          white-space: nowrap;
-        }
-
-        .fd-home-hero__scroll :global(svg) {
-          animation: fd-home-nudge 2.4s ease-in-out infinite;
-        }
-
-        @keyframes fd-home-nudge {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(3px);
-          }
         }
 
         @media (prefers-reduced-motion: reduce) {
           .fd-home-hero__video {
             display: none;
           }
-          .fd-home-hero__scroll :global(svg) {
-            animation: none;
-          }
         }
 
         @media (max-width: 640px) {
           .fd-home-hero {
-            padding: 8rem 1.25rem 6rem;
+            padding: 8rem 1.25rem 5rem;
           }
-          .fd-home-hero__scroll {
-            font-size: 0.72rem;
+          .fd-home-hero__tile {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+          }
+          .fd-home-hero__tile :global(img) {
+            width: 32px;
           }
         }
       `}</style>

@@ -57,17 +57,13 @@ export default function FrontDeskPage() {
           playsInline
           aria-hidden="true"
         />
-        <div className="fd-hero__scrim" />
-
         <span className="fd-hero__brand">
-          <img src="/FullLogo.svg" alt="Weblery" />
-          Front Desk
+          <img src="/LetterLogo.svg" alt="Weblery" />
         </span>
 
-        <h1>The calls you miss are the jobs you lose.</h1>
+        <h1>Front Desk</h1>
         <p className="fd-hero__sub">
-          Front Desk is an AI receptionist that answers as your business, captures the job, and
-          texts your team before the caller reaches anyone else.
+          An AI receptionist that answers as your business—and never misses a call.
         </p>
 
         <DemoForm id="fd-hero-url" />
