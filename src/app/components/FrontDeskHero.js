@@ -69,8 +69,10 @@ export default function FrontDeskHero() {
           An AI receptionist that answers your calls—and never misses one.
         </p>
 
-        {/* Tailwind rather than styled-jsx: scoped styles don't reach the
-            element a child component renders. */}
+        {/* Wrapped because the entrance animation lives in styled-jsx, which
+            can't reach the element a child component renders — the wrapper is
+            ours, so it can carry it. */}
+        <span className="fd-home-hero__ctaWrap">
         <Link
           href="/frontdesk"
           className="group mt-8 inline-flex items-center gap-2 rounded-full bg-black px-7 py-3.5 text-[15px] font-medium text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0A6F4C] focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
@@ -93,6 +95,7 @@ export default function FrontDeskHero() {
             />
           </svg>
         </Link>
+        </span>
       </div>
 
       <style jsx>{`
@@ -166,9 +169,54 @@ export default function FrontDeskHero() {
           text-wrap: balance;
         }
 
+        /* animation-fill-mode backwards holds the from-state through the
+           delay; without it each line flashes at full opacity before its turn.
+           (No backticks in here — this block is a template literal.) */
+        @keyframes fd-home-rise {
+          from {
+            opacity: 0;
+            transform: translateY(18px);
+          }
+          to {
+            opacity: 1;
+            transform: none;
+          }
+        }
+
+        .fd-home-hero__tile,
+        .fd-home-hero__title,
+        .fd-home-hero__sub,
+        .fd-home-hero__ctaWrap {
+          animation: fd-home-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+        }
+
+        .fd-home-hero__tile {
+          animation-delay: 0.05s;
+        }
+
+        .fd-home-hero__title {
+          animation-delay: 0.16s;
+        }
+
+        .fd-home-hero__sub {
+          animation-delay: 0.27s;
+        }
+
+        .fd-home-hero__ctaWrap {
+          display: inline-flex;
+          animation-delay: 0.38s;
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .fd-home-hero__video {
             display: none;
+          }
+
+          .fd-home-hero__tile,
+          .fd-home-hero__title,
+          .fd-home-hero__sub,
+          .fd-home-hero__ctaWrap {
+            animation: none;
           }
         }
 

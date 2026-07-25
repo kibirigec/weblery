@@ -2,6 +2,7 @@ import Link from "next/link";
 import DemoForm from "./DemoForm";
 import LiveCall from "./LiveCall";
 import HeroVideo from "./HeroVideo";
+import ScrollReveal from "./ScrollReveal";
 
 const NICHES = [
   { title: "Home services", tag: "HVAC · plumbing · electrical · roofing", quote: "No cooling, 88° inside, two kids at home. Wants a visit tomorrow 8–10am." },
@@ -148,9 +149,11 @@ export default function FrontDeskPage() {
         <DemoForm id="fd-hero-url" />
       </header>
 
+      <ScrollReveal />
+
       <section className="fd-body">
         <div className="fd-shell">
-          <h2 className="fd-body__head">
+          <h2 className="fd-body__head" data-reveal>
             The calls you miss are the jobs you lose.
           </h2>
 
@@ -158,8 +161,10 @@ export default function FrontDeskPage() {
             {FEATURES.map((f) => (
               <div key={f.title} className="fd-feature">
                 <div className="fd-feature__copy">
-                  <h3>{f.title}</h3>
-                  <p>{f.body}</p>
+                  <h3 data-reveal>{f.title}</h3>
+                  <p data-reveal data-reveal-delay>
+                    {f.body}
+                  </p>
                 </div>
                 <div className="fd-feature__media">{f.panel}</div>
               </div>
@@ -171,8 +176,8 @@ export default function FrontDeskPage() {
       {/* Close */}
       <section className="fd-close">
         <div className="fd-shell">
-          <h2>Hear it answer your phone.</h2>
-          <p className="fd-close__lede">
+          <h2 data-reveal>Hear it answer your phone.</h2>
+          <p className="fd-close__lede" data-reveal data-reveal-delay>
             Put in your website and we&apos;ll build a receptionist that already knows your
             business. Then call it yourself.
           </p>

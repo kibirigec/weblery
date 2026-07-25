@@ -96,6 +96,80 @@
   text-wrap: balance;
 }
 
+/* ---------- Entrances ----------
+   The hero is on screen at load, so it animates on load rather than on
+   scroll. `backwards` holds the from-state through the delay; without it
+   each line would flash at full opacity before its turn. */
+
+@keyframes fd-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fd-hero__brand,
+.fd-hero h1,
+.fd-hero__sub,
+.fd-hero .fd-form {
+  animation: fd-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+}
+
+.fd-hero__brand {
+  animation-delay: 0.05s;
+}
+
+.fd-hero h1 {
+  animation-delay: 0.16s;
+}
+
+.fd-hero__sub {
+  animation-delay: 0.27s;
+}
+
+.fd-hero .fd-form {
+  animation-delay: 0.38s;
+}
+
+/* Scroll reveal. Visible by default and only cloaked by JS once it knows it
+   can uncloak — so if the script never runs, the copy is simply there. */
+[data-reveal] {
+  transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+[data-reveal].is-cloaked {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+/* Second line of a pair trails the first slightly. */
+[data-reveal][data-reveal-delay] {
+  transition-delay: 0.09s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fd-hero__brand,
+  .fd-hero h1,
+  .fd-hero__sub,
+  .fd-hero .fd-form {
+    animation: none;
+  }
+
+  [data-reveal] {
+    transition: none;
+  }
+
+  [data-reveal].is-cloaked {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* ---------- Demo form ---------- */
 
 .fd-form {
