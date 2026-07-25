@@ -13,12 +13,12 @@ const NICHES = [
 
 function ScanPanel() {
   return (
-    <div className="fd-panel fd-panel--scan">
-      <div className="fd-fakebar">
-        <span className="fd-fakebar__dot" />
-        <span className="fd-fakebar__url">summitheatingandair.com</span>
-      </div>
-      <div className="fd-scan">
+    <div className="fd-panel">
+      <div className="fd-card">
+        <div className="fd-fakebar">
+          <span className="fd-fakebar__dot" />
+          <span className="fd-fakebar__url">summitheatingandair.com</span>
+        </div>
         <p className="fd-scan__label">Extracted in 48 seconds</p>
         <dl className="fd-scan__grid">
           <div><dt>Business</dt><dd>Summit Heating &amp; Air</dd></div>
@@ -45,15 +45,17 @@ function CallPanel() {
     { who: "them", text: "Understood, I'll flag this as urgent. What's the best number to reach you?" },
   ];
   return (
-    <div className="fd-panel fd-panel--call">
-      <div className="fd-call__bar">
-        <span className="fd-call__live" />
-        Incoming call · 9:41 PM
-      </div>
-      <div className="fd-call__thread">
-        {turns.map((t, i) => (
-          <p key={i} className={`fd-turn fd-turn--${t.who}`}>{t.text}</p>
-        ))}
+    <div className="fd-panel">
+      <div className="fd-card">
+        <div className="fd-call__bar">
+          <span className="fd-call__live" />
+          Incoming call · 9:41 PM
+        </div>
+        <div className="fd-call__thread">
+          {turns.map((t, i) => (
+            <p key={i} className={`fd-turn fd-turn--${t.who}`}>{t.text}</p>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -61,8 +63,8 @@ function CallPanel() {
 
 function TicketPanel() {
   return (
-    <div className="fd-panel fd-panel--ticket">
-      <div className="fd-ticket" role="img" aria-label="Example intake message sent to your team">
+    <div className="fd-panel">
+      <div className="fd-card" role="img" aria-label="Example intake message sent to your team">
         <div className="fd-ticket__top">
           <span className="fd-ticket__label">New call · 9:42 PM</span>
           <span className="fd-ticket__badge">URGENT</span>
@@ -85,22 +87,24 @@ function TicketPanel() {
 
 function NichePanel() {
   return (
-    <div className="fd-panel fd-panel--niches">
-      {NICHES.map((n) => (
-        <article key={n.title} className="fd-niche">
-          <h4>{n.title}</h4>
-          <p className="fd-niche__quote">{n.quote}</p>
-          <p className="fd-niche__tag">{n.tag}</p>
-        </article>
-      ))}
+    <div className="fd-panel">
+      <div className="fd-card fd-card--wide">
+        {NICHES.map((n) => (
+          <article key={n.title} className="fd-niche">
+            <h4>{n.title}</h4>
+            <p className="fd-niche__quote">{n.quote}</p>
+            <p className="fd-niche__tag">{n.tag}</p>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
 
 function ForwardPanel() {
   return (
-    <div className="fd-panel fd-panel--forward">
-      <div className="fd-forward">
+    <div className="fd-panel">
+      <div className="fd-card fd-forward">
         <div className="fd-forward__row">
           <span className="fd-forward__num">(702) 555-0148</span>
           <span className="fd-forward__note">Your existing number — unchanged</span>
@@ -175,7 +179,6 @@ export default function FrontDeskPage() {
         <DemoForm id="fd-hero-url" />
       </header>
 
-      {/* Everything below the hero runs dark, as in the reference. */}
       <section className="fd-body">
         <div className="fd-shell">
           <h2 className="fd-body__head">

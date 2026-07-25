@@ -1,8 +1,6 @@
 /* Front Desk product page — its own identity, distinct from the agency site.
-   A light hero on full-saturation footage, then the page inverts to white on
-   black for the feature rows and close. Tokens below serve the hero and the
-   form, which are the only light surfaces left; the dark side sets its own
-   values inline because they are all one-offs against #000. */
+   Light throughout: a hero on full-saturation footage, then alternating
+   feature rows where each visual sits on a soft gradient panel. */
 
 .fd {
   --fd-ink: #0d1512;
@@ -10,6 +8,7 @@
   --fd-faint: #8b9a93;
   --fd-line: #e4eae7;
   --fd-bg: #ffffff;
+  --fd-bg-soft: #f5f8f6;
   --fd-accent: #0f9d6b;
   --fd-accent-deep: #0a6f4c;
 
@@ -180,80 +179,110 @@
   font-weight: 600;
 }
 
-/* ---------- Dark body ----------
-   Below the hero the page inverts: white on black, matching the reference.
-   The hero keeps dark type because it sits on light footage. */
+/* ---------- Body ----------
+   Light throughout. Feature rows alternate sides, and the copy sits bottom
+   aligned against a tall gradient panel — the reference's rhythm. */
 
 .fd-body {
-  background: #000;
-  color: #fff;
+  background: #fff;
   padding: clamp(5rem, 9vw, 8rem) 0 clamp(4rem, 8vw, 7rem);
 }
 
-/* styles/02-base.css colours h1–h6 with an element selector, which beats
-   inheriting white from .fd-body — every heading on black must say so. */
-.fd-body__head,
-.fd-feature__copy h3,
-.fd-niche h4,
-.fd-close h2 {
-  color: #fff;
+.fd-body .fd-shell {
+  max-width: 1216px;
 }
 
 .fd-body__head {
-  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
-  line-height: 1.12;
-  letter-spacing: -0.028em;
+  color: var(--fd-ink);
+  font-size: clamp(2rem, 4.2vw, 3.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   font-weight: 500;
-  margin: 0 0 clamp(3rem, 6vw, 5rem);
+  text-align: center;
+  margin: 0 auto clamp(3rem, 6vw, 4.5rem);
   max-width: 20ch;
   text-wrap: balance;
 }
 
-/* ---------- Feature rows ----------
-   Reference geometry: 3 columns, copy in one, media spanning two. */
+/* ---------- Feature rows ---------- */
 
 .fd-features {
   display: flex;
   flex-direction: column;
-  gap: clamp(2.5rem, 5vw, 4rem);
+  gap: clamp(3rem, 6vw, 5.5rem);
 }
 
 .fd-feature {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  align-items: start;
+  gap: 2.5rem;
+  /* Copy hangs from the bottom of the panel rather than centring on it. */
+  align-items: end;
+}
+
+/* Alternate which side the panel falls on. */
+.fd-feature:nth-child(even) .fd-feature__media {
+  order: 1;
+}
+
+.fd-feature:nth-child(even) .fd-feature__copy {
+  order: 2;
+}
+
+.fd-feature__copy {
+  padding-bottom: clamp(1rem, 4vw, 3.5rem);
 }
 
 .fd-feature__copy h3 {
-  font-size: clamp(1.35rem, 2.3vw, 1.82rem);
-  line-height: 1.18;
-  letter-spacing: -0.01em;
+  color: var(--fd-ink);
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  line-height: 1.16;
+  letter-spacing: -0.02em;
   font-weight: 500;
-  margin: 0 0 0.9rem;
+  margin: 0 0 1rem;
   text-wrap: balance;
 }
 
 .fd-feature__copy p {
   margin: 0;
   font-size: 1.0625rem;
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.62;
+  color: var(--fd-body);
 }
 
 .fd-feature__media {
   grid-column: span 2;
 }
 
-/* ---------- Panels ---------- */
+/* ---------- Panels ----------
+   A soft gradient field with the artifact floating on it, echoing the blue of
+   the hero footage so the page reads as one piece. */
 
 .fd-panel {
-  min-height: 430px;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 18px;
-  background: #0c0c0c;
-  padding: 1.5rem;
+  position: relative;
+  min-height: 560px;
+  border-radius: 22px;
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+  display: grid;
+  place-items: center;
   overflow: hidden;
+  background:
+    radial-gradient(58% 68% at 18% 28%, #8ea2f5 0%, rgba(142, 162, 245, 0) 62%),
+    radial-gradient(52% 62% at 86% 16%, #7b8ef4 0%, rgba(123, 142, 244, 0) 58%),
+    radial-gradient(55% 65% at 74% 92%, #b3a4f2 0%, rgba(179, 164, 242, 0) 62%),
+    linear-gradient(135deg, #eef1fe 0%, #e7ebfd 55%, #f2effe 100%);
+}
+
+/* The artifact card that floats on the gradient. */
+.fd-card {
+  width: min(470px, 100%);
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  padding: 1.4rem 1.5rem 1.6rem;
+  box-shadow: 0 26px 60px -30px rgba(30, 41, 92, 0.55);
 }
 
 /* Scan */
@@ -262,68 +291,70 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(30, 41, 92, 0.12);
   border-radius: 10px;
   padding: 0.6rem 0.85rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.4rem;
 }
 
 .fd-fakebar__dot {
   width: 7px;
   height: 7px;
   border-radius: 999px;
-  background: #34d399;
-  box-shadow: 0 0 9px #34d399;
+  background: var(--fd-accent);
   flex: none;
 }
 
 .fd-fakebar__url {
   font-size: 0.86rem;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--fd-body);
 }
 
 .fd-scan__label {
-  font-size: 0.72rem;
+  font-size: 0.71rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.42);
-  margin: 1.5rem 0 0.9rem;
+  color: var(--fd-faint);
+  margin: 0 0 0.9rem;
 }
 
 .fd-scan__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.1rem 1.5rem;
+  gap: 1rem 1.4rem;
   margin: 0;
 }
 
 .fd-scan__grid dt {
-  font-size: 0.74rem;
-  color: rgba(255, 255, 255, 0.45);
-  margin-bottom: 0.25rem;
+  font-size: 0.73rem;
+  color: var(--fd-faint);
+  margin-bottom: 0.2rem;
 }
 
 .fd-scan__grid dd {
   margin: 0;
-  font-size: 0.96rem;
+  font-size: 0.94rem;
   font-weight: 500;
+  color: var(--fd-ink);
 }
 
 .fd-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-  padding-top: 1.4rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 0.45rem;
+  margin-top: 1.3rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(30, 41, 92, 0.1);
 }
 
 .fd-chip {
-  font-size: 0.83rem;
-  color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 0.81rem;
+  color: var(--fd-body);
+  border: 1px solid rgba(30, 41, 92, 0.14);
   border-radius: 999px;
-  padding: 0.35rem 0.8rem;
+  padding: 0.32rem 0.75rem;
+  background: rgba(255, 255, 255, 0.55);
 }
 
 /* Call */
@@ -332,200 +363,190 @@
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.05em;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-  padding-bottom: 1.1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--fd-faint);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(30, 41, 92, 0.1);
+  margin-bottom: 1.1rem;
 }
 
 .fd-call__live {
   width: 7px;
   height: 7px;
   border-radius: 999px;
-  background: #f87171;
-  box-shadow: 0 0 9px #f87171;
+  background: #e5484d;
 }
 
 .fd-call__thread {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  margin-top: 1.2rem;
+  gap: 0.65rem;
 }
 
 .fd-turn {
   margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: 0.93rem;
+  line-height: 1.5;
   border-radius: 14px;
-  padding: 0.7rem 0.95rem;
-  max-width: 82%;
+  padding: 0.65rem 0.9rem;
+  max-width: 86%;
 }
 
 .fd-turn--them {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  /* The base layer greys <p>; on black that reads as disabled text. */
-  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(30, 41, 92, 0.1);
+  color: var(--fd-ink);
   align-self: flex-start;
   border-bottom-left-radius: 5px;
 }
 
 .fd-turn--caller {
-  background: #0f9d6b;
-  color: #04170f;
+  background: var(--fd-ink);
+  color: #fff;
   align-self: flex-end;
   border-bottom-right-radius: 5px;
-  font-weight: 500;
 }
 
 /* Ticket */
-
-.fd-panel--ticket {
-  display: grid;
-  place-items: center;
-  background: #0c0c0c;
-}
-
-.fd-ticket {
-  width: min(430px, 100%);
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 16px;
-  padding: 1.3rem 1.4rem 1.5rem;
-}
 
 .fd-ticket__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.85rem;
 }
 
 .fd-ticket__label {
-  font-size: 0.72rem;
+  font-size: 0.71rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--fd-faint);
 }
 
 .fd-ticket__badge {
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #04170f;
-  background: #fbbf24;
+  color: #fff;
+  background: #b45309;
   border-radius: 999px;
   padding: 0.22rem 0.6rem;
 }
 
 .fd-ticket__summary {
-  font-size: 0.94rem;
-  line-height: 1.6;
-  margin: 0 0 1.1rem;
-  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.93rem;
+  line-height: 1.58;
+  margin: 0 0 1rem;
+  color: var(--fd-ink);
 }
 
 .fd-ticket__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.85rem 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1.1rem;
+  gap: 0.8rem 1rem;
+  border-top: 1px solid rgba(30, 41, 92, 0.1);
+  padding-top: 1rem;
   margin: 0;
 }
 
 .fd-ticket__grid dt {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.71rem;
+  color: var(--fd-faint);
   margin-bottom: 0.15rem;
 }
 
 .fd-ticket__grid dd {
   margin: 0;
-  font-size: 0.92rem;
+  font-size: 0.91rem;
   font-weight: 500;
+  color: var(--fd-ink);
 }
 
-/* Niches */
+/* Niches — a wider card, two across. */
 
-.fd-panel--niches {
+.fd-card--wide {
+  width: min(700px, 100%);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0;
 }
 
 .fd-niche {
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 14px;
-  padding: 1.15rem 1.2rem 1.25rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  padding: 1.1rem 1.15rem 1.2rem;
+  box-shadow: 0 20px 46px -28px rgba(30, 41, 92, 0.5);
 }
 
 .fd-niche h4 {
-  font-size: 1rem;
+  color: var(--fd-ink);
+  font-size: 0.97rem;
   font-weight: 500;
-  margin: 0 0 0.7rem;
+  margin: 0 0 0.65rem;
 }
 
 .fd-niche__quote {
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.82);
-  border-left: 2px solid #0f9d6b;
-  padding-left: 0.8rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--fd-ink);
+  border-left: 2px solid var(--fd-accent);
+  padding-left: 0.75rem;
 }
 
 .fd-niche__tag {
-  margin: 0.85rem 0 0;
-  font-size: 0.76rem;
-  color: rgba(255, 255, 255, 0.42);
+  margin: 0.8rem 0 0;
+  font-size: 0.75rem;
+  color: var(--fd-faint);
 }
 
 /* Forwarding */
 
-.fd-panel--forward {
-  display: grid;
-  place-items: center;
-}
-
 .fd-forward {
-  width: min(430px, 100%);
   text-align: center;
 }
 
 .fd-forward__row {
-  border: 1px solid rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(30, 41, 92, 0.12);
   border-radius: 14px;
-  padding: 1rem 1.1rem;
-  background: rgba(255, 255, 255, 0.03);
+  padding: 0.95rem 1.1rem;
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .fd-forward__row--on {
-  border-color: rgba(15, 157, 107, 0.55);
-  background: rgba(15, 157, 107, 0.1);
+  border-color: rgba(15, 157, 107, 0.5);
+  background: rgba(15, 157, 107, 0.12);
 }
 
 .fd-forward__num {
   display: block;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 500;
+  color: var(--fd-ink);
 }
 
 .fd-forward__note {
   display: block;
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.77rem;
+  color: var(--fd-faint);
   margin-top: 0.25rem;
 }
 
 .fd-forward__arrow {
   position: relative;
-  height: 54px;
+  height: 50px;
   display: grid;
   place-items: center;
 }
@@ -536,35 +557,36 @@
   top: 0;
   bottom: 0;
   left: 50%;
-  border-left: 1px dashed rgba(255, 255, 255, 0.25);
+  border-left: 1px dashed rgba(30, 41, 92, 0.28);
 }
 
 .fd-forward__arrow span {
   position: relative;
-  background: #0c0c0c;
-  padding: 0 0.7rem;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: 999px;
+  padding: 0.1rem 0.7rem;
+  font-size: 0.74rem;
+  color: var(--fd-body);
 }
 
 .fd-forward__off {
-  margin: 1.6rem 0 0;
-  font-size: 0.85rem;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.5);
+  margin: 1.4rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--fd-body);
 }
 
 /* ---------- Closing ---------- */
 
 .fd-close {
-  background: #000;
-  color: #fff;
+  background: var(--fd-bg-soft);
   text-align: center;
-  padding: clamp(4rem, 8vw, 6.5rem) 0 clamp(4rem, 8vw, 6rem);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: clamp(4.5rem, 9vw, 7rem) 0 clamp(4rem, 8vw, 6rem);
+  border-top: 1px solid var(--fd-line);
 }
 
 .fd-close h2 {
+  color: var(--fd-ink);
   font-size: clamp(1.9rem, 4.2vw, 2.9rem);
   letter-spacing: -0.03em;
   font-weight: 500;
@@ -575,7 +597,7 @@
 }
 
 .fd-close__lede {
-  color: rgba(255, 255, 255, 0.66);
+  color: var(--fd-body);
   font-size: 1.02rem;
   line-height: 1.6;
   margin: 1rem auto 0;
@@ -587,25 +609,20 @@
   margin-inline: auto;
 }
 
-/* On black the form's hint needs to lift, not recede. */
-.fd-close .fd-form__hint {
-  color: rgba(255, 255, 255, 0.5);
-}
-
 .fd-close__back {
   margin-top: 3.5rem;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--fd-faint);
 }
 
 .fd-close__back a {
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--fd-body);
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid var(--fd-line);
 }
 
 .fd-close__back a:hover {
-  color: #fff;
+  color: var(--fd-ink);
 }
 
 /* ---------- Focus + motion ---------- */
@@ -630,14 +647,26 @@
   .fd-feature {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  /* Panel always leads on narrow screens; alternating needs two columns. */
+  .fd-feature:nth-child(even) .fd-feature__media,
+  .fd-feature:nth-child(even) .fd-feature__copy {
+    order: 0;
   }
 
   .fd-feature__media {
     grid-column: auto;
   }
 
+  .fd-feature__copy {
+    padding-bottom: 0;
+  }
+
   .fd-panel {
     min-height: 0;
+    padding: 1.5rem;
   }
 }
 
@@ -654,7 +683,7 @@
 
   .fd-scan__grid,
   .fd-ticket__grid,
-  .fd-panel--niches {
+  .fd-card--wide {
     grid-template-columns: 1fr;
   }
 }
