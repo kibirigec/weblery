@@ -1,45 +1,150 @@
 import Link from "next/link";
 import DemoForm from "./DemoForm";
 
-const STEPS = [
-  {
-    title: "Give us your website",
-    body: "No forms, no setup call. We read your site and learn your services, hours, service area and the questions customers actually ask.",
-  },
-  {
-    title: "Forward your calls",
-    body: "Keep your number. Turn on call forwarding so anything you don't pick up rings through instead of going to voicemail.",
-  },
-  {
-    title: "Get the job, not a voicemail",
-    body: "It answers as your business, asks the right questions, then texts your team the caller's name, number, address and what they need.",
-  },
+const NICHES = [
+  { title: "Home services", tag: "HVAC · plumbing · electrical · roofing", quote: "No cooling, 88° inside, two kids at home. Wants a visit tomorrow 8–10am." },
+  { title: "Real estate", tag: "Agents · brokerages · property managers", quote: "Asking about the 4-bed on Maple. Pre-approved, wants a viewing this weekend." },
+  { title: "Law firms", tag: "Personal injury · family · immigration", quote: "Car accident last Tuesday, has a police report, asking about a consultation." },
+  { title: "Clinics & practices", tag: "Dental · veterinary · wellness", quote: "Wants to book a cleaning, is a new patient, asking if you take her insurance." },
 ];
 
-const NICHES = [
+/* Each feature row is one visual panel; they carry the page the way the
+   reference's product shots do, so they're built rather than screenshotted. */
+
+function ScanPanel() {
+  return (
+    <div className="fd-panel fd-panel--scan">
+      <div className="fd-fakebar">
+        <span className="fd-fakebar__dot" />
+        <span className="fd-fakebar__url">summitheatingandair.com</span>
+      </div>
+      <div className="fd-scan">
+        <p className="fd-scan__label">Extracted in 48 seconds</p>
+        <dl className="fd-scan__grid">
+          <div><dt>Business</dt><dd>Summit Heating &amp; Air</dd></div>
+          <div><dt>Service area</dt><dd>Clark County, NV</dd></div>
+          <div><dt>Hours</dt><dd>Mon–Sat 7–6 · 24/7 emergency</dd></div>
+          <div><dt>Books through</dt><dd>Phone + online form</dd></div>
+        </dl>
+        <div className="fd-chips">
+          {["AC repair", "Furnace install", "Duct cleaning", "Maintenance plans", "Emergency callout"].map((c) => (
+            <span key={c} className="fd-chip">{c}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CallPanel() {
+  const turns = [
+    { who: "them", text: "Summit Heating and Air, this is Riley — how can I help?" },
+    { who: "caller", text: "Hey, my AC just quit and it's really hot in here." },
+    { who: "them", text: "Sorry to hear that. Is anyone home who's sensitive to the heat — kids, older folks?" },
+    { who: "caller", text: "Yeah, two little ones." },
+    { who: "them", text: "Understood, I'll flag this as urgent. What's the best number to reach you?" },
+  ];
+  return (
+    <div className="fd-panel fd-panel--call">
+      <div className="fd-call__bar">
+        <span className="fd-call__live" />
+        Incoming call · 9:41 PM
+      </div>
+      <div className="fd-call__thread">
+        {turns.map((t, i) => (
+          <p key={i} className={`fd-turn fd-turn--${t.who}`}>{t.text}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TicketPanel() {
+  return (
+    <div className="fd-panel fd-panel--ticket">
+      <div className="fd-ticket" role="img" aria-label="Example intake message sent to your team">
+        <div className="fd-ticket__top">
+          <span className="fd-ticket__label">New call · 9:42 PM</span>
+          <span className="fd-ticket__badge">URGENT</span>
+        </div>
+        <p className="fd-ticket__summary">
+          Maria called after hours — her AC stopped cooling this afternoon and the house is at
+          88°F with two young kids at home. She&apos;d like the earliest available visit.
+        </p>
+        <dl className="fd-ticket__grid">
+          <div><dt>Caller</dt><dd>Maria Lopez</dd></div>
+          <div><dt>Phone</dt><dd>(702) 866-2222</dd></div>
+          <div><dt>Address</dt><dd>4821 Maple Avenue</dd></div>
+          <div><dt>Needs</dt><dd>AC not cooling — repair</dd></div>
+          <div><dt>Preferred time</dt><dd>Tomorrow, 8–10 AM</dd></div>
+        </dl>
+      </div>
+    </div>
+  );
+}
+
+function NichePanel() {
+  return (
+    <div className="fd-panel fd-panel--niches">
+      {NICHES.map((n) => (
+        <article key={n.title} className="fd-niche">
+          <h4>{n.title}</h4>
+          <p className="fd-niche__quote">{n.quote}</p>
+          <p className="fd-niche__tag">{n.tag}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function ForwardPanel() {
+  return (
+    <div className="fd-panel fd-panel--forward">
+      <div className="fd-forward">
+        <div className="fd-forward__row">
+          <span className="fd-forward__num">(702) 555-0148</span>
+          <span className="fd-forward__note">Your existing number — unchanged</span>
+        </div>
+        <div className="fd-forward__arrow" aria-hidden="true">
+          <span>rings 4 times</span>
+        </div>
+        <div className="fd-forward__row fd-forward__row--on">
+          <span className="fd-forward__num">Front Desk picks up</span>
+          <span className="fd-forward__note">Only when you don&apos;t</span>
+        </div>
+        <p className="fd-forward__off">
+          Switch call forwarding off and everything is exactly how it was.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+const FEATURES = [
   {
-    title: "Home services",
-    body: "You're under a house or on a roof — you can't answer. After-hours emergencies go to whoever picks up first.",
-    quote: "No cooling, 88° inside, two kids at home. Wants a visit tomorrow 8–10am.",
-    tag: "HVAC, plumbing, electrical, roofing",
+    title: "Built from your own website",
+    body: "No forms, no setup call, no scripts to write. Front Desk reads your site and learns your services, hours, service area, and the questions your customers actually ask.",
+    panel: <ScanPanel />,
   },
   {
-    title: "Real estate",
-    body: "A buyer calls about a listing while you're mid-showing. By the time you call back, they've toured with someone else.",
-    quote: "Asking about the 4-bed on Maple. Pre-approved, wants a viewing this weekend.",
-    tag: "Agents, brokerages, property managers",
+    title: "Answers as your business",
+    body: "Not a menu and not a voicemail. It picks up in your business's name, asks the questions that qualify the job, and knows when something is an emergency.",
+    panel: <CallPanel />,
   },
   {
-    title: "Law firms",
-    body: "Intake calls arrive when you're in court or with a client. Every unanswered one is a case that goes to the next firm on the list.",
-    quote: "Car accident last Tuesday, has a police report, asking about a consultation.",
-    tag: "Personal injury, family, immigration",
+    title: "Your team gets the job, not a recording",
+    body: "No listening back through voicemails. Every call arrives as a short, structured message — who called, how to reach them, what they need, and how urgent it is.",
+    panel: <TicketPanel />,
   },
   {
-    title: "Clinics & practices",
-    body: "Your front desk is with a patient. The phone rings anyway — appointments, reschedules, questions about hours.",
-    quote: "Wants to book a cleaning, is a new patient, asking if you take her insurance.",
-    tag: "Dental, veterinary, wellness",
+    title: "It already speaks your trade",
+    body: "Because it learns from your own site, it asks what matters in your line of work instead of reading a generic script — and it captures the details that decide whether you win the job.",
+    panel: <NichePanel />,
+  },
+  {
+    title: "Keep your number",
+    body: "Nothing to install and no new phone system. Turn on conditional call forwarding and anything you don't pick up rings through to Front Desk instead of going to voicemail.",
+    panel: <ForwardPanel />,
   },
 ];
 
@@ -57,6 +162,7 @@ export default function FrontDeskPage() {
           playsInline
           aria-hidden="true"
         />
+
         <span className="fd-hero__brand">
           <img src="/LetterLogo.svg" alt="Weblery" />
         </span>
@@ -69,115 +175,23 @@ export default function FrontDeskPage() {
         <DemoForm id="fd-hero-url" />
       </header>
 
-      {/* Problem */}
-      <section className="fd-section fd-section--statement">
+      {/* Everything below the hero runs dark, as in the reference. */}
+      <section className="fd-body">
         <div className="fd-shell">
-          <div className="fd-section__head">
-            <p className="fd-eyebrow">The quiet leak</p>
-            <h2>Your phone rings while you&apos;re working.</h2>
-            <p className="fd-section__lede">
-              Evenings, weekends, and the middle of a job — that&apos;s when customers call. Most
-              won&apos;t leave a voicemail. They just call the next business on the list, and you
-              never find out it happened.
-            </p>
-          </div>
-        </div>
-      </section>
+          <h2 className="fd-body__head">
+            The calls you miss are the jobs you lose.
+          </h2>
 
-      {/* How it works */}
-      <section id="how" className="fd-section fd-section--soft">
-        <div className="fd-shell">
-          <div className="fd-section__head">
-            <p className="fd-eyebrow">Plug and play</p>
-            <h2>Answering by tonight.</h2>
-            <p className="fd-section__lede">
-              Nothing to install, no new phone system, no number to advertise. If it isn&apos;t
-              working out, switch call forwarding off and everything is back how it was.
-            </p>
-          </div>
-
-          <div className="fd-steps">
-            {STEPS.map((s, i) => (
-              <article key={s.title} className="fd-step">
-                <span className="fd-step__n">{i + 1}</span>
-                <h3>{s.title}</h3>
-                <p>{s.body}</p>
-              </article>
+          <div className="fd-features">
+            {FEATURES.map((f) => (
+              <div key={f.title} className="fd-feature">
+                <div className="fd-feature__copy">
+                  <h3>{f.title}</h3>
+                  <p>{f.body}</p>
+                </div>
+                <div className="fd-feature__media">{f.panel}</div>
+              </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Niches */}
-      <section className="fd-section">
-        <div className="fd-shell">
-          <div className="fd-section__head">
-            <p className="fd-eyebrow">Built around your business</p>
-            <h2>It already speaks your trade.</h2>
-            <p className="fd-section__lede">
-              Front Desk learns what your business does from your own website, so it asks the
-              questions that matter in your line of work — not a generic script.
-            </p>
-          </div>
-
-          <div className="fd-niches">
-            {NICHES.map((n) => (
-              <article key={n.title} className="fd-niche">
-                <h3>{n.title}</h3>
-                <p>{n.body}</p>
-                <blockquote className="fd-niche__quote">
-                  {n.quote}
-                  <span>{n.tag}</span>
-                </blockquote>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* The artifact */}
-      <section className="fd-section fd-section--soft">
-        <div className="fd-shell fd-ticket-wrap">
-          <div className="fd-ticket-copy">
-            <p className="fd-eyebrow">After every call</p>
-            <h2>Your team gets the job, not a recording.</h2>
-            <p className="fd-section__lede">
-              No listening back through voicemails. Every call arrives as a short, structured
-              message — who called, how to reach them, what they need, and how urgent it is.
-            </p>
-          </div>
-
-          <div className="fd-ticket" role="img" aria-label="Example intake message sent to your team">
-            <div className="fd-ticket__top">
-              <span className="fd-ticket__label">New call · 9:42 PM</span>
-              <span className="fd-ticket__badge">URGENT</span>
-            </div>
-            <p className="fd-ticket__summary">
-              Maria called after hours — her AC stopped cooling this afternoon and the house is at
-              88°F with two young kids at home. She&apos;d like the earliest available visit.
-            </p>
-            <dl className="fd-ticket__grid">
-              <div>
-                <dt>Caller</dt>
-                <dd>Maria Lopez</dd>
-              </div>
-              <div>
-                <dt>Phone</dt>
-                <dd>(702) 866-2222</dd>
-              </div>
-              <div>
-                <dt>Address</dt>
-                <dd>4821 Maple Avenue</dd>
-              </div>
-              <div>
-                <dt>Needs</dt>
-                <dd>AC not cooling — repair</dd>
-              </div>
-              <div>
-                <dt>Preferred time</dt>
-                <dd>Tomorrow, 8–10 AM</dd>
-              </div>
-            </dl>
           </div>
         </div>
       </section>
@@ -186,7 +200,7 @@ export default function FrontDeskPage() {
       <section className="fd-close">
         <div className="fd-shell">
           <h2>Hear it answer your phone.</h2>
-          <p className="fd-section__lede">
+          <p className="fd-close__lede">
             Put in your website and we&apos;ll build a receptionist that already knows your
             business. Then call it yourself.
           </p>
