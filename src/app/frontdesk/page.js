@@ -47,7 +47,10 @@ function CallPanel() {
     { at: "0:21", who: "Front Desk", agent: true, text: "Understood, I'll flag this as urgent. Best number to reach you?" },
   ];
   // Fixed, not random — a server component must render the same bars twice.
-  const bars = [5, 9, 16, 11, 22, 14, 7, 18, 27, 19, 12, 24, 9, 15, 6, 20, 13, 8, 17, 10, 23, 14, 6, 11, 19, 9, 15, 7];
+  const bars = [
+    4, 7, 11, 6, 14, 9, 18, 12, 22, 15, 9, 20, 25, 17, 10, 6, 13, 21, 16, 8, 12, 24, 18,
+    11, 7, 15, 19, 9, 23, 14, 6, 10, 17, 26, 13, 8, 20, 12, 5, 16, 22, 10, 7, 14, 9, 4,
+  ];
 
   return (
     <div className="fd-panel">

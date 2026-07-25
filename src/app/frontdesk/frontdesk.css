@@ -273,9 +273,10 @@
     linear-gradient(135deg, #edf4fe 0%, #e1edfc 55%, #eff7ff 100%);
 }
 
-/* The artifact card that floats on the gradient. */
+/* The artifact card that floats on the gradient. Kept narrow so the gradient
+   still reads around it. */
 .fd-card {
-  width: min(470px, 100%);
+  width: min(424px, 100%);
   background: rgba(255, 255, 255, 0.74);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
@@ -412,21 +413,23 @@
   background: #e5484d;
 }
 
-/* Audio, so the panel reads as sound rather than typing. */
+/* Audio, so the panel reads as sound rather than typing. Hairline bars —
+   fat ones read as a bar chart, not a waveform. */
 .fd-wave {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 3px;
+  gap: 0;
   height: 34px;
   margin: 1.1rem 0;
 }
 
 .fd-wave span {
-  flex: 1;
+  flex: none;
+  width: 3px;
   border-radius: 999px;
   background: linear-gradient(to bottom, var(--fd-accent), rgba(15, 157, 107, 0.45));
-  min-height: 4px;
+  min-height: 3px;
 }
 
 .fd-call__label {
@@ -499,11 +502,8 @@
   box-shadow: 0 8px 20px -8px rgba(229, 72, 77, 0.8);
 }
 
-/* Rotate the handset, not the button — rotating the button turns its shadow
-   with it. Pointing down is the universal hang-up affordance. */
-.fd-call__end svg {
-  transform: rotate(135deg);
-}
+/* No rotation here: the glyph is already the hang-up handset (tilted, with
+   the drop lines). Rotating it a second time turns it upside down. */
 
 /* Ticket */
 
