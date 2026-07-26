@@ -51,7 +51,9 @@ export default function DemoSheet({ open, website, result, onClose }) {
 
   const scan = status?.scan ?? null;
   const agentReady = status?.agent?.status === "READY";
-  const ready = scan?.status === "DONE" && agentReady;
+  // "SUCCEEDED", not "DONE" — matches prisma's ScanStatus enum. Getting this
+  // wrong strands the sheet in the building state forever.
+  const ready = scan?.status === "SUCCEEDED" && agentReady;
   const failed = scan?.status === "FAILED";
   const ticket = status?.ticket ?? null;
 
