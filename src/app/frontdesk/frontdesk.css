@@ -1492,8 +1492,8 @@
   place-items: center;
   filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9))
     drop-shadow(0 0 12px rgba(255, 255, 255, 0.5))
-    drop-shadow(0 0 14px rgba(145, 71, 255, 0.4))
-    drop-shadow(0 0 8px rgba(255, 0, 0, 0.35));
+    drop-shadow(0 0 14px rgba(111, 158, 247, 0.45))
+    drop-shadow(0 0 8px rgba(27, 95, 208, 0.4));
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     filter 0.4s ease;
   /* Live audio swells the whole orb. */
@@ -1507,8 +1507,8 @@
   transform: scale(calc(1.06 + var(--level) * 0.12));
   filter: drop-shadow(0 0 5px rgba(255, 255, 255, 1))
     drop-shadow(0 0 10px rgba(255, 255, 255, 0.7))
-    drop-shadow(0 0 16px rgba(145, 71, 255, 0.5))
-    drop-shadow(0 6px 22px rgba(255, 0, 0, 0.4));
+    drop-shadow(0 0 16px rgba(111, 158, 247, 0.55))
+    drop-shadow(0 6px 22px rgba(27, 95, 208, 0.45));
 }
 .orb[data-interactive="true"]:active {
   transform: scale(0.94);
@@ -1522,7 +1522,7 @@
   width: 96px;
   height: 96px;
   border-radius: 50%;
-  background-color: #ff0002;
+  background-color: #2f7ef5;
   filter: url(#orb-gooey);
 }
 
@@ -1540,10 +1540,14 @@
   transform: translate(-50%, -50%);
   width: 150px;
   height: 150px;
+  /* Much lighter than the ball. The gooey filter merges this layer into the
+     ball's silhouette, so when the two tones are close its morphing clip-path
+     reads as the orb's own outline (spikes and all) instead of as a core
+     moving inside it. The contrast is what keeps it looking round. */
   background-image: radial-gradient(
     ellipse at center,
-    rgba(255, 255, 255, 0.78) 15%,
-    #3b82f6 50%
+    rgba(255, 255, 255, 0.95) 15%,
+    #a8cffc 55%
   );
   clip-path: polygon(
     50% 25%, 65% 30%, 75% 42%, 75% 58%, 65% 70%,
@@ -1572,7 +1576,7 @@
   inset: 0;
   border-radius: 50%;
   border: 8px solid transparent;
-  background: linear-gradient(white, #3b82f6, #d946ef, #8b5cf6, #fde68a) border-box;
+  background: linear-gradient(white, #8ecbfb, #3f86f4, #1b5fd0, #dbeafe) border-box;
   mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
@@ -1603,7 +1607,8 @@
 .orb__mic[data-show="true"],
 .orb__close[data-show="true"] {
   opacity: 1;
-  filter: drop-shadow(0 0 4px #fff);
+  /* No drop-shadow here: the glow spills past the 24-unit viewBox and the SVG
+     clips it, which paints a hard rectangle around the glyph. */
 }
 
 .orb__goo { position: absolute; width: 0; height: 0; pointer-events: none; }
@@ -1620,8 +1625,8 @@
   font-size: clamp(1.1rem, 3.4vw, 1.35rem);
   font-weight: 600;
   line-height: 1.2;
-  color: #67e8f9;
-  text-shadow: 0 0 18px rgb(34 211 238 / 0.4);
+  color: #3f86f4;
+  text-shadow: 0 0 18px rgb(47 126 245 / 0.45);
 }
 .orb__sub {
   font-size: 0.8rem;
