@@ -1,17 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import DemoSheet from "./DemoSheet";
 
 /**
  * The page's single call to action: a visitor drops in their website and we
  * build them a receptionist that already knows their business. Posting goes to
  * our own route so the browser never needs to know where the app lives.
+ *
+ * Submitting opens the sheet rather than printing a link — the scan takes the
+ * better part of a minute, and the sheet turns that wait into the pitch.
  */
 export default function DemoForm({ id, cta = "Hear it answer" }) {
   const [url, setUrl] = useState("");
   const [state, setState] = useState("idle"); // idle | working | done | error
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -31,6 +36,7 @@ export default function DemoForm({ id, cta = "Hear it answer" }) {
       if (!res.ok) throw new Error(body.error || "Something went wrong.");
       setResult(body);
       setState("done");
+      setSheetOpen(true);
     } catch (err) {
       setError(err.message);
       setState("error");
@@ -68,22 +74,22 @@ export default function DemoForm({ id, cta = "Hear it answer" }) {
         </p>
       )}
 
-      {state === "done" && result?.demoUrl && (
+      {state === "done" && !sheetOpen && (
         <p className="fd-form__msg fd-form__msg--ok">
-          Your receptionist is ready.{" "}
-          <a href={result.demoUrl} target="_blank" rel="noreferrer">
-            Call it now →
-          </a>
-        </p>
-      )}
-
-      {state === "done" && !result?.demoUrl && (
-        <p className="fd-form__msg fd-form__msg--ok">
-          Got it — we&apos;re building your receptionist and will send the link shortly.
+          <button type="button" className="fd-form__reopen" onClick={() => setSheetOpen(true)}>
+            Reopen your demo →
+          </button>
         </p>
       )}
 
       {state === "error" && <p className="fd-form__msg fd-form__msg--error">{error}</p>}
+
+      <DemoSheet
+        open={sheetOpen}
+        website={url.trim()}
+        result={result}
+        onClose={() => setSheetOpen(false)}
+      />
     </div>
   );
 }
