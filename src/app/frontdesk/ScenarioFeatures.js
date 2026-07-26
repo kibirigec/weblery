@@ -20,7 +20,7 @@ import { SCENARIOS } from "./scenarios";
 const NICHES = [
   { title: "Home services", tag: "HVAC · plumbing · electrical · roofing", quote: "No cooling, 88° inside, two kids at home. Wants a visit tomorrow 8–10am." },
   { title: "Real estate", tag: "Agents · brokerages · property managers", quote: "Asking about the 4-bed on Maple. Pre-approved, wants a viewing this weekend." },
-  { title: "Law firms", tag: "Personal injury · family · immigration", quote: "Car accident last Tuesday, has a police report, asking about a consultation." },
+  { title: "Law firms", tag: "Employment · family · personal injury", quote: "Served with papers today, response due in 20 days. Wants the earliest consult." },
   { title: "Clinics & practices", tag: "Dental · veterinary · wellness", quote: "Wants to book a cleaning, is a new patient, asking if you take her insurance." },
 ];
 
