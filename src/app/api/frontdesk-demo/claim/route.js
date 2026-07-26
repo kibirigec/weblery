@@ -11,6 +11,26 @@ import { NextResponse } from "next/server";
 const FRONTDESK_URL = (process.env.FRONTDESK_URL || "").replace(/\/$/, "");
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+const PROXY_KEY = process.env.FRONTDESK_PROXY_KEY || "";
+
+/**
+ * We call the app from this server, so it sees our IP, not the visitor's.
+ * Forward the real one (with the shared key, so the app knows to trust it) —
+ * otherwise every visitor lands in the same rate-limit bucket and the limit
+ * becomes a cap on the whole site instead of on one person.
+ */
+function forwardHeaders(request) {
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") ||
+    "";
+  return {
+    "content-type": "application/json",
+    ...(PROXY_KEY && ip ? { "x-demo-proxy-key": PROXY_KEY, "x-demo-client-ip": ip } : {}),
+  };
+}
+
+
 async function captureLead(lines) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -48,7 +68,7 @@ export async function POST(request) {
     try {
       const res = await fetch(`${FRONTDESK_URL}/api/public/claim`, {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: forwardHeaders(request),
         body: JSON.stringify({ slug, email }),
         signal: AbortSignal.timeout(20_000),
       });
