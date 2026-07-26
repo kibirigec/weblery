@@ -284,8 +284,10 @@ export default function DemoSheet({ open, website, result, onClose }) {
                 <p className="fds__lead">
                   {scan?.error?.includes("bot protection")
                     ? "Your site is behind bot protection, so we couldn't read it automatically."
-                    : "We couldn't read your site automatically."}{" "}
-                  Leave your email and we&apos;ll set it up by hand.
+                    : scan?.error?.includes("builds its pages in the browser")
+                      ? "Your site builds its pages in the browser, so there's nothing for us to read in the page itself."
+                      : "We couldn't read your site automatically."}{" "}
+                  Leave your email and we&apos;ll set it up by hand — it usually takes us under an hour.
                 </p>
               ) : (
                 <>
