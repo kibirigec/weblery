@@ -11,11 +11,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
  */
 
 const WORD_MS = 205;
+const ACTION_S = 1.3; // an action line lands whole, not word by word
 const TAIL_S = 3; // hold on the finished call before looping
 
+// Shaped like speech — clusters of activity separated by lulls — rather than
+// noise, which reads as a bar chart however thin the bars are.
 const BARS = [
-  4, 7, 11, 6, 14, 9, 18, 12, 22, 15, 9, 20, 25, 17, 10, 6, 13, 21, 16, 8, 12, 24, 18,
-  11, 7, 15, 19, 9, 23, 14, 6, 10, 17, 26, 13, 8, 20, 12, 5, 16, 22, 10, 7, 14, 9, 4,
+  3, 5, 8, 6, 11, 16, 22, 18, 13, 9, 6, 4, 7, 12, 19, 25, 21, 15, 10, 7,
+  5, 9, 14, 20, 17, 12, 8, 5, 4, 8, 13, 18, 24, 26, 20, 14, 9, 6, 4, 7,
+  11, 17, 23, 19, 13, 8, 5, 3, 6, 10, 15, 21, 16, 11, 7, 5, 8, 12, 7, 4,
 ];
 
 function clock(seconds) {
@@ -30,7 +34,7 @@ export default function LiveCall({ scenario }) {
     const laid = scenario.script.map((line) => {
       const words = line.text.split(" ");
       const at = cursor + line.gap;
-      const end = at + (words.length * WORD_MS) / 1000;
+      const end = at + (line.action ? ACTION_S : (words.length * WORD_MS) / 1000);
       cursor = end;
       return { ...line, words, at, end };
     });
@@ -115,9 +119,19 @@ export default function LiveCall({ scenario }) {
           </span>
         </div>
 
+        {/* The wave keeps moving; `is-live` only changes its amplitude, so a
+            pause between turns eases down instead of stopping dead. */}
         <div className={`fd-wave${speaking ? " is-live" : ""}`} aria-hidden="true">
           {BARS.map((h, i) => (
-            <span key={i} style={{ height: `${h}px`, animationDelay: `${(i % 9) * -0.11}s` }} />
+            <span
+              key={i}
+              style={{
+                height: `${h}px`,
+                animationDelay: `${(i % 11) * -0.13}s`,
+                // Varied periods stop the bars pulsing in lockstep.
+                animationDuration: `${0.85 + (i % 5) * 0.16}s`,
+              }}
+            />
           ))}
         </div>
 
@@ -135,13 +149,17 @@ export default function LiveCall({ scenario }) {
                 <span className={`fd-call__spk${t.agent ? " fd-call__spk--agent" : ""}`}>
                   {t.agent ? "Front Desk" : "Caller"}
                 </span>
-                <span className="fd-call__said">
-                  {t.words.map((w, wi) => (
-                    <span key={wi} className={wi < shown ? "fd-w is-in" : "fd-w"}>
-                      {w}{" "}
-                    </span>
-                  ))}
-                </span>
+                {t.action ? (
+                  <span className="fd-call__act">{t.text}</span>
+                ) : (
+                  <span className="fd-call__said">
+                    {t.words.map((w, wi) => (
+                      <span key={wi} className={wi < shown ? "fd-w is-in" : "fd-w"}>
+                        {w}{" "}
+                      </span>
+                    ))}
+                  </span>
+                )}
               </li>
             );
           })}

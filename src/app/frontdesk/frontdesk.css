@@ -418,8 +418,8 @@
 }
 
 /* ---------- Panels ----------
-   A soft gradient field with the artifact floating on it, echoing the blue of
-   the hero footage so the page reads as one piece. */
+   A soft gradient field; the card sits on it as a deeper, filled surface with
+   its content in white. */
 
 .fd-panel {
   position: relative;
@@ -436,17 +436,37 @@
     linear-gradient(135deg, #edf4fe 0%, #e1edfc 55%, #eff7ff 100%);
 }
 
-/* The artifact card that floats on the gradient. Kept narrow so the gradient
-   still reads around it. */
+/* Translucent, not filled: the panel's gradient reads through the card, so
+   the two are one object rather than a card sitting on a background. Alpha is
+   high enough that white type still clears 4.5:1 over the lightest part of
+   the field underneath. */
 .fd-card {
   width: min(424px, 100%);
-  background: rgba(255, 255, 255, 0.74);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 1.4rem 1.5rem 1.6rem;
-  box-shadow: 0 26px 60px -30px rgba(30, 41, 92, 0.55);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 30px 60px -28px rgba(18, 34, 82, 0.55);
+  background: linear-gradient(
+    150deg,
+    rgba(18, 40, 96, 0.82) 0%,
+    rgba(22, 46, 104, 0.78) 55%,
+    rgba(28, 54, 116, 0.8) 100%
+  );
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+}
+
+/* Shared inside the card: a hairline, a muted tone, and a mono voice. */
+.fd-card hr,
+.fd-fakebar,
+.fd-call__label,
+.fd-call__actions,
+.fd-chips,
+.fd-ticket__grid,
+.fd-cal__head,
+.fd-cal__note {
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 /* Scan */
@@ -455,10 +475,10 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  border: 1px solid rgba(30, 41, 92, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 10px;
   padding: 0.6rem 0.85rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.12);
   margin-bottom: 1.4rem;
 }
 
@@ -466,20 +486,26 @@
   width: 7px;
   height: 7px;
   border-radius: 999px;
-  background: var(--fd-accent);
+  background: #9ff5c8;
   flex: none;
 }
 
 .fd-fakebar__url {
   font-size: 0.86rem;
-  color: var(--fd-body);
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.fd-scan__label {
+.fd-scan__label,
+.fd-call__label,
+.fd-ticket__label,
+.fd-cal__day {
   font-size: 0.71rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--fd-faint);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.fd-scan__label {
   margin: 0 0 0.9rem;
 }
 
@@ -490,17 +516,19 @@
   margin: 0;
 }
 
-.fd-scan__grid dt {
+.fd-scan__grid dt,
+.fd-ticket__grid dt {
   font-size: 0.73rem;
-  color: var(--fd-faint);
+  color: rgba(255, 255, 255, 0.62);
   margin-bottom: 0.2rem;
 }
 
-.fd-scan__grid dd {
+.fd-scan__grid dd,
+.fd-ticket__grid dd {
   margin: 0;
   font-size: 0.94rem;
   font-weight: 500;
-  color: var(--fd-ink);
+  color: #fff;
 }
 
 .fd-chips {
@@ -509,16 +537,16 @@
   gap: 0.45rem;
   margin-top: 1.3rem;
   padding-top: 1.2rem;
-  border-top: 1px solid rgba(30, 41, 92, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .fd-chip {
   font-size: 0.81rem;
-  color: var(--fd-body);
-  border: 1px solid rgba(30, 41, 92, 0.14);
+  color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 999px;
   padding: 0.32rem 0.75rem;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Call — an in-call screen, not a message thread. */
@@ -532,10 +560,10 @@
 .fd-call__avatar {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 999px;
-  background: var(--fd-accent);
+  background: rgba(255, 255, 255, 0.16);
   color: #fff;
   flex: none;
 }
@@ -548,15 +576,15 @@
 }
 
 .fd-call__id strong {
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: var(--fd-ink);
+  color: #fff;
   font-variant-numeric: tabular-nums;
 }
 
 .fd-call__id span {
   font-size: 0.76rem;
-  color: var(--fd-faint);
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .fd-call__timer {
@@ -566,46 +594,49 @@
   gap: 0.4rem;
   font-size: 0.85rem;
   font-variant-numeric: tabular-nums;
-  color: var(--fd-ink);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .fd-call__timer i {
   width: 7px;
   height: 7px;
   border-radius: 999px;
-  background: #e5484d;
+  background: #ff6b6b;
 }
 
-/* Audio, so the panel reads as sound rather than typing. Hairline bars —
-   fat ones read as a bar chart, not a waveform. */
+/* Audio. The bars never stop moving; the whole wave scales between loud and
+   quiet instead, so a pause eases down rather than snapping flat. */
 .fd-wave {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0;
-  height: 34px;
-  margin: 1.1rem 0;
+  height: 40px;
+  margin: 1.15rem 0;
+  transform-origin: center;
+  transform: scaleY(0.3);
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.55s ease;
+  opacity: 0.55;
+}
+
+.fd-wave.is-live {
+  transform: scaleY(1);
+  opacity: 1;
 }
 
 .fd-wave span {
   flex: none;
-  width: 3px;
+  width: 2px;
   border-radius: 999px;
-  background: linear-gradient(to bottom, var(--fd-accent), rgba(47, 126, 245, 0.45));
-  min-height: 3px;
+  background: rgba(255, 255, 255, 0.92);
+  min-height: 2px;
   transform-origin: center;
-  /* Collapsed between turns; the line settles when nobody is talking. */
-  transform: scaleY(0.16);
-  transition: transform 0.35s ease;
-}
-
-.fd-wave.is-live span {
-  animation: fd-wave-pulse 0.85s ease-in-out infinite alternate;
+  animation: fd-wave-pulse 1.1s ease-in-out infinite alternate;
 }
 
 @keyframes fd-wave-pulse {
   from {
-    transform: scaleY(0.22);
+    transform: scaleY(0.42);
   }
   to {
     transform: scaleY(1);
@@ -613,24 +644,18 @@
 }
 
 .fd-call__label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--fd-faint);
   margin: 0 0 0.75rem;
   padding-top: 0.9rem;
-  border-top: 1px solid rgba(30, 41, 92, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-/* Fixed height so the card doesn't grow as lines arrive. Scrollable rather
-   than clipped, so the whole transcript stays reachable without motion. */
 .fd-call__log {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.75rem;
   height: 200px;
   /* Must be the offset parent: the auto-scroll measures each line's offsetTop
      against it. Without this the nearest positioned ancestor is .fd-panel and
@@ -639,8 +664,7 @@
   overflow-y: auto;
   /* Not `smooth`: the playback tick re-checks position every 100ms, which
      cancels and restarts a smooth scroll before it can travel, leaving the
-     log pinned at the top. Line-at-a-time jumps are what a live transcript
-     does anyway. */
+     log pinned at the top. */
   scroll-behavior: auto;
   scrollbar-width: none;
 }
@@ -649,12 +673,11 @@
   display: none;
 }
 
-/* Timestamp gutter, then speaker, then what was said — a transcript. */
 .fd-call__log li {
   display: grid;
-  grid-template-columns: 2.4rem minmax(0, 1fr);
-  column-gap: 0.65rem;
-  font-size: 0.89rem;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  column-gap: 0.7rem;
+  font-size: 0.92rem;
   line-height: 1.45;
   flex: none;
   opacity: 0;
@@ -677,25 +700,30 @@
 
 .fd-call__at {
   grid-row: span 2;
-  font-size: 0.74rem;
-  color: var(--fd-faint);
-  font-variant-numeric: tabular-nums;
-  padding-top: 0.1rem;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 0.73rem;
+  color: rgba(255, 255, 255, 0.5);
+  padding-top: 0.15rem;
 }
 
 .fd-call__spk {
-  font-size: 0.71rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--fd-faint);
-}
-
-.fd-call__spk--agent {
-  color: var(--fd-accent-deep);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 0.1rem;
 }
 
 .fd-call__said {
-  color: var(--fd-ink);
+  color: #fff;
+}
+
+/* What the agent did, not what it said. */
+.fd-call__act {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .fd-call__actions {
@@ -703,18 +731,18 @@
   justify-content: center;
   margin-top: 1.3rem;
   padding-top: 1.1rem;
-  border-top: 1px solid rgba(30, 41, 92, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .fd-call__end {
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
   background: #e5484d;
   color: #fff;
-  box-shadow: 0 8px 20px -8px rgba(229, 72, 77, 0.8);
+  box-shadow: 0 8px 20px -8px rgba(229, 72, 77, 0.9);
 }
 
 /* No rotation here: the glyph is already the hang-up handset (tilted, with
@@ -730,13 +758,6 @@
   margin-bottom: 0.85rem;
 }
 
-.fd-ticket__label {
-  font-size: 0.71rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--fd-faint);
-}
-
 .fd-ticket__badge {
   font-size: 0.67rem;
   font-weight: 700;
@@ -749,40 +770,29 @@
 /* Amber only when the call actually is an emergency. If every ticket wore it,
    it would stop meaning anything — the rest are routine intake. */
 .fd-ticket__badge--urgent {
-  background: #b45309;
+  background: #e08a1e;
+  color: #2a1a02;
 }
 
 .fd-ticket__badge--new {
-  background: var(--fd-accent-deep);
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
 }
 
 .fd-ticket__summary {
   font-size: 0.93rem;
   line-height: 1.58;
   margin: 0 0 1rem;
-  color: var(--fd-ink);
+  color: rgba(255, 255, 255, 0.94);
 }
 
 .fd-ticket__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.8rem 1rem;
-  border-top: 1px solid rgba(30, 41, 92, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
   padding-top: 1rem;
   margin: 0;
-}
-
-.fd-ticket__grid dt {
-  font-size: 0.71rem;
-  color: var(--fd-faint);
-  margin-bottom: 0.15rem;
-}
-
-.fd-ticket__grid dd {
-  margin: 0;
-  font-size: 0.91rem;
-  font-weight: 500;
-  color: var(--fd-ink);
 }
 
 /* Calendar */
@@ -795,7 +805,7 @@
   flex-wrap: wrap;
   gap: 0.35rem 0.75rem;
   padding-bottom: 0.9rem;
-  border-bottom: 1px solid rgba(30, 41, 92, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
   margin-bottom: 1rem;
 }
 
@@ -805,20 +815,16 @@
   gap: 0.45rem;
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--fd-ink);
+  color: #fff;
   white-space: nowrap;
 }
 
 .fd-cal__src svg {
-  color: var(--fd-accent);
+  color: rgba(255, 255, 255, 0.75);
   flex: none;
 }
 
 .fd-cal__day {
-  font-size: 0.71rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--fd-faint);
   white-space: nowrap;
 }
 
@@ -836,17 +842,17 @@
 }
 
 .fd-cal__time {
-  font-size: 0.75rem;
-  color: var(--fd-faint);
-  font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 0.73rem;
+  color: rgba(255, 255, 255, 0.5);
   text-align: right;
 }
 
 /* Existing events sit back; only the new one is meant to catch the eye. */
 .fd-cal__ev {
-  border: 1px solid rgba(30, 41, 92, 0.09);
-  background: rgba(30, 41, 92, 0.04);
-  color: var(--fd-body);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.82);
   border-radius: 9px;
   padding: 0.5rem 0.7rem;
   font-size: 0.87rem;
@@ -854,16 +860,16 @@
 }
 
 .fd-cal__ev--new {
-  border-color: rgba(47, 126, 245, 0.5);
-  background: rgba(47, 126, 245, 0.12);
-  color: var(--fd-ink);
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.9);
+  color: #12275e;
   font-weight: 500;
 }
 
 .fd-cal__tag {
   display: block;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.72rem;
   color: var(--fd-accent-deep);
   margin-top: 0.15rem;
@@ -872,10 +878,10 @@
 .fd-cal__note {
   margin: 1rem 0 0;
   padding-top: 0.9rem;
-  border-top: 1px solid rgba(30, 41, 92, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
   font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--fd-body);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Niches — a wider card, two across. */
@@ -888,23 +894,26 @@
   background: transparent;
   border: 0;
   box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
   padding: 0;
 }
 
 .fd-niche {
-  background: rgba(255, 255, 255, 0.74);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 16px;
-  padding: 1.1rem 1.15rem 1.2rem;
-  box-shadow: 0 20px 46px -28px rgba(30, 41, 92, 0.5);
+  border-radius: 14px;
+  padding: 1.1rem 1.15rem 1.25rem;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 22px 46px -26px rgba(18, 34, 82, 0.5);
+  background: linear-gradient(
+    150deg,
+    rgba(18, 40, 96, 0.82) 0%,
+    rgba(24, 48, 108, 0.79) 100%
+  );
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
 }
 
 .fd-niche h4 {
-  color: var(--fd-ink);
+  color: #fff;
   font-size: 0.97rem;
   font-weight: 500;
   margin: 0 0 0.65rem;
@@ -914,15 +923,15 @@
   margin: 0;
   font-size: 0.88rem;
   line-height: 1.5;
-  color: var(--fd-ink);
-  border-left: 2px solid var(--fd-accent);
+  color: rgba(255, 255, 255, 0.94);
+  border-left: 2px solid rgba(255, 255, 255, 0.6);
   padding-left: 0.75rem;
 }
 
 .fd-niche__tag {
   margin: 0.8rem 0 0;
   font-size: 0.75rem;
-  color: var(--fd-faint);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* Forwarding */
@@ -932,28 +941,36 @@
 }
 
 .fd-forward__row {
-  border: 1px solid rgba(30, 41, 92, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 14px;
   padding: 0.95rem 1.1rem;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .fd-forward__row--on {
-  border-color: rgba(47, 126, 245, 0.5);
-  background: rgba(47, 126, 245, 0.12);
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.fd-forward__row--on .fd-forward__num {
+  color: #12275e;
+}
+
+.fd-forward__row--on .fd-forward__note {
+  color: rgba(18, 39, 94, 0.72);
 }
 
 .fd-forward__num {
   display: block;
   font-size: 1.02rem;
   font-weight: 500;
-  color: var(--fd-ink);
+  color: #fff;
 }
 
 .fd-forward__note {
   display: block;
   font-size: 0.77rem;
-  color: var(--fd-faint);
+  color: rgba(255, 255, 255, 0.62);
   margin-top: 0.25rem;
 }
 
@@ -970,23 +987,23 @@
   top: 0;
   bottom: 0;
   left: 50%;
-  border-left: 1px dashed rgba(30, 41, 92, 0.28);
+  border-left: 1px dashed rgba(255, 255, 255, 0.35);
 }
 
 .fd-forward__arrow span {
   position: relative;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(20, 42, 100, 0.92);
   border-radius: 999px;
   padding: 0.1rem 0.7rem;
   font-size: 0.74rem;
-  color: var(--fd-body);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .fd-forward__off {
   margin: 1.4rem 0 0;
   font-size: 0.84rem;
   line-height: 1.5;
-  color: var(--fd-body);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* ---------- Closing ---------- */

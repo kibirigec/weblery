@@ -32,8 +32,10 @@ export const SCENARIOS = [
       { agent: false, gap: 0.5, text: "Maria Lopez, 4821 Maple Avenue." },
       { agent: true, gap: 0.4, text: "Thanks Maria. Best number to reach you on?" },
       { agent: false, gap: 0.5, text: "Seven oh two, eight six six, two two two two." },
+      { agent: true, action: true, gap: 0.35, text: "Checking calendar availability" },
       { agent: true, gap: 0.4, text: "Got it. Earliest visit is tomorrow between eight and ten — shall I hold it?" },
       { agent: false, gap: 0.5, text: "Yes please, the earliest you have." },
+      { agent: true, action: true, gap: 0.3, text: "Booking appointment · texting team" },
       { agent: true, gap: 0.4, text: "Booked. I'm flagging this urgent and texting the team now." },
     ],
     calendar: {
@@ -83,8 +85,10 @@ export const SCENARIOS = [
       { agent: false, gap: 0.5, text: "Yes, up to six hundred thousand." },
       { agent: true, gap: 0.4, text: "That helps. Can I take your name and best number?" },
       { agent: false, gap: 0.5, text: "Dana Whitfield, five one two, four four seven, nine one three zero." },
+      { agent: true, action: true, gap: 0.35, text: "Checking calendar availability" },
       { agent: true, gap: 0.4, text: "Thanks Dana. Is Saturday morning or afternoon better?" },
       { agent: false, gap: 0.5, text: "Saturday morning works." },
+      { agent: true, action: true, gap: 0.3, text: "Booking viewing · notifying agent" },
       { agent: true, gap: 0.4, text: "Booked. I'm sending this to the listing agent now." },
     ],
     calendar: {
@@ -139,8 +143,10 @@ export const SCENARIOS = [
       { agent: false, gap: 0.5, text: "Ray Ellison, six oh two, three one eight, four four seven seven." },
       { agent: true, gap: 0.4, text: "Thanks Ray. And your employer's name, so we can run a conflict check?" },
       { agent: false, gap: 0.5, text: "Halvorsen Logistics." },
+      { agent: true, action: true, gap: 0.35, text: "Running conflict check" },
       { agent: true, gap: 0.4, text: "Got it. First opening is tomorrow at two — shall I hold it?" },
       { agent: false, gap: 0.5, text: "Yes, please." },
+      { agent: true, action: true, gap: 0.3, text: "Booking consultation · flagging deadline" },
       { agent: true, gap: 0.4, text: "Booked. I'm marking this deadline-sensitive for the intake attorney." },
     ],
     calendar: {
@@ -191,8 +197,10 @@ export const SCENARIOS = [
       { agent: false, gap: 0.5, text: "Yes, I'm with Delta Dental." },
       { agent: true, gap: 0.4, text: "We take that. Can I get your name and best number?" },
       { agent: false, gap: 0.5, text: "Priya Raman, five oh three, six six two, oh one eight four." },
+      { agent: true, action: true, gap: 0.35, text: "Checking calendar availability" },
       { agent: true, gap: 0.4, text: "Thanks Priya. We have Thursday at ten or Friday at two." },
       { agent: false, gap: 0.5, text: "Thursday at ten works." },
+      { agent: true, action: true, gap: 0.3, text: "Booking appointment · sending forms" },
       { agent: true, gap: 0.4, text: "Booked. I'm texting the new-patient forms over now." },
     ],
     calendar: {
