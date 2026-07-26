@@ -291,28 +291,27 @@
 
 .fd-switch {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: -1rem 0 clamp(2.5rem, 5vw, 3.5rem);
+  gap: 0.9rem;
+  margin: -0.5rem 0 clamp(2.75rem, 5vw, 4rem);
 }
 
+/* Same eyebrow treatment as the labels inside the panels. */
 .fd-switch__label {
-  font-size: 0.8rem;
+  font-size: 0.71rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
   color: var(--fd-faint);
 }
 
+/* A rail rather than a container: the row reads as type with an indicator,
+   which sits better on a page this flat than a filled control would. */
 .fd-switch__track {
   display: flex;
-  gap: 0.2rem;
-  padding: 0.25rem;
-  background: var(--fd-bg-soft);
-  border: 1px solid var(--fd-line);
-  border-radius: 999px;
-  /* Scrolls rather than wraps on narrow screens, so the control stays one
-     line and the options keep their pill shape. */
+  gap: clamp(0.35rem, 2.2vw, 1.75rem);
   max-width: 100%;
+  border-bottom: 1px solid var(--fd-line);
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -322,32 +321,49 @@
 }
 
 .fd-switch__opt {
+  position: relative;
   flex: none;
   border: 0;
   background: transparent;
-  border-radius: 999px;
-  padding: 0.42rem 0.95rem;
+  padding: 0.3rem 0.45rem 0.72rem;
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: var(--fd-body);
+  color: var(--fd-faint);
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  transition: color 0.2s ease;
+}
+
+/* Sits on the rail, so the indicator reads as part of the line. */
+.fd-switch__opt::after {
+  content: "";
+  position: absolute;
+  left: 0.45rem;
+  right: 0.45rem;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--fd-accent);
+  transform: scaleX(0);
+  transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .fd-switch__opt:hover:not(.is-on) {
-  color: var(--fd-ink);
+  color: var(--fd-body);
 }
 
 .fd-switch__opt.is-on {
-  background: #fff;
-  color: var(--fd-accent-deep);
-  box-shadow: 0 1px 2px rgba(13, 20, 32, 0.1), 0 6px 16px -10px rgba(13, 20, 32, 0.5);
+  color: var(--fd-ink);
+}
+
+.fd-switch__opt.is-on::after {
+  transform: scaleX(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fd-switch__opt {
+  .fd-switch__opt,
+  .fd-switch__opt::after {
     transition: none;
   }
 }
@@ -1129,7 +1145,12 @@
   /* Tightened so all four options fit rather than overflowing by a hair —
      a barely-clipped last option reads as a bug, not as "scroll me". */
   .fd-switch__opt {
-    padding: 0.42rem 0.66rem;
-    font-size: 0.83rem;
+    padding: 0.3rem 0.3rem 0.68rem;
+    font-size: 0.87rem;
+  }
+
+  .fd-switch__opt::after {
+    left: 0.3rem;
+    right: 0.3rem;
   }
 }
