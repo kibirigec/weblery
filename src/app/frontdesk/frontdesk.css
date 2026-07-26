@@ -769,6 +769,99 @@
   color: var(--fd-ink);
 }
 
+/* Calendar */
+
+.fd-cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Wraps as a whole rather than breaking the product name across lines. */
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(30, 41, 92, 0.1);
+  margin-bottom: 1rem;
+}
+
+.fd-cal__src {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--fd-ink);
+  white-space: nowrap;
+}
+
+.fd-cal__src svg {
+  color: var(--fd-accent);
+  flex: none;
+}
+
+.fd-cal__day {
+  font-size: 0.71rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--fd-faint);
+  white-space: nowrap;
+}
+
+.fd-cal__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fd-cal__row {
+  display: grid;
+  grid-template-columns: 2.9rem minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.fd-cal__time {
+  font-size: 0.75rem;
+  color: var(--fd-faint);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* Existing events sit back; only the new one is meant to catch the eye. */
+.fd-cal__ev {
+  border: 1px solid rgba(30, 41, 92, 0.09);
+  background: rgba(30, 41, 92, 0.04);
+  color: var(--fd-body);
+  border-radius: 9px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.87rem;
+  line-height: 1.35;
+}
+
+.fd-cal__ev--new {
+  border-color: rgba(47, 126, 245, 0.5);
+  background: rgba(47, 126, 245, 0.12);
+  color: var(--fd-ink);
+  font-weight: 500;
+}
+
+.fd-cal__tag {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.72rem;
+  color: var(--fd-accent-deep);
+  margin-top: 0.15rem;
+}
+
+.fd-cal__note {
+  margin: 1rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(30, 41, 92, 0.1);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--fd-body);
+}
+
 /* Niches — a wider card, two across. */
 
 .fd-card--wide {

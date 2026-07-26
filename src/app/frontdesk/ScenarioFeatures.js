@@ -70,6 +70,40 @@ function TicketPanel({ scenario }) {
   );
 }
 
+function CalendarPanel({ scenario }) {
+  const c = scenario.calendar;
+  return (
+    <div className="fd-panel">
+      <div className="fd-card">
+        <div className="fd-cal__head">
+          <span className="fd-cal__src">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="16" rx="3" stroke="currentColor" strokeWidth="1.7" />
+              <path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+            </svg>
+            Google Calendar
+          </span>
+          <span className="fd-cal__day">{c.day}</span>
+        </div>
+
+        <div className="fd-cal__rows">
+          {c.slots.map((s) => (
+            <div key={s.time} className="fd-cal__row">
+              <span className="fd-cal__time">{s.time}</span>
+              <span className={`fd-cal__ev${s.booked ? " fd-cal__ev--new" : ""}`}>
+                {s.label}
+                {s.booked && <em className="fd-cal__tag">Added by Front Desk</em>}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <p className="fd-cal__note">{c.note}</p>
+      </div>
+    </div>
+  );
+}
+
 function NichePanel() {
   return (
     <div className="fd-panel">
@@ -124,6 +158,11 @@ const FEATURES = [
     title: "Your team gets the job, not a recording",
     body: "No listening back through voicemails. Every call arrives as a short, structured message — who called, how to reach them, what they need, and how urgent it is.",
     panel: (s) => <TicketPanel scenario={s} />,
+  },
+  {
+    title: "Books into the calendar you already use",
+    body: "Front Desk reads your real availability before it offers a time, so it never double-books you, and writes the appointment straight into your calendar while the caller is still on the line.",
+    panel: (s) => <CalendarPanel scenario={s} />,
   },
   {
     title: "It already speaks your trade",

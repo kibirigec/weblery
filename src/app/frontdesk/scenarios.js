@@ -36,6 +36,16 @@ export const SCENARIOS = [
       { agent: false, gap: 0.5, text: "Yes please, the earliest you have." },
       { agent: true, gap: 0.4, text: "Booked. I'm flagging this urgent and texting the team now." },
     ],
+    calendar: {
+      day: "Tomorrow · Thu",
+      slots: [
+        { time: "7:00", label: "Crew huddle" },
+        { time: "8:00", label: "Maria Lopez — AC not cooling", booked: true },
+        { time: "10:30", label: "Nguyen — furnace service" },
+        { time: "1:00", label: "Ortiz — duct clean" },
+      ],
+      note: "8–10 was the first slot with a two-hour gap. 9:00 was already taken.",
+    },
     ticket: {
       when: "New call · 9:42 PM",
       badge: "URGENT",
@@ -77,6 +87,16 @@ export const SCENARIOS = [
       { agent: false, gap: 0.5, text: "Saturday morning works." },
       { agent: true, gap: 0.4, text: "Booked. I'm sending this to the listing agent now." },
     ],
+    calendar: {
+      day: "Saturday",
+      slots: [
+        { time: "9:00", label: "Open house prep — Cedar Ave" },
+        { time: "10:00", label: "Dana Whitfield — showing, Maple St", booked: true },
+        { time: "12:30", label: "Buyer consult — Okafor" },
+        { time: "3:00", label: "Listing photos" },
+      ],
+      note: "Saturday morning had one opening left. It was held before she hung up.",
+    },
     ticket: {
       when: "New call · 7:13 PM",
       badge: "NEW LEAD",
@@ -118,6 +138,16 @@ export const SCENARIOS = [
       { agent: false, gap: 0.5, text: "Afternoon, please." },
       { agent: true, gap: 0.4, text: "Booked. I'm passing this to the intake attorney now." },
     ],
+    calendar: {
+      day: "Tomorrow · Wed",
+      slots: [
+        { time: "9:30", label: "Deposition — Hartley" },
+        { time: "12:00", label: "Blocked — court" },
+        { time: "2:00", label: "Ray Ellison — free consultation", booked: true },
+        { time: "4:00", label: "Case review" },
+      ],
+      note: "Morning was in court, so it offered the first free afternoon slot.",
+    },
     ticket: {
       when: "New call · 6:49 PM",
       badge: "NEW MATTER",
@@ -159,6 +189,16 @@ export const SCENARIOS = [
       { agent: false, gap: 0.5, text: "Thursday at ten works." },
       { agent: true, gap: 0.4, text: "Booked. I'm texting the new-patient forms over now." },
     ],
+    calendar: {
+      day: "Thursday",
+      slots: [
+        { time: "9:00", label: "Cleaning — J. Park" },
+        { time: "10:00", label: "Priya Raman — new patient cleaning", booked: true },
+        { time: "11:00", label: "Crown fitting — Alvarez" },
+        { time: "2:00", label: "Open" },
+      ],
+      note: "New patients need a longer slot, so 10:00 was offered over 11:00.",
+    },
     ticket: {
       when: "New call · 5:27 PM",
       badge: "NEW PATIENT",
