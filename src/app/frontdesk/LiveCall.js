@@ -1,47 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 /**
  * A call that plays: the timer runs, the waveform moves while someone is
  * speaking, and the transcript arrives word by word.
  *
- * The script is the call that produces the ticket in the next section — same
- * caller, same number, same address, same slot. If you edit one, edit both.
+ * The script comes from the selected scenario, and the ticket in the section
+ * below is built from the same one — see scenarios.js.
  */
 
 const WORD_MS = 205;
 const TAIL_S = 3; // hold on the finished call before looping
-
-// `gap` is the silence before the line starts, so timings can't drift out of
-// order the way hand-written absolute timestamps do.
-const SCRIPT = [
-  { agent: true, gap: 0.8, text: "Summit Heating and Air, this is Riley — how can I help?" },
-  { agent: false, gap: 0.6, text: "Hi — my AC stopped cooling this afternoon and it won't come back on." },
-  { agent: true, gap: 0.5, text: "Sorry to hear it. How warm is it inside right now?" },
-  { agent: false, gap: 0.5, text: "Eighty-eight degrees, and I've got two young kids at home." },
-  { agent: true, gap: 0.4, text: "That makes it urgent. Can I take your name and the service address?" },
-  { agent: false, gap: 0.5, text: "Maria Lopez, 4821 Maple Avenue." },
-  { agent: true, gap: 0.4, text: "Thanks Maria. Best number to reach you on?" },
-  { agent: false, gap: 0.5, text: "Seven oh two, eight six six, two two two two." },
-  { agent: true, gap: 0.4, text: "Got it. Earliest visit is tomorrow between eight and ten — shall I hold it?" },
-  { agent: false, gap: 0.5, text: "Yes please, the earliest you have." },
-  { agent: true, gap: 0.4, text: "Booked. I'm flagging this urgent and texting the team now." },
-];
-
-// Lay the script out on a timeline once, at module load.
-const TURNS = (() => {
-  let cursor = 0;
-  return SCRIPT.map((line) => {
-    const words = line.text.split(" ");
-    const at = cursor + line.gap;
-    const end = at + (words.length * WORD_MS) / 1000;
-    cursor = end;
-    return { ...line, words, at, end };
-  });
-})();
-
-const TOTAL = TURNS[TURNS.length - 1].end + TAIL_S;
 
 const BARS = [
   4, 7, 11, 6, 14, 9, 18, 12, 22, 15, 9, 20, 25, 17, 10, 6, 13, 21, 16, 8, 12, 24, 18,
@@ -53,10 +23,23 @@ function clock(seconds) {
   return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 }
 
-export default function LiveCall() {
+export default function LiveCall({ scenario }) {
+  // Lay the script out on a timeline; recomputed when the scenario changes.
+  const { turns, total } = useMemo(() => {
+    let cursor = 0;
+    const laid = scenario.script.map((line) => {
+      const words = line.text.split(" ");
+      const at = cursor + line.gap;
+      const end = at + (words.length * WORD_MS) / 1000;
+      cursor = end;
+      return { ...line, words, at, end };
+    });
+    return { turns: laid, total: laid[laid.length - 1].end + TAIL_S };
+  }, [scenario]);
+
   // Starts fully revealed so the transcript is present without JS and in the
-  // server render; playback rewinds it once the panel scrolls into view.
-  const [elapsed, setElapsed] = useState(TOTAL);
+  // server render; playback rewinds it once the panel mounts.
+  const [elapsed, setElapsed] = useState(total);
   const [playing, setPlaying] = useState(false);
   const panelRef = useRef(null);
   const logRef = useRef(null);
@@ -72,26 +55,26 @@ export default function LiveCall() {
     const el = panelRef.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
 
-    const io = new IntersectionObserver(
-      ([entry]) => setPlaying(entry.isIntersecting),
-      { threshold: 0.2 }
-    );
+    const io = new IntersectionObserver(([entry]) => setPlaying(entry.isIntersecting), {
+      threshold: 0.2,
+    });
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
+  // Restarts on scenario change too, so switching business type replays the
+  // new call from the top rather than dropping into the middle of it.
   useEffect(() => {
     if (!playing) return;
     const started = performance.now();
     setElapsed(0);
     const id = setInterval(() => {
-      const e = (performance.now() - started) / 1000;
-      setElapsed(e % TOTAL);
+      setElapsed(((performance.now() - started) / 1000) % total);
     }, 100);
     return () => clearInterval(id);
-  }, [playing]);
+  }, [playing, total, scenario]);
 
-  const active = TURNS.find((t) => elapsed >= t.at && elapsed < t.end);
+  const active = turns.find((t) => elapsed >= t.at && elapsed < t.end);
   const speaking = Boolean(active);
 
   // Keep the newest line in view, scrolling the log only — never the page.
@@ -123,8 +106,8 @@ export default function LiveCall() {
             </svg>
           </span>
           <span className="fd-call__id">
-            <strong>(702) 866-2222</strong>
-            <span>Incoming · 9:41 PM</span>
+            <strong>{scenario.caller.number}</strong>
+            <span>{scenario.caller.when}</span>
           </span>
           <span className="fd-call__timer">
             <i aria-hidden="true" />
@@ -140,7 +123,7 @@ export default function LiveCall() {
 
         <p className="fd-call__label">Live transcript</p>
         <ol className="fd-call__log" ref={logRef}>
-          {TURNS.map((t, i) => {
+          {turns.map((t, i) => {
             const shown = Math.floor((elapsed - t.at) / (WORD_MS / 1000));
             return (
               <li

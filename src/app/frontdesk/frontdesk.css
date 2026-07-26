@@ -285,6 +285,73 @@
   text-wrap: balance;
 }
 
+/* ---------- Business-type selector ----------
+   Quiet track, one filled option. It changes three panels down the page, so
+   it needs to read as a control without competing with the section heading. */
+
+.fd-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: -1rem 0 clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.fd-switch__label {
+  font-size: 0.8rem;
+  color: var(--fd-faint);
+}
+
+.fd-switch__track {
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.25rem;
+  background: var(--fd-bg-soft);
+  border: 1px solid var(--fd-line);
+  border-radius: 999px;
+  /* Scrolls rather than wraps on narrow screens, so the control stays one
+     line and the options keep their pill shape. */
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fd-switch__track::-webkit-scrollbar {
+  display: none;
+}
+
+.fd-switch__opt {
+  flex: none;
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.42rem 0.95rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--fd-body);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fd-switch__opt:hover:not(.is-on) {
+  color: var(--fd-ink);
+}
+
+.fd-switch__opt.is-on {
+  background: #fff;
+  color: var(--fd-accent-deep);
+  box-shadow: 0 1px 2px rgba(13, 20, 32, 0.1), 0 6px 16px -10px rgba(13, 20, 32, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fd-switch__opt {
+    transition: none;
+  }
+}
+
 /* ---------- Feature rows ---------- */
 
 .fd-features {
@@ -659,9 +726,18 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   color: #fff;
-  background: #b45309;
   border-radius: 999px;
   padding: 0.22rem 0.6rem;
+}
+
+/* Amber only when the call actually is an emergency. If every ticket wore it,
+   it would stop meaning anything — the rest are routine intake. */
+.fd-ticket__badge--urgent {
+  background: #b45309;
+}
+
+.fd-ticket__badge--new {
+  background: var(--fd-accent-deep);
 }
 
 .fd-ticket__summary {
@@ -955,5 +1031,12 @@
   .fd-call__log li {
     grid-template-columns: 2.1rem minmax(0, 1fr);
     column-gap: 0.5rem;
+  }
+
+  /* Tightened so all four options fit rather than overflowing by a hair —
+     a barely-clipped last option reads as a bug, not as "scroll me". */
+  .fd-switch__opt {
+    padding: 0.42rem 0.66rem;
+    font-size: 0.83rem;
   }
 }
