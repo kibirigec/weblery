@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import VoiceOrb from "./VoiceOrb";
 
 /**
  * The bottom sheet a visitor lands in after submitting their website.
@@ -13,8 +14,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * If the app is unreachable the sheet still opens and collects an email, so a
  * visitor never hits a dead end.
  *
- * Call UI reuses .fd-panel / .fd-card / .fd-wave from the page so the sheet
- * inherits the theme rather than restating it.
+ * Call UI reuses .fd-panel / .fd-card from the page so the sheet inherits the
+ * theme rather than restating it. The live call shows the orb rather than the
+ * page's waveform: the waveform labels a transcript, the orb is presence —
+ * something listening and answering. Showing both would say one thing twice.
  */
 
 const POLL_MS = 2500;
@@ -310,20 +313,26 @@ export default function DemoSheet({ open, website, result, onClose }) {
                     )}
                   </div>
 
-                  <div
-                    className={`fd-wave${callState === "active" && agentTalking ? " is-live" : ""}`}
-                    aria-hidden="true"
-                  >
-                    {BARS.map((h, i) => (
-                      <span
-                        key={i}
-                        style={{
-                          height: `${h}px`,
-                          animationDelay: `${(i % 11) * -0.13}s`,
-                          animationDuration: `${0.85 + (i % 5) * 0.16}s`,
-                        }}
-                      />
-                    ))}
+                  <div className="fds__orb">
+                    <VoiceOrb
+                      state={callState}
+                      label={
+                        callState === "active"
+                          ? agentTalking
+                            ? "Speaking…"
+                            : "Listening…"
+                          : callState === "connecting"
+                            ? "Connecting…"
+                            : callState === "ended"
+                              ? "Call ended"
+                              : "Tap to call"
+                      }
+                      onClick={callState === "active" ? hangUp : startCall}
+                      // Agent talk events are the only level signal we get from
+                      // the SDK, so drive the orb from those rather than fake a
+                      // waveform that isn't reading real audio.
+                      getLevel={() => (agentTalking ? 0.85 : 0.12)}
+                    />
                   </div>
 
                   {ticket ? (
@@ -336,26 +345,20 @@ export default function DemoSheet({ open, website, result, onClose }) {
                     </p>
                   )}
 
-                  <div className="fd-call__actions">
-                    {callState === "active" ? (
-                      <button type="button" className="fd-call__end fds__hang" onClick={hangUp} aria-label="End call">
-                        <HangUpIcon />
-                      </button>
-                    ) : (
+                  {/* The orb starts the call, so there is no second start
+                      button. Hanging up stays a separate, deliberate control. */}
+                  {callState === "active" && (
+                    <div className="fd-call__actions">
                       <button
                         type="button"
-                        className="fds__call"
-                        onClick={startCall}
-                        disabled={callState === "connecting"}
+                        className="fd-call__end fds__hang"
+                        onClick={hangUp}
+                        aria-label="End call"
                       >
-                        {callState === "connecting"
-                          ? "Connecting…"
-                          : callState === "ended"
-                            ? "Call again"
-                            : "Call your receptionist"}
+                        <HangUpIcon />
                       </button>
-                    )}
-                  </div>
+                    </div>
+                  )}
 
                   {callError && <p className="fds__err">{callError}</p>}
                 </>
