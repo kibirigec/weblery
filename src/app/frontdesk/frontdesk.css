@@ -1215,11 +1215,11 @@
 .fds__sheet {
   position: relative;
   width: min(1040px, 100%);
-  /* Sized to content, capped at the viewport. A fixed height left a lot of
-     empty sheet under the short onboarding pages; the demo's gradient stage
-     carries its own height, so nothing needs propping up. */
-  height: auto;
-  max-height: 94svh;
+  /* Fixed, so the sheet doesn't resize under you as pages change length. The
+     dead space that used to sit at the bottom is gone a different way: the
+     body is a column, the content centres in whatever is left, and the nav is
+     pinned to the base. */
+  height: min(94svh, 880px);
   overflow-y: auto;
   background: var(--fd-bg);
   border-radius: 20px 20px 0 0;
@@ -1277,6 +1277,10 @@
   padding: 1.4rem clamp(1.25rem, 4vw, 3rem) clamp(2rem, 4vw, 3rem);
   max-width: 780px;
   margin: 0 auto;
+  /* Fills the fixed sheet so children can distribute themselves down it. */
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .fds__eyebrow {
@@ -1745,8 +1749,14 @@
   transition: width 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
+/* Takes the space between the progress bar and the nav, and centres in it —
+   short pages sit in the middle rather than stranded at the top. */
 .fdo__page {
   text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Each page slides in from the right. The choices lead and the heading follows
@@ -1903,7 +1913,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  /* Sits at the base of the sheet whatever the page height. */
+  margin-top: auto;
+  padding-top: clamp(1.75rem, 4vw, 2.5rem);
 }
 
 .fdo__back {
