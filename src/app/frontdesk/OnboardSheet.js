@@ -26,12 +26,14 @@ export default function OnboardSheet({ open, onClose }) {
     type: null,
     businessName: "",
     services: [],
+    custom: [],
     days: null,
     hours: null,
     area: "",
     phone: "",
     afterHours: null,
   });
+  const [draft, setDraft] = useState("");
   const [building, setBuilding] = useState(false);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
@@ -58,6 +60,7 @@ export default function OnboardSheet({ open, onClose }) {
     if (open) {
       setStep(0);
       setDir("fwd");
+      setDraft("");
       setResult(null);
       setError(null);
       setBuilding(false);
@@ -83,6 +86,22 @@ export default function OnboardSheet({ open, onClose }) {
     setTimeout(next, 160);
   };
 
+  /** Anything the presets don't cover. Trimmed, capped and de-duplicated
+   *  against both lists, so a typed "Repairs" can't shadow the picked one. */
+  const addCustom = () => {
+    const name = draft.trim().slice(0, 60);
+    if (!name) return;
+    setA((prev) =>
+      prev.services.includes(name) || prev.custom.includes(name)
+        ? prev
+        : { ...prev, custom: [...prev.custom, name] },
+    );
+    setDraft("");
+  };
+
+  const removeCustom = (name) =>
+    setA((prev) => ({ ...prev, custom: prev.custom.filter((c) => c !== name) }));
+
   // Reads from prev, not from the render-time snapshot: two taps inside one
   // render both computed against the same stale array, so the second silently
   // discarded the first.
@@ -107,7 +126,7 @@ export default function OnboardSheet({ open, onClose }) {
         body: JSON.stringify({
           businessName: a.businessName.trim(),
           industry: type?.industry ?? "general",
-          services: a.services,
+          services: [...a.services, ...a.custom],
           serviceAreas: a.area.trim() ? [a.area.trim()] : [],
           days: days && days.id !== "varies" ? days.label : "",
           open: hours?.open ?? "",
@@ -139,7 +158,7 @@ export default function OnboardSheet({ open, onClose }) {
   const answered = [
     Boolean(a.type),
     a.businessName.trim().length > 1,
-    a.services.length > 0,
+    a.services.length + a.custom.length > 0,
     Boolean(a.days),
     Boolean(a.hours),
     true,
@@ -181,7 +200,7 @@ export default function OnboardSheet({ open, onClose }) {
                     key={t.id}
                     type="button"
                     className={`fdo__opt${a.type === t.id ? " is-on" : ""}`}
-                    onClick={() => pick({ type: t.id, services: [] })}
+                    onClick={() => pick({ type: t.id, services: [], custom: [] })}
                   >
                     <strong>{t.label}</strong>
                     <span>{t.hint}</span>
@@ -207,6 +226,8 @@ export default function OnboardSheet({ open, onClose }) {
 
           {step === 2 && (
             <Page key={step} title="What do you offer?" hint="Pick everything that applies — callers ask about these by name.">
+              {/* Typed additions sit in the same row as the presets — they are
+                  the same kind of answer, so they belong in the same place. */}
               <div className="fdo__chips">
                 {(type?.services ?? []).map((s) => (
                   <button
@@ -219,6 +240,59 @@ export default function OnboardSheet({ open, onClose }) {
                     {s}
                   </button>
                 ))}
+
+                {a.custom.map((c) => (
+                  <span key={c} className="fdo__chip is-on fdo__chip--own">
+                    {c}
+                    <button
+                      type="button"
+                      className="fdo__del"
+                      onClick={() => removeCustom(c)}
+                      aria-label={`Remove ${c}`}
+                    >
+                      <svg viewBox="0 0 14 14" width="11" height="11" fill="none" aria-hidden="true">
+                        <path
+                          d="M3 3l8 8M11 3l-8 8"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </button>
+                  </span>
+                ))}
+              </div>
+
+              <div className="fdo__other">
+                <label className="fdo__label fdo__label--inline" htmlFor="fdo-other">
+                  Something else you offer?
+                </label>
+                <div className="fdo__otherRow">
+                  <input
+                    id="fdo-other"
+                    className="fdo__input fdo__input--inline"
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        // Otherwise Enter submits the page and skips the word
+                        // they just typed.
+                        e.preventDefault();
+                        addCustom();
+                      }
+                    }}
+                    placeholder="Type it and press Add"
+                  />
+                  <button
+                    type="button"
+                    className="fdo__add"
+                    onClick={addCustom}
+                    disabled={!draft.trim()}
+                  >
+                    Add
+                  </button>
+                </div>
+
               </div>
             </Page>
           )}
