@@ -20,6 +20,7 @@ const TOTAL = 7;
 
 export default function OnboardSheet({ open, onClose }) {
   const [step, setStep] = useState(0);
+  const [dir, setDir] = useState("fwd");
   const [a, setA] = useState({
     type: null,
     businessName: "",
@@ -59,6 +60,7 @@ export default function OnboardSheet({ open, onClose }) {
   useEffect(() => {
     if (open) {
       setStep(0);
+      setDir("fwd");
       setResult(null);
       setError(null);
       setBuilding(false);
@@ -66,8 +68,17 @@ export default function OnboardSheet({ open, onClose }) {
   }, [open]);
 
   const set = (patch) => setA((prev) => ({ ...prev, ...patch }));
-  const next = () => setStep((s) => Math.min(s + 1, TOTAL - 1));
-  const back = () => setStep((s) => Math.max(s - 1, 0));
+
+  // Direction drives which way pages slide. Set before the step so the new
+  // page renders already knowing where it came from.
+  const next = () => {
+    setDir("fwd");
+    setStep((s) => Math.min(s + 1, TOTAL - 1));
+  };
+  const back = () => {
+    setDir("back");
+    setStep((s) => Math.max(s - 1, 0));
+  };
 
   /** Single-choice: record and move on, so a tap is the whole interaction. */
   const pick = (patch) => {
@@ -155,7 +166,7 @@ export default function OnboardSheet({ open, onClose }) {
           ✕
         </button>
 
-        <div className="fds__body">
+        <div className="fds__body" data-dir={dir}>
           <div className="fdo__top">
             <span className="fds__eyebrow">
               Step {step + 1} of {TOTAL}

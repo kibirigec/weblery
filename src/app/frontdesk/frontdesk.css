@@ -1759,22 +1759,48 @@
   justify-content: center;
 }
 
-/* Each page slides in from the right. The choices lead and the heading follows
-   a beat later — the eye is already on the options when a page turns, so
-   moving them first is what makes the turn feel like a response to the tap. */
-@keyframes fdo-slide {
+/* Pages slide in along the direction of travel: from the right going forward,
+   from the left on Back, so retracing a step visibly undoes it. The choices
+   lead and the heading follows a beat later — the eye is already on the
+   options when a page turns, so moving those first makes the turn read as a
+   response to the tap rather than a redraw. */
+@keyframes fdo-slide-fwd {
   from {
     opacity: 0;
-    transform: translateX(34px);
+    transform: translateX(72px);
   }
 }
 
+@keyframes fdo-slide-back {
+  from {
+    opacity: 0;
+    transform: translateX(-72px);
+  }
+}
+
+.fdo__choices,
+.fdo__head {
+  animation-duration: 0.58s;
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation-fill-mode: both;
+}
+
 .fdo__choices {
-  animation: fdo-slide 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: 0s;
 }
 
 .fdo__head {
-  animation: fdo-slide 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.12s both;
+  animation-delay: 0.15s;
+}
+
+[data-dir="fwd"] .fdo__choices,
+[data-dir="fwd"] .fdo__head {
+  animation-name: fdo-slide-fwd;
+}
+
+[data-dir="back"] .fdo__choices,
+[data-dir="back"] .fdo__head {
+  animation-name: fdo-slide-back;
 }
 
 @media (prefers-reduced-motion: reduce) {
