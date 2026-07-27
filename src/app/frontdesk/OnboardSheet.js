@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import DemoSheet from "./DemoSheet";
 import { AFTER_HOURS, BUSINESS_TYPES, DAY_PATTERNS, HOUR_PATTERNS } from "./onboardingQuestions";
 import { useScrollLock } from "./useScrollLock";
+import { useSheetDismiss } from "./useSheetDismiss";
 
 /**
  * Builds a receptionist for someone who has no website — or won't hand one
@@ -41,6 +42,7 @@ export default function OnboardSheet({ open, onClose }) {
   const sheetRef = useRef(null);
   const type = BUSINESS_TYPES.find((t) => t.id === a.type) ?? null;
 
+  const { closing, requestClose } = useSheetDismiss(onClose);
   useScrollLock(open);
 
   useEffect(() => {
@@ -49,10 +51,10 @@ export default function OnboardSheet({ open, onClose }) {
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e) => e.key === "Escape" && onClose();
+    const onKey = (e) => e.key === "Escape" && requestClose();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [open, requestClose]);
 
   // Start clean each time it opens, rather than resuming a half-finished
   // answer set from a previous visitor on a shared screen.
@@ -167,7 +169,11 @@ export default function OnboardSheet({ open, onClose }) {
   const canContinue = answered[step] && !building;
 
   return (
-    <div className="fds" role="presentation" onMouseDown={onClose}>
+    <div
+      className={`fds${closing ? " is-closing" : ""}`}
+      role="presentation"
+      onMouseDown={requestClose}
+    >
       <div
         className="fds__sheet"
         role="dialog"
@@ -178,7 +184,7 @@ export default function OnboardSheet({ open, onClose }) {
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="fds__grip" aria-hidden="true" />
-        <button type="button" className="fds__close" onClick={onClose} aria-label="Close">
+        <button type="button" className="fds__close" onClick={requestClose} aria-label="Close">
           ✕
         </button>
 

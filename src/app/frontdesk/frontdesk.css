@@ -1212,6 +1212,10 @@
   }
 }
 
+.fds.is-closing {
+  animation: fds-fade 0.3s ease reverse both;
+}
+
 .fds__sheet {
   position: relative;
   width: min(1040px, 100%);
@@ -1224,7 +1228,7 @@
   background: var(--fd-bg);
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -20px 60px -20px rgba(9, 18, 40, 0.45);
-  animation: fds-rise 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: fds-up 0.46s cubic-bezier(0.22, 0.61, 0.36, 1) both;
   outline: none;
   scrollbar-width: none;
 }
@@ -1233,16 +1237,30 @@
   display: none;
 }
 
-@keyframes fds-rise {
+/* Comes all the way up from below the fold and goes back the same way, rather
+   than fading in place with a nudge. The exit is quicker than the entrance and
+   eases the other way — a dismissal should feel decided, not laboured. */
+@keyframes fds-up {
   from {
-    transform: translateY(28px);
-    opacity: 0;
+    transform: translateY(100%);
   }
+}
+
+@keyframes fds-down {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.fds.is-closing .fds__sheet {
+  animation: fds-down 0.32s cubic-bezier(0.55, 0.06, 0.68, 0.19) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .fds,
-  .fds__sheet {
+  .fds__sheet,
+  .fds.is-closing,
+  .fds.is-closing .fds__sheet {
     animation: none;
   }
 }

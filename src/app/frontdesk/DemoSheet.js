@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import VoiceOrb from "./VoiceOrb";
 import { useScrollLock } from "./useScrollLock";
+import { useSheetDismiss } from "./useSheetDismiss";
 
 /**
  * The bottom sheet a visitor lands in after submitting their website.
@@ -63,6 +64,7 @@ export default function DemoSheet({ open, website, result, onClose }) {
 
   /* ---- lifecycle ---- */
 
+  const { closing, requestClose } = useSheetDismiss(onClose);
   useScrollLock(open);
 
   useEffect(() => {
@@ -71,10 +73,10 @@ export default function DemoSheet({ open, website, result, onClose }) {
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e) => e.key === "Escape" && onClose();
+    const onKey = (e) => e.key === "Escape" && requestClose();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [open, requestClose]);
 
   // Poll build progress. Stops once the demo is ready or the scan failed —
   // except while a call is live, when we keep polling to catch the ticket.
@@ -203,7 +205,11 @@ export default function DemoSheet({ open, website, result, onClose }) {
   const noDemo = unavailable || !slug;
 
   return (
-    <div className="fds" role="presentation" onMouseDown={onClose}>
+    <div
+      className={`fds${closing ? " is-closing" : ""}`}
+      role="presentation"
+      onMouseDown={requestClose}
+    >
       <div
         className="fds__sheet"
         role="dialog"
@@ -214,7 +220,7 @@ export default function DemoSheet({ open, website, result, onClose }) {
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="fds__grip" aria-hidden="true" />
-        <button type="button" className="fds__close" onClick={onClose} aria-label="Close">
+        <button type="button" className="fds__close" onClick={requestClose} aria-label="Close">
           ✕
         </button>
 
