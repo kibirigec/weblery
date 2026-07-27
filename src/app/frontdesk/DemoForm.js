@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import DemoSheet from "./DemoSheet";
+import OnboardSheet from "./OnboardSheet";
 
 /**
  * The page's single call to action: a visitor drops in their website and we
@@ -17,6 +18,7 @@ export default function DemoForm({ id, cta = "Hear it answer" }) {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [onboardOpen, setOnboardOpen] = useState(false);
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -83,6 +85,14 @@ export default function DemoForm({ id, cta = "Hear it answer" }) {
       )}
 
       {state === "error" && <p className="fd-form__msg fd-form__msg--error">{error}</p>}
+
+      {/* The way in for anyone the scanner can't serve: no site, a site it
+          can't read, or someone not ready to hand one over. */}
+      <button type="button" className="fd-form__alt" onClick={() => setOnboardOpen(true)}>
+        Don&apos;t have a website?
+      </button>
+
+      <OnboardSheet open={onboardOpen} onClose={() => setOnboardOpen(false)} />
 
       <DemoSheet
         open={sheetOpen}
