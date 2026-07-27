@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import VoiceOrb from "./VoiceOrb";
+import { useScrollLock } from "./useScrollLock";
 
 /**
  * The bottom sheet a visitor lands in after submitting their website.
@@ -62,15 +63,10 @@ export default function DemoSheet({ open, website, result, onClose }) {
 
   /* ---- lifecycle ---- */
 
-  // Lock the page behind the sheet.
+  useScrollLock(open);
+
   useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    sheetRef.current?.focus();
-    return () => {
-      document.body.style.overflow = prev;
-    };
+    if (open) sheetRef.current?.focus();
   }, [open]);
 
   useEffect(() => {

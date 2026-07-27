@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import DemoSheet from "./DemoSheet";
 import { AFTER_HOURS, BUSINESS_TYPES, DAY_PATTERNS, HOUR_PATTERNS } from "./onboardingQuestions";
+import { useScrollLock } from "./useScrollLock";
 
 /**
  * Builds a receptionist for someone who has no website — or won't hand one
@@ -38,14 +39,10 @@ export default function OnboardSheet({ open, onClose }) {
   const sheetRef = useRef(null);
   const type = BUSINESS_TYPES.find((t) => t.id === a.type) ?? null;
 
+  useScrollLock(open);
+
   useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    sheetRef.current?.focus();
-    return () => {
-      document.body.style.overflow = prev;
-    };
+    if (open) sheetRef.current?.focus();
   }, [open]);
 
   useEffect(() => {
@@ -263,7 +260,7 @@ export default function OnboardSheet({ open, onClose }) {
           {step === 5 && (
             <Page key={step} title="Anything else worth knowing?" hint="Both optional — skip if you'd rather.">
               <label className="fdo__label" htmlFor="fdo-area">
-                Where do you serve?
+                Where are you located?
               </label>
               <input
                 id="fdo-area"
