@@ -3,12 +3,14 @@
    feature rows where each visual sits on a soft gradient panel. */
 
 .fd {
-  --fd-ink: #0d1420;
-  --fd-body: #4a5568;
-  --fd-faint: #8b95a8;
-  --fd-line: #e3e8f1;
+  /* The site's own neutrals (styles/00-tokens.css), not a slate scale. The
+     blue lives in the accent and the panels; the text stays neutral. */
+  --fd-ink: #121212;
+  --fd-body: #636161;
+  --fd-faint: #9a9898;
+  --fd-line: #ddd8d8;
   --fd-bg: #ffffff;
-  --fd-bg-soft: #f4f7fc;
+  --fd-bg-soft: #f6f4f5;
   /* Blue, pulled from the panel gradient so accents and panels agree.
      Status colours below are deliberately not blue — see --fd-urgent etc. */
   --fd-accent: #2f7ef5;
@@ -82,7 +84,7 @@
   height: 74px;
   border-radius: 21px;
   background: #fff;
-  box-shadow: 0 10px 30px -12px rgba(13, 20, 32, 0.45);
+  box-shadow: 0 10px 30px -12px rgba(18, 18, 18, 0.45);
 }
 
 .fd-hero__brand img {
@@ -103,7 +105,7 @@
    has to hold up against the darkest frames too. */
 .fd-hero__sub {
   font-size: clamp(1.02rem, 1.5vw, 1.14rem);
-  color: #0f1622;
+  color: #141414;
   max-width: 44ch;
   margin: 1.35rem auto 0;
   line-height: 1.53;
@@ -199,7 +201,7 @@
   border: 1px solid var(--fd-line);
   border-radius: 14px;
   padding: 0.45rem;
-  box-shadow: 0 14px 40px -20px rgba(13, 20, 32, 0.28);
+  box-shadow: 0 14px 40px -20px rgba(18, 18, 18, 0.28);
 }
 
 .fd-form__row input {
@@ -251,7 +253,7 @@
    grey disappears. Elsewhere (the closing CTA) it sits on a flat background
    and the default is right. */
 .fd-hero .fd-form__hint {
-  color: #0f1622;
+  color: #141414;
 }
 
 .fd-form__msg {
@@ -1213,9 +1215,10 @@
 .fds__sheet {
   position: relative;
   width: min(1040px, 100%);
-  /* Tall by default, not just tall enough: the sheet is the demo, so it should
-     own the screen rather than perch at the bottom of it. */
-  height: min(94svh, 940px);
+  /* Sized to content, capped at the viewport. A fixed height left a lot of
+     empty sheet under the short onboarding pages; the demo's gradient stage
+     carries its own height, so nothing needs propping up. */
+  height: auto;
   max-height: 94svh;
   overflow-y: auto;
   background: var(--fd-bg);
@@ -1446,7 +1449,6 @@
 
 @media (max-width: 560px) {
   .fds__sheet {
-    height: 92svh;
     max-height: 92svh;
   }
 
@@ -1713,7 +1715,7 @@
 
 /* On the footage the muted body grey disappears, same as the hint. */
 .fd-hero .fd-form__alt {
-  color: #0f1622;
+  color: #141414;
   text-decoration-color: rgba(15, 22, 34, 0.35);
 }
 
@@ -1745,18 +1747,29 @@
 
 .fdo__page {
   text-align: center;
-  animation: fdo-in 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
-@keyframes fdo-in {
+/* Each page slides in from the right. The choices lead and the heading follows
+   a beat later — the eye is already on the options when a page turns, so
+   moving them first is what makes the turn feel like a response to the tap. */
+@keyframes fdo-slide {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateX(34px);
   }
 }
 
+.fdo__choices {
+  animation: fdo-slide 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.fdo__head {
+  animation: fdo-slide 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.12s both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .fdo__page {
+  .fdo__choices,
+  .fdo__head {
     animation: none;
   }
   .fdo__bar span {
@@ -1929,11 +1942,6 @@
 .fdo__next:disabled {
   opacity: 0.4;
   cursor: default;
-}
-
-.fdo__auto {
-  font-size: 0.84rem;
-  color: var(--fd-faint);
 }
 
 @media (max-width: 560px) {

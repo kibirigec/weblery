@@ -125,11 +125,19 @@ export default function OnboardSheet({ open, onClose }) {
     return <DemoSheet open website={a.businessName} result={result} onClose={onClose} />;
   }
 
-  const canContinue =
-    (step === 1 && a.businessName.trim().length > 1) ||
-    (step === 2 && a.services.length > 0) ||
-    step === 5 ||
-    (step === 6 && !building);
+  // Every page can be answered and moved on from, including the ones that also
+  // advance on tap — otherwise stepping Back to a single-choice page stranded
+  // you there with no way forward short of re-tapping an answer you'd given.
+  const answered = [
+    Boolean(a.type),
+    a.businessName.trim().length > 1,
+    a.services.length > 0,
+    Boolean(a.days),
+    Boolean(a.hours),
+    true,
+    Boolean(a.afterHours),
+  ];
+  const canContinue = answered[step] && !building;
 
   return (
     <div className="fds" role="presentation" onMouseDown={onClose}>
@@ -158,7 +166,7 @@ export default function OnboardSheet({ open, onClose }) {
           </div>
 
           {step === 0 && (
-            <Page title="What kind of business is it?" hint="This shapes the questions your receptionist asks callers.">
+            <Page key={step} title="What kind of business is it?" hint="This shapes the questions your receptionist asks callers.">
               <div className="fdo__grid">
                 {BUSINESS_TYPES.map((t) => (
                   <button
@@ -176,7 +184,7 @@ export default function OnboardSheet({ open, onClose }) {
           )}
 
           {step === 1 && (
-            <Page title="What's the business called?" hint="Your receptionist answers the phone with this name.">
+            <Page key={step} title="What's the business called?" hint="Your receptionist answers the phone with this name.">
               <input
                 className="fdo__input"
                 autoFocus
@@ -190,7 +198,7 @@ export default function OnboardSheet({ open, onClose }) {
           )}
 
           {step === 2 && (
-            <Page title="What do you offer?" hint="Pick everything that applies — callers ask about these by name.">
+            <Page key={step} title="What do you offer?" hint="Pick everything that applies — callers ask about these by name.">
               <div className="fdo__chips">
                 {(type?.services ?? []).map((s) => (
                   <button
@@ -208,7 +216,7 @@ export default function OnboardSheet({ open, onClose }) {
           )}
 
           {step === 3 && (
-            <Page title="Which days are you open?" hint="So it never promises a callback on a day you're closed.">
+            <Page key={step} title="Which days are you open?" hint="So it never promises a callback on a day you're closed.">
               <div className="fdo__grid fdo__grid--wide">
                 {DAY_PATTERNS.map((d) => (
                   <button
@@ -225,7 +233,7 @@ export default function OnboardSheet({ open, onClose }) {
           )}
 
           {step === 4 && (
-            <Page title="And what hours?" hint="You can fine-tune this later.">
+            <Page key={step} title="And what hours?" hint="You can fine-tune this later.">
               <div className="fdo__grid fdo__grid--wide">
                 {HOUR_PATTERNS.map((h) => (
                   <button
@@ -242,7 +250,7 @@ export default function OnboardSheet({ open, onClose }) {
           )}
 
           {step === 5 && (
-            <Page title="Anything else worth knowing?" hint="Both optional — skip if you'd rather.">
+            <Page key={step} title="Anything else worth knowing?" hint="Both optional — skip if you'd rather.">
               <label className="fdo__label" htmlFor="fdo-area">
                 Where do you serve?
               </label>
@@ -298,15 +306,12 @@ export default function OnboardSheet({ open, onClose }) {
             )}
 
             {step === TOTAL - 1 ? (
-              <button type="button" className="fdo__next" onClick={build} disabled={building}>
+              <button type="button" className="fdo__next" onClick={build} disabled={!canContinue}>
                 {building ? "Building your receptionist…" : "Build my receptionist"}
               </button>
-            ) : step === 0 || step === 3 || step === 4 ? (
-              // Single-choice pages advance themselves; no button to ignore.
-              <span className="fdo__auto">Pick one to continue</span>
             ) : (
               <button type="button" className="fdo__next" onClick={next} disabled={!canContinue}>
-                Continue
+                Next
               </button>
             )}
           </div>
@@ -319,9 +324,11 @@ export default function OnboardSheet({ open, onClose }) {
 function Page({ title, hint, children }) {
   return (
     <div className="fdo__page">
-      <h2 className="fds__title fdo__title">{title}</h2>
-      {hint && <p className="fdo__hint">{hint}</p>}
-      {children}
+      <div className="fdo__head">
+        <h2 className="fds__title fdo__title">{title}</h2>
+        {hint && <p className="fdo__hint">{hint}</p>}
+      </div>
+      <div className="fdo__choices">{children}</div>
     </div>
   );
 }
