@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import "./shop.css";
 import { CATEGORIES, SHOP_WHATSAPP } from "../../config/shop";
 

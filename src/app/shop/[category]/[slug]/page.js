@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { notFound } from "next/navigation";
 import {
   PRODUCTS,

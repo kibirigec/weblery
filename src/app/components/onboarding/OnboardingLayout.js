@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'motion/react';
-import Link from 'next/link';
+import Link from "@/app/components/MarketLink";
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';

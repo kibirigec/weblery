@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Navigation from "../components/Navigation";
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { useRef } from "react";
 import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 

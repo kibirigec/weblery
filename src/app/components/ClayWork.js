@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from "@/app/components/MarketLink";
 import { PROJECTS } from '../../config/projects';
 import { useTransition } from '../context/TransitionContext';
 

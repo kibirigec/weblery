@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { isUSMarket, isAEMarket } from "../../lib/market";
+import Link from "@/app/components/MarketLink";
+import { useMarketRouter, isUSMarket, isAEMarket } from "../../lib/market";
+
 
 const WHATSAPP_NUMBER = "256700000000"; // change to your real number
 
@@ -268,7 +268,7 @@ const items = [
 
 
 export default function QuoteBuilder() {
-    const router = useRouter();
+    const router = useMarketRouter();
     const [isUS, setIsUS] = useState(false);
     const [isAE, setIsAE] = useState(false);
     const [loading, setLoading] = useState(true);

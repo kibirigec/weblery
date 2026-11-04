@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
 import Navigation from "../components/Navigation";

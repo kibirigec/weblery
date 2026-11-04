@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from "@/app/components/MarketLink";
 
 const SERVICES_LIST = [
     {

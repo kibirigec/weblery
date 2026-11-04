@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Navigation from "../../components/Navigation";
 import StickySection from "../../components/StickySection";
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { useRef } from "react";
 
 import ServiceHeroImage from "../../components/ServiceHeroImage";

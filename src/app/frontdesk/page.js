@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import DemoForm from "./DemoForm";
 import HeroVideo from "./HeroVideo";
 import ScrollReveal from "./ScrollReveal";

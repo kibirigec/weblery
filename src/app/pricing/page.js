@@ -1,11 +1,11 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { useRef, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useMarketRouter, isUSMarket, isAEMarket } from "../../lib/market";
 import Navigation from "../components/Navigation";
-import { isUSMarket, isAEMarket } from "../../lib/market";
+
 
 
 
@@ -120,7 +120,7 @@ const PLANS = [
 ];
 
 export default function PricingPage() {
-  const router = useRouter();
+  const router = useMarketRouter();
   const [isUS, setIsUS] = useState(false);
   const [isAE, setIsAE] = useState(false);
   const [loading, setLoading] = useState(true);

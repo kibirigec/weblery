@@ -3,12 +3,15 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { useMarket } from './MarketContext';
+import { withMarket } from '@/lib/markets';
 
 const TransitionContext = createContext();
 
 export function TransitionProvider({ children }) {
   const [transitionData, setTransitionData] = useState(null); // { text, initialTop, initialLeft, slug }
   const router = useRouter();
+  const market = useMarket();
 
   const startTransition = (data, slug) => {
     // Calculate target left position synchronously based on specific breakpoints
@@ -30,7 +33,7 @@ export function TransitionProvider({ children }) {
     // Wait for the overlay (0.4s) + buffer before navigating. 
     // User requested "faster", reducing offset to 800ms.
     setTimeout(() => {
-      router.push(`/our-work/${slug}`);
+      router.push(withMarket(`/our-work/${slug}`, market));
     }, 100);
   };
 

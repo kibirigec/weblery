@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { useEffect } from "react";
 
 export default function ServiceModal({ service, isOpen, onClose }) {

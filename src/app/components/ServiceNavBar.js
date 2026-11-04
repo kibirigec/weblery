@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import Link from "@/app/components/MarketLink";
 import { servicesList } from '../../config/services';
 import { tailwindColors } from '../../lib/colors';
 

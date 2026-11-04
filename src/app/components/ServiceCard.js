@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from "@/app/components/MarketLink";
 import { useRef } from 'react';
 
 export default function ServiceCard({

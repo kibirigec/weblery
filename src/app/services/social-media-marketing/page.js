@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Navigation from "../../components/Navigation";
 import StickySection from "../../components/StickySection";
 import AnimatedLogo from "../../components/AnimatedLogo";
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { useRef } from "react";
 
 export default function SocialMediaPage() {

@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { usePathname } from "next/navigation";
 import AnimatedLogo from "./AnimatedLogo";
 import { useIsUSMarket , useIsAEMarket } from "../../lib/market";

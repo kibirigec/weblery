@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { useEffect, useRef } from "react";
 
 /**

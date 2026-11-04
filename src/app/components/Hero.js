@@ -8,7 +8,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from "@/app/components/MarketLink";
 
 export default function Hero() {
   const [isMobile, setIsMobile] = useState(false);

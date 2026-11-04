@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
-import Link from 'next/link';
+import Link from "@/app/components/MarketLink";
 import { PACKAGES } from '../../config/services';
 
 // Simplified pricing tiers for the home page

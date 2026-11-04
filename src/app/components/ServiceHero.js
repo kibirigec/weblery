@@ -8,7 +8,7 @@ import {
   useTransform,
 } from "motion/react";
 import { useRef, useMemo, useEffect, useState } from  'react'
-import Link from 'next/link';
+import Link from "@/app/components/MarketLink";
 import { useIsUSMarket , useIsAEMarket } from "../../lib/market";
 
 export default function ServiceHero({ service, onOpenModal }) {

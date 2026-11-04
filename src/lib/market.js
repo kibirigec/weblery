@@ -1,104 +1,60 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
+import { useMarket } from '@/app/context/MarketContext';
+import { withMarket } from '@/lib/markets';
 
-// Global client-side cache to prevent double-renders on page transitions
-let cachedIsUS = null;
-let cachedIsAE = null;
-
-export function isUSMarket() {
-  if (typeof window === 'undefined') return false;
-
-  // 1. Check URL query parameters
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('market') === 'us') {
-    if (typeof sessionStorage !== 'undefined') {
-      sessionStorage.setItem('market', 'us');
-    }
-    return true;
-  }
-  if (urlParams.get('market') === 'ug') {
-    if (typeof sessionStorage !== 'undefined') {
-      sessionStorage.removeItem('market');
-    }
-    return false;
-  }
-
-  // 2. Check persisted session storage (useful for local testing)
-  if (typeof sessionStorage !== 'undefined') {
-    if (sessionStorage.getItem('market') === 'us') {
-      return true;
-    }
-  }
-
-  // 3. Check hostname
-  const hostname = window.location.hostname;
-  if (hostname.startsWith('us.') || hostname === 'us.weblery.com') {
-    return true;
-  }
-
-  return false;
-}
+/**
+ * Market helpers for components.
+ *
+ * The hook names are unchanged from the subdomain era so the twenty-odd
+ * components that call them did not have to be touched. What changed is where
+ * the answer comes from: the market is now decided once by the proxy and read
+ * from context, instead of each component sniffing the hostname, the query
+ * string and sessionStorage and hoping the three agreed.
+ */
 
 export function useIsUSMarket() {
-  // Initialize with cached value if already resolved client-side to prevent double JIT renders
-  const [isUS, setIsUS] = useState(() => {
-    if (cachedIsUS !== null) return cachedIsUS;
-    return false;
-  });
-
-  useEffect(() => {
-    const resolved = isUSMarket();
-    cachedIsUS = resolved;
-    setIsUS(resolved);
-  }, []);
-
-  return isUS;
-}
-
-export function isAEMarket() {
-  if (typeof window === 'undefined') return false;
-
-  // 1. Check URL query parameters
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('market') === 'ae') {
-    if (typeof sessionStorage !== 'undefined') {
-      sessionStorage.setItem('market', 'ae');
-    }
-    return true;
-  }
-  // If explicitly requested a different market, ignore ae
-  if (urlParams.get('market') === 'ug' || urlParams.get('market') === 'us') {
-    return false;
-  }
-
-  // 2. Check persisted session storage (useful for local testing)
-  if (typeof sessionStorage !== 'undefined') {
-    if (sessionStorage.getItem('market') === 'ae') {
-      return true;
-    }
-  }
-
-  // 3. Check hostname
-  const hostname = window.location.hostname;
-  if (hostname.startsWith('ae.') || hostname === 'ae.weblery.com') {
-    return true;
-  }
-
-  return false;
+  return useMarket() === 'us';
 }
 
 export function useIsAEMarket() {
-  const [isAE, setIsAE] = useState(() => {
-    if (cachedIsAE !== null) return cachedIsAE;
-    return false;
-  });
+  return useMarket() === 'ae';
+}
 
-  useEffect(() => {
-    const resolved = isAEMarket();
-    cachedIsAE = resolved;
-    setIsAE(resolved);
-  }, []);
+/**
+ * `router.push` / `router.replace` that stay inside the current market.
+ *
+ * Same shape as `useRouter()`, so it substitutes directly at the call site.
+ */
+export function useMarketRouter() {
+  const router = useRouter();
+  const market = useMarket();
 
-  return isAE;
+  const push = useCallback((href, options) => router.push(withMarket(href, market), options), [router, market]);
+  const replace = useCallback((href, options) => router.replace(withMarket(href, market), options), [router, market]);
+
+  return { ...router, push, replace };
+}
+
+/**
+ * Market read straight from the browser URL, for the handful of call sites
+ * that run outside React's render (effects, event handlers).
+ *
+ * Returns the default market during server rendering — callers use it inside
+ * `useEffect`, where the window always exists.
+ */
+export function currentMarket() {
+  if (typeof window === 'undefined') return 'ug';
+  const first = window.location.pathname.split('/')[1]?.toLowerCase();
+  return first === 'us' || first === 'ae' ? first : 'ug';
+}
+
+export function isUSMarket() {
+  return currentMarket() === 'us';
+}
+
+export function isAEMarket() {
+  return currentMarket() === 'ae';
 }

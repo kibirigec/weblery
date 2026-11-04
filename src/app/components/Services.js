@@ -3,7 +3,7 @@
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import ServiceCard from './ServiceCard';
-import Link from 'next/link';
+import Link from "@/app/components/MarketLink";
 import { useState, useEffect } from 'react';
 import { servicesList } from '../../config/services';
 

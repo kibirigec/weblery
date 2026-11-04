@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import Link from "next/link";
+import Link from "@/app/components/MarketLink";
 import { SERVICES, PACKAGES } from "../../../config/services";
 
 export default function ConfirmationPage() {

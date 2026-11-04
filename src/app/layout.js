@@ -1,11 +1,10 @@
-
-
+import { headers } from "next/headers";
 import "./globals.css";
 import Footer from "./components/Footer";
 
 import { TransitionProvider } from "./context/TransitionContext";
-
-
+import { MarketProvider } from "./context/MarketContext";
+import { DEFAULT_MARKET, MARKET_HEADER } from "@/lib/markets";
 
 export const metadata = {
   title: "Weblery - Digital Media Agency | App Development, Web Development & AI Integration",
@@ -16,16 +15,23 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  // Set by the proxy, which has already stripped the /us or /ae prefix from
+  // the path. Reading it here is what makes the market identical on the server
+  // render and after hydration.
+  const market = (await headers()).get(MARKET_HEADER) ?? DEFAULT_MARKET;
+
   return (
     <html lang="en">
       <body
         className={`antialiased`}
       >
-        <TransitionProvider>
-          {children}
-          <Footer />
-        </TransitionProvider>
+        <MarketProvider market={market}>
+          <TransitionProvider>
+            {children}
+            <Footer />
+          </TransitionProvider>
+        </MarketProvider>
       </body>
     </html>
   );
