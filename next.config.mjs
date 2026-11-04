@@ -12,15 +12,17 @@ const nextConfig = {
             },
         ],
     },
-    async rewrites() {
+    async redirects() {
         return [
             {
                 source: '/images/:path*',
                 destination: `${R2_PUBLIC_URL}/images/:path*`,
+                permanent: false,
             },
             {
                 source: '/portfolio/:path*',
                 destination: `${R2_PUBLIC_URL}/portfolio/:path*`,
+                permanent: false,
             },
         ];
     },
