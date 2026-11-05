@@ -1,25 +1,26 @@
 'use client';
 
 import Navigation from '../Navigation';
-import ClayShowreel from '../ClayShowreel';
 import ClayWork from '../ClayWork';
 import USHero from './USHero';
+import USStorySection from './USStorySection';
+import USWebsiteQuestion from './USWebsiteQuestion';
 import USServices from './USServices';
-import USProcess from './USProcess';
 import USCTA from './USCTA';
 
 export default function USHomepage() {
   return (
     <div id="us-home-page">
-      <main className="bg-[#FBFBFB] min-h-screen">
+      {/* Dark unified background */}
+      <main className="min-h-screen" style={{ background: '#07020f' }}>
         <Navigation id="us-home-nav" />
         <USHero />
-        <ClayShowreel />
+        <USStorySection />
+        <USWebsiteQuestion />
         <USServices />
-        <div id="us-work">
+        <div id="us-work" className="py-16" style={{ background: '#07020f' }}>
           <ClayWork />
         </div>
-        <USProcess />
         <USCTA />
       </main>
     </div>
