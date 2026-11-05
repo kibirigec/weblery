@@ -7,8 +7,14 @@ import ClayShowreel from './components/ClayShowreel';
 import ClayServices from './components/ClayServices';
 import ClayWork from './components/ClayWork';
 import ClayFAQ from './components/ClayFAQ';
+import USHomepage from './components/us/USHomepage';
+import { useMarket } from './context/MarketContext';
 
 export default function Home() {
+  const market = useMarket();
+
+  if (market === 'us') return <USHomepage />;
+
   return (
     <div id="home-page">
       <main className="bg-[#FBFBFB] min-h-screen">
